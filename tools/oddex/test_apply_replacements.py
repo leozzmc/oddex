@@ -1,0 +1,154 @@
+"""Tests for apply_replacements.py on scratch copies of the game's data (the real files are untouched).
+
+    python3 tools/oddex/test_apply_replacements.py
+"""
+import json, os, shutil, subprocess, sys, tempfile, unittest
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import apply_replacements as ar  # noqa: E402
+import check_species_refs as refs  # noqa: E402
+
+TOOL = os.path.join(HERE, "apply_replacements.py")
+def read(path):
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+
+
+EARLY_TABLE = """
+[replace]
+POOCHYENA = "SHADEPUP"
+ZIGZAGOON = "SCRUFFLE"
+WURMPLE = "SPROUTWORM"
+WINGULL = "GULLWISP"
+LOTAD = "PADLILY"
+SEEDOT = "ACORNIK"
+RALTS = "DOZELET"
+SHROOMISH = "FUNGLOO"
+TAILLOW = "CHIRPIP"
+"""
+
+
+class ApplyReplacementsTest(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.party = os.path.join(self.dir, "trainers.party")
+        self.wild = os.path.join(self.dir, "wild_encounters.json")
+        shutil.copy(ar.PARTY, self.party)
+        shutil.copy(ar.WILD, self.wild)
+        self.party0 = read(self.party)
+        self.wild0 = read(self.wild)
+
+    def tearDown(self):
+        shutil.rmtree(self.dir)
+
+    def table(self, text, name="table.toml"):
+        path = os.path.join(self.dir, name)
+        with open(path, "w") as f:
+            f.write(text)
+        return path
+
+    def run_tool(self, *args, table=EARLY_TABLE):
+        cmd = [sys.executable, "-I", TOOL, "--table", self.table(table), "--party", self.party, "--wild", self.wild, *args]
+        return subprocess.run(cmd, capture_output=True, text=True)
+
+    def files(self):
+        return read(self.party), read(self.wild)
+
+    @staticmethod
+    def changed_lines(a, b):
+        la, lb = a.split("\n"), b.split("\n")
+        assert len(la) == len(lb), "line count changed"
+        return [(x, y) for x, y in zip(la, lb) if x != y]
+
+    def test_rewrites_only_species_tokens_in_scope(self):
+        r = self.run_tool("--maps", "Route101,Route102", "--kinds", "land_mons")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        party, wild = self.files()
+        # Route 102 trainers: Calvin, Rick x2, Tiana x2, Allen x2. Route 101 has none.
+        pc = self.changed_lines(self.party0, party)
+        self.assertEqual(len(pc), 7, pc)
+        for old, new in pc:
+            self.assertIn(new.strip(), {"Shadepup", "Scruffle", "Sproutworm", "Fungloo", "Chirpip"}, (old, new))
+        # 12 land slots each on Route 101 and Route 102; only the "species" value changes.
+        wc = self.changed_lines(self.wild0, wild)
+        self.assertEqual(len(wc), 24, wc[:3])
+        for old, new in wc:
+            self.assertEqual(old.split('"species"')[0], new.split('"species"')[0])
+            self.assertIn('"SPECIES_', new)
+        a, b = json.loads(self.wild0), json.loads(wild)
+        self.assertEqual(json.dumps(a, sort_keys=True).count('"species"'), json.dumps(b, sort_keys=True).count('"species"'))
+        self.assertIn("party: 7 Pokemon, wild: 24 slots", r.stdout)
+
+    def test_second_run_changes_nothing(self):
+        self.assertEqual(self.run_tool("--maps", "Route101,Route102", "--kinds", "land_mons").returncode, 0)
+        once = self.files()
+        r = self.run_tool("--maps", "Route101,Route102", "--kinds", "land_mons")
+        self.assertEqual(r.returncode, 0, r.stdout)
+        self.assertEqual(self.files(), once)
+        self.assertIn("party: 0 Pokemon, wild: 0 slots", r.stdout)
+
+    def test_missing_species_are_all_listed_and_nothing_is_written(self):
+        r = self.run_tool("--maps", "Route102")
+        self.assertEqual(r.returncode, 1)
+        for name in ("CORPHISH", "MARILL", "GOLDEEN", "MAGIKARP"):
+            self.assertIn(name, r.stdout)
+        self.assertEqual(self.files(), (self.party0, self.wild0))
+
+    def test_fallback_covers_the_rest(self):
+        r = self.run_tool("--maps", "Route102", "--fallback", "SHADEPUP")
+        self.assertEqual(r.returncode, 0, r.stdout)
+        enc = [e for g in json.loads(self.files()[1])["wild_encounter_groups"] for e in g.get("encounters", [])
+               if e.get("map") == "MAP_ROUTE102"]
+        species = {m["species"] for e in enc for k, t in e.items() if isinstance(t, dict) for m in t.get("mons", [])}
+        vanilla = refs.load_species(ar.GAME)[0]
+        self.assertFalse(species & vanilla, species & vanilla)
+
+    def test_out_of_scope_maps_are_untouched(self):
+        self.assertEqual(self.run_tool("--maps", "Route101,Route102", "--kinds", "land_mons").returncode, 0)
+        before = [e for g in json.loads(self.wild0)["wild_encounter_groups"] for e in g.get("encounters", [])
+                  if e.get("map") == "MAP_ROUTE104"]
+        after = [e for g in json.loads(self.files()[1])["wild_encounter_groups"] for e in g.get("encounters", [])
+                 if e.get("map") == "MAP_ROUTE104"]
+        self.assertEqual(before, after)
+
+    def test_dry_run_writes_nothing(self):
+        r = self.run_tool("--maps", "Route101,Route102", "--kinds", "land_mons", "--dry-run")
+        self.assertEqual(r.returncode, 0, r.stdout)
+        self.assertIn("(dry run)", r.stdout)
+        self.assertEqual(self.files(), (self.party0, self.wild0))
+
+    def test_stage_mismatch_fails_unless_allowed(self):
+        r = self.run_tool("--dry-run", table='[replace]\nMIGHTYENA = "SHADEPUP"\n')
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("MIGHTYENA is evolution stage 2 but SHADEPUP is stage 1", r.stdout)
+        r = self.run_tool("--maps", "Route101", "--kinds", "land_mons", "--dry-run",
+                          table='stage_mismatch_ok = ["MIGHTYENA"]\n' + EARLY_TABLE + 'MIGHTYENA = "SHADEPUP"\n')
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+    def test_unknown_keys_and_values_fail(self):
+        r = self.run_tool("--dry-run", table='[replace]\nNOTAMON = "SHADEPUP"\nPOOCHYENA = "NOTREAL"\n')
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("table key NOTAMON is not a vanilla species", r.stdout)
+        self.assertIn("table value NOTREAL", r.stdout)
+        self.assertEqual(self.files(), (self.party0, self.wild0))
+
+    def test_party_line_forms(self):
+        for line, species in [
+            ("Poochyena", "Poochyena"),
+            ("Poochyena @ Oran Berry", "Poochyena"),
+            ("Poochyena (M)", "Poochyena"),
+            ("Rex (Poochyena) (F) @ Oran Berry", "Poochyena"),
+            ("SPECIES_POOCHYENA @ ITEM_ORAN_BERRY", "SPECIES_POOCHYENA"),
+            ("Mr. Mime", "Mr. Mime"),
+        ]:
+            a, b = ar.species_span(line)
+            self.assertEqual(line[a:b], species, line)
+
+    def test_display_name_round_trips_through_trainerproc_rules(self):
+        for oddex_id in ("SHADEPUP", "FOO_BAR", "MOSS2"):
+            self.assertEqual(refs.party_species_token(ar.display_name(oddex_id)), "SPECIES_" + oddex_id)
+
+
+if __name__ == "__main__":
+    unittest.main()
