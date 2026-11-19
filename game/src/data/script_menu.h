@@ -265,7 +265,7 @@ static const struct MenuAction MultichoiceList_UnusedAshVendor[] =
 
 static const struct MenuAction MultichoiceList_GameCornerDolls[] =
 {
-    {COMPOUND_STRING("MOSSPRIT DOLL 1,000 COINS")},
+    {COMPOUND_STRING("TREECKO DOLL 1,000 COINS")},
     {COMPOUND_STRING("TORCHIC DOLL 1,000 COINS")},
     {COMPOUND_STRING("MUDKIP DOLL   1,000 COINS")},
     {gText_Exit},
