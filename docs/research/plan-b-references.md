@@ -290,7 +290,7 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 `tools/headless/scripts/to_rustboro.txt` 接在 `to_petalburg` 後面：Petalburg 回血 → Route 104 → Petalburg Woods（Devon 研究員、Aqua 手下）→ Rustboro 回血 → Mart、學校、Flat2、House3 → Route 116 練到 Lv16（Lv15 學會 Bulldoze）→ 道館 → Roxanne → STONE BADGE。截圖 r01–r09 拍的是 §6.3 的各個位置和 Roxanne 的 Nosepass；Briney 家的 Peeko 要到 Dewford 之後才出現，這一段拍不到。單獨執行約 144 秒（345,802 幀），所以不在 `check-oddex` 的預設清單裡，交給 `make check-oddex-full`。
 
 為了這一段，`autopilot.py` 新增了以下能力（也會用在 4b 的重新校準）：
-- **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時，新招的「威力 × 本系加成 × 自己的攻擊或特攻」比最弱的現有招式高就按 A 學；如果最弱那招是物理或特殊唯一的攻擊招，而新招是另一類，就改忘下一招，保留兩類（游標預設在 YES），在遺忘畫面把 `sMonSummaryScreen->firstMoveIndex`（偏移 16588）移到最弱那招再按 A；否則按 B 拒絕（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示）。
+- **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時，新招的「威力 × 本系加成 × 自己的攻擊或特攻」比最弱的現有招式高就按 A 學。比較時，某個屬性唯一的攻擊招（新招則是現有招式都沒有的屬性）價值乘 1.5，所以 Grinpack 會用 Aerial Ace（打格鬥系 2 倍）換掉和 Mega Drain 同屬性的 Razor Leaf；如果最弱那招是物理或特殊唯一的攻擊招，而新招是另一類，就改忘下一招，保留兩類（游標預設在 YES），在遺忘畫面把 `sMonSummaryScreen->firstMoveIndex`（偏移 16588）移到最弱那招再按 A；否則按 B 拒絕（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示）。
 - **野生戰逃跑**：對手的屬性剋我方、我方又沒有 2 倍以上的招式時（例如 Taillow 對草屬性），在行動選單選 Run。玩家的 `HandleInputChooseAction` 是 static，有三個同名函式，用 map 檔裡 `battle_controller_player.o` 的範圍找出正確的那個。
 - **選招畫面**（`gBattlerControllerFuncs[0] == HandleInputChooseMove`）：把遊標移到「威力 × 屬性相剋 × 本系加成 × 攻防比」最高、還有 PP 的攻擊招式。攻防比是物理招用我方攻擊對對手防禦、特殊招用特攻對特防，套用能力階段（`statStages` 在 +24），分類從 `moves_info.h` 的 `.category` 解析。加入攻防比之前，Grinpack 一直拿物理招去撞 Iwadawn 135 的物防，要練到 Lv22 才打得贏 Roxanne；加入之後改用 Mega Drain，Lv16 就打得贏，`to_rustboro` 從約 400 秒縮短到 135 秒。雙方的招式、PP、屬性從 `gBattleMons[0]`／`gBattleMons[1]` 讀（`struct BattlePokemon` 大小 0x8C，招式在 +12、屬性在 +34、PP 在 +37）。相剋表從 ROM 的 `gTypeEffectivenessTable` 讀（`uq4_12_t` 是 u32），招式的威力和屬性從 `src/data/moves_info.h` 解析。換成原創角色後才需要這樣做：例如 Tackle 打一般／幽靈的 Kyokon 完全無效，Leafage 又被火屬性抵抗。
 - **大地圖上換招式**：第一格是狀態招式，或 PP 低於 5 時，打開能力畫面把攻擊招式換到第一格。開始選單的遊標會記住位置而且會繞圈，所以從 `sCurrentStartMenuActions`／`sStartMenuCursorPos` 讀出來再計算按法；操作被腳本鎖住時（`sLockFieldControls`、`sGlobalScriptContextStatus`）不換。
@@ -381,14 +381,21 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - Granite Cave B1F 的裂地板要 Mach Bike，不過 Steven 的房間從 1F 就走得到。
 
 
-**錄製結果**：`tools/headless/scripts/to_dewford.txt`（在 `check-oddex-full` 裡，單獨約 160 秒）。截圖 d01–d07 依序是：
+**錄製結果**：`tools/headless/scripts/to_dewford.txt`（在 `check-oddex-full` 裡）錄到 **KNUCKLE BADGE**。截圖 d01–d09 依序是：
 - Rusturf Tunnel 的 Peeko 和 Aqua 手下、手下的 Shachound。
 - Rustboro 的勁敵（Shojobob）。
 - Briney 家的 Peeko、Dewford House1 的 Kyokon。
-- Granite Cave 的野生 Komorimen。
-- Brawly 的 Karuvajra。
+- Granite Cave 的野生戰。
+- Brawly 的 Karuvajra、王牌 Komarock，以及徽章。
 
-腳本**停在 Brawly 的第一個回合**：Lv17 的 Grinpack 被 Karuvajra 的 Karate Chop 一下打掉 44/45，而它所有的招式打格鬥/飛行都只有一半效果，這不是多練幾級能解決的。這跟 Roxanne 一樣是草系御三家的平衡問題，留給使用者決定。Old Rod 和 Steven 的信沒有涵蓋，因為跟角色遷移無關。
+最早的版本停在 Brawly 的第一回合：當時 Lv17 的 Grinpack 被 Karuvajra 一下打掉 44/45。方案 F（見下）加上 Mark 讓 Grinpack 在 Lv15 學 Aerial Ace 之後，`to_rustboro` 在 Route 116 練到 Lv21。Lv19 時還打不贏：Karuvajra 要吃兩下 Aerial Ace，Brawly 又有兩瓶傷藥。練到 Lv21 之後，Roxanne 和 Brawly 都穩定打得贏（Brawly 那場結束時是 Lv22、剩 40/58）。Granite Cave 裡大多是剋 Grinpack 的格鬥系，在那裡練等多半在逃跑，效率很差，所以把練等集中在 Route 116。Old Rod 和 Steven 的信沒有涵蓋，因為跟角色遷移無關。
+
+**Brawly 的平衡（2026-11-20，David 暫定採用方案 F，見 `DECISIONS.md` 和 `balance.md`）**：`TRAINER_BRAWLY_1` 的王牌從 Shishiblaze Lv19 改成 Komarock Lv17：
+- 沿用原本王牌的 Sitrus 果和 24 的 IV。
+- 招式是 Arm Thrust、Vital Throw、Rock Tomb、Bulk Up。
+- Karuvajra 和 Gachirinza 降到 Lv14。
+
+重戰的 `TRAINER_BRAWLY_2`–`5` 沒有改：它們在破關後，等級和隊伍的平衡要跟其他重戰一起看，不適合照第一戰的比例調整。
 
 錄製時學到的事：
 - Rustboro 南口的勁敵會問要不要對戰，用 B 推進等於回答 NO。

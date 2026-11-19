@@ -1,17 +1,29 @@
 # to_rustboro, then the Devon Goods (Rusturf Tunnel), the Devon president and PokeNav, the rival
-# in Rustboro, Mr. Briney's house and boat, Dewford and Granite Cave, up to Brawly's first Pokemon.
+# in Rustboro, Mr. Briney's house and boat, Dewford and Granite Cave, and Brawly's KNUCKLE BADGE.
 # Regression script for the [dewford] migration scope: Peeko (PEEKO role) in Rusturf Tunnel and in
 # Briney's house, the Rusturf grunt, the rival (Shojobob, Oddex Starter Fire), the Dewford House1
-# Kyokon, a Granite Cave wild battle and Brawly's Karuvajra.
-# It stops at Brawly's first turn: Karuvajra's Karate Chop takes 44 of Grinpack's 45 HP at Lv17
-# and nothing Grinpack has resists or hurts fighting/flying, so winning would need far more
-# training than this script should spend (a balance question for the user, see balance.md).
+# Kyokon, a Granite Cave wild battle, and Brawly's team (option F: Karuvajra and Gachirinza Lv14,
+# Komarock Lv17 ace).
 # Generated closed-loop with tools/headless/authoring/autopilot.py; scene waits were counted
-# from savestates, and a few steps around trainers who block the path were placed by hand.
-# Regenerate if anything before a step changes. Run by make check-oddex-full.
+# from savestates, and a few steps where trainers stand in the way or the planner overshoots a
+# tile were placed by hand. Regenerate if anything before a step changes. Run by
+# make check-oddex-full.
 include to_rustboro.txt
 
 # Leave the gym: the Devon Goods are stolen (x=23); heal, then the Devon employee asks for help.
+wait 60
+press START 2 40
+press A 2 90
+press A 2 40
+press A 2 90
+repeat 2 press RIGHT 2 60
+press A 2 40
+repeat 2 press DOWN 2 20
+press A 2 40
+repeat 2 press UP 2 20
+press A 2 60
+repeat 8 press B 2 60
+wait 30
 press LEFT 3 20
 hold LEFT 16
 hold DOWN 16
@@ -58,8 +70,8 @@ hold RIGHT 16
 wait 30
 repeat 10 press B 2 30
 
-# Route 116 east (Joey avoided; Johnson, Clark and Devan fought; a hand-placed step around them)
-# to Rusturf Tunnel, where Briney stops us first.
+# Route 116 east (Joey avoided; the trainers further east are fought) to Rusturf Tunnel, where
+# Briney stops us first.
 press RIGHT 3 20
 hold RIGHT 160
 hold UP 64
@@ -85,9 +97,6 @@ hold RIGHT 16
 wait 40
 hold RIGHT 16
 wait 40
-repeat 15 press A 2 30
-press DOWN 2 20
-repeat 17 press A 2 30
 hold RIGHT 16
 wait 40
 hold RIGHT 32
@@ -107,6 +116,10 @@ repeat 2 hold RIGHT 16
 wait 40
 press DOWN 3 20
 hold DOWN 16
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 17 press A 2 30
+hold DOWN 16
 hold RIGHT 16
 wait 40
 hold RIGHT 16
@@ -134,38 +147,36 @@ hold RIGHT 32
 hold RIGHT 16
 repeat 15 press B 2 30
 repeat 10 press A 2 30
-press RIGHT 2 20
+press DOWN 2 20
 repeat 48 press A 2 30
 hold RIGHT 16
 press UP 3 20
 hold UP 16
 wait 40
-repeat 15 press B 2 30
-repeat 9 press A 2 30
-press DOWN 2 20
-repeat 59 press A 2 30
-hold UP 16
-wait 40
-press DOWN 3 20
-hold DOWN 16
-wait 40
-repeat 15 press B 2 30
-hold DOWN 16
-wait 40
 press RIGHT 3 20
 hold RIGHT 16
-wait 10
-press UP 3 20
-hold UP 48
-wait 20
-hold UP 48
-repeat 15 press B 2 30
-repeat 9 press A 2 30
-press RIGHT 2 20
-repeat 105 press A 2 30
-hold UP 48
+hold UP 32
 hold UP 16
-hold RIGHT 160
+repeat 15 press B 2 30
+repeat 10 press A 2 30
+press DOWN 2 20
+repeat 54 press A 2 30
+hold UP 16
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+repeat 10 press A 2 30
+press DOWN 2 20
+repeat 98 press A 2 30
+hold RIGHT 16
+press DOWN 3 20
+hold DOWN 16
+hold RIGHT 32
+hold UP 32
+hold LEFT 16
+press UP 3 20
+hold UP 32
+hold RIGHT 144
 hold UP 16
 wait 10
 press UP 3 20
@@ -178,12 +189,23 @@ hold UP 16
 wait 120
 hold UP 80
 hold RIGHT 144
-repeat 21 press A 2 30
-press DOWN 2 20
-repeat 20 press A 2 30
-hold RIGHT 80
+repeat 33 press A 2 30
+hold RIGHT 128
 hold RIGHT 64
 repeat 15 press B 2 30
+wait 60
+press START 2 40
+press A 2 90
+press A 2 40
+press A 2 90
+repeat 2 press RIGHT 2 60
+press A 2 40
+press DOWN 2 20
+press A 2 40
+press UP 2 20
+press A 2 60
+repeat 8 press B 2 60
+wait 30
 hold RIGHT 64
 wait 10
 press RIGHT 3 20
@@ -196,18 +218,22 @@ wait 20
 shot shots/d02_rusturf_grunt_battle.png
 press A 2 30
 press RIGHT 2 20
-press DOWN 2 20
-repeat 41 press A 2 30
+repeat 24 press A 2 30
 repeat 46 press B 2 30
 
-# Back to Rustboro: the employee takes us to the president on 3F (PokeNav, letter, goods).
+# Out of the tunnel (a wild battle on the way) and back to Rustboro: the employee takes us to the
+# president on 3F (PokeNav, letter, goods).
 press LEFT 3 20
 hold LEFT 144
 hold DOWN 64
-repeat 22 press A 2 30
-press DOWN 2 20
+wait 10
+press DOWN 3 20
+hold DOWN 32
+wait 120
 repeat 17 press A 2 30
-hold DOWN 48
+press RIGHT 2 20
+repeat 30 press A 2 30
+press B 2 30
 wait 10
 press DOWN 3 20
 hold DOWN 32
@@ -260,6 +286,7 @@ hold LEFT 16
 wait 40
 hold LEFT 16
 wait 40
+repeat 35 press A 2 30
 hold LEFT 16
 wait 40
 hold LEFT 16
@@ -327,8 +354,19 @@ hold RIGHT 112
 hold DOWN 144
 hold LEFT 64
 hold DOWN 64
-hold LEFT 16
-hold DOWN 176
+hold DOWN 16
+repeat 15 press B 2 30
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press LEFT 3 20
+hold LEFT 32
+press DOWN 3 20
+hold DOWN 32
+hold RIGHT 16
+hold DOWN 48
+hold RIGHT 16
+hold DOWN 144
 hold LEFT 16
 hold DOWN 96
 wait 10
@@ -342,7 +380,8 @@ press A 2 30
 press DOWN 2 20
 repeat 25 press A 2 30
 press RIGHT 2 20
-repeat 42 press A 2 30
+press UP 2 20
+repeat 41 press A 2 30
 repeat 9 press B 2 30
 
 # Heal (a few steps placed by hand: the planner overshoots here), Route 104 north (around Winston),
@@ -432,8 +471,7 @@ hold LEFT 176
 repeat 15 press B 2 30
 repeat 6 press A 2 30
 press RIGHT 2 20
-press DOWN 2 20
-repeat 57 press A 2 30
+repeat 41 press A 2 30
 hold LEFT 176
 press DOWN 3 20
 hold DOWN 16
@@ -495,7 +533,6 @@ hold RIGHT 16
 repeat 15 press B 2 30
 repeat 10 press A 2 30
 press RIGHT 2 20
-press DOWN 2 20
 repeat 23 press A 2 30
 hold RIGHT 16
 press UP 3 20
@@ -532,16 +569,65 @@ repeat 2 press B 2 30
 repeat 2 press A 2 30
 repeat 92 press A 2 30
 
-# Dewford House1: the pet KYOKON.
+# Dewford House1 (the last steps to the door by hand): the pet KYOKON.
 press LEFT 3 20
 hold LEFT 32
 hold DOWN 64
 hold RIGHT 32
 hold DOWN 32
-hold RIGHT 96
-wait 30
+repeat 15 press B 2 30
+hold DOWN 32
+press RIGHT 3 20
+hold RIGHT 32
+press DOWN 3 20
+hold DOWN 32
 press UP 3 20
-hold UP 32
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+press UP 3 20
+hold UP 16
+press DOWN 3 20
+hold DOWN 16
+wait 20
+press RIGHT 3 20
+hold RIGHT 16
+wait 20
+hold RIGHT 16
+wait 20
+hold RIGHT 16
+wait 20
+wait 10
+press UP 3 20
+hold UP 48
 wait 120
 hold UP 32
 hold RIGHT 48
@@ -574,6 +660,7 @@ repeat 15 press B 2 30
 hold UP 32
 hold LEFT 80
 hold UP 208
+hold UP 32
 hold LEFT 48
 hold UP 16
 hold LEFT 16
@@ -600,7 +687,84 @@ hold UP 16
 hold DOWN 16
 hold UP 16
 hold DOWN 16
-repeat 16 press B 2 30
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+hold DOWN 16
+hold UP 16
+repeat 16 press A 2 30
 wait 20
 shot shots/d06_granite_cave_wild.png
 press RIGHT 2 20
@@ -608,7 +772,7 @@ press DOWN 2 20
 repeat 5 press A 2 30
 press B 2 30
 
-# Heal in Dewford, the gym avoiding trainer sight, Brawly.
+# Heal in Dewford, the gym avoiding trainer sight, Brawly and the KNUCKLE BADGE.
 wait 10
 press DOWN 3 20
 hold DOWN 64
@@ -642,6 +806,7 @@ repeat 6 press B 2 30
 hold DOWN 64
 hold DOWN 32
 wait 120
+press B 2 30
 hold DOWN 112
 hold RIGHT 96
 wait 30
@@ -665,3 +830,10 @@ press A 2 60
 repeat 27 press B 2 30
 wait 20
 shot shots/d07_brawly_battle.png
+repeat 117 press A 2 30
+shot shots/d08_brawly_ace.png
+press DOWN 2 20
+repeat 72 press A 2 30
+repeat 15 press B 2 30
+shot shots/d09_knuckle_badge.png
+repeat 38 press B 2 30

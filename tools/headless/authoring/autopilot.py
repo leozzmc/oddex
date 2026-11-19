@@ -179,7 +179,8 @@ def player_choose_action():
     raise SystemExit("player HandleInputChooseAction not found")
 
 
-SUMMARY_FIRST_MOVE_INDEX = 16588  # offsetof(struct PokemonSummaryScreenData, firstMoveIndex)
+SUMMARY_FIRST_MOVE_INDEX = 16588
+COVERAGE = 1.5  # slot_to_forget: worth of a move that is the only one of its type  # offsetof(struct PokemonSummaryScreenData, firstMoveIndex)
 
 
 def move_value(move, types, stats=(1, 1)):
@@ -189,10 +190,13 @@ def move_value(move, types, stats=(1, 1)):
 
 
 def slot_to_forget(st):
-    """Move slot to replace with gMoveToLearn, or None to decline. The new move is learned when it
-    is worth more (move_value) than the weakest current move, which is forgotten (status moves
-    first) unless it is the lead's only physical or only special damaging move and the new move
-    is of the other category: then the next weakest goes, so the lead keeps both kinds."""
+    """Move slot to replace with gMoveToLearn, or None to decline. Moves are compared by
+    move_value, times COVERAGE when the move is the lead's only damaging move of its type (for the
+    new move: of a type none of the kept moves has), so a weaker move of a new type (e.g. Aerial
+    Ace for a grass/dark lead facing fighting types) can replace a second move of a type that is
+    already covered. The weakest current move goes first (status moves first), except the lead's
+    only physical or only special damaging move when the new move is of the other category: the
+    next weakest goes then, so the lead keeps both kinds."""
     new = W["read"](st, SYMS["gMoveToLearn"], "<H")[0]
     base = SYMS["gBattleMons"]
     types = set(W["read"](st, base + 34, "<3B")) - {0}
@@ -203,12 +207,24 @@ def slot_to_forget(st):
     def kind(m):
         power, _, special = info.get(m, (0, 0, False))
         return special if power > 0 else None
-    order = sorted(range(4), key=lambda i: (move_value(moves[i], types, stats), -i))
+
+    def move_type(m):
+        return info.get(m, (0, 0, False))[1]
+
+    def worth(m, others):
+        value = move_value(m, types, stats)
+        others_types = {move_type(o) for o in others if kind(o) is not None}
+        return value * (COVERAGE if value > 0 and move_type(m) not in others_types else 1.0)
+
+    def kept_worth(i):
+        return worth(moves[i], [m for j, m in enumerate(moves) if j != i])
+    order = sorted(range(4), key=lambda i: (kept_worth(i), -i))
     for slot in order:
         k = kind(moves[slot])
         if k is not None and k != kind(new) and sum(kind(m) == k for m in moves) == 1:
             continue  # last move of its category
-        if move_value(new, types, stats) > move_value(moves[slot], types, stats):
+        kept = [m for j, m in enumerate(moves) if j != slot]
+        if worth(new, kept) > kept_worth(slot):
             return slot
         return None
     return None
