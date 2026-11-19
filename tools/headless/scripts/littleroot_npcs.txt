@@ -1,0 +1,40 @@
+# Run after to_littleroot.txt (same ROM build): talk to the oddex test guide at (10,11)
+# and the boy near (14,17). The boy wanders; his position is deterministic for identical
+# inputs from boot, so rerun to_littleroot.txt first if the ROM changed.
+load out/littleroot.ss
+# (5,9) -> (10,9) -> (10,10), face the scientist below
+hold RIGHT 80
+hold DOWN 16
+press DOWN 3 20
+shot out/10_scientist.png
+# A starts the talk; B advances/closes text and can never start a new interaction
+press A 2 80
+press B 2 40
+press B 2 80
+shot out/11_scientist_text_1.png
+press B 2 40
+press B 2 80
+press B 2 40
+wait 30
+shot out/12_scientist_text_2.png
+repeat 3 press B 2 30
+wait 30
+# (10,10) -> (11,10) -> (11,15) -> (12,15) -> (12,16), face the boy below at (12,17).
+# The boy wanders; with the runner's pinned RTC and these exact inputs this works for any
+# `wait` from 0 to 56 (24 is the middle). Recalibrate if anything earlier changes.
+hold RIGHT 16
+hold DOWN 80
+wait 24
+hold RIGHT 16
+hold DOWN 16
+press DOWN 3 20
+shot out/13_boy.png
+press A 2 80
+press B 2 40
+press B 2 80
+wait 40
+shot out/14_boy_text_1.png
+press B 2 80
+wait 60
+shot out/15_boy_text_2.png
+repeat 3 press B 2 30
