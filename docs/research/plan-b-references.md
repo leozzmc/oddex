@@ -395,3 +395,19 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - Devon 社長之後的 PokéNav 教學，要選 POKéNAV → MATCH CALL → MR. STONE → CALL 才會結束。
 - Briney 和 Peeko 繞著桌子走，要站在路線旁邊一直按 A 等他們經過。
 - 路上的訓練家打完之後會站在路中間，autopilot 會判斷成走不過去。這時加上 `AP_PARTIAL=1`，讓 autopilot 交出已經走過的指令，再手動繞過去。
+## 8. 第 6 步第三段：Route 109 → Slateport → Route 110 → Mauville（到 Wattson）
+
+`[mauville]`（`strict = false`）已經遷移，理由都寫在範圍的註解裡：
+- **已遷移**：
+  - `apply_replacements`：party 59、wild 42。範圍是 Route 110 的 land，加上 Route 109、Slateport、Route 110 的 fishing。
+  - 腳本、文字和造型：
+    - Route 109 撿垃圾的 Kyokon。
+    - Fan Club 的三隻寵物：Mandalumb、Kyokon，以及 Magatide。
+    - Wally 那句「combine forces with ...」改用 `TUTORIAL_CATCH` 代號。
+  - 範圍內的殘留是 0 筆。
+- **Fan Club 的 Azumarill 對到 Magatide**：對照表沒有 Azumarill。它是 Marill 線的第 3 階段，而 Marill 對到 Magatide；這只是 NPC 的寵物，不牽涉進化。之後如果 Magatide 有了進化線，可以改成第 2 階段。
+- **留在範圍外**：
+  - Route 110 勁敵 6 組和 Edwin（含重戰），共 28 筆：Grovyle、Combusken、Marshtomp、Lombre、Nuzleaf、Shiftry、Ludicolo、Slugma、Wingull。要等使用者決定御三家和 Bekurama 的進化線；對照表一有缺漏，`apply_replacements` 就整個範圍都不寫。
+  - 要衝浪才遇得到的水上野生，共 15 筆，含 Pelipper 6 筆。
+- **可達性**：`stage_reach.py` 從 Route 109 碼頭只走得到海灘、Slateport 和 Route 110 南段，因為它過不了自行車道下方的橋。其餘的 Route 110 和 Mauville 都在劇情路線上，而 Mauville 拿到的自行車在 Wattson 之前就能騎上自行車道。
+- **`to_mauville`**：路線要先打贏 Brawly，所以等使用者對 Brawly 的平衡做出決定之後再錄。到時把範圍設成 strict。
