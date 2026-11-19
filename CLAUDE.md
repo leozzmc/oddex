@@ -39,7 +39,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 **角色（species）**
 - 資料來源是 `content/species/<name>.toml`（一隻一檔）、`content/roles.toml`、`content/regional_dex.toml`。圖檔在 `game/graphics/pokemon/oddex/<name>/`。
 - `tools/oddex/gen_species.py`（共用載入器：`species_data.py`）會改寫 `game/` 裡用 `oddex:` 標記包起來的區段（例如 `include/constants/species.h` 的 `// oddex:species-ids begin/end`），並產生 `oddex_data.h`、`oddex_families.h`、`oddex_species.h`。產生的檔案有提交進 git；`game/oddex.mk`（被 `game/Makefile` include）會在來源改變時自動重跑。
-- species ID 只能往後追加，因為 ID 會存進存檔；刪除角色時產生器會警告。改名會連帶改到 `SPECIES_*` 常數，必須保留原本的編號（Mark 正在用 TOML 的 `previous_ids` 實作這個機制）。
+- species ID 只能往後追加，因為 ID 會存進存檔；刪除角色時產生器會警告。改名會連帶改到 `SPECIES_*` 常數，必須保留原本的編號：在 TOML 加 `previous_ids = ["<舊 ID>"]`，產生器會把舊編號給新 ID。進化只能指向 `content/species/` 裡的原創角色（產生器會擋）。
 - **代號（roles）**：劇情用到的角色一律寫成 `SPECIES_ODDEX_<ROLE>`，例如 `STARTER_GRASS`、`RESCUE_WILD`、`TUTORIAL_CATCH`。C、腳本、`trainers.party`（寫成 `Oddex Starter Grass`）、`wild_encounters.json` 都引用代號，所以換角色只要改 `roles.toml`。
 - 美術：`tools/oddex/blender/`（headless Blender 建模渲染；面具風格見 `docs/research/mask-designs.md`）→ `tools/oddex/import_art.py`（量化成 15 色，產生異色、icon、overworld、足跡）。`placeholder_art.py` 是舊的幾何佔位圖產生器。
 
@@ -57,7 +57,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 `runner.c` 是用 libmgba 寫的無頭執行器，不限速，RTC 固定在 2026-01-01 12:00 UTC，所以同一個 ROM 加同一支腳本，結果逐像素相同。腳本指令：`wait`、`press KEYS [hold] [after]`、`hold`、`repeat N <cmd>`、`shot`、`save`/`load`、`include other.txt`。
 - 回歸腳本必須能從開機獨立跑完：共用開頭用 `include`，不要 `load` 別支腳本留下的 savestate。
 - 標題畫面不要按 SELECT（那是 Quickstart，會跳過 Birch 開場）。推進對話用 B，避免 A 又跟 NPC 講話或在 YES/NO 選到 YES。
-- 會經過戰鬥或草叢的段落，ROM 一改亂數時機就會變，要寫成不依賴回合數的形式。`tools/headless/authoring/`（`where.py`、`plan.py`、`autopilot.py`）可以用來重新校準路線。
+- 腳本的確定性來自固定的 RTC；ROM 或角色一改，經過戰鬥和草叢的路線就要重新產生。用 `tools/headless/authoring/autopilot.py` 閉環產生（每段之後讀 RAM 判斷位置、戰鬥、HP、招式；`where.py` 讀 savestate、`plan.py` 規劃少踩草的路線），組好後從開機連跑一次確認和分段結果相同，再連跑兩次確認逐像素一致。
 
 ## 分析編譯產物
 

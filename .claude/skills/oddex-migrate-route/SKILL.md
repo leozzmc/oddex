@@ -13,7 +13,7 @@ description: Migrate a stretch of the oddex game (a route, town or story segment
 
 在 `content/migration_scope.toml` 加一個新範圍（先 `strict = false`）。檔案開頭的註解說明了每個欄位。
 
-- **訓練家用明確清單**，不要依地圖推斷：同一張地圖上常有中期才走得到的訓練家（例如 Route 103 有 8 名要從 Route 110 或衝浪才遇得到）。用 `python3 tools/oddex/check_maps.py` 的可達性結果和 `tools/headless/authoring/plan.py` 確認玩家在這個階段走得到誰。
+- **訓練家用明確清單**，不要依地圖推斷：同一張地圖上常有中期才走得到的訓練家（例如 Route 103 有 8 名要從 Route 110 或衝浪才遇得到）。用 `python3 tools/headless/authoring/stage_reach.py <起點地圖> X Y "Map,Map*,..."` 確認這個階段走得到誰：它只走陸路、跨 connection 和 warp，不能衝浪、居合斬、碎岩、怪力，訓練家旁邊或視線內有一格到得了就算。劇情上的封鎖它判斷不出來（例如 Petalburg 道館的地形走得到，但 Norman 是第 5 個徽章），要人工排除。不要用 `check_maps.py` 的可達性，那個假設已經有所有場地招式，判斷的是「最終」走不走得到。
 - 野生遭遇用 `wild_maps` 加 `wild_kinds`；還沒有釣竿或衝浪時，只放 `land_mons`。
 - 刻意留下的原版引用（例如設定角色、破關後才出現的東西）放進 `exclude_refs`，每一條都要寫明理由。用例外並寫清楚，比用不相干的佔位角色硬頂替更好。
 - 列出這段的工作清單：
@@ -24,7 +24,7 @@ description: Migrate a stretch of the oddex game (a route, town or story segment
 
 ## 2. 先錄原版基準
 
-改內容之前，先有一支能從開機獨立跑到這段路線的回歸腳本（`tools/headless/scripts/to_<地點>.txt`，用 `include` 接前一段，不要 `load` 別支腳本的 savestate），在**還沒遷移**的 ROM 上錄好基準截圖，連跑兩次逐像素一致，並加進 `check_oddex.sh` 預設的腳本清單。這樣之後每一步都能證明「只有預期的畫面改變了」。會經過戰鬥或草叢的段落，要寫成不依賴回合數或亂數的形式。
+改內容之前，先有一支能從開機獨立跑到這段路線的回歸腳本（`tools/headless/scripts/to_<地點>.txt`，用 `include` 接前一段，不要 `load` 別支腳本的 savestate），在**還沒遷移**的 ROM 上錄好基準截圖，連跑兩次逐像素一致，並加進 `check_oddex.sh` 預設的腳本清單。這樣之後每一步都能證明「只有預期的畫面改變了」。路線用 `tools/headless/authoring/autopilot.py` 閉環產生：草叢逐格走；戰鬥一次按一鍵（A，遇到「要忘掉招式嗎？」按 B，選招畫面遇到沒 PP 的招式就把游標移開）；被腳本擋住按 B；第一格變成狀態招式或 PP 低於 5 時，在大地圖上換招式；被走過來的訓練家擋路時繞路；需要練等級用 `grind:Map:x1:y1:x2:y2:LV`。組好之後從開機連跑一次，確認跟分段結果相同，再連跑兩次確認逐像素一致。確定性靠的是固定的 RTC，所以角色或 ROM 一改就要重新產生。
 
 ## 3. 對照表與代號
 
@@ -43,7 +43,7 @@ python3 tools/oddex/apply_replacements.py --scope <name>
 `apply_replacements.py` 只處理 `trainers.party` 和 `wild_encounters.json`。其餘的要手改，每一項都要在這段的回歸腳本截圖裡看到結果：
 - **腳本**裡的 `SPECIES_*`：包括 `givemon`、`setwildbattle`、`seteventmon`、`bufferspeciesname`，以及 **`playmoncry`**（叫聲雖然「先無聲」，但原版角色的 `playmoncry` 在 debug build 一樣會 assert）。
 - **文字**裡寫死的角色名：改用 `bufferspeciesname` 加代號，或重寫句子。牽涉屬性的說明（例如 Petalburg 寶可夢中心的屬性介紹）要跟著原創角色的屬性改。
-- **地圖上寶可夢造型的物件**（`map.json` 的 `OBJ_EVENT_GFX_*`）：改用 `OBJ_EVENT_GFX_SPECIES(<原創角色或代號>)`，讓地圖上看到的和實際戰鬥一致；不屬於角色的（例如搬家公司的設定角色）列進 `exclude_refs` 並寫理由。改 `map.json` 後跑 `python3 tools/oddex/check_maps.py --maps <地圖>`，確認沒有被上層圖層蓋住或走不到。
+- **地圖上寶可夢造型的物件**（`map.json` 的 `OBJ_EVENT_GFX_*`）：改用 `OBJ_EVENT_GFX_SPECIES(<原創角色或代號>)`，讓地圖上看到的和實際戰鬥一致；不屬於角色的（例如搬家公司的設定角色，以及民宅裡的裝飾娃娃）列進 `exclude_refs` 並寫理由。改 `map.json` 後跑 `python3 tools/oddex/check_maps.py --maps <地圖>`，確認沒有被上層圖層蓋住或走不到。
 
 ## 5. 驗證並收尾
 
