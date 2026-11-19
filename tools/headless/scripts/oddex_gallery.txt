@@ -139,3 +139,68 @@ shot gallery/1589_trekkeye.png
 press START 2 120
 shot gallery/1589_trekkeye_shiny.png
 press START 2 120
+press DOWN 2 20
+press LEFT 2 10
+press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+wait 120
+shot gallery/1590_inarizuma.png
+press START 2 120
+shot gallery/1590_inarizuma_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1591_iwadawn.png
+press START 2 120
+shot gallery/1591_iwadawn_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1592_karuvajra.png
+press START 2 120
+shot gallery/1592_karuvajra_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1593_komarock.png
+press START 2 120
+shot gallery/1593_komarock_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1594_kumozuka.png
+press START 2 120
+shot gallery/1594_kumozuka_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1595_magatide.png
+press START 2 120
+shot gallery/1595_magatide_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1596_mandalumb.png
+press START 2 120
+shot gallery/1596_mandalumb_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1597_tsukuyume.png
+press START 2 120
+shot gallery/1597_tsukuyume_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1598_tsunacoon.png
+press START 2 120
+shot gallery/1598_tsunacoon_shiny.png
+press START 2 120

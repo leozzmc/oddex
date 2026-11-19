@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Silcoon and Cascoon (Petalburg Woods); evolves from Usobuzz at Lv7. Stats and moves are provisional.
+
+id = "TSUNACOON"
+name = "Tsunacoon"
+category = "Rope Cocoon"
+
+types = ["BUG", "FIGHTING"]
+abilities = ["SHED_SKIN", "NONE", "INNER_FOCUS"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 50, atk = 35, def = 55, spa = 25, spd = 25, spe = 15 }   # total 205
+ev_yield = { def = 2 }
+catch_rate = 120
+exp_yield = 50
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["BUG"]
+growth_rate = "MEDIUM_FAST"
+body_color = "BROWN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 100
+text = """
+The mosquito spirit binds itself in a
+sacred rope like a grand champion and
+waits. Inside, it practises its stance
+until the rope can no longer hold it."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "HARDEN"], [1, "TACKLE"], [7, "HARDEN"], [10, "BIDE"], [14, "IRON_DEFENSE"],
+]
+teachable = [
+    "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/tsunacoon"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["PetalburgWoods"]
+level_band = [7, 10]
+family = ["USOBUZZ", "TSUNACOON"]

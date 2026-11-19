@@ -21,3 +21,6 @@ RESCUE_WILD = "KYOKON"          # Zigzagoon
 # lent to Wally (src/field_specials.c).
 TUTORIAL_CATCH = "OMOTELLE"     # Ralts
 TUTORIAL_LENT = "KYOKON"        # Zigzagoon
+
+# The pet in a Rustboro City house (RustboroCity_House3: cry, text and object graphic; was Pikachu).
+RUSTBORO_PET = "INARIZUMA"

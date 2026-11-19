@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Nosepass (Roxanne). Stats and moves are provisional.
+
+id = "IWADAWN"
+name = "Iwadawn"
+category = "Sun Door"
+
+types = ["ROCK", "FAIRY"]
+abilities = ["STURDY", "CLEAR_BODY", "SAND_FORCE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 30, atk = 45, def = 135, spa = 45, spd = 90, spe = 30 }   # total 375
+ev_yield = { def = 1 }
+catch_rate = 45
+exp_yield = 75
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["MINERAL"]
+growth_rate = "MEDIUM_FAST"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 970
+text = """
+The stone door the sun once hid behind.
+Light leaks from the crack down its face,
+and on cold mornings it opens a finger's
+width to let a little dawn out."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "HARDEN"], [4, "FAIRY_WIND"], [7, "ROCK_THROW"], [10, "BLOCK"], [13, "DISARMING_VOICE"], [16, "ROCK_TOMB"], [19, "SANDSTORM"], [22, "DRAINING_KISS"], [25, "ROCK_SLIDE"], [28, "DAZZLING_GLEAM"], [31, "POWER_GEM"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/iwadawn"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["RustboroGym"]
+level_band = [14, 16]
+family = ["IWADAWN"]

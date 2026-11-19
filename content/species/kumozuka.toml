@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Nincada (Route 116 wild and trainers). Stats and moves are provisional.
+
+id = "KUMOZUKA"
+name = "Kumozuka"
+category = "Earth Spider"
+
+types = ["BUG", "POISON"]
+abilities = ["INSOMNIA", "SWARM", "SNIPER"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 50, def = 70, spa = 30, spd = 30, spe = 46 }   # total 266
+ev_yield = { def = 1 }
+catch_rate = 190
+exp_yield = 53
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["BUG"]
+growth_rate = "ERRATIC"
+body_color = "BROWN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 60
+text = """
+It lives in old burial mounds and casts
+threads across the path. One eye watches
+the sky and the other the earth, so it
+is never caught napping."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "POISON_STING"], [1, "STRING_SHOT"], [5, "SAND_ATTACK"], [9, "BUG_BITE"], [13, "POISON_FANG"], [17, "DIG"], [21, "SPIDER_WEB"], [25, "X_SCISSOR"], [29, "CROSS_POISON"],
+]
+teachable = [
+    "ATTRACT", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC", "X_SCISSOR",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kumozuka"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route116", "PetalburgWoods"]
+level_band = [5, 10]
+family = ["KUMOZUKA"]

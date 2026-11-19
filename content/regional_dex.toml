@@ -7,4 +7,7 @@ order = [
     "OKINOIR", "SHISHIBLAZE", "KAMORAI",
     "SHACHOUND", "KYOKON", "USOBUZZ", "SHAWABOLT", "UTOGHAST",
     "SHOJOBOB", "BEKURAMA", "YAMAMBRR", "OMOTELLE", "DEIGLOOM", "HANNYAGON",
+    # Rustboro batch (appended so earlier numbers stay; reorder by route when vanilla is disabled).
+    "KOMAROCK", "IWADAWN", "KUMOZUKA", "MAGATIDE", "MANDALUMB", "TSUNACOON", "TSUKUYUME", "KARUVAJRA",
+    "INARIZUMA",
 ]

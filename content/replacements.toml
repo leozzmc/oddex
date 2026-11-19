@@ -4,14 +4,18 @@
 # species_data.vanilla_stages / oddex_stages). See docs/research/mask-designs.md for why each
 # mask fills its slot.
 #
-# Rules for stages we do not have yet: every original line except Omotelle's is a single stage
-# today, so vanilla stage 2/3 species (Mightyena, Linoone, Silcoon/Cascoon, Beautifly/Dustox,
-# Pelipper, Lombre/Ludicolo, Nuzleaf/Shiftry, Breloom, Swellow, the starters' evolutions) are
-# deliberately absent. apply_replacements lists them as missing instead of guessing; the early
-# scope does not contain them. Add each when its line gets an evolution, never by mapping a
-# stage-2 vanilla species onto a stage-1 original (stage_mismatch_ok stays empty).
+# Rules for stages we do not have yet: only the Omotelle and Usobuzz lines have more than one stage
+# today, so most vanilla stage 2/3 species (Mightyena, Linoone, Beautifly/Dustox, Pelipper,
+# Lombre/Ludicolo, Nuzleaf/Shiftry, Breloom, Swellow, the starters' evolutions) are deliberately
+# absent. apply_replacements lists them as missing instead of guessing. Add each when its line gets
+# an evolution. A stage-2 vanilla species may map onto a stage-1 original only when its stage-1
+# form never appears in the game segment that uses it; each such key is in stage_mismatch_ok with
+# the reason next to it.
 
-stage_mismatch_ok = []
+stage_mismatch_ok = [
+    "MARILL",    # Route 104 wild; Azurill (its stage 1) is never met in the Rustboro segment
+    "PIKACHU",   # only the Rustboro house pet (role RUSTBORO_PET); Pichu never appears
+]
 
 [replace]
 # Starters (also STARTER_* in roles.toml, rival teams on Route 103).
@@ -32,3 +36,21 @@ RALTS = "OMOTELLE"
 KIRLIA = "DEIGLOOM"
 GARDEVOIR = "HANNYAGON"
 GALLADE = "HANNYAGON"
+# Rustboro segment (plan-b-references.md section 6.2): fused masks, many-to-one where the vanilla
+# species shared a role. Komarock and Iwadawn are Roxanne's team.
+GEODUDE = "KOMAROCK"
+NOSEPASS = "IWADAWN"
+MACHOP = "KARUVAJRA"
+ABRA = "TSUKUYUME"
+NINCADA = "KUMOZUKA"
+# Usobuzz evolves into Tsunacoon at Lv7 (like Wurmple); both cocoon branches share it.
+SILCOON = "TSUNACOON"
+CASCOON = "TSUNACOON"
+# One water creature for the Route 104 fishers' Magikarp and the wild Marill.
+MAGIKARP = "MAGATIDE"
+MARILL = "MAGATIDE"
+# One normal creature for the three Petalburg Woods / Route 116 normal species.
+SKITTY = "MANDALUMB"
+SLAKOTH = "MANDALUMB"
+WHISMUR = "MANDALUMB"
+PIKACHU = "INARIZUMA"

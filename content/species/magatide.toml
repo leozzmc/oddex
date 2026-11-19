@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Magikarp (Route 104 fishers) and Marill (Route 104 wild). Stats and moves are provisional.
+
+id = "MAGATIDE"
+name = "Magatide"
+category = "Jewel Fish"
+
+types = ["WATER", "DRAGON"]
+abilities = ["SWIFT_SWIM", "NONE", "RATTLED"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 20, def = 55, spa = 35, spd = 55, spe = 50 }   # total 255
+ev_yield = { spd = 1 }
+catch_rate = 190
+exp_yield = 51
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "DRAGON"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 4
+weight = 90
+text = """
+A comma-shaped jewel that swims in the
+shallows. Fishers who land one find it
+heavy as stone. It is said to dream of
+the day it grows into a dragon."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "SPLASH"], [1, "WATER_GUN"], [5, "TWISTER"], [10, "BUBBLE_BEAM"], [15, "DRAGON_BREATH"], [20, "AQUA_TAIL"], [25, "DRAGON_PULSE"],
+]
+teachable = [
+    "ATTRACT", "BLIZZARD", "DRAGON_PULSE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/magatide"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["Route104"]
+level_band = [5, 10]
+family = ["MAGATIDE"]

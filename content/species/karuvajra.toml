@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Machop (Route 116 trainer). Stats and moves are provisional.
+
+id = "KARUVAJRA"
+name = "Karuvajra"
+category = "Vajra"
+
+types = ["FIGHTING", "FLYING"]
+abilities = ["GUTS", "NO_GUARD", "STEADFAST"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 80, def = 50, spa = 35, spd = 35, spe = 35 }   # total 305
+ev_yield = { atk = 1 }
+catch_rate = 45
+exp_yield = 61
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "BLUE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 8
+weight = 195
+text = """
+A furious face that trains night and day
+before a halo of bird-shaped flames.
+It never lets go of its vajra, and its
+glare alone can make a bully back down."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "LOW_KICK"], [1, "LEER"], [4, "PECK"], [8, "FOCUS_ENERGY"], [12, "KARATE_CHOP"], [16, "WING_ATTACK"], [20, "REVENGE"], [24, "AERIAL_ACE"], [28, "CROSS_CHOP"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BRICK_BREAK", "BULK_UP", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "STRENGTH", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/karuvajra"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route116"]
+level_band = [8, 12]
+family = ["KARUVAJRA"]
