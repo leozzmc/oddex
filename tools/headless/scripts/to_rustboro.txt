@@ -1,0 +1,2560 @@
+# to_petalburg, then Petalburg -> Route 104 -> Petalburg Woods -> Rustboro -> Route 116 training ->
+# Rustboro Gym, ending with Roxanne's STONE BADGE. Baseline for the [rustboro] migration scope
+# (content/migration_scope.toml): the shots show the scope's species sites (Devon researcher and
+# Aqua grunt in the woods, Rustboro Mart, Pokemon School, Flat2 Skitty, House3 Pikachu, Roxanne).
+# Peeko in Mr. Briney's house is hidden until after Dewford, so it is not covered here.
+# Generated closed-loop with tools/headless/authoring/autopilot.py (type-aware moves, learns a
+# better move over the weakest one, flees wild battles it cannot win); scene waits were counted
+# from savestates. Regenerate if anything before a step changes; the pinned RTC keeps it stable.
+# Longer than 2 minutes: run by make check-oddex-full, not the default check-oddex.
+include to_petalburg.txt
+
+# Heal in Petalburg, Route 104 to the south entrance of Petalburg Woods.
+press RIGHT 3 20
+hold RIGHT 16
+hold UP 16
+hold RIGHT 16
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press LEFT 3 20
+hold LEFT 112
+hold UP 16
+hold LEFT 64
+hold UP 48
+hold LEFT 336
+hold LEFT 256
+repeat 15 press B 2 30
+hold LEFT 256
+press UP 3 20
+hold UP 16
+repeat 15 press B 2 30
+hold UP 16
+hold LEFT 256
+hold DOWN 144
+hold LEFT 112
+hold UP 80
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 208
+hold RIGHT 64
+hold UP 32
+hold LEFT 16
+hold UP 32
+hold LEFT 16
+hold UP 32
+hold LEFT 16
+hold UP 16
+hold LEFT 48
+hold DOWN 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+repeat 38 press A 2 30
+press UP 3 20
+hold UP 96
+wait 30
+press UP 3 20
+hold UP 16
+wait 120
+
+# The Devon researcher (asks about SHROOMISH) and the Aqua grunt ambush.
+hold UP 16
+hold LEFT 32
+hold UP 32
+hold LEFT 80
+repeat 2 hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+hold RIGHT 64
+hold DOWN 16
+hold RIGHT 192
+hold UP 16
+hold RIGHT 16
+hold UP 16
+wait 30
+press UP 3 20
+hold UP 16
+wait 30
+repeat 8 press B 2 30
+shot shots/r01_woods_researcher.png
+repeat 47 press B 2 30
+shot shots/r02_woods_grunt_battle.png
+press A 2 30
+press DOWN 2 20
+repeat 43 press A 2 30
+repeat 36 press B 2 30
+
+# North exit, Route 104 north, Rustboro Pokemon Center door.
+hold UP 32
+hold RIGHT 16
+hold UP 32
+hold LEFT 16
+hold UP 16
+hold LEFT 16
+hold UP 16
+hold LEFT 64
+hold UP 16
+hold LEFT 160
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 32
+hold UP 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold UP 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 32
+hold UP 32
+hold RIGHT 16
+hold UP 48
+hold RIGHT 32
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 112
+hold RIGHT 320
+hold UP 96
+hold LEFT 96
+hold UP 128
+hold LEFT 64
+hold UP 16
+hold LEFT 16
+hold UP 272
+hold RIGHT 16
+hold UP 96
+hold LEFT 16
+hold UP 32
+hold LEFT 48
+hold UP 48
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+
+# Heal, then the Mart: the woman shopping for SHROOMISH (she wanders; A until she is in reach).
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press LEFT 3 20
+hold LEFT 32
+hold DOWN 112
+hold RIGHT 32
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 80
+hold UP 32
+hold RIGHT 16
+hold UP 16
+wait 10
+press LEFT 3 20
+repeat 3 press A 2 30
+repeat 3 press B 2 30
+shot shots/r03_mart_shroomish.png
+press B 2 30
+
+# Pokemon School: the kid who always wanted a SEEDOT.
+press DOWN 3 20
+hold DOWN 16
+hold LEFT 16
+hold DOWN 32
+hold LEFT 80
+wait 10
+press DOWN 3 20
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 160
+hold RIGHT 96
+hold UP 16
+hold RIGHT 16
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 96
+hold UP 64
+hold LEFT 16
+wait 10
+press LEFT 3 20
+press A 2 30
+press B 2 30
+shot shots/r04_school_seedot.png
+press B 2 30
+
+# Flat2 1F: the SKITTY (cry, sprite and name).
+press RIGHT 3 20
+hold RIGHT 16
+hold DOWN 64
+hold LEFT 96
+wait 10
+press DOWN 3 20
+hold DOWN 32
+wait 120
+press LEFT 3 20
+hold LEFT 16
+hold DOWN 16
+hold LEFT 96
+hold DOWN 48
+hold LEFT 160
+hold DOWN 208
+hold LEFT 80
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 48
+hold RIGHT 80
+wait 10
+press UP 3 20
+press A 2 30
+press B 2 30
+shot shots/r05_flat2_skitty.png
+press B 2 30
+
+# House3: PEKACHU the PIKACHU (cry, sprite), then the woman who explains the name.
+press LEFT 3 20
+hold LEFT 80
+hold DOWN 48
+hold LEFT 64
+hold UP 16
+wait 10
+press DOWN 3 20
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 80
+hold UP 80
+hold RIGHT 256
+hold RIGHT 96
+repeat 15 press B 2 30
+hold RIGHT 96
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+press LEFT 3 20
+hold LEFT 32
+hold UP 64
+wait 10
+press RIGHT 3 20
+press A 2 30
+shot shots/r06_house3_pikachu.png
+press B 2 30
+press UP 3 20
+hold UP 16
+hold RIGHT 64
+hold DOWN 16
+hold RIGHT 16
+hold DOWN 16
+wait 10
+press LEFT 3 20
+press A 2 30
+repeat 2 press B 2 30
+shot shots/r07_house3_pikachu_name.png
+repeat 4 press B 2 30
+press DOWN 3 20
+hold DOWN 16
+hold LEFT 48
+hold DOWN 16
+wait 10
+press DOWN 3 20
+hold DOWN 32
+wait 120
+
+# Train on Route 116 (6,15)-(7,15) to Lv16, healing in Rustboro below 60% HP (GRIND_MIN_HP=60).
+press LEFT 3 20
+hold LEFT 48
+hold UP 384
+hold LEFT 16
+hold UP 96
+hold RIGHT 16
+hold UP 80
+hold RIGHT 272
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 39 press A 2 30
+hold LEFT 16
+wait 40
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 45 press A 2 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 26 press A 2 30
+hold RIGHT 16
+wait 40
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 61 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 26 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 28 press A 2 30
+repeat 8 press B 2 30
+repeat 2 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 23 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 55 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 23 press A 2 30
+hold RIGHT 16
+wait 40
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 47 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 26 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 31 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 57 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 26 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+hold RIGHT 16
+repeat 15 press B 2 30
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 67 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+hold RIGHT 16
+wait 40
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 13 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 38 press A 2 30
+repeat 3 press DOWN 2 20
+repeat 15 press A 2 30
+press LEFT 3 20
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 432
+hold RIGHT 320
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 32
+repeat 2 hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 30 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+repeat 53 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 14 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 13 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 21 press A 2 30
+
+# Heal, Rustboro Gym (trainers on the way), Roxanne.
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 32
+hold UP 32
+hold LEFT 32
+hold UP 16
+hold LEFT 320
+hold DOWN 432
+hold LEFT 64
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 64
+hold UP 304
+hold RIGHT 112
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+press LEFT 3 20
+hold LEFT 64
+hold UP 192
+hold UP 32
+repeat 15 press B 2 30
+repeat 9 press A 2 30
+press DOWN 2 20
+repeat 50 press A 2 30
+hold UP 32
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press DOWN 2 20
+repeat 49 press A 2 30
+hold RIGHT 16
+press DOWN 3 20
+hold DOWN 48
+hold RIGHT 64
+hold UP 64
+hold LEFT 48
+hold UP 64
+hold RIGHT 32
+hold UP 16
+hold RIGHT 16
+wait 10
+press UP 3 20
+press A 2 60
+repeat 28 press B 2 30
+press A 2 30
+press DOWN 2 20
+repeat 38 press A 2 30
+shot shots/r08_roxanne_nosepass.png
+press A 2 30
+press RIGHT 2 20
+press UP 2 20
+repeat 210 press A 2 30
+press LEFT 2 20
+press DOWN 2 20
+repeat 53 press A 2 30
+repeat 2 press B 2 30
+shot shots/r09_stone_badge.png
+repeat 37 press B 2 30

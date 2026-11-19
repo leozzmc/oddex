@@ -10,8 +10,9 @@ commands in one continuous run reproduces the same result (verified separately).
 
 usage: autopilot.py START.ss OUT_PREFIX FACING WAYPOINT [WAYPOINT ...]
 WAYPOINT = Map:x:y, or grind:Map:x1:y1:x2:y2:LEVEL to walk between two grass tiles until the lead
-reaches LEVEL (stops early when its HP drops below 35% or its damaging moves have fewer than 10
-PP left, so the caller can heal)
+reaches LEVEL (stops early when its HP drops below GRIND_MIN_HP percent, default 35, or its
+damaging moves have fewer than 10 PP left, so the caller can heal). Wild battles against an
+opponent whose types hit the lead super-effectively, with no super-effective move back, are fled.
 """
 import os, subprocess, sys, tempfile
 from functools import lru_cache
@@ -29,6 +30,7 @@ SETTLE = 40        # frames after each grass step for a wild battle transition t
 LOW_PP = 5         # swap slot 1 out before a battle once its PP drops below this
 MAX_BATTLE_PRESSES = 600  # a battle longer than this is stuck (e.g. slot 1 out of PP mid-battle)
 DIALOG_B = 15      # B presses when a move went nowhere outside battle
+GRIND_MIN_HP = int(os.environ.get("GRIND_MIN_HP", "35"))  # grind pauses below this HP percent
 
 
 def run(ss_in, cmds, ss_out):
@@ -109,6 +111,75 @@ def best_move(st):
     return max(scored)[3] if scored else None
 
 
+BATTLE_TYPE_TRAINER = 1 << 3  # include/constants/battle.h
+
+
+def should_flee(st):
+    """Wild battle where the opponent's own types hit the lead super-effectively and no usable move
+    is super-effective back (e.g. Taillow's Peck on a grass lead that only has Tackle): run."""
+    if W["read"](st, SYMS["gBattleTypeFlags"], "<I")[0] & BATTLE_TYPE_TRAINER:
+        return False
+    base = SYMS["gBattleMons"]
+    own = [t for t in set(W["read"](st, base + 34, "<3B")) if t]
+    foe = [t for t in set(W["read"](st, base + BATTLE_MON + 34, "<3B")) if t]
+    chart, info = type_chart(), move_info()
+
+    def eff(t, defender):
+        e = 1.0
+        for d in defender:
+            e *= chart[t][d]
+        return e
+    threat = max((eff(t, own) for t in foe), default=1.0) >= 2
+    moves = W["read"](st, base + 12, "<4H")
+    pp = W["read"](st, base + 37, "<4B")
+    best = max((eff(info[m][1], foe) for m, p in zip(moves, pp) if m and p and info.get(m, (0, 0))[0] > 0),
+               default=0.0)
+    return threat and best < 2
+
+
+@lru_cache(None)
+def text_range(obj):
+    """(start, end) of an object file's .text in the linker map, e.g. "battle_controller_player.o"."""
+    import re as _re
+    text = open(os.path.join(os.path.dirname(ROM), "pokeemerald.map"), encoding="utf-8").read()
+    m = _re.search(r"\.text\s+0x([0-9a-f]+)\s+0x([0-9a-f]+)\s+\S*/" + _re.escape(obj), text)
+    lo = int(m.group(1), 16)
+    return lo, lo + int(m.group(2), 16)
+
+
+@lru_cache(None)
+def player_choose_action():
+    """Address of battle_controller_player.c's static HandleInputChooseAction (three files define
+    one; the map file gives the player controller's .text range)."""
+    lo, hi = text_range("battle_controller_player.o")
+    out = subprocess.run([W["NM"], os.path.join(os.path.dirname(ROM), "pokeemerald.elf")],
+                         capture_output=True, text=True).stdout
+    for line in out.splitlines():
+        p = line.split()
+        if len(p) == 3 and p[2] == "HandleInputChooseAction" and lo <= int(p[0], 16) < hi:
+            return int(p[0], 16)
+    raise SystemExit("player HandleInputChooseAction not found")
+
+
+SUMMARY_FIRST_MOVE_INDEX = 16588  # offsetof(struct PokemonSummaryScreenData, firstMoveIndex)
+
+
+def move_value(move, types):
+    power, t = move_info().get(move, (0, 0))
+    return power * (1.5 if t in types else 1.0)
+
+
+def slot_to_forget(st):
+    """Move slot to replace with gMoveToLearn, or None to decline: learn when the new move is worth
+    more (power x STAB) than the weakest current move, and forget that one (status moves first)."""
+    new = W["read"](st, SYMS["gMoveToLearn"], "<H")[0]
+    base = SYMS["gBattleMons"]
+    types = set(W["read"](st, base + 34, "<3B")) - {0}
+    moves, _ = W["lead_moves"](st, SYMS)
+    worst = min(range(4), key=lambda i: (move_value(moves[i], types), -i))
+    return worst if move_value(new, types) > move_value(moves[worst], types) else None
+
+
 def controls_free(ss):
     """No script is running and the player's field controls are not locked (src/script.c)."""
     st = W["state"](ss)
@@ -166,10 +237,29 @@ def battle_press(ss):
     """Next single input in battle: B at "delete a move?"; in the move menu, move the cursor to the
     best move against the opponent's types (best_move); otherwise A."""
     st = W["state"](ss)
+    cb2 = W["read"](st, SYMS["gMain"] + 4, "<I")[0] & ~1
+    lo, hi = text_range("pokemon_summary_screen.o")
+    if lo <= cb2 < hi:
+        # "Forget which move?" summary screen: move the cursor to the slot to forget, then A.
+        ptr = W["read"](st, SYMS["sMonSummaryScreen"], "<I")[0]
+        target = slot_to_forget(st)
+        if not ptr or target is None:
+            return "press B 2 30"
+        cur = W["read"](st, ptr + SUMMARY_FIRST_MOVE_INDEX, "<B")[0]
+        return "press A 2 30" if cur == target else ("press DOWN 2 20" if cur < target else "press UP 2 20")
     instr = W["read"](st, SYMS["gBattlescriptCurrInstr"], "<I")[0]
     if SYMS["BattleScript_AskToLearnMove"] <= instr < SYMS["BattleScript_ForgotAndLearnedNewMove"]:
-        return "press B 2 30"
+        # A advances the text and answers YES (the cursor starts there); B declines.
+        return "press A 2 30" if slot_to_forget(st) is not None else "press B 2 30"
     func = W["read"](st, SYMS["gBattlerControllerFuncs"], "<I")[0] & ~1
+    if func == player_choose_action():
+        # Action menu: Battle (0) / Bag (1) / Pokemon (2) / Run (3) in a 2x2 grid.
+        cur = W["read"](st, SYMS["gActionSelectionCursor"], "<B")[0] & 3
+        to = 3 if should_flee(st) else 0
+        if to % 2 != cur % 2:
+            return "press RIGHT 2 20" if to % 2 else "press LEFT 2 20"
+        if to // 2 != cur // 2:
+            return "press DOWN 2 20" if to // 2 else "press UP 2 20"
     if func == SYMS["HandleInputChooseMove"]:
         cur = W["read"](st, SYMS["gMoveSelectionCursor"], "<B")[0] & 3
         to = best_move(st)
@@ -251,7 +341,7 @@ def main():
                     break
                 moves, pp = W["lead_moves"](st, SYMS)
                 attack_pp = sum(p for m, p in zip(moves, pp) if move_power().get(m, 0) > 0)
-                if hp * 100 < mhp * 35 or attack_pp < 10:
+                if hp * 100 < mhp * GRIND_MIN_HP or attack_pp < 10:
                     print(f"# grind paused: HP {hp}/{mhp}, attack PP {attack_pp} at Lv{lvl}; heal and resume", file=sys.stderr)
                     break
                 if (name, x, y) == goal:

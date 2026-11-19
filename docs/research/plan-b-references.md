@@ -285,20 +285,17 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 
 `playmoncry` 這 3 處在原版角色停用後會讓 debug build 跳出 assert，是 strict 之前一定要處理的。
 
-### 6.4 `to_rustboro`（原版基準）：暫停，等 4b 之後在新的 ROM 上重錄
+### 6.4 `to_rustboro`（原版基準，4b 之後的 ROM）
 
-已經用 `tools/headless/authoring/` 打通的部分：Petalburg 回血 → Route 104 → Petalburg Woods（Devon 研究員和 Aqua 手下）→ Route 104 北段 → Rustboro 回血 → 道館的 Josh、Tommy、Marc。**Roxanne 輸了兩次**，因為佔位的 Mossprit（原地替換 Treecko）在 Lv16 照原版規則進化成 Grovyle（純草），Leafage 打不動帶著 Oran 樹果、館主又會用兩瓶傷藥的 Nosepass。必須在 Route 116 練到大約 Lv20 以上。
-
-暫停的原因：`to_rustboro` 從 `to_starter` 開始就會經過很多戰鬥，4b 換掉早期角色之後，戰鬥長度和亂數全部都會變，現在錄的路線會整段作廢。而且 Rustboro 段的「遷移前基準」本來就應該錄在 4b 之後的 ROM 上。
-
-執行時間估計：光是練到 Lv16 就要大約 15 萬幀（約 37 秒），加上 `to_petalburg` 的 47 秒，`to_rustboro` 一定會超過 2 分鐘。David 的方案是：`check-oddex` 預設只跑到 Petalburg，`to_rustboro` 改成另一個目標（例如 `make check-oddex-full`），合併前再跑完整版。
+`tools/headless/scripts/to_rustboro.txt` 接在 `to_petalburg` 後面：Petalburg 回血 → Route 104 → Petalburg Woods（Devon 研究員、Aqua 手下）→ Rustboro 回血 → Mart、學校、Flat2、House3 → Route 116 練到 Lv16（Lv15 學會 Bulldoze）→ 道館 → Roxanne → STONE BADGE。截圖 r01–r09 拍的是 §6.3 的各個位置和 Roxanne 的 Nosepass；Briney 家的 Peeko 要到 Dewford 之後才出現，這一段拍不到。單獨執行約 144 秒（345,802 幀），所以不在 `check-oddex` 的預設清單裡，交給 `make check-oddex-full`。
 
 為了這一段，`autopilot.py` 新增了以下能力（也會用在 4b 的重新校準）：
-- **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時按 B，拒絕學新招式（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示），避免 A 把第一格的攻擊招式忘掉。
+- **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時，新招的「威力 × 本系加成」比最弱的現有招式高就按 A 學（游標預設在 YES），在遺忘畫面把 `sMonSummaryScreen->firstMoveIndex`（偏移 16588）移到最弱那招再按 A；否則按 B 拒絕（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示）。
+- **野生戰逃跑**：對手的屬性剋我方、我方又沒有 2 倍以上的招式時（例如 Taillow 對草屬性），在行動選單選 Run。玩家的 `HandleInputChooseAction` 是 static，有三個同名函式，用 map 檔裡 `battle_controller_player.o` 的範圍找出正確的那個。
 - **選招畫面**（`gBattlerControllerFuncs[0] == HandleInputChooseMove`）：把遊標移到「威力 × 屬性相剋 × 本系加成」最高、還有 PP 的攻擊招式。雙方的招式、PP、屬性從 `gBattleMons[0]`／`gBattleMons[1]` 讀（`struct BattlePokemon` 大小 0x8C，招式在 +12、屬性在 +34、PP 在 +37）。相剋表從 ROM 的 `gTypeEffectivenessTable` 讀（`uq4_12_t` 是 u32），招式的威力和屬性從 `src/data/moves_info.h` 解析。換成原創角色後才需要這樣做：例如 Tackle 打一般／幽靈的 Kyokon 完全無效，Leafage 又被火屬性抵抗。
 - **大地圖上換招式**：第一格是狀態招式，或 PP 低於 5 時，打開能力畫面把攻擊招式換到第一格。開始選單的遊標會記住位置而且會繞圈，所以從 `sCurrentStartMenuActions`／`sStartMenuCursorPos` 讀出來再計算按法；操作被腳本鎖住時（`sLockFieldControls`、`sGlobalScriptContextStatus`）不換。
 - 同一步走不動兩次（已經按 B 排除對話框的可能）時，把那一格當成障礙並重新規劃。例如道館裡打完戰鬥、走過來擋在一格寬通道上的訓練家。
-- `grind:Map:x1:y1:x2:y2:LV`：在兩格草叢之間來回走到指定等級；HP 低於 35% 或攻擊招式的 PP 總和低於 10 時暫停，讓呼叫者去回血。
+- `grind:Map:x1:y1:x2:y2:LV`：在兩格草叢之間來回走到指定等級；HP 低於 `GRIND_MIN_HP`%（預設 35，`to_rustboro` 用 60）或攻擊招式的 PP 總和低於 10 時暫停，讓呼叫者去回血。
 - 戰鬥中按超過 600 次就直接報錯（避免像 PP 用完那次，無限產生存檔）。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
