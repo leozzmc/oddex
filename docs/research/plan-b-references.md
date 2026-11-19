@@ -171,7 +171,7 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 | 4a | `apply_replacements.py`（§5.1 的要求） | Sonia（階段比對：Mark） | 3 | 單元測試：重複執行、最小 diff、缺漏時失敗 |
 | 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | `check_species_refs.py --strict --maps LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity` 通過（`--maps` 會排除 C，C 的部分由 2a／2b 涵蓋） |
 | 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `to_littleroot`、`to_starter`、`to_petalburg` 截圖全程沒有 assert |
-| 6 | 依路線往後擴充替換表、腳本和文字；美術（搬家的 Vigoroth、娃娃等）；最後是設施 stub | 兩人 | 5 | 每段都要跑 `--strict --maps` 和截圖 |
+| 6 | 依路線往後擴充。**每條路線的必要項目**：替換表套用（訓練家、野生）；腳本裡的 `SPECIES_*`，**包含 `playmoncry`**（原版角色的叫聲在 debug build 會 assert，見下方說明）；文字裡寫死的角色名；寶可夢造型的地圖物件改用佔位 overworld 圖。最後是設施 stub | 兩人 | 5 | 每段都要跑 `--strict --maps <該路線>` 和截圖，全程沒有 assert |
 
 1、2a、2b、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）。
 
