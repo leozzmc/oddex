@@ -299,3 +299,74 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - 戰鬥中按超過 600 次就直接報錯（避免像 PP 用完那次，無限產生存檔）。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
+
+## 7. 第 6 步第二段的事前準備：Devon 貨物 → Route 104 勁敵 → Dewford（到 Brawly）和 Granite Cave
+
+### 7.1 範圍：`[dewford]`（`content/migration_scope.toml`，`strict = false`）
+
+劇情順序：Roxanne 之後，Aqua 手下搶走 Devon 貨物，追到 Route 116 的 Rusturf Tunnel 打倒他，救回 Briney 的 Peeko → Devon 社長交代信件和貨物 → 離開 Rustboro 時在 Route 104 跟勁敵對戰 → Mr. Briney 開船送到 Dewford → 拿 Old Rod、打 Brawly、到 Granite Cave 把信交給 Steven。下一段從 Briney 開船到 Slateport（Route 109）開始。
+
+- **訓練家**（`stage_reach.py`，從 Rustboro 和 Dewford 兩個起點，不能衝浪、居合斬、碎岩、怪力）：
+  - Rusturf Tunnel 的 Aqua 手下（`TRAINER_GRUNT_RUSTURF_TUNNEL`，劇情戰）。同一條隧道的 Mike 要碎岩，不在範圍內。
+  - Route 104 勁敵：6 種組合（`TRAINER_{MAY,BRENDAN}_RUSTBORO_{TREECKO,TORCHIC,MUDKIP}`）。
+  - Dewford 道館：Takao、Jocelyn、Laura、Lilith、Cristian、Brenden、Brawly。
+  - Route 106 沙灘的釣魚人 Elliot、Ned。Douglas、Kyla 和整條 Route 107 都是泳客，要衝浪。
+- **野生**：Rusturf Tunnel 和 Granite Cave（1F、B1F、B2F、Steven 的房間）的 `land_mons`。Old Rod 拿到後，Briney 的船可以在 Dewford 和 Route 104 之間來回，所以 Dewford、Route 104、106、107 的 `fishing_mons` 也在範圍內。這個表同時包含 Good Rod 和 Super Rod 的格子，等於提早一起遷移；Route 104 的 `land_mons` 已經在 `[rustboro]`。Granite Cave 的 `rock_smash_mons` 要碎岩，不在範圍內。
+- **地圖**：`RusturfTunnel`、`DewfordTown*`、`Route106`、`Route107`、`GraniteCave*`。Rustboro 市區、Devon 大樓和 Briney 的家已經在 `[rustboro]` 的 `RustboroCity*`、`Route104*` 裡。
+
+`check_species_refs.py --scope dewford`：party 26、wild 112、script 3、text 1、gfx 2，共 24 種原版角色。
+
+### 7.2 角色盤點：哪些位置可以用已經做好的角色填
+
+「已有」指 `content/replacements.toml` 已經有對照（早期角色）；「Rustboro 批」指 `mask-designs.md` 裡 Rustboro 段的 9 隻設計（Mark 正在做）；「舊御三家」指換成三人組之後待重新安排的 Okinoir（草/地面）、Shishiblaze（火/格鬥）、Kamorai（水/電）。
+
+| 原版 | 屬性 | 訓練家 | 野生格數 | 出現在 | 建議 | 依據 |
+|---|---|---|---|---|---|---|
+| Poochyena | 惡 | 1 | 3 | Rusturf 手下、Route 104 | **已有**：Shachound | |
+| Wingull | 水/飛行 | 2 | 4 | 勁敵、Route 104 釣魚以外 | **已有**：Utoghast | Peeko 也是 Wingull（§7.3） |
+| Lotad | 水/草 | 2 | 0 | 勁敵 | **已有**：Shojobob | |
+| Taillow、Wurmple | | 0 | 3 | Route 104 | **已有**：Shawabolt、Usobuzz | |
+| Treecko、Torchic、Mudkip | | 6 | 0 | 勁敵的御三家 | **代號**：`Oddex Starter Grass/Fire/Water`（跟 Route 103 勁敵一樣，2b 的做法） | 換成三人組後自動跟著改 |
+| Magikarp | 水 | 2 | 16 | 各地釣魚、Elliot | **Rustboro 批**：Magatide | |
+| Marill | 水/妖精 | 0 | 2 | Route 104 | **Rustboro 批**：Magatide | |
+| Whismur | 一般 | 0 | 12 | Rusturf Tunnel | **Rustboro 批**：Mandalumb | |
+| Geodude | 岩石/地面 | 0 | 4 | Granite Cave 1F | **Rustboro 批**：Komarock | |
+| Abra | 超能力 | 0 | 4 | Granite Cave | **Rustboro 批**：Tsukuyume | |
+| Machop | 格鬥 | 3 | 0 | Takao、Brenden、Brawly | **Rustboro 批**：Karuvajra | 道館主題 |
+| Makuhita | 格鬥 | 2 | 12 | Brawly 的王牌、Cristian、洞窟 | **舊御三家**：Shishiblaze（火/格鬥） | 格鬥道館；1 階段、沒有進化，等級帶對得上 |
+| Slugma、Torkoal | 火 | 2 | 0 | 勁敵 | **舊御三家**：Shishiblaze | 只在勁敵隊伍裡 |
+| Wailmer | 水 | 0 | 18 | 釣魚（Good/Super Rod） | **舊御三家**：Kamorai（水/電） | 這段其實釣不到（Old Rod 只有 Magikarp/Tentacool） |
+| Tentacool | 水/毒 | 2 | 6 | 釣魚、Elliot、Ned | **已有**：Shojobob（水/妖精），或新角色 | 有毒屬性的話比較合適 |
+| Zubat | 毒/飛行 | 0 | 8 | Granite Cave 全層 | **已有**：Utoghast（飛行/幽靈），或新角色 | 洞窟的蝙蝠，最常遇到 |
+| Sableye | 惡/幽靈 | 0 | 10 | Granite Cave B1F、B2F | **已有**：Kyokon（一般/幽靈），或新角色 | |
+| Aron | 鋼/岩石 | 0 | 10 | Granite Cave B1F 以下 | **Rustboro 批**：Komarock，或新角色（鋼） | Aron 是 3 階段線的第 1 階段 |
+| Meditite | 格鬥/超能力 | 4 | 0 | Brawly、Jocelyn、Laura、Lilith | **新角色**（格鬥/超能力） | 道館主題；也可以暫用 Karuvajra |
+
+**結論**：全部用現有角色填，**新角色 0 隻**也做得到。比較理想的是 **1–4 隻**：
+- Meditite：道館的第二主題，最需要新角色。
+- Zubat、Sableye：Granite Cave 遇到最多的兩隻。
+- Aron：要有鋼屬性。
+
+先用上表的填法，之後再換成新角色，只要改 `replacements.toml`。這是設計上的選擇，請使用者決定。
+
+### 7.3 逐處處理的腳本、文字、物件造型（`--scope dewford`，訓練家和野生以外）
+
+| 類別 | 位置 | 內容 | 處理方式 |
+|---|---|---|---|
+| `playmoncry` ×2 | `RusturfTunnel/scripts.inc:293, 325` | 被搶走的 Peeko 叫聲 | 跟 Briney 家的 Peeko（§6.3）一樣改成 Utoghast；建議新增代號 `PEEKO`，三處共用 |
+| 地圖造型 | `RusturfTunnel` 物件 #7 | `OBJ_EVENT_GFX_WINGULL`（Peeko） | `OBJ_EVENT_GFX_SPECIES(ODDEX_PEEKO)` |
+| `playmoncry` | `DewfordTown_House1/scripts.inc:16` | NPC 的 Zigzagoon 叫聲 | 改成 Kyokon（對照表已有） |
+| 文字 | `DewfordTown_House1/scripts.inc:35` | ZIGZAGOON | `bufferspeciesname` 或改寫句子 |
+| 地圖造型 | `DewfordTown_House1` 物件 #3 | `OBJ_EVENT_GFX_ZIGZAGOON_2` | `OBJ_EVENT_GFX_SPECIES(KYOKON)` |
+
+不算角色引用、但同一類的問題：`data/scripts/berry_tree.inc` 的道具名 **WAILMER PAIL**（Route 104 花店送的，在 `[rustboro]` 就拿得到）。道具改名留給第 6 步統一處理。
+
+這一段的共用腳本（`data/scripts/*.inc`）裡沒有原版角色引用，所以不需要 `script_files`。
+
+### 7.4 原版基準 `to_dewford`：等 `[rustboro]` 遷移完再錄
+
+跟 Rustboro 一樣，基準要錄在前一段遷移完的 ROM 上。預定接在 `to_rustboro` 後面：Devon 貨物事件（Rusturf 手下）→ Devon 社長 → Route 104 勁敵 → Briney 的船 → Dewford（Old Rod、House1 的 Zigzagoon）→ Granite Cave（Steven）→ Brawly。截圖要拍到 §7.3 的每一處、勁敵戰、Brawly 的王牌，以及一次 Old Rod 的釣魚戰鬥。執行時間會超過 `to_rustboro`（約 144 秒），所以放進 `check-oddex-full`。
+
+可能遇到的問題：
+- Dewford 道館很暗，要帶 Flash 或摸黑。stage_reach 走得到，但 autopilot 的路線規劃用的是地圖資料，不受亮度影響。
+- Granite Cave B1F 的裂地板要 Mach Bike，不過 Steven 的房間從 1F 就走得到。
