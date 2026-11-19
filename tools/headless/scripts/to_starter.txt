@@ -1,0 +1,139 @@
+# NEW GAME -> Littleroot -> meet rival -> Route 101 -> pick the left starter (Treecko slot)
+# -> first battle -> Birch's lab -> party, summary pages and the sprite visualizer.
+# Run from the directory that should receive shots/:
+#   cd ~/oddex-shots/mark && $ODDEX_RUN <worktree>/game/pokeemerald.gba <worktree>/tools/headless/scripts/to_starter.txt
+# Input timings are tuned against the frame-exact headless runner; if dialogue length
+# changes upstream of a step, re-check the shots for that step first.
+# B is used to advance dialogue wherever A could re-trigger an NPC or answer YES.
+
+# Title -> NEW GAME. Mashing A through Birch's intro picks BOY and fills the name with "Aaaaaaa".
+wait 700
+press START
+repeat 4 press A 2 50
+repeat 560 press A 2 6
+wait 900
+
+# Step out of the truck, Mom walks us into the house.
+hold RIGHT 40
+press RIGHT 8 60
+repeat 104 press A 2 20
+wait 60
+repeat 6 press A 2 20
+
+# 1F -> stairs (8,2) -> 2F, stand under the wall clock (5,1) and set it (YES needs UP first).
+hold UP 110
+wait 60
+hold DOWN 16
+wait 10
+hold LEFT 32
+wait 10
+hold UP 16
+wait 10
+press UP 2 10
+repeat 7 press A 2 40
+wait 90
+press A 2 60
+press UP 2 20
+press A 2 60
+repeat 34 press A 2 30
+
+# Back down for the TV scene, then out of the door (8,8) and across to May's house (14,8).
+hold RIGHT 32
+wait 10
+hold UP 20
+wait 90
+repeat 69 press A 2 30
+hold RIGHT 64
+wait 10
+hold DOWN 60
+wait 90
+hold RIGHT 144
+wait 10
+hold UP 20
+wait 90
+
+# Rival's mom, then upstairs; checking the Poke Ball at (5,4) makes May walk in.
+repeat 36 press A 2 30
+repeat 25 press B 2 30
+hold UP 110
+wait 90
+hold DOWN 32
+wait 10
+hold RIGHT 48
+wait 10
+press A 2 60
+repeat 44 press B 2 30
+repeat 30 press B 2 30
+wait 60
+
+# Downstairs, out, north to the Route 101 trigger and Birch's bag at (7,14).
+hold LEFT 48
+wait 10
+hold UP 60
+wait 90
+hold DOWN 100
+wait 90
+hold LEFT 48
+wait 10
+hold UP 128
+wait 30
+repeat 51 press B 2 30
+hold UP 96
+wait 30
+repeat 51 press B 2 30
+hold UP 16
+wait 10
+hold LEFT 48
+wait 10
+press A 2 60
+repeat 11 press B 2 40
+
+# Starter selection: cursor starts on the middle ball; LEFT is the Treecko slot.
+press LEFT 2 40
+shot shots/01_starter_select.png
+press A 2 60
+wait 100
+shot shots/02_starter_confirm.png
+
+# First battle vs. wild Zigzagoon.
+press A 2 30
+repeat 19 press B 2 30
+shot shots/03_battle_send_out.png
+repeat 4 press B 2 30
+shot shots/04_battle_menu.png
+repeat 90 press A 2 30
+
+# Birch's lab. The "go meet my kid?" prompt appears after the 18th B; answer YES with A.
+repeat 72 press B 2 30
+repeat 18 press B 2 30
+press A 2 30
+repeat 12 press B 2 30
+wait 30
+
+# Party screen (icon) and summary pages.
+press START 2 40
+press A 2 90
+shot shots/05_party_icon.png
+wait 7
+press A 2 40
+press A 2 90
+shot shots/06_summary_info.png
+press RIGHT 2 60
+shot shots/07_summary_skills.png
+press RIGHT 2 60
+shot shots/08_summary_moves.png
+press LEFT 2 60
+press LEFT 2 60
+
+# Sprite visualizer (SELECT on the summary): dial species 0001 -> 0252 to see the
+# front sprite at the enemy position, the back sprite, shiny, icon and footprint.
+press SELECT 2 120
+press RIGHT 2 10
+repeat 2 press UP 2 20
+press RIGHT 2 10
+repeat 5 press UP 2 20
+press RIGHT 2 10
+press UP 2 90
+shot shots/09_visualizer_normal.png
+press START 2 90
+shot shots/10_visualizer_shiny.png
