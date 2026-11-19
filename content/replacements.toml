@@ -54,3 +54,17 @@ SKITTY = "MANDALUMB"
 SLAKOTH = "MANDALUMB"
 WHISMUR = "MANDALUMB"
 PIKACHU = "INARIZUMA"
+# Dewford segment (plan-b-references.md section 7.2). The former starters, kept after the trio took
+# over (mask-designs.md, "原御三家的新位置"): Shishiblaze for the fighting gym's Makuhita and the
+# rival's fire types, Kamorai for Wailmer, Okinoir for Oddish (Route 110 onward).
+MAKUHITA = "SHISHIBLAZE"
+SLUGMA = "SHISHIBLAZE"
+TORKOAL = "SHISHIBLAZE"
+WAILMER = "KAMORAI"
+ODDISH = "OKINOIR"
+# Existing species for the rest: Bekurama is the only stage-1 steel type (Aron); Kyokon keeps the
+# ghost type (Sableye); Shojobob floats on the water like Tentacool. Meditite and Zubat get new
+# species (the Dewford pair).
+ARON = "BEKURAMA"
+SABLEYE = "KYOKON"
+TENTACOOL = "SHOJOBOB"
