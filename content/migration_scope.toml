@@ -68,3 +68,29 @@ exclude_refs = [
     "data/maps/RustboroCity_DevonCorp_2F/scripts.inc:SPECIES_ANORITH",
 ]
 c_files = []
+
+[dewford]
+description = "Devon Goods (Rusturf Tunnel), Route 104 rival, Mr. Briney to Dewford, Brawly, Granite Cave"
+strict = false
+# Checked with stage_reach.py from Rustboro and from Dewford (Briney's boat), without Surf, Cut,
+# Rock Smash or Strength. The Old Rod comes from the Dewford fisherman, so fishing is in scope on
+# the maps Briney connects (Dewford, Route 104, 106, 107); fishing_mons also holds the Good/Super
+# Rod slots, which are migrated early with it. Route 104's land table is already in [rustboro]
+# (listing the map here just means both scopes cover it).
+wild_maps = ["RusturfTunnel", "GraniteCave_1F", "GraniteCave_B1F", "GraniteCave_B2F", "GraniteCave_StevensRoom",
+             "Route104", "Route106", "Route107", "DewfordTown"]
+wild_kinds = ["land_mons", "fishing_mons"]   # Granite Cave rock_smash_mons needs Rock Smash
+trainers = [
+    # Aqua grunt with the Devon Goods (Mike in the tunnel needs Rock Smash).
+    "TRAINER_GRUNT_RUSTURF_TUNNEL",
+    # Route 104 rival after the Devon errand (all six starter/gender variants).
+    "TRAINER_MAY_RUSTBORO_TREECKO", "TRAINER_MAY_RUSTBORO_TORCHIC", "TRAINER_MAY_RUSTBORO_MUDKIP",
+    "TRAINER_BRENDAN_RUSTBORO_TREECKO", "TRAINER_BRENDAN_RUSTBORO_TORCHIC", "TRAINER_BRENDAN_RUSTBORO_MUDKIP",
+    # Dewford Gym.
+    "TRAINER_TAKAO", "TRAINER_JOCELYN", "TRAINER_LAURA", "TRAINER_LILITH", "TRAINER_CRISTIAN", "TRAINER_BRENDEN",
+    "TRAINER_BRAWLY_1",
+    # Route 106 fishermen on the beach; Douglas and Kyla (and all of Route 107) are swimmers: Surf.
+    "TRAINER_ELLIOT_1", "TRAINER_NED",
+]
+maps = ["RusturfTunnel", "DewfordTown*", "Route106", "Route107", "GraniteCave*"]
+c_files = []
