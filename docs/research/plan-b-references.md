@@ -162,7 +162,7 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 
 | 步 | 內容 | 負責 | 依賴 | 驗證 |
 |---|---|---|---|---|
-| 0 | 使用者決定：原創角色的美術製作方式、叫聲、TOML 格式（Mark §5） | 使用者 | — | — |
+| 0 | ~~使用者決策~~ **已決定**（`DECISIONS.md` 92cd562a）：原創角色先用程式產生的佔位圖，之後再統一設計；原版叫聲關掉後先無聲。TOML 格式由 David 確認 | 使用者 | — | — |
 | 1 | 產生地區圖鑑、修好 sprite 檢視器的起始編號 | Mark | — | 能力畫面不再顯示 No000 |
 | 2a | 代號接上 C：開場 ×2、救 Birch、御三家 ×3 | Mark | — | `to_starter` 截圖逐像素不變 |
 | 2b | 代號接上 C：Wally 教學 ×2；Route 103 勁敵 6 組；Petalburg 寶可夢中心 3 段、道館 1 段改用 `bufferspeciesname` 代號 | Sonia | — | `to_petalburg` 截圖不變 |
@@ -173,4 +173,6 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 | 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `to_littleroot`、`to_starter`、`to_petalburg` 截圖全程沒有 assert |
 | 6 | 依路線往後擴充替換表、腳本和文字；美術（搬家的 Vigoroth、娃娃等）；最後是設施 stub | 兩人 | 5 | 每段都要跑 `--strict --maps` 和截圖 |
 
-1、2a、2b、2c 彼此獨立，可以同時進行。第 3 步卡在第 0 步的美術決策。
+1、2a、2b、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）。
+
+**注意：「先無聲」不代表 `playmoncry` 可以不改。** `playmoncry` → `GetCryIdBySpecies` → `SanitizeSpeciesId`（`src/pokemon.c:6388`）。在 debug build 裡，播放已停用 species 的叫聲**一樣會跳出 `disabled species` 的 assert**（release build 會靜默變成 `SPECIES_NONE`）。所以腳本裡原版角色的 `playmoncry`（Emerald 共 71 處）還是要在第 6 步依路線改成原創角色或代號；原創角色本身的叫聲是 `CRY_NONE`，沒有問題。早期路線（到 Petalburg）沒有 `playmoncry`，所以不影響第 5 步的驗收。地圖上寶可夢造型的物件，依決策先換成原創角色的佔位 overworld 圖。
