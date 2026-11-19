@@ -54,7 +54,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 
 ## 私人素材（寫實臉孔）
 
-御三家是使用者和朋友，寫實臉孔的圖檔**只能放在 repo 外**的 `~/oddex-private/likeness/<dir>/`（目錄結構對應 `game/graphics/pokemon/oddex/<dir>/`），絕對不能提交，也不能把參考照片或從照片產生的圖放進 repo。repo 裡放的是卡通化的公開替代圖，`make check-oddex` 和基準截圖都用公開版。`tools/oddex/build_private.sh [ref]` 會在 `~/oddex-private/build-tree`（獨立的 worktree）把私人素材蓋上去再編譯，輸出 `~/oddex-private/oddex-private.gba`。文件、TOML、commit 訊息都不要寫這三人的真名。
+御三家是使用者和兩位朋友。2026-11-20 使用者核准**寫實版**作為正式造型，並同意放進 GitHub：`tools/oddex/likeness/compose.py` 產生的寫實 sprite 直接放在 `game/graphics/pokemon/oddex/<dir>/` 並提交。**原始照片和 `crop.toml` 仍然只放在 repo 外的 `~/oddex-private/`**，不提交（遊戲只需要產生出來的 sprite）。文件、TOML、commit 訊息都不要寫這三人的真名。`tools/oddex/build_private.sh` 留著，供之後若有只能留在本機的素材使用。
 
 ## 無頭測試（`tools/headless/`）
 
