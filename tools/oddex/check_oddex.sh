@@ -32,11 +32,18 @@ python3 "$ROOT/tools/oddex/check_species_refs.py" --strict-scopes || fail=1
 echo "== map checks (new findings fail; accepted ones are in tools/oddex/check_maps_baseline.json)"
 python3 "$ROOT/tools/oddex/check_maps.py" || fail=1
 
-echo "== headless regression scripts (any crash screen fails)"
+echo "== headless regression scripts (any crash screen or game reset fails)"
 if [ ! -x "$RUN" ]; then
     echo "oddex-run not found at $RUN; build it with tools/headless/build.sh"
     exit 1
 fi
+# gMain.vblankCounter1 (offset 0x20) only drops when the game resets, which shows no crash screen.
+gmain=$(arm-none-eabi-nm "$ROOT/game/pokeemerald.elf" | awk '$3 == "gMain" { print $1 }')
+if [ -z "$gmain" ]; then
+    echo "gMain not found in pokeemerald.elf; cannot watch for resets"
+    exit 1
+fi
+export ODDEX_RESET_WATCH=$(printf '0x%x' $((0x$gmain + 0x20)))
 for name in $SCRIPTS; do
     dir="$OUT/$name"
     rm -rf "$dir" && mkdir -p "$dir"
@@ -45,9 +52,9 @@ for name in $SCRIPTS; do
         fail=1
         continue
     fi
-    if grep -q ODDEX_CRASH_SCREEN "$dir/err.log"; then
-        echo "$name: crash screen"
-        grep ODDEX_CRASH_SCREEN "$dir/err.log" | sort | uniq -c
+    if grep -q -E 'ODDEX_CRASH_SCREEN|ODDEX_RESET' "$dir/err.log"; then
+        echo "$name: crash screen or game reset"
+        grep -E 'ODDEX_CRASH_SCREEN|ODDEX_RESET' "$dir/err.log" | sort | uniq -c
         fail=1
         continue
     fi

@@ -39,11 +39,29 @@ static uint32_t parseKeys(const char* spec) {
 	return keys;
 }
 
+// ODDEX_RESET_WATCH names a u32 the game only ever increments (gMain.vblankCounter1); it
+// drops back to 0 only when the game resets, which shows no crash screen.
+static uint32_t resetWatch;
+static uint32_t lastCounter;
+
+static void checkReset(void) {
+	if (!resetWatch) {
+		return;
+	}
+	uint32_t counter = core->busRead32(core, resetWatch);
+	// Boot clears and re-inits the counter around frame 13, so only watch once it has settled.
+	if (counter < lastCounter && frame > 60) {
+		fprintf(stderr, "ODDEX_RESET game reset at frame %lu (counter %u -> %u)\n", frame, lastCounter, counter);
+	}
+	lastCounter = counter;
+}
+
 static void run(uint32_t keys, unsigned long frames) {
 	core->setKeys(core, keys);
 	for (unsigned long i = 0; i < frames; ++i) {
 		core->runFrame(core);
 		++frame;
+		checkReset();
 	}
 	core->setKeys(core, 0);
 }
@@ -83,6 +101,9 @@ static void stateIo(const char* path, int save) {
 	if (!vf || !(save ? mCoreSaveStateNamed(core, vf, SAVESTATE_ALL) : mCoreLoadStateNamed(core, vf, SAVESTATE_ALL))) {
 		fprintf(stderr, "%s state failed: %s\n", save ? "save" : "load", path);
 		exit(1);
+	}
+	if (!save && resetWatch) {
+		lastCounter = core->busRead32(core, resetWatch);
 	}
 	vf->close(vf);
 	printf("[frame %lu] %s %s\n", frame, save ? "saved" : "loaded", path);
@@ -202,6 +223,10 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 	core->reset(core);
+	const char* watch = getenv("ODDEX_RESET_WATCH");
+	if (watch && *watch) {
+		resetWatch = (uint32_t) strtoul(watch, NULL, 0);
+	}
 
 	runScript(argv[2], 0);
 	printf("done at frame %lu\n", frame);

@@ -30,7 +30,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 1. `gen_species.py --check`：產生檔是否過期。
 2. `check_species_refs.py`：回報所有原版 species 的引用；`content/migration_scope.toml` 裡 `strict = true` 的範圍若還有引用就失敗。
 3. `check_maps.py`：地圖大小、connection、warp、遮擋、可達性。原版本來就有的例外在 `check_maps_baseline.json`，只有新發現會失敗。
-4. 用無頭模擬器跑 `tools/headless/scripts/` 的回歸腳本（預設清單寫在 `check_oddex.sh`）。只要出現 crash screen 就失敗（`src/assertf.c` 會輸出 `ODDEX_CRASH_SCREEN` 到 log），然後跟 `tools/headless/baselines/<script>/` 逐像素比對。
+4. 用無頭模擬器跑 `tools/headless/scripts/` 的回歸腳本（預設清單寫在 `check_oddex.sh`）。只要出現 crash screen（`src/assertf.c` 會輸出 `ODDEX_CRASH_SCREEN` 到 log），或遊戲被默默重置（runner 監看 `gMain.vblankCounter1`，變小時輸出 `ODDEX_RESET`；這種情況不會有 crash screen）就失敗，然後跟 `tools/headless/baselines/<script>/` 逐像素比對。
 
 **刻意改變畫面的 commit，要在同一個 commit 更新基準截圖**（`find game/build/oddex-check/<script> -name '*.png' -exec cp {} tools/headless/baselines/<script>/ \;`），更新前要先逐張看過。
 
