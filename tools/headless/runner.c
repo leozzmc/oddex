@@ -88,7 +88,9 @@ static void stateIo(const char* path, int save) {
 	printf("[frame %lu] %s %s\n", frame, save ? "saved" : "loaded", path);
 }
 
-static void execute(char* line, int lineno) {
+static void runScript(const char* path, int depth);
+
+static void execute(char* line, int lineno, const char* dir, int depth) {
 	char* argv[8];
 	int argc = 0;
 	for (char* tok = strtok(line, " \t\r\n"); tok && argc < 8; tok = strtok(NULL, " \t\r\n")) {
@@ -111,7 +113,7 @@ static void execute(char* line, int lineno) {
 		for (long i = 0; i < n; ++i) {
 			char copy[256];
 			strcpy(copy, rest);
-			execute(copy, lineno);
+			execute(copy, lineno, dir, depth);
 		}
 	} else if (!strcmp(cmd, "wait") && argc == 2) {
 		run(0, atol(argv[1]));
@@ -126,6 +128,14 @@ static void execute(char* line, int lineno) {
 		stateIo(argv[1], 1);
 	} else if (!strcmp(cmd, "load") && argc == 2) {
 		stateIo(argv[1], 0);
+	} else if (!strcmp(cmd, "include") && argc == 2) {
+		char path[512];
+		if (argv[1][0] == '/') {
+			snprintf(path, sizeof(path), "%s", argv[1]);
+		} else {
+			snprintf(path, sizeof(path), "%s/%s", dir, argv[1]);
+		}
+		runScript(path, depth + 1);
 	} else {
 		fprintf(stderr, "line %d: bad command: %s\n", lineno, cmd);
 		exit(2);
@@ -142,6 +152,32 @@ static void quietLog(struct mLogger* logger, int category, enum mLogLevel level,
 }
 
 static struct mLogger logger = { .log = quietLog };
+
+static void runScript(const char* path, int depth) {
+	if (depth > 8) {
+		fprintf(stderr, "include nested too deeply: %s\n", path);
+		exit(2);
+	}
+	FILE* script = fopen(path, "r");
+	if (!script) {
+		fprintf(stderr, "cannot open %s\n", path);
+		exit(1);
+	}
+	char dir[512];
+	snprintf(dir, sizeof(dir), "%s", path);
+	char* slash = strrchr(dir, '/');
+	if (slash) {
+		*slash = '\0';
+	} else {
+		strcpy(dir, ".");
+	}
+	char line[256];
+	int lineno = 0;
+	while (fgets(line, sizeof(line), script)) {
+		execute(line, ++lineno, dir, depth);
+	}
+	fclose(script);
+}
 
 int main(int argc, char** argv) {
 	if (argc != 3) {
@@ -167,17 +203,7 @@ int main(int argc, char** argv) {
 	}
 	core->reset(core);
 
-	FILE* script = fopen(argv[2], "r");
-	if (!script) {
-		fprintf(stderr, "cannot open %s\n", argv[2]);
-		return 1;
-	}
-	char line[256];
-	int lineno = 0;
-	while (fgets(line, sizeof(line), script)) {
-		execute(line, ++lineno);
-	}
-	fclose(script);
+	runScript(argv[2], 0);
 	printf("done at frame %lu\n", frame);
 
 	mCoreConfigDeinit(&core->config);

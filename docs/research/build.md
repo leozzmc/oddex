@@ -39,6 +39,7 @@ $ODDEX_RUN game/pokeemerald.gba script.txt
 | `repeat N <指令>` | 重複執行 |
 | `shot path.png` | 截圖（240×160） |
 | `save path.ss` / `load path.ss` | 存／讀 savestate（只能用在同一個 ROM 編譯結果） |
+| `include other.txt` | 在這裡執行另一支腳本（路徑相對於目前這支腳本所在的目錄；最多巢狀 8 層）。被引入腳本的 `shot` 也會照常輸出。用來讓回歸腳本共用開頭段落，又不必依賴別支腳本留下的 savestate |
 
 KEYS：`A B SELECT START RIGHT LEFT UP DOWN R L`，可用 `+` 組合（例如 `A+B`）。
 
