@@ -162,7 +162,7 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 
 | 步 | 內容 | 負責 | 依賴 | 驗證 |
 |---|---|---|---|---|
-| 0 | ~~使用者決策~~ **已決定**（`DECISIONS.md` 92cd562a）：原創角色先用程式產生的佔位圖，之後再統一設計；原版叫聲關掉後先無聲。TOML 格式由 David 確認 | 使用者 | — | — |
+| 0 | ~~使用者決策~~ **已決定**（`DECISIONS.md` 92cd562a）：原創角色先用程式產生的佔位圖，之後再統一設計；原版叫聲關掉後先無聲；資料格式採用 TOML（d0baa5b1） | 使用者 | — | — |
 | 1 | 產生地區圖鑑、修好 sprite 檢視器的起始編號 | Mark | — | 能力畫面不再顯示 No000 |
 | 2a | 代號接上 C：開場 ×2、救 Birch、御三家 ×3 | Mark | — | `to_starter` 截圖逐像素不變 |
 | 2b | 代號接上 C：Wally 教學 ×2；Route 103 勁敵 6 組；Petalburg 寶可夢中心 3 段、道館 1 段改用 `bufferspeciesname` 代號 | Sonia | — | `to_petalburg` 截圖不變 |
