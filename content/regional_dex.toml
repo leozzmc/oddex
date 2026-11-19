@@ -3,5 +3,7 @@
 # vanilla 210 entries; once vanilla is disabled (plan B step 5) the first one is No. 001.
 
 order = [
-    "MOSSPRIT",
+    "MOSSPRIT", "EMBERKIT", "PUDDLEFIN",
+    "SHADEPUP", "SCRUFFLE", "SPROUTWORM", "CHIRPIP", "GULLWISP",
+    "PADLILY", "ACORNIK", "FUNGLOO", "DOZELET",
 ]

@@ -1,0 +1,58 @@
+# Placeholder species for plan B step 3 (stats, moves and art are provisional).
+id = "SPROUTWORM"
+name = "Sproutworm"
+category = "Sprout Bug"
+
+types = ["BUG", "GRASS"]
+abilities = ["SHIELD_DUST", "NONE", "LEAF_GUARD"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 45, atk = 45, def = 35, spa = 20, spd = 30, spe = 20 }   # total 195
+ev_yield = { hp = 1 }
+catch_rate = 255
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["BUG"]
+growth_rate = "MEDIUM_FAST"
+body_color = "GREEN"
+cry = "NONE"
+
+[dex]
+height = 3
+weight = 36
+text = """
+A seedling grows on its back. It eats
+fallen leaves all day so that the
+seedling never goes hungry, even when
+it is starving itself."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "STRING_SHOT"], [5, "ABSORB"], [9, "POISON_STING"], [13, "BUG_BITE"], [17, "LEECH_SEED"],
+]
+teachable = [
+    "ATTRACT", "BUG_BUZZ", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+evolutions = []
+
+[graphics]
+dir = "graphics/pokemon/oddex/sproutworm"   # drawn by tools/oddex/placeholder_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[graphics.placeholder]   # delete this table once real art is in [graphics] dir
+body = "worm"
+size = 0.66
+features = ["antennae", "leaf"]
+eyes = "round"
+
+[design]
+habitat = ["Route101", "Route102"]
+level_band = [2, 8]
+family = ["SPROUTWORM"]

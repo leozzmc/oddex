@@ -1,0 +1,58 @@
+# Placeholder species for plan B step 3 (stats, moves and art are provisional).
+id = "FUNGLOO"
+name = "Fungloo"
+category = "Frost Cap"
+
+types = ["GRASS", "ICE"]
+abilities = ["EFFECT_SPORE", "ICE_BODY", "QUICK_FEET"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 40, def = 60, spa = 40, spd = 60, spe = 35 }   # total 295
+ev_yield = { hp = 1 }
+catch_rate = 255
+exp_yield = 59
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FAIRY", "GRASS"]
+growth_rate = "FLUCTUATING"
+body_color = "WHITE"
+cry = "NONE"
+
+[dex]
+height = 4
+weight = 45
+text = """
+The cap on its head is always cold to
+the touch. It grows best in shade near
+melting snow, and its spores sparkle
+like frost in the morning."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ABSORB"], [1, "TACKLE"], [5, "POWDER_SNOW"], [9, "STUN_SPORE"], [13, "LEECH_SEED"], [17, "ICE_SHARD"], [21, "ICY_WIND"], [25, "GIGA_DRAIN"],
+]
+teachable = [
+    "ATTRACT", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+evolutions = []
+
+[graphics]
+dir = "graphics/pokemon/oddex/fungloo"   # drawn by tools/oddex/placeholder_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[graphics.placeholder]   # delete this table once real art is in [graphics] dir
+body = "blob"
+size = 0.64
+features = ["spikes"]
+eyes = "round"
+
+[design]
+habitat = ["Route102"]
+level_band = [2, 8]
+family = ["FUNGLOO"]

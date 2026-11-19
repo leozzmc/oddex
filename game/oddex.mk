@@ -1,9 +1,10 @@
-# Original (oddex) species are generated from ../content/species/*.toml and ../content/roles.toml by
-# ../tools/oddex/gen_species.py. The generated files are committed; this rule keeps them
-# fresh when the content or the generator changes. A stamp stands in for the outputs
+# Original (oddex) species are generated from ../content/ (species, roles, regional dex) and
+# their sprite files by ../tools/oddex/gen_species.py. The generated files are committed; this
+# rule keeps them fresh when the content, the sprites or the generator change. A stamp stands in for the outputs
 # because GNU Make 3.81 (macOS) has no grouped targets.
 
-ODDEX_SPECIES_SRC := $(wildcard ../content/species/*.toml) ../content/roles.toml ../content/regional_dex.toml ../tools/oddex/gen_species.py ../tools/oddex/species_data.py
+ODDEX_SPECIES_SRC := $(wildcard ../content/species/*.toml) ../content/roles.toml ../content/regional_dex.toml \
+	$(wildcard graphics/pokemon/oddex/*/*.png) ../tools/oddex/gen_species.py ../tools/oddex/species_data.py ../tools/oddex/png_reader.py
 ODDEX_SPECIES_STAMP := $(BUILD_DIR)/oddex_species.stamp
 ODDEX_SPECIES_OUT := \
 	$(INCLUDE_DIRS)/constants/species.h \

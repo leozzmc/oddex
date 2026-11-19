@@ -156,6 +156,42 @@ python3 tools/oddex/gen_species.py --check    # 產生檔不是最新的就 exit
 ### 5.2 給 `apply_replacements.py` 用的載入函式
 `tools/oddex/species_data.py`:`load_species()`、`load_roles()`、`oddex_stages()`(原創角色的進化階段,由 TOML 的 `evolutions` 計算)、`vanilla_stages()`(原版的,解析 `gen_*_families.h` 的 `.evolutions`;1,571 種,Wurmple 1 → Silcoon/Cascoon 2 → Beautifly/Dustox 3 這類分歧也算得正確)。Mega 等型態不是進化,一律算第 1 階段;替換表本來就不會用它們當 key。`gen_species.py` 也改用這個模組。
 
+### 5.3 第 3 步:早期 12 隻佔位角色(已完成)
+
+| # | id | 屬性 | 體型 | 對應的早期位置 |
+|---|---|---|---|---|
+| 1573 | MOSSPRIT | 草/岩 | 圓球(手繪原型) | 御三家・草 |
+| 1574 | ACORNIK | 草/鋼 | 圓球 + 角 | Seedot |
+| 1575 | CHIRPIP | 電/飛行 | 鳥 | Taillow(Route 102 訓練家) |
+| 1576 | DOZELET | 超能力/龍 | 雙足 | Ralts |
+| 1577 | EMBERKIT | 火/格鬥 | 雙足 + 耳 + 尾 | 御三家・火 |
+| 1578 | FUNGLOO | 草/冰 | 圓球 + 刺 | Shroomish(Route 102 訓練家) |
+| 1579 | GULLWISP | 飛行/幽靈 | 鳥 + 冠羽 | Wingull |
+| 1580 | PADLILY | 水/妖精 | 圓球 + 葉 | Lotad |
+| 1581 | PUDDLEFIN | 水/電 | 四足 + 鰭 | 御三家・水 |
+| 1582 | SCRUFFLE | 一般 | 四足 + 尾 | Zigzagoon |
+| 1583 | SHADEPUP | 惡 | 四足 + 耳 + 尾 | Poochyena |
+| 1584 | SPROUTWORM | 蟲/草 | 蟲 + 觸角 + 葉 | Wurmple |
+
+依照「屬性不同、又怪」的設計方向,刻意用了少見的屬性組合。數值、招式、圖鑑文字都是暫定的(早期角色的種族值總和約 200~310,和原版同位置的角色相近)。名字都和原版 1,500 多隻比對過,沒有重複(Glimmet 是第 9 世代真實存在的寶可夢,所以改名)。目前都還沒有進化,進化線等統一設計時再補。
+
+新增或調整的工具:
+- `tools/oddex/placeholder_art.py`:通用佔位圖產生器(§5.1 的要求):5 種體型、配件、依屬性配色、頭上的屬性記號,還有異色版、icon(自動挑最接近的共用 icon 調色盤)、overworld 6 幀、足跡。不認得的屬性(將來的原創屬性)會用名稱雜湊出一個穩定的顏色,所以不會壞。`--preview` 可以輸出總覽圖。
+- `tools/oddex/import_art.py`:外部 PNG 匯入(RGBA、全彩、索引色都可以),詳見檔頭說明。用兩種合成素材測過:1,413 色的半透明漸層圖,以及 96×96、洋紅色背景的圖。兩者都通過驗證。
+- `gen_species.py` 的圖檔驗證:用標準函式庫寫的 `png_reader.py`(66 個檔案和 PIL 的結果逐像素一致)檢查尺寸、色數、調色盤。`front_size`/`back_size`/Y 位移和 `icon_palette` 改成**選填**:沒寫的話,由圖的實際邊界和 icon 的調色盤自動算出,所以換正式美術時不用手改數值(Mossprit 的值是手寫的,也會被檢查)。
+- **species ID 只往後追加**:ID 會存進存檔。原本是依檔名排序,新增一隻 Acornik 就把 Mossprit 從 #1573 擠到 #1579;現在沿用 `species.h` 裡既有的順序,新角色接在最後面。刪除角色會印出警告,因為後面的 ID 會跟著移動。
+- `tools/headless/scripts/oddex_gallery.txt`(由產生器產生):接在 `to_starter` 後面,在 sprite 檢視器裡逐隻截圖(普通色 + 異色,共 24 張),已加入 `make check-oddex` 的預設清單,基準截圖放在 `tools/headless/baselines/oddex_gallery/`。檢視器只能逐位調整編號,所以用 BFS 找出只經過原創角色編號的路徑,第 5 步關掉原版之後也不會經過已停用的物種。注意:離開檢視器會一路退回開始選單,要重新進入隊伍 → 能力畫面 → SELECT。
+
+已知的限制:共用 icon 調色盤只有 6 組,顏色和本體差很多的角色,icon 會偏灰(硬體限制;要改善得新增 icon 調色盤)。佔位圖都偏小,等正式美術。
+
+### 5.4 研究筆記:新增原創屬性的可行性(還沒實作)
+使用者之後想把朋友設計成「屬性不同、又怪」的寶可夢,可能會需要原創屬性。在 expansion 1.17.2 裡,一個屬性由這些部分組成:
+- `include/constants/pokemon.h` 的 `enum Type`:目前 `TYPE_NONE`(0) ~ `TYPE_STELLAR`(20),`NUMBER_OF_MON_TYPES` = 21。新屬性要加在 `TYPE_STELLAR` 之前或之後都可以,但 **`teraType` 只有 5 bits**(`include/pokemon.h:135`,註解寫 30 types),所以最多到 31,也就是還能加約 10 個。`TYPE_MYSTERY`(10,也就是「???」)目前也有程式在用(`src/*.c` 54 處),不建議挪用。
+- `src/data/types_info.h`:`gTypeEffectivenessTable[21][21]` 相剋表(要加一列加一欄);`gTypesInfo[]`:名稱、`generic` 文字、icon 調色盤編號、Z 招式/極巨招式、太晶顏色、傷害分類(舊世代物理/特殊)、TM 圖示調色盤、是否算覺醒力量屬性(改了會影響所有覺醒力量的分布)。檔案裡的註解也列出要配套的道具(屬性強化道具、半減果、寶石、石板…),可以先不做。
+- 圖示:`graphics/types/<name>.png`(32×16、4bpp),`graphics_file_rules.mk` 的 `types :=` 清單,`src/type_icons.c` 的動畫表;戰鬥中的小圖示在 `graphics/types/battle_icons*.png`。
+- 我們這邊的工具:`gen_species.py` 只檢查 `TYPE_<名稱>` 有沒有定義,`placeholder_art.py` 不認得的屬性會用雜湊配色,所以**資料格式和工具都不用改**,只要先在遊戲裡定義好屬性就能直接用。
+- 估計工作量:加一個屬性(定義、相剋表、TypeInfo、圖示)大約一次工作階段,不含平衡設計。建議等角色設計確定、真的需要時再做,而且一次決定好所有新屬性,相剋表只改一次。
+
 ## 6. 建置防線:`make check-oddex`
 因為「編譯不會壞、release 默默變成 `SPECIES_NONE`」,能抓到漏網之魚的只有內容檢查和 debug build 的 assert。這兩者都排進建置流程,不靠人記得去跑:
 
