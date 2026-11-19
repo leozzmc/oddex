@@ -116,7 +116,30 @@ $ODDEX_RUN game/pokeemerald.gba tools/headless/scripts/littleroot_npcs.txt  # �
 - 調時鐘時「Is this the correct time?」的游標預設在 **NO**。要先按 A 讓選單出現，再按 UP、A；在時鐘畫面裡按 UP 會轉動指針。
 - 1F 門口 (8,8) 在 `VAR_LITTLEROOT_INTRO_STATE == 4` 時有 trigger，所以不調時鐘就出不了門。
 - 會隨機走動的 NPC：用暴力搜尋「等待幀數 × 靠近方向」，再挑可行範圍最寬的組合（男孩的有效等待區間是 0–56 幀）。
-- `save` 不會自動建立目錄（`shot` 會）。
+- ~~`save` 不會自動建立目錄~~（David 已修正，現在會自動建立）。
+
+### `to_petalburg.txt`（第二階段 2c）
+
+從開機到 Petalburg，約 198,000 幀，單次執行大約 47 秒。內容是 `include to_starter.txt` → Route 101 → Oldale → Route 103 勁敵戰 → Oldale 回血 → 研究所拿圖鑑 → Oldale 回血 → Route 102 → Petalburg 道館 Wally 教學 → Petalburg 寶可夢中心女性 NPC 的屬性說明。截圖 `p01`–`p07` 對應 2b 會動到的位置（勁敵隊伍、借給 Wally 的寶可夢、Wally 要抓的寶可夢、御三家屬性文字），基準截圖放在 `tools/headless/baselines/to_petalburg/`，已加進 `check_oddex.sh` 預設的 `ODDEX_REGRESSION_SCRIPTS`。
+
+做法是**閉環撰寫**，工具放在 `tools/headless/authoring/`：
+
+| 工具 | 用途 |
+|---|---|
+| `where.py STATE.ss …` | 從 savestate（PNG 裡的 `gbAs` chunk，zlib 解壓後 IWRAM 在 0x19000、EWRAM 在 0x21000）讀出 `gSaveBlock1Ptr->location/pos`（地圖、座標）、`gMain.callback2` 對應的函式名稱（`CB2_Overworld`／`BattleMainCB2`／`CB2_OverworldBasic`＝戰鬥轉場）、隊伍第一隻的等級和 HP（`gParties[0]`） |
+| `plan.py` | 跨地圖（依 connections）用 Dijkstra 找路，盡量少踩草（每格成本 100）、可選擇避開訓練家視線；平台只能往跳下的方向通過；輸出 `hold DIR 16n` |
+| `autopilot.py START.ss PREFIX FACING Map:x:y …` | 一次執行一小段（一段平地，或踩一格草＋連按 A），每段結束後讀位置：還在戰鬥就多按 A；沒移動就判定是對話框，按 B；走偏就從實際位置重新規劃。最後輸出實際有效的指令 |
+
+重新校準（例如 4b 換了角色，戰鬥長度和亂數都會變）：用 `to_starter` 的最後狀態當起點，依 `to_petalburg.txt` 裡的段落註解，逐段用 `autopilot.py` 重新產生路線，片段之間的劇情操作（換招式、選項、回血、對話）照抄。最後**一定要從開機連續跑一次**，確認結果跟分段時相同，再更新基準截圖。
+
+踩到的坑：
+- **Growl 會讓 Tackle 失效**：野生 Zigzagoon 一直用 Growl，Tackle 降到只剩 1 點傷害，戰鬥拖超過 150 次 A。每場戰鬥的招式游標都會重設到第一格，所以要在能力畫面把特殊招式（Leafage，40 PP）換到第一格；勁敵戰前改換 Rock Throw（打 Torchic 效果好），之後再換回來（Rock Throw 只有 15 PP，用完之後連按 A 會卡在「沒有 PP」）。
+- **遊戲選項**：文字速度 FAST、戰鬥動畫 OFF、戰鬥方式 SET。戰鬥時間大幅縮短，訓練家換寶可夢時也不會問「要不要換？」。
+- **從靜止狀態換方向**：按住方向鍵 16 幀，有時只夠轉身、不會走。停下來（連按 A 之後）要換方向時，先輕點 `press DIR 3 20` 轉身，再 `hold`。
+- **開始選單的游標會記住上次位置，而且會繞圈**：拿到圖鑑後第一項變成 POKéDEX，原本的「UP×4 到 POKéMON」會跑到訓練家卡片。
+- **出口地墊**：站上去後還要再按一次往下才會傳送。
+- 劇情觸發：Oldale 南邊出口 (8–10,19) 的勁敵、未白鎮 (8–11,9) 媽媽給跑步鞋，都會開對話框擋住移動；autopilot 判定「沒移動」後用 B 推進。
+- 讀 savestate 再繼續跑，跟一路連續跑的結果是一樣的（實測 600 幀後 RAM 完全相同，只有音效通道狀態和存檔時間不同）。組合腳本時如果結果跟分段不同，一定是**片段之間漏了指令**：這次就是漏了兩個 `wait 30`，亂數每幀都會前進，所以少 30 幀就讓後面所有遭遇都不同。
 
 ## 6. Porymap／Poryscript 評估
 
