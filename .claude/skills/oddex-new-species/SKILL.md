@@ -54,11 +54,11 @@ cd game && make check-oddex -j$(sysctl -n hw.ncpu)
 
 `check-oddex` 會在 sprite 檢視器裡逐隻截圖普通色和異色（`oddex_gallery`）。新角色或改過的圖一定會跟基準不同，這是預期中的：
 
-1. 打開 `game/build/oddex-check/oddex_gallery/shots/` 裡的新截圖，**逐張看過**：輪廓是否清楚、眼睛和嘴巴在 64px 下是否還看得出來、異色是否只換色、平台上的位置有沒有偏。
+1. 打開 `game/build/oddex-check/oddex_gallery/gallery/` 裡的新截圖，**逐張看過**：輪廓是否清楚、眼睛和嘴巴在 64px 下是否還看得出來、異色是否只換色、平台上的位置有沒有偏。
 2. 確認沒問題後再更新基準。截圖檔名是 `<編號>_<id>.png`／`<編號>_<id>_shiny.png`，改名或新增角色後舊檔名不會被覆蓋，所以先整個清掉再複製：
    ```bash
    git rm -q tools/headless/baselines/oddex_gallery/*.png
-   cp game/build/oddex-check/oddex_gallery/shots/*.png tools/headless/baselines/oddex_gallery/
+   cp game/build/oddex-check/oddex_gallery/gallery/*.png tools/headless/baselines/oddex_gallery/
    ```
    再跑一次 `make check-oddex`，要 0 差異。
 3. 其他腳本（例如 `to_petalburg`）也可能跟著變：角色數量改變會影響亂數，對手寶可夢的性別之類的會換。一樣把截圖跟基準並排看過，確認只有這類差異，才更新那一張，並在 commit 訊息說明。

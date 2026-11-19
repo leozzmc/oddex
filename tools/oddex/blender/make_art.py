@@ -24,7 +24,8 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from import_art import TRANSPARENT_RGB, best_icon, fit, to_indexed, write_jasc  # noqa: E402
+from import_art import TRANSPARENT_RGB, best_icon, to_indexed, write_jasc  # noqa: E402
+from import_art import fit as fit_art  # noqa: E402
 from placeholder_art import footprint  # noqa: E402
 from species_data import GAME, load_species  # noqa: E402
 
@@ -95,12 +96,13 @@ def outline(im):
     return out
 
 
-def render(module, variant, out):
+def render(module, variant, out, env=None):
+    """env: extra environment for render_species.py (ODDEX_LAYERS, ODDEX_PALETTE)."""
     blender = os.environ.get('BLENDER')
     if not blender:
         sys.exit('make_art: $BLENDER is not set; run `. tools/env.sh` first')
     cmd = [blender, '-b', '--factory-startup', '-P', str(HERE / 'render_species.py'), '--', module, str(out), variant]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, **(env or {})})
     if result.returncode or 'Traceback' in result.stderr + result.stdout:
         sys.exit(f'make_art: Blender failed for {module} ({variant}):\n{result.stdout[-2000:]}{result.stderr[-2000:]}')
 
@@ -135,8 +137,17 @@ def make(spec, keep=None):
         base = Path(keep) / module if keep else Path(tmp)
         render(module, 'normal', base / 'normal')
         render(module, 'shiny', base / 'shiny')
-        n, s = views(base / 'normal'), views(base / 'shiny')
-        kind = json.loads((base / 'normal' / 'opts.json').read_text())['kind']
+        return write_sprites(base, GAME / spec['graphics']['dir'])
+
+
+def write_sprites(base, out):
+    """Turn the renders in base/normal and base/shiny into every sprite file and palette in out
+    (also used by tools/oddex/likeness/compose.py, which writes outside the repo)."""
+    n, s = views(base / 'normal'), views(base / 'shiny')
+    kind = json.loads((base / 'normal' / 'opts.json').read_text())['kind']
+
+    def fit(im, size, bottom):
+        return fit_art(im, size, bottom, resample=Image.NEAREST)
 
     def placed(v, names, size, bottom):
         return [fit(v[name], size, bottom) for name in names]
@@ -164,7 +175,6 @@ def make(spec, keep=None):
     ow_ix = to_indexed(ow, ow_pal, layout='horizontal')
     s_ow_pal = shiny_palette([to_indexed([f], ow_pal) for f in ow], s_ow, ow_pal)
 
-    out = GAME / spec['graphics']['dir']
     out.mkdir(parents=True, exist_ok=True)
     front_ix.save(out / 'anim_front.png', bits=4)
     back_ix.save(out / 'back.png', bits=4)
@@ -196,17 +206,23 @@ def main():
         print(f'{sid}: {len([c for c in pal[1:] if c != (0, 0, 0)])} palette colours, icon palette {icon_index}')
         rows.append((front, back, icon, ow, pal, s_pal))
     if args.preview:
-        sheet = Image.new('RGB', ((64 * 2 + 64 * 2 + 32 + 192 + 50), 64 * len(rows)), (152, 200, 176))
-        for r, (front, back, icon, ow, pal, s_pal) in enumerate(rows):
-            x = 0
-            for im, p in ((front.crop((0, 0, 64, 64)), pal), (back, pal), (front.crop((0, 0, 64, 64)), s_pal), (back, s_pal)):
-                c = im.copy()
-                c.putpalette([v for rgb in p for v in rgb])
-                sheet.paste(c.convert('RGB'), (x, r * 64))
-                x += 74
-            sheet.paste(icon.crop((0, 0, 32, 32)).convert('RGB'), (x, r * 64))
-            sheet.paste(ow.convert('RGB'), (x + 42, r * 64))
-        sheet.resize((sheet.width * 3, sheet.height * 3), Image.NEAREST).save(args.preview)
+        preview_sheet(rows, args.preview)
+
+
+def preview_sheet(rows, path):
+    """Contact sheet, 3x: front and back in normal and shiny colours, icon, overworld strip.
+    rows: (front, back, icon, ow, pal, s_pal) per species."""
+    sheet = Image.new('RGB', ((64 * 2 + 64 * 2 + 32 + 192 + 50), 64 * len(rows)), (152, 200, 176))
+    for r, (front, back, icon, ow, pal, s_pal) in enumerate(rows):
+        x = 0
+        for im, p in ((front.crop((0, 0, 64, 64)), pal), (back, pal), (front.crop((0, 0, 64, 64)), s_pal), (back, s_pal)):
+            c = im.copy()
+            c.putpalette([v for rgb in p for v in rgb])
+            sheet.paste(c.convert('RGB'), (x, r * 64))
+            x += 74
+        sheet.paste(icon.crop((0, 0, 32, 32)).convert('RGB'), (x, r * 64))
+        sheet.paste(ow.convert('RGB'), (x + 42, r * 64))
+    sheet.resize((sheet.width * 3, sheet.height * 3), Image.NEAREST).save(path)
 
 
 if __name__ == '__main__':

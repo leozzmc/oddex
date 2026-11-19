@@ -46,8 +46,10 @@ def load_rgba(path):
     return im
 
 
-def fit(im, size, bottom, max_w=None, max_h=None):
-    """Crop to content, shrink to fit, paste bottom-aligned and centred on a transparent canvas."""
+def fit(im, size, bottom, max_w=None, max_h=None, resample=Image.LANCZOS):
+    """Crop to content, shrink to fit, paste bottom-aligned and centred on a transparent canvas.
+    resample: LANCZOS for photos and painted art; NEAREST for flat toon renders, which must not
+    gain blended colours (thousands of them make the palette quantizer crawl)."""
     box = im.getchannel('A').point(lambda a: 255 if a >= 128 else 0).getbbox()
     canvas = Image.new('RGBA', size, (0, 0, 0, 0))
     if not box:
@@ -57,7 +59,7 @@ def fit(im, size, bottom, max_w=None, max_h=None):
     max_h = max_h or bottom + 1
     scale = min(1.0, max_w / im.width, max_h / im.height)
     if scale < 1.0:
-        im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS)
+        im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), resample)
     canvas.paste(im, ((size[0] - im.width) // 2, bottom + 1 - im.height), im)
     return canvas
 
