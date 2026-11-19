@@ -28,7 +28,7 @@ $(ALL_TEACHING_TYPES_JSON): $(ODDEX_SPECIES_STAMP)
 # must already be free of vanilla species is set per scope in ../content/migration_scope.toml.
 
 # Also replays the long route scripts (over 2 minutes each); run before merging content changes.
-ODDEX_FULL_SCRIPTS := to_littleroot to_starter oddex_gallery to_petalburg to_dolls to_rustboro
+ODDEX_FULL_SCRIPTS := to_littleroot to_starter oddex_gallery oddex_dex to_petalburg to_dolls to_rustboro
 .PHONY: check-oddex-full
 check-oddex-full: rom
 	@ODDEX_REGRESSION_SCRIPTS="$(ODDEX_FULL_SCRIPTS)" bash ../tools/oddex/check_oddex.sh

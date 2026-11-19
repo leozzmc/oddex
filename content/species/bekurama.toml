@@ -49,6 +49,6 @@ shadow = { x = 0, y = 4, size = "M" }
 overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 
 [design]
-habitat = ["Route102"]
+habitat = ["Route102", "GraniteCave"]
 level_band = [2, 8]
 family = ["BEKURAMA"]
