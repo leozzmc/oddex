@@ -1,0 +1,54 @@
+# Mauville batch (see docs/research/mask-designs.md; pending the user's review): fused mask parts plus
+# Shinto / folk imagery, never a deity. Replaces Plusle and Minun (Route 110). Stats and moves are provisional.
+
+id = "TOMOEDEN"
+name = "Tomoeden"
+category = "Spark Crest"
+
+types = ["ELECTRIC", "PSYCHIC"]
+abilities = ["PLUS", "MINUS", "TELEPATHY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 50, def = 40, spa = 85, spd = 75, spe = 95 }   # total 405
+ev_yield = { spe = 1 }
+catch_rate = 200
+exp_yield = 81
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FAIRY"]
+growth_rate = "MEDIUM_FAST"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 4
+weight = 42
+text = """
+Three sparks chase one another round a
+little drum, and it laughs whenever they
+touch. Two of them together make the
+sparks spin so fast they crackle blue."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "NUZZLE"], [1, "HELPING_HAND"], [4, "CONFUSION"], [8, "SPARK"], [12, "ENCORE"], [16, "PSYBEAM"], [20, "CHARGE"], [24, "ELECTRO_BALL"], [28, "PSYCHIC"],
+]
+teachable = [
+    "CALM_MIND", "PSYCHIC", "SHOCK_WAVE", "THUNDERBOLT", "THUNDER_WAVE", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/tomoeden"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route110"]
+level_band = [12, 16]
+family = ["TOMOEDEN"]

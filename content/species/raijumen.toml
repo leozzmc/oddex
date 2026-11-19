@@ -1,0 +1,54 @@
+# Mauville batch (see docs/research/mask-designs.md; pending the user's review): fused mask parts plus
+# Shinto / folk imagery, never a deity. Replaces Electrike (Route 110 wild and trainers, Mauville Gym). Stats and moves are provisional.
+
+id = "RAIJUMEN"
+name = "Raijumen"
+category = "Thunderbeast"
+
+types = ["ELECTRIC", "DARK"]
+abilities = ["STATIC", "LIGHTNING_ROD", "INTIMIDATE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 45, def = 40, spa = 65, spd = 40, spe = 65 }   # total 295
+ev_yield = { spe = 1 }
+catch_rate = 120
+exp_yield = 59
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "SLOW"
+body_color = "BLUE"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 26, into = "RAIJUOH" }]   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 152
+text = """
+A beast that falls to earth with the
+lightning and wears a thunder mask. It
+sleeps curled in tree hollows and wakes
+only when a storm is coming."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "THUNDER_WAVE"], [4, "LEER"], [8, "BITE"], [12, "SHOCK_WAVE"], [16, "THUNDER_FANG"], [20, "HOWL"], [24, "CRUNCH"], [28, "DISCHARGE"],
+]
+teachable = [
+    "CRUNCH", "DIG", "SHOCK_WAVE", "THUNDERBOLT", "THUNDER_WAVE", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/raijumen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route110", "MauvilleGym"]
+level_band = [12, 20]
+family = ["RAIJUMEN", "RAIJUOH"]

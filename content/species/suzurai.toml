@@ -1,0 +1,54 @@
+# Mauville batch (see docs/research/mask-designs.md; pending the user's review): fused mask parts plus
+# Shinto / folk imagery, never a deity. Replaces Magnemite and Voltorb (Route 110 trainers, Mauville Gym). Stats and moves are provisional.
+
+id = "SUZURAI"
+name = "Suzurai"
+category = "Shrine Bell"
+
+types = ["STEEL", "ELECTRIC"]
+abilities = ["MAGNET_PULL", "STURDY", "SOUNDPROOF"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 25, atk = 35, def = 70, spa = 95, spd = 55, spe = 45 }   # total 325
+ev_yield = { spa = 1 }
+catch_rate = 190
+exp_yield = 65
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["MINERAL"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 30, into = "KAGURAI" }]   # [{ method, param, into }]
+
+[dex]
+height = 3
+weight = 60
+text = """
+A shrine bell that rings by itself when
+thunder is near. Static crackles round
+its mouth, and anyone who pulls its rope
+gets a shock instead of a blessing."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "THUNDER_SHOCK"], [5, "SUPERSONIC"], [9, "METAL_SOUND"], [13, "SPARK"], [17, "MIRROR_SHOT"], [21, "ELECTRO_BALL"], [25, "FLASH_CANNON"], [29, "DISCHARGE"],
+]
+teachable = [
+    "FLASH_CANNON", "SHOCK_WAVE", "THUNDERBOLT", "THUNDER_WAVE", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/suzurai"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["Route110", "MauvilleGym"]
+level_band = [13, 22]
+family = ["SUZURAI", "KAGURAI"]

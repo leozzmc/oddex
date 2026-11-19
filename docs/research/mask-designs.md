@@ -259,6 +259,43 @@
 - `replacements.toml`:Delcatty、Vigoroth、Loudred 對到 Mandaring;Slaking、Exploud 對到 Mandaloka。三條原版線都是一般系,而且都是越長越大或越吵,用同一條線涵蓋,可以避免遭遇表的角色數變成三倍。Skitty 只有 2 個階段,所以 Delcatty 對到第 2 階段。
 - 進化等級取 Whismur(20/40)和 Slakoth(18/36)之間的值。
 
+## Mauville 段:Route 109 → Slateport → Route 110 → Mauville(到 Wattson),7 隻(**待使用者審查**)
+
+**需求盤點**(2026-11-20,唯讀):用 `check_species_refs --maps Route109,SlateportCity,Route110,MauvilleCity` 列出引用,再用 `stage_reach.py` 篩出走得到的訓練家。
+- **不算在內的**:Route 109 要衝浪才遇得到的泳客;Slateport 對戰帳篷和機關屋(Trick House)後段的訓練家。這兩者都屬於設施或之後的進度。
+- **要算在內的**:Route 110 中段 stage_reach 走不到,但在 Mauville 拿到自行車就能去,而且在 Wattson 之前,所以算進來。
+
+已經有對照、可以直接沿用的:Wailmer、Tentacool、Wingull、Magikarp、Marill、Zigzagoon、Abra、Machop、Meditite、Ralts、Shroomish、Skitty、Oddish、Zubat、Aron、Slugma、Poochyena。
+
+**用現有角色填**(屬性對得上、階段相同、種族值差在 15% 以內):
+- Gulpin → Kumozuka(266 對 302,−12%;毒)。
+- Carvanha → Kamorai(310 對 305,+2%;水)。
+- Goldeen → Kamorai(310 對 320,−3%)。
+- Azurill → Shojobob(220 對 190,+16%。Azurill 是嬰兒寶可夢,原本就特別弱,只差 1% 就在範圍內,所以接受)。
+
+**必須新做的**:
+- Wattson 的電系道館:Magnemite/Magneton、Voltorb、Electrike/Manectric。
+- Route 110 的野生:Electrike、Plusle/Minun。
+- 道館訓練家 Angelo:Illumise/Volbeat。
+- 勁敵和 Edwin:Lombre(Lotad 線的第 2 階段)。
+
+| 暫定名 | 取代的原版 | 屬性 | 階段 | 種族值 | 形體 | 融合來源(零件) | 宗教／文化元素 |
+|---|---|---|---|---|---|---|---|
+| Suzurai | Magnemite、Voltorb | 鋼/電 | 1(Lv30 進化) | 325 | 面具本體(鈴) | Okinoir 的鈴放大成身體;Kamorai 的金眼(縮小);鈴口當成嘴;共用的 `rope` 和 `shide` 做鈴緒 | 神道:神社的鈴、鈴緒、紙垂 |
+| Kagurai | Magneton | 鋼/電 | 2 | 465 | 面具本體(神樂鈴) | Suzurai 的鈴三層疊起來,裝在一根柄上;五色布條 | 神道:神樂鈴與五色布(巫女跳神樂時拿的) |
+| Raijumen | Electrike | 電/惡 | 1(Lv26 進化) | 295 | 戴面具的四腳獸 | Shachound 的獵犬身體;Kamorai 的雷神面(改成藍色)、閃電角 | 民間傳說:雷獸(隨著閃電落下的妖獸,不是神) |
+| Raijuoh | Manectric(**Wattson 的王牌**) | 電/惡 | 2 | 475 | 戴面具的四腳獸 | Raijumen 放大;Kamorai 的鼓環改成背後的一圈雷鼓;尾巴是閃電形的尖刺 | 雷神背後連鼓的意象,只取鼓環,不做成雷神 |
+| Torobi | Illumise、Volbeat | 蟲/電 | 1 | 400 | 面具本體(石燈籠) | 共用零件做的石燈籠(Iwadawn 的岩石質感);火袋窗口裡是 Omotelle 空洞的眼;共用的 `wing` 做螢火蟲翅膀 | 神道:神社參道的石燈籠;螢火蟲(民間把螢火當成魂) |
+| Tomoeden | Plusle、Minun | 電/超能力 | 1 | 405 | 面具本體(三巴) | 三顆 `magatama`(紅、藍、黃)繞著一面小太鼓旋轉;中央是 Shojobob 的笑臉(縮小) | 神道:三巴紋(常見於神社的太鼓和瓦) |
+| Shojomai | Lombre | 水/妖精 | 2(Shojobob 在 Lv14 進化) | 340 | 面具本體加手臂 | Shojobob 的紅臉和長髮;Karuvajra 的手臂拿著柄杓;頭上頂著荷葉 | 能〈猩々〉的「亂」(猩々在浪上跳舞) |
+
+- **Wattson 的隊伍**:Suzurai(Voltorb)、Raijumen(Electrike)、Kagurai(Magneton),王牌是 Raijuoh(Manectric)。
+- **還沒處理、留待決定的**:
+  - 勁敵 Route 110 隊伍裡的御三家第 2 階段(Grovyle、Combusken、Marshtomp):要等使用者決定三人組要不要進化。
+  - Nuzleaf(Edwin):需要 Bekurama 的第 2 階段。
+  - Pelipper:要衝浪才遇得到,需要 Utoghast 的第 2 階段。
+  - 這幾個位置先不在 `replacements.toml` 裡,`apply_replacements` 會把它們列成缺漏。
+
 ## 原御三家的新位置(2026-11-20,Mark 暫定,等使用者看過)
 
 三人組接手御三家之後,Okinoir、Shishiblaze、Kamorai 保留,原本的設計和圖都不動,改放到下面這些位置。三隻都是第 1 階段、種族值總和 310,跟這些位置的原版角色差不多。對照已經寫進 `content/replacements.toml`。

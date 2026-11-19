@@ -9,13 +9,13 @@
 | Ridgecap | Water/Flying | 1 | 310 | starter Lv2–8 | Mudkip 310 (+0%) |
 | Okinoir | Grass/Ground | 1 | 310 | Route110, Route117 Lv12–20 | Oddish 320 (-3%) |
 | Shishiblaze | Fire/Fighting | 1 | 310 | DewfordGym, GraniteCave, Route104 Lv12–19 | Makuhita 237 (+31%) **⚠**; Slugma 250 (+24%) **⚠**; Torkoal 470 (-34%) **⚠** |
-| Kamorai | Water/Electric | 1 | 310 | Route104, Route106, Route107, DewfordTown Lv10–20 | Wailmer 400 (-22%) **⚠** |
+| Kamorai | Water/Electric | 1 | 310 | Route104, Route106, Route107, DewfordTown Lv10–20 | Wailmer 400 (-22%) **⚠**; Carvanha 305 (+2%); Goldeen 320 (-3%) |
 | Shachound | Dark/Psychic | 1 | 220 | Route101, Route102, Route103 Lv2–8 | Poochyena 220 (+0%) |
 | Kyokon | Normal/Ghost | 1 | 240 | Route101, Route102, Route103, GraniteCave Lv2–8 | Zigzagoon 240 (+0%); Sableye 380 (-37%) **⚠** |
 | Usobuzz | Bug/Fighting | 1 | 195 | Route101, Route102 Lv2–8 | Wurmple 195 (+0%) |
 | Shawabolt | Electric/Fairy | 1 | 270 | Route102 Lv2–8 | Taillow 270 (+0%) |
 | Utoghast | Flying/Ghost | 1 | 270 | Route103 Lv2–8 | Wingull 270 (+0%) |
-| Shojobob | Water/Fairy | 1 | 220 | Route102, Route106 Lv2–8 | Lotad 220 (+0%); Tentacool 335 (-34%) **⚠** |
+| Shojobob | Water/Fairy | 1 | 220 | Route102, Route106 Lv2–8 | Lotad 220 (+0%); Tentacool 335 (-34%) **⚠**; Azurill 190 (+16%) **⚠** |
 | Bekurama | Grass/Steel | 1 | 220 | Route102, GraniteCave Lv2–8 | Seedot 220 (+0%); Aron 330 (-33%) **⚠** |
 | Yamambrr | Ice/Ground | 1 | 295 | Route102 Lv2–8 | Shroomish 295 (+0%) |
 | Omotelle | Psychic/Dragon | 1 | 198 | Route102 Lv2–8 | Ralts 198 (+0%) |
@@ -23,7 +23,7 @@
 | Hannyagon | Ghost/Dragon | 3 | 520 | evolution Lv2–8 | Gardevoir 518 (+0%); Gallade 518 (+0%) |
 | Komarock | Rock/Fighting | 1 | 285 | RustboroGym, Route116 Lv8–16 | Geodude 300 (-5%) |
 | Iwadawn | Rock/Fairy | 1 | 375 | RustboroGym Lv14–16 | Nosepass 375 (+0%) |
-| Kumozuka | Bug/Poison | 1 | 266 | Route116, PetalburgWoods Lv5–10 | Nincada 266 (+0%) |
+| Kumozuka | Bug/Poison | 1 | 266 | Route116, PetalburgWoods Lv5–10 | Nincada 266 (+0%); Gulpin 302 (-12%) |
 | Magatide | Water/Dragon | 1 | 255 | Route104 Lv5–10 | Magikarp 200 (+28%) **⚠**; Marill 250 (+2%) |
 | Mandalumb | Normal/Ground | 1 | 280 | PetalburgWoods, Route116 Lv5–10 | Skitty 260 (+8%); Slakoth 280 (+0%); Whismur 240 (+17%) **⚠** |
 | Tsunacoon | Bug/Fighting | 2 | 205 | PetalburgWoods Lv7–10 | Silcoon 205 (+0%); Cascoon 205 (+0%) |
@@ -34,6 +34,13 @@
 | Komorimen | Poison/Flying | 1 | 245 | GraniteCave Lv6–11 | Zubat 245 (+0%) |
 | Mandaring | Normal/Ground | 2 | 400 | evolution Lv20–38 | Delcatty 400 (+0%); Vigoroth 440 (-9%); Loudred 360 (+11%) |
 | Mandaloka | Ground/Fire | 3 | 540 | evolution Lv38–60 | Slaking 670 (-19%) **⚠**; Exploud 490 (+10%) |
+| Suzurai | Steel/Electric | 1 | 325 | Route110, MauvilleGym Lv13–22 | Magnemite 325 (+0%); Voltorb 330 (-2%) |
+| Kagurai | Steel/Electric | 2 | 465 | MauvilleGym, evolution Lv22–40 | Magneton 465 (+0%) |
+| Raijumen | Electric/Dark | 1 | 295 | Route110, MauvilleGym Lv12–20 | Electrike 295 (+0%) |
+| Raijuoh | Electric/Dark | 2 | 475 | MauvilleGym, evolution Lv24–45 | Manectric 475 (+0%) |
+| Torobi | Bug/Electric | 1 | 400 | MauvilleGym Lv18–22 | Illumise 430 (-7%); Volbeat 430 (-7%) |
+| Tomoeden | Electric/Psychic | 1 | 405 | Route110 Lv12–16 | Plusle 405 (+0%); Minun 405 (+0%) |
+| Shojomai | Water/Fairy | 2 | 340 | Route110, evolution Lv14–30 | Lombre 340 (+0%) |
 
 ## 被標記的角色(8 隻)
 
@@ -84,3 +91,22 @@
 - 選草系御三家的玩家打 Roxanne 偏難,要不要調(見上一段)?
 
 在使用者決定之前,任何數值都不改。
+
+## 建議調整(2026-11-20,Mark;只是建議,數值和對照都還沒改,等使用者決定)
+
+「改對照」只動 `content/replacements.toml`,角色本身的數值不變。每一項的候選都用 15% 的規則檢查過(至少有一個屬性相同、階段一致、種族值差在 15% 以內)。
+
+| # | 被標記 | 差異 | 建議 | 理由 |
+|---|---|---|---|---|
+| 1 | Shojobob ← Tentacool | −34% | **改對照:Tentacool → Kamorai**(310,−7%) | 水系相同;Kamorai 的雷神面帶電,也能聯想到水母的刺。Tentacool 在 Route 106–110 的釣魚、海面和訓練家隊伍裡出現很多次,這一項影響最大。Kamorai 已經涵蓋 Wailmer、Carvanha、Goldeen,所以海邊的種類會比較單調;如果之後做新的水系角色,可以再拆出去 |
+| 2 | Bekurama ← Aron | −33% | **改對照:Aron → Komarock**(285,−14%) | 岩石系相同,而且 Granite Cave 本來就有 Komarock(Geodude)。缺點是鋼屬性會消失;等 Bekurama 有第 2 階段之後,也可以把 Lairon 對到它 |
+| 3 | Kyokon ← Sableye | −37% | **暫時不改** | 幽靈系的現有角色都差太多(Utoghast −29%、Deigloom −24% 而且是第 2 階段)。偏弱只會讓 Granite Cave 稍微簡單一點。建議之後新增一隻 Dewford／洞窟的幽靈系角色 |
+| 4 | Shishiblaze ← Makuhita | +31% | **暫時不改**;如果 Brawly 太難,把他王牌的等級降 1–2 | 格鬥系的現有角色都超過 15%(Gachirinza +18%、Karuvajra +29%)。Makuhita 的種族值低但 HP 很高,實際強度的差距沒有數字上那麼大。這一項請 Sonia 在 `to_dewford` 實測後再判斷 |
+| 5 | Shishiblaze ← Torkoal | −34% | **改對照(選項):Torkoal → Mandaloka**(540,+15%,地面/火) | 只出現在勁敵隊伍。Mandaloka 是第 3 階段,而 Torkoal 是單一階段,所以要把 TORKOAL 列進 `stage_mismatch_ok`,理由寫「勁敵限定、沒有野生」;或者維持原樣,把勁敵那隻的等級加 3 |
+| 6 | Kamorai ← Wailmer | −22% | **暫時不改** | Wailmer 要用 Good/Super Rod 才釣得到,實際遇到是在下一段以後。等 Wailord 出現的那一段,再做一條新的鯨魚系進化線 |
+| 7 | Magatide ← Magikarp | +28% | **不改** | Magikarp 本來就是故意設計得很弱(只會 Splash),Magatide 的種族值是照 Marill 抓的;招式一開始也只有 Splash 和 Water Gun |
+| 8 | Mandaloka ← Slaking | −19% | **不改** | Slaking 的 670 有 Truant 特性壓著,實際戰力接近 500 左右 |
+| 9 | Mandalumb ← Whismur | +17% | **不改** | 只超出 2%,Skitty(+8%)和 Slakoth(0%)都在範圍內 |
+| 10 | Shojobob ← Azurill | +16% | **不改** | 嬰兒寶可夢本來就特別弱,只超出 1% |
+
+照這些建議做的話,只有 Bekurama 會從標記中移除,被標記的從 8 隻變成 7 隻。Shojobob 還有 Azurill(+16%),Shishiblaze 還有 Makuhita,Kamorai 還有 Wailmer。最大的差距(Tentacool、Aron)會消失,剩下的每一項都寫了暫時不改的理由。

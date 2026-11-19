@@ -78,3 +78,20 @@ SABLEYE = "KYOKON"
 TENTACOOL = "SHOJOBOB"
 MEDITITE = "GACHIRINZA"
 ZUBAT = "KOMORIMEN"
+# Mauville segment (Route 109 -> Slateport -> Route 110 -> Mauville, up to Wattson; mask-designs.md).
+# New species: the electric gym and Route 110.
+MAGNEMITE = "SUZURAI"
+VOLTORB = "SUZURAI"     # both are round single-stage electric types; one bell covers both
+MAGNETON = "KAGURAI"
+ELECTRIKE = "RAIJUMEN"
+MANECTRIC = "RAIJUOH"   # Wattson's ace
+ILLUMISE = "TOROBI"
+VOLBEAT = "TOROBI"      # the firefly pair share one lantern
+PLUSLE = "TOMOEDEN"
+MINUN = "TOMOEDEN"      # the spark pair share one crest
+LOMBRE = "SHOJOMAI"     # Shojobob's stage 2 (Lotad -> Lombre at Lv14)
+# Existing species within 15% of the vanilla stat total, same stage and a shared type.
+GULPIN = "KUMOZUKA"     # poison, 266 vs 302
+CARVANHA = "KAMORAI"    # water, 310 vs 305 (Team Aqua at the museum)
+GOLDEEN = "KAMORAI"     # water, 310 vs 320
+AZURILL = "SHOJOBOB"    # baby stage; 220 vs 190 is +16%, accepted for a deliberately weak baby
