@@ -295,7 +295,7 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 
 為了這一段，`autopilot.py` 新增了以下能力（也會用在 4b 的重新校準）：
 - **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時按 B，拒絕學新招式（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示），避免 A 把第一格的攻擊招式忘掉。
-- **選招畫面**（`gBattlerControllerFuncs[0] == HandleInputChooseMove`）：遊標所在的招式沒有 PP 或不是攻擊招式時，把遊標移到威力最高、還有 PP 的攻擊招式。
+- **選招畫面**（`gBattlerControllerFuncs[0] == HandleInputChooseMove`）：把遊標移到「威力 × 屬性相剋 × 本系加成」最高、還有 PP 的攻擊招式。雙方的招式、PP、屬性從 `gBattleMons[0]`／`gBattleMons[1]` 讀（`struct BattlePokemon` 大小 0x8C，招式在 +12、屬性在 +34、PP 在 +37）。相剋表從 ROM 的 `gTypeEffectivenessTable` 讀（`uq4_12_t` 是 u32），招式的威力和屬性從 `src/data/moves_info.h` 解析。換成原創角色後才需要這樣做：例如 Tackle 打一般／幽靈的 Kyokon 完全無效，Leafage 又被火屬性抵抗。
 - **大地圖上換招式**：第一格是狀態招式，或 PP 低於 5 時，打開能力畫面把攻擊招式換到第一格。開始選單的遊標會記住位置而且會繞圈，所以從 `sCurrentStartMenuActions`／`sStartMenuCursorPos` 讀出來再計算按法；操作被腳本鎖住時（`sLockFieldControls`、`sGlobalScriptContextStatus`）不換。
 - 同一步走不動兩次（已經按 B 排除對話框的可能）時，把那一格當成障礙並重新規劃。例如道館裡打完戰鬥、走過來擋在一格寬通道上的訓練家。
 - `grind:Map:x1:y1:x2:y2:LV`：在兩格草叢之間來回走到指定等級；HP 低於 35% 或攻擊招式的 PP 總和低於 10 時暫停，讓呼叫者去回血。

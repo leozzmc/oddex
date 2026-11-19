@@ -16,7 +16,7 @@
 
 [early]
 description = "Littleroot -> Petalburg: plan B step 4b"
-strict = false
+strict = true
 wild_maps = ["Route101", "Route102", "Route103"]
 wild_kinds = ["land_mons"]   # water and fishing need a rod or Surf; not reachable this early
 trainers = [

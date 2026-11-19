@@ -33,6 +33,10 @@ PetalburgCity_PokemonCenter_1F_EventScript_Woman::
 	release
 	end
 
+@ The type texts below are written for the current STARTER_* roles (Okinoir grass/ground,
+@ Shishiblaze fire/fighting, Kamorai water/electric). When content/roles.toml points the starters
+@ at other species (planned: the three friend characters, new second types), rewrite these
+@ texts to match and rerecord the to_petalburg baselines.
 PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
 	call_if_eq VAR_STARTER_MON, 0, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterGrassType
 	call_if_eq VAR_STARTER_MON, 1, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterFireType
