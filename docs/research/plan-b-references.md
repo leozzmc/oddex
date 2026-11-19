@@ -158,21 +158,37 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
   4. 替換表缺少原版角色時，失敗並列出全部；可選 `--fallback`。
   - 分工：進化階段的比對需要讀 TOML，由 Mark 提供（`gen_species.py` 的載入函式）；改寫 party 和 json 由 Sonia 實作（`tools/oddex/apply_replacements.py`）。
 
-### 5.2 第二階段實作順序
+- **進化階段**：Mark 已經在 `tools/oddex/species_data.py` 提供 `load_species()`、`load_roles()`、`oddex_stages()`、`vanilla_stages()`（feat/species a1c3394f）。原版共 1,571 種：Wurmple 1 → Silcoon/Cascoon 2 → Beautifly/Dustox 3、Kirlia → Gardevoir/Gallade 都正確，Mega 等型態算第 1 階段。`apply_replacements.py` 直接 import 使用。
+
+### 5.2 驗證：`make check-oddex`
+
+下表「驗證」欄寫的 `make check-oddex`，是 Mark 實作的（feat/species a1c3394f，`game/oddex.mk` + `tools/oddex/check_oddex.sh`）。它會依序執行：
+
+1. `gen_species.py --check`：產生檔是最新的。
+2. `check_species_refs.py`：預設只回報；設定 `ODDEX_STRICT_MAPS` 後，改成 `--strict --maps $ODDEX_STRICT_MAPS`。
+3. 用 runner 跑 `ODDEX_REGRESSION_SCRIPTS`（預設 `to_littleroot to_starter`）：只要出現 crash screen 就失敗。Mark 讓 `src/assertf.c` 在 debug build 的 CrashScreen 多輸出一行 `ODDEX_CRASH_SCREEN assert: <檔案:行號: 訊息>` 到 mGBA log，所以「全程沒有 assert」可以自動判定（已驗證：關掉第 3 世代時會抓到 `disabled species: 270`）。
+4. 選用：`ODDEX_SHOTS_BASELINE=<dir>` 會拿 `<dir>/<腳本名>/*.png` 逐像素比對。
+
+使用規則：
+- **2c 完成時**，把 `to_petalburg` 加進 `check_oddex.sh` 預設的 `ODDEX_REGRESSION_SCRIPTS`，並把原版基準截圖放到 `ODDEX_SHOTS_BASELINE/to_petalburg/`。
+- **4b 完成時**，把早期路線寫進 `game/oddex.mk` 的 `ODDEX_STRICT_MAPS ?=` 預設值（`LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity`），之後每遷移一段就往上加。
+- **回歸腳本必須能獨立執行**：`check_oddex.sh` 會讓每份腳本在自己全新的目錄裡、從開機開始跑，不能 `load` 其他腳本留下的 savestate。所以 `to_petalburg` 要從開機一路跑到 Petalburg（`littleroot_npcs` 目前依賴 `to_littleroot` 的存檔，因此沒放進回歸清單）。如果重複的開頭段落太多，可以請 David 在 runner 加一個 `include <script>` 指令。
+
+### 5.3 第二階段實作順序
 
 | 步 | 內容 | 負責 | 依賴 | 驗證 |
 |---|---|---|---|---|
 | 0 | ~~使用者決策~~ **已決定**（`DECISIONS.md` 92cd562a）：原創角色先用程式產生的佔位圖，之後再統一設計；原版叫聲關掉後先無聲；資料格式採用 TOML（d0baa5b1） | 使用者 | — | — |
 | 1 | 產生地區圖鑑、修好 sprite 檢視器的起始編號 | Mark | — | 能力畫面不再顯示 No000 |
-| 2a | 代號接上 C：開場 ×2、救 Birch、御三家 ×3 | Mark | — | `to_starter` 截圖逐像素不變 |
-| 2b | 代號接上 C：Wally 教學 ×2；Route 103 勁敵 6 組；Petalburg 寶可夢中心 3 段、道館 1 段改用 `bufferspeciesname` 代號 | Sonia | — | `to_petalburg` 截圖不變 |
-| 2c | 新增 `to_petalburg.txt`：接在 `to_starter` 之後 → Oldale → Route 103 勁敵 → 研究所拿圖鑑 → Route 102 → Petalburg Wally 教學。**先在原版上錄好基準截圖** | Sonia | — | 腳本可重現 |
-| 3 | 早期約 10 隻原創角色的資料和圖像 | Mark | 0 | 產生器驗證、sprite 檢視器 |
+| 2a | 代號接上 C：開場 ×2、救 Birch、御三家 ×3 | Mark | — | `make check-oddex` + `ODDEX_SHOTS_BASELINE`：`to_starter` 逐像素不變 |
+| 2b | 代號接上 C：Wally 教學 ×2；Route 103 勁敵 6 組；Petalburg 寶可夢中心 3 段、道館 1 段改用 `bufferspeciesname` 代號 | Sonia | 2c | `make check-oddex` + `ODDEX_SHOTS_BASELINE`：`to_petalburg` 逐像素不變 |
+| 2c | 新增 `to_petalburg.txt`：從開機開始，走 `to_starter` 的路線 → Oldale → Route 103 勁敵 → 研究所拿圖鑑 → Route 102 → Petalburg Wally 教學。**先在原版上錄好基準截圖**。必須能獨立執行（見 §5.2） | Sonia | — | 從開機跑兩次結果相同，並加進 `ODDEX_REGRESSION_SCRIPTS` |
+| 3 | 早期約 10 隻原創角色的資料和圖像。依使用者決策，先把佔位圖產生器通用化：配色依屬性、幾種體型模板、屬性記號、同一條進化線共用配色，參數放在 TOML 的選填區段 `[graphics.placeholder]`（換正式美術時只要換圖檔、刪掉那一段）；圖檔匯入要能吃外部 PNG（自動量化成 15 色、對應共用 icon 調色盤）。詳見 Mark 的 `species-plan-b.md` §5.1 | Mark | 0 | 產生器驗證、sprite 檢視器、`make check-oddex` |
 | 4a | `apply_replacements.py`（§5.1 的要求） | Sonia（階段比對：Mark） | 3 | 單元測試：重複執行、最小 diff、缺漏時失敗 |
-| 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | `check_species_refs.py --strict --maps LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity` 通過（`--maps` 會排除 C，C 的部分由 2a／2b 涵蓋） |
-| 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `to_littleroot`、`to_starter`、`to_petalburg` 截圖全程沒有 assert |
-| 6 | 依路線往後擴充。**每條路線的必要項目**：替換表套用（訓練家、野生）；腳本裡的 `SPECIES_*`，**包含 `playmoncry`**（原版角色的叫聲在 debug build 會 assert，見下方說明）；文字裡寫死的角色名；寶可夢造型的地圖物件改用佔位 overworld 圖。最後是設施 stub | 兩人 | 5 | 每段都要跑 `--strict --maps <該路線>` 和截圖，全程沒有 assert |
+| 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | 早期路線寫進 `ODDEX_STRICT_MAPS` 後，`make check-oddex` 通過（`--maps` 會排除 C，C 的部分由 2a／2b 涵蓋） |
+| 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `make check-oddex`（含 `ODDEX_STRICT_MAPS` 早期路線，以及 `to_littleroot`、`to_starter`、`to_petalburg` 全程沒有 crash screen） |
+| 6 | 依路線往後擴充。**每條路線的必要項目**：替換表套用（訓練家、野生）；腳本裡的 `SPECIES_*`，**包含 `playmoncry`**（原版角色的叫聲在 debug build 會 assert，見下方說明）；文字裡寫死的角色名；寶可夢造型的地圖物件改用佔位 overworld 圖。最後是設施 stub | 兩人 | 5 | `make check-oddex`：把該路線加進 `ODDEX_STRICT_MAPS`，並加入或更新該路線的回歸腳本 |
 
-1、2a、2b、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）。
+1、2a、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）；2b 要等 2c 錄好基準截圖再改，才能證明改完遊戲內容不變。
 
 **注意：「先無聲」不代表 `playmoncry` 可以不改。** `playmoncry` → `GetCryIdBySpecies` → `SanitizeSpeciesId`（`src/pokemon.c:6388`）。在 debug build 裡，播放已停用 species 的叫聲**一樣會跳出 `disabled species` 的 assert**（release build 會靜默變成 `SPECIES_NONE`）。所以腳本裡原版角色的 `playmoncry`（Emerald 共 71 處）還是要在第 6 步依路線改成原創角色或代號；原創角色本身的叫聲是 `CRY_NONE`，沒有問題。早期路線（到 Petalburg）沒有 `playmoncry`，所以不影響第 5 步的驗收。地圖上寶可夢造型的物件，依決策先換成原創角色的佔位 overworld 圖。
