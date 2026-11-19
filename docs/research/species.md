@@ -28,8 +28,12 @@
 ### 會顯示角色名字、但不在 species 資料裡的地方
 `speciesName` 改掉後,下列地方**仍然寫死原名**,需要另外處理(大多屬於事件/地圖線):
 
-- `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc:73`:「For example, your TREECKO…」+ 說它是 GRASS 屬性 → **Sonia**
-- 裝飾品 `DECOR_TREECKO_DOLL`:`src/data/decoration/header.h`(名稱/說明)、`src/data/script_menu.h:268`(遊戲角「TREECKO DOLL 1,000 COINS」)、`OBJ_EVENT_GFX_TREECKO_DOLL` 圖像
+- `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc:73`:「For example, your TREECKO…」+ 說它是 GRASS 屬性 → **已由 Sonia 在 `feat/events` 修正**(改用 `bufferspeciesname` 讀取資料)
+- 裝飾品 `DECOR_TREECKO_DOLL` → **已改成 MOSSPRIT DOLL**:
+  - 名稱/說明:`src/data/decoration/header.h`(`name` 是 `u8[16]`,最多 15 字);遊戲角選單:`src/data/script_menu.h`(`MultichoiceList_GameCornerDolls`,視窗寬度會依最長字串自動計算)。地圖腳本用 `bufferdecorationname`,不用改
+  - 圖像:`graphics/object_events/pics/dolls/treecko_doll.png`,16×16 4bpp。**沒有自己的調色盤**,用共用的 `OBJ_EVENT_PAL_TAG_NPC_3`(`graphics/object_events/palettes/npc_3.pal`,見 `object_event_graphics_info.h` 的 `gObjectEventGraphicsInfo_TreeckoDoll`),所以只能用那 16 色(沒有黃色)。秘密基地的放置也透過 `DecorGfx_TREECKO_DOLL` 引用同一張圖
+  - 產生:`python3 ../scripts/species/gen_mossprit.py graphics/pokemon/treecko graphics/object_events/pics/dolls/treecko_doll.png`。16×16 用程序化繪製會太擠,所以玩偶是腳本裡手動排的對稱像素圖(`DOLL_LEFT`)
+- **尚未處理**:秘密基地裝飾品 `DECOR_GREEN_POSTER` 的說明「A small poster with a TREECKO print.」(`src/data/decoration/header.h`)。海報圖案在秘密基地 tileset 裡,要連圖案一起換
 - `src/data/trainers.party`:隊伍用的是 species 識別名(`Treecko` → `SPECIES_TREECKO`),**名稱改了也不用改這裡**;trainer 常數名稱如 `TRAINER_MAY_ROUTE_103_TREECKO` 只是識別字
 - 單元測試(見第 6 節)
 

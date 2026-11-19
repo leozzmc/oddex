@@ -2,8 +2,9 @@
 """Procedurally draw the original placeholder species "Mossprit" and write every
 graphics file a pokeemerald-expansion species folder needs.
 
-Usage: python3 scripts/species/gen_mossprit.py <species_gfx_dir>
-  e.g. python3 scripts/species/gen_mossprit.py game/graphics/pokemon/treecko
+Usage: python3 scripts/species/gen_mossprit.py <species_gfx_dir> [<doll_png>]
+  e.g. python3 scripts/species/gen_mossprit.py game/graphics/pokemon/treecko \\
+           game/graphics/object_events/pics/dolls/treecko_doll.png
 """
 import math
 import sys
@@ -256,7 +257,46 @@ def main(out_dir):
     fp.save(out / 'footprint.png', bits=1)
 
 
+# 16x16 decoration doll, hand-placed because the procedural renderer is too busy at
+# this size. Left half only; the right half is its mirror. Indices are drawn straight
+# onto graphics/object_events/palettes/npc_3.pal (the doll's OBJ_EVENT_PAL_TAG_NPC_3),
+# which has no yellow, so the flower is peach.
+DOLL_KEYS = {'.': 0, 'K': 15, 'D': 7, 'G': 6, 'L': 5, 'W': 14, 'm': 10, 'M': 9,
+             'g': 8, 'P': 2, 'C': 12, 'R': 11, 'B': 4}
+DOLL_LEFT = [
+    '......KK',
+    '.....KPC',
+    '......KM',
+    '..KKK.KM',
+    '.KgggKKM',
+    '..KKKKgM',
+    '...KgggM',
+    '..KgggMg',
+    '.KgMMgMM',
+    '.KMLLMLM',
+    '.KLWKLLL',
+    '.KGKKLLL',
+    '.KRGGGGK',
+    '.KDGGGGG',
+    '..KDDDDD',
+    '..KBBKKK',
+]
+
+
+def write_doll(path):
+    path = Path(path)
+    pal = read_jasc(path.parents[2] / 'palettes' / 'npc_3.pal')
+    im = Image.new('P', (16, 16), 0)
+    im.putpalette([c for rgb in pal for c in rgb])
+    for y, half in enumerate(DOLL_LEFT):
+        for x, key in enumerate(half + half[::-1]):
+            im.putpixel((x, y), DOLL_KEYS[key])
+    save_png(im, path)
+
+
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         sys.exit(__doc__)
     main(sys.argv[1])
+    if len(sys.argv) == 3:
+        write_doll(sys.argv[2])
