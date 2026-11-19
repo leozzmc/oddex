@@ -91,3 +91,22 @@
 - 選草系御三家的玩家打 Roxanne 偏難,要不要調(見上一段)?
 
 在使用者決定之前,任何數值都不改。
+
+## 建議調整(2026-11-20,Mark;只是建議,數值和對照都還沒改,等使用者決定)
+
+「改對照」只動 `content/replacements.toml`,角色本身的數值不變。每一項的候選都用 15% 的規則檢查過(至少有一個屬性相同、階段一致、種族值差在 15% 以內)。
+
+| # | 被標記 | 差異 | 建議 | 理由 |
+|---|---|---|---|---|
+| 1 | Shojobob ← Tentacool | −34% | **改對照:Tentacool → Kamorai**(310,−7%) | 水系相同;Kamorai 的雷神面帶電,也能聯想到水母的刺。Tentacool 在 Route 106–110 的釣魚、海面和訓練家隊伍裡出現很多次,這一項影響最大。Kamorai 已經涵蓋 Wailmer、Carvanha、Goldeen,所以海邊的種類會比較單調;如果之後做新的水系角色,可以再拆出去 |
+| 2 | Bekurama ← Aron | −33% | **改對照:Aron → Komarock**(285,−14%) | 岩石系相同,而且 Granite Cave 本來就有 Komarock(Geodude)。缺點是鋼屬性會消失;等 Bekurama 有第 2 階段之後,也可以把 Lairon 對到它 |
+| 3 | Kyokon ← Sableye | −37% | **暫時不改** | 幽靈系的現有角色都差太多(Utoghast −29%、Deigloom −24% 而且是第 2 階段)。偏弱只會讓 Granite Cave 稍微簡單一點。建議之後新增一隻 Dewford／洞窟的幽靈系角色 |
+| 4 | Shishiblaze ← Makuhita | +31% | **暫時不改**;如果 Brawly 太難,把他王牌的等級降 1–2 | 格鬥系的現有角色都超過 15%(Gachirinza +18%、Karuvajra +29%)。Makuhita 的種族值低但 HP 很高,實際強度的差距沒有數字上那麼大。這一項請 Sonia 在 `to_dewford` 實測後再判斷 |
+| 5 | Shishiblaze ← Torkoal | −34% | **改對照(選項):Torkoal → Mandaloka**(540,+15%,地面/火) | 只出現在勁敵隊伍。Mandaloka 是第 3 階段,而 Torkoal 是單一階段,所以要把 TORKOAL 列進 `stage_mismatch_ok`,理由寫「勁敵限定、沒有野生」;或者維持原樣,把勁敵那隻的等級加 3 |
+| 6 | Kamorai ← Wailmer | −22% | **暫時不改** | Wailmer 要用 Good/Super Rod 才釣得到,實際遇到是在下一段以後。等 Wailord 出現的那一段,再做一條新的鯨魚系進化線 |
+| 7 | Magatide ← Magikarp | +28% | **不改** | Magikarp 本來就是故意設計得很弱(只會 Splash),Magatide 的種族值是照 Marill 抓的;招式一開始也只有 Splash 和 Water Gun |
+| 8 | Mandaloka ← Slaking | −19% | **不改** | Slaking 的 670 有 Truant 特性壓著,實際戰力接近 500 左右 |
+| 9 | Mandalumb ← Whismur | +17% | **不改** | 只超出 2%,Skitty(+8%)和 Slakoth(0%)都在範圍內 |
+| 10 | Shojobob ← Azurill | +16% | **不改** | 嬰兒寶可夢本來就特別弱,只超出 1% |
+
+照這些建議做的話,只有 Bekurama 會從標記中移除,被標記的從 8 隻變成 7 隻。Shojobob 還有 Azurill(+16%),Shishiblaze 還有 Makuhita,Kamorai 還有 Wailmer。最大的差距(Tentacool、Aron)會消失,剩下的每一項都寫了暫時不改的理由。
