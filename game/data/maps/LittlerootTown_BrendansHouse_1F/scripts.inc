@@ -287,9 +287,9 @@ PlayersHouse_1F_Text_IsntItNiceInHere:
 	.string "MOM: See, {PLAYER}?\n"
 	.string "Isn't it nice in here, too?$"
 
-PlayersHouse_1F_Text_MoversPokemonGoSetClock:
-	.string "The mover's POKéMON do all the work\n"
-	.string "of moving us in and cleaning up after.\l"
+PlayersHouse_1F_Text_MoversGoSetClock:
+	.string "The movers do all the work of\n"
+	.string "moving us in and cleaning up after.\l"
 	.string "This is so convenient!\p"
 	.string "{PLAYER}, your room is upstairs.\n"
 	.string "Go check it out, dear!\p"
@@ -361,11 +361,13 @@ PlayersHouse_1F_Text_RegisteredMom:
 	.string "Registered MOM\n"
 	.string "in the POKéNAV.$"
 
-PlayersHouse_1F_Text_Vigoroth1:
-	.string "Fugiiiiih!$"
+PlayersHouse_1F_Text_Mover1:
+	.string "Hup! Almost done unpacking here.\n"
+	.string "Mind the boxes, kid!$"
 
-PlayersHouse_1F_Text_Vigoroth2:
-	.string "Huggoh, uggo uggo…$"
+PlayersHouse_1F_Text_Mover2:
+	.string "Coming through!\n"
+	.string "This one goes upstairs…$"
 
 PlayersHouse_1F_Text_ReportFromPetalburgGym:
 	.string "INTERVIEWER: …We brought you this\n"

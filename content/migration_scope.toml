@@ -32,10 +32,6 @@ exclude_refs = [
     "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_CHIKORITA",
     "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_CYNDAQUIL",
     "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_TOTODILE",
-    # The Vigoroth moving crew in both houses are set dressing, not encounters; who carries the
-    # boxes is a story/art question for plan B step 6 (David's decision, 4b).
-    "data/maps/LittlerootTown_BrendansHouse_1F/map.json:SPECIES_VIGOROTH",
-    "data/maps/LittlerootTown_MaysHouse_1F/map.json:SPECIES_VIGOROTH",
     # Bedroom dolls are decorations (the decoration system has its own doll set); step 6.
     "data/maps/LittlerootTown_BrendansHouse_2F/map.json:SPECIES_SWABLU",
     "data/maps/LittlerootTown_MaysHouse_2F/map.json:SPECIES_PICHU",
