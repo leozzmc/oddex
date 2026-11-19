@@ -58,7 +58,7 @@ cd game && . ../tools/env.sh && make check-oddex -j$(sysctl -n hw.ncpu)
 
 **基準截圖有放進 git。** 刻意改變畫面時（例如改對話、換圖），請在同一個 commit 裡更新基準：
 ```bash
-cp game/build/oddex-check/<script>/**/*.png tools/headless/baselines/<script>/
+find game/build/oddex-check/<script> -name '*.png' -exec cp {} tools/headless/baselines/<script>/ \;
 ```
 更新前先看過新截圖，確認變化是預期中的。合併時，基準截圖的差異就是畫面變更的紀錄。
 
