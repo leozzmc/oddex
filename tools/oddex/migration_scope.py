@@ -8,7 +8,7 @@ import tomllib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCOPE_FILE = os.path.join(ROOT, "content", "migration_scope.toml")
-FIELDS = {"description", "strict", "wild_maps", "wild_kinds", "trainers", "maps", "exclude_maps", "exclude_refs", "c_files"}
+FIELDS = {"description", "strict", "wild_maps", "wild_kinds", "trainers", "maps", "exclude_maps", "exclude_refs", "c_files", "script_files"}
 
 
 class Scope:
@@ -22,6 +22,7 @@ class Scope:
         self.exclude_maps = list(data.get("exclude_maps", []))
         self.exclude_refs = set(data.get("exclude_refs", []))
         self.c_files = set(data.get("c_files", []))
+        self.script_files = set(data.get("script_files", []))
         self._validate(data, game)
 
     def _validate(self, data, game):
@@ -46,6 +47,11 @@ class Scope:
         for c in self.c_files:
             if not os.path.exists(os.path.join(game, c)):
                 errors.append(f"c_files: {c} does not exist")
+        for s in sorted(self.script_files):
+            if not s.startswith("data/scripts/") or not s.endswith(".inc"):
+                errors.append(f"script_files: {s} is not a data/scripts/*.inc file (map scripts go in maps)")
+            elif not os.path.exists(os.path.join(game, s)):
+                errors.append(f"script_files: {s} does not exist")
         if errors:
             raise SystemExit(f"{os.path.relpath(SCOPE_FILE, ROOT)} [{self.name}]: " + "; ".join(errors))
 
@@ -54,6 +60,9 @@ class Scope:
 
     def has_wild(self, map_name, kind):
         return map_name in self.wild_maps and (not self.wild_kinds or kind in self.wild_kinds)
+
+    def has_script_file(self, path):
+        return path in self.script_files
 
     def excludes(self, path, species):
         return f"{path}:{species}" in self.exclude_refs

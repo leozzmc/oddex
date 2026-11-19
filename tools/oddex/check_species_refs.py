@@ -205,8 +205,12 @@ def in_scope(f, scope):
         map_name, _, kind = ctx.partition(":")
         return scope.has_wild(map_name, kind)
     if cat in ("script", "text", "gfx"):
-        map_name = ctx.split(" ")[0]
-        return bool(map_name) and scope.has_map(map_name) and not scope.excludes(f["file"], f["species"])
+        map_name = ctx.split(" ")[0] if map_of(f["file"]) else ""
+        if scope.excludes(f["file"], f["species"]):
+            return False
+        if map_name:
+            return scope.has_map(map_name)
+        return scope.has_script_file(f["file"])  # shared scripts under data/scripts/
     if cat == "c":
         return f["file"] in scope.c_files
     return False

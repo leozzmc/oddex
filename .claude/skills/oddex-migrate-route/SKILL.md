@@ -15,6 +15,7 @@ description: Migrate a stretch of the oddex game (a route, town or story segment
 
 - **訓練家用明確清單**，不要依地圖推斷：同一張地圖上常有中期才走得到的訓練家（例如 Route 103 有 8 名要從 Route 110 或衝浪才遇得到）。用 `python3 tools/headless/authoring/stage_reach.py <起點地圖> X Y "Map,Map*,..."` 確認這個階段走得到誰：它只走陸路、跨 connection 和 warp，不能衝浪、居合斬、碎岩、怪力，訓練家旁邊或視線內有一格到得了就算。劇情上的封鎖它判斷不出來（例如 Petalburg 道館的地形走得到，但 Norman 是第 5 個徽章），要人工排除。不要用 `check_maps.py` 的可達性，那個假設已經有所有場地招式，判斷的是「最終」走不走得到。
 - 野生遭遇用 `wild_maps` 加 `wild_kinds`；還沒有釣竿或衝浪時，只放 `land_mons`。
+- 這段路線用到的**共用腳本**（`game/data/scripts/*.inc`，例如兩戶主角家共用的 `players_house.inc`）不在任何地圖底下，`maps` 涵蓋不到，要列進 `script_files`。用 `grep -rn "goto\|call" data/maps/<地圖>/scripts.inc` 找出這段的地圖跳去哪些共用腳本。
 - 刻意留下的原版引用（例如設定角色、破關後才出現的東西）放進 `exclude_refs`，每一條都要寫明理由。用例外並寫清楚，比用不相干的佔位角色硬頂替更好。
 - 列出這段的工作清單：
   ```bash

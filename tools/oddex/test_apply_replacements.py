@@ -1,5 +1,8 @@
 """Tests for apply_replacements.py on scratch copies of the game's data (the real files are untouched).
 
+The trainer and wild data come from FIXTURE_REF, a commit from before any scope was migrated, so the
+expectations do not change as content/migration_scope.toml scopes are migrated.
+
     python3 tools/oddex/test_apply_replacements.py
 """
 import collections, json, os, shutil, subprocess, sys, tempfile, unittest
@@ -10,6 +13,7 @@ import apply_replacements as ar  # noqa: E402
 import check_species_refs as refs  # noqa: E402
 
 TOOL = os.path.join(HERE, "apply_replacements.py")
+FIXTURE_REF = "7910be01"  # develop before plan B step 4b: Routes 101-103 still vanilla
 def read(path):
     with open(path, encoding="utf-8") as f:
         return f.read()
@@ -17,15 +21,15 @@ def read(path):
 
 EARLY_TABLE = """
 [replace]
-POOCHYENA = "SHADEPUP"
-ZIGZAGOON = "SCRUFFLE"
-WURMPLE = "SPROUTWORM"
-WINGULL = "GULLWISP"
-LOTAD = "PADLILY"
-SEEDOT = "ACORNIK"
-RALTS = "DOZELET"
-SHROOMISH = "FUNGLOO"
-TAILLOW = "CHIRPIP"
+POOCHYENA = "SHACHOUND"
+ZIGZAGOON = "KYOKON"
+WURMPLE = "USOBUZZ"
+WINGULL = "UTOGHAST"
+LOTAD = "SHOJOBOB"
+SEEDOT = "BEKURAMA"
+RALTS = "OMOTELLE"
+SHROOMISH = "YAMAMBRR"
+TAILLOW = "SHAWABOLT"
 """
 
 
@@ -34,8 +38,12 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.dir = tempfile.mkdtemp()
         self.party = os.path.join(self.dir, "trainers.party")
         self.wild = os.path.join(self.dir, "wild_encounters.json")
-        shutil.copy(ar.PARTY, self.party)
-        shutil.copy(ar.WILD, self.wild)
+        for src, dst in ((ar.PARTY, self.party), (ar.WILD, self.wild)):
+            rel = os.path.relpath(src, os.path.dirname(ar.GAME))
+            data = subprocess.run(["git", "-C", ar.GAME, "show", f"{FIXTURE_REF}:{rel}"],
+                                  capture_output=True, check=True).stdout
+            with open(dst, "wb") as f:
+                f.write(data)
         self.party0 = read(self.party)
         self.wild0 = read(self.wild)
 
@@ -69,7 +77,7 @@ class ApplyReplacementsTest(unittest.TestCase):
         pc = self.changed_lines(self.party0, party)
         self.assertEqual(len(pc), 7, pc)
         for old, new in pc:
-            self.assertIn(new.strip(), {"Shadepup", "Scruffle", "Sproutworm", "Fungloo", "Chirpip"}, (old, new))
+            self.assertIn(new.strip(), {"Shachound", "Kyokon", "Usobuzz", "Yamambrr", "Shawabolt"}, (old, new))
         # 12 land slots each on Route 101 and Route 102; only the "species" value changes.
         wc = self.changed_lines(self.wild0, wild)
         self.assertEqual(len(wc), 24, wc[:3])
@@ -96,7 +104,7 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertEqual(self.files(), (self.party0, self.wild0))
 
     def test_fallback_covers_the_rest(self):
-        r = self.run_tool("--maps", "Route102", "--fallback", "SHADEPUP")
+        r = self.run_tool("--maps", "Route102", "--fallback", "SHACHOUND")
         self.assertEqual(r.returncode, 0, r.stdout)
         enc = [e for g in json.loads(self.files()[1])["wild_encounter_groups"] for e in g.get("encounters", [])
                if e.get("map") == "MAP_ROUTE102"]
@@ -119,15 +127,15 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertEqual(self.files(), (self.party0, self.wild0))
 
     def test_stage_mismatch_fails_unless_allowed(self):
-        r = self.run_tool("--dry-run", table='[replace]\nMIGHTYENA = "SHADEPUP"\n')
+        r = self.run_tool("--dry-run", table='[replace]\nMIGHTYENA = "SHACHOUND"\n')
         self.assertEqual(r.returncode, 1)
-        self.assertIn("MIGHTYENA is evolution stage 2 but SHADEPUP is stage 1", r.stdout)
+        self.assertIn("MIGHTYENA is evolution stage 2 but SHACHOUND is stage 1", r.stdout)
         r = self.run_tool("--maps", "Route101", "--kinds", "land_mons", "--dry-run",
-                          table='stage_mismatch_ok = ["MIGHTYENA"]\n' + EARLY_TABLE + 'MIGHTYENA = "SHADEPUP"\n')
+                          table='stage_mismatch_ok = ["MIGHTYENA"]\n' + EARLY_TABLE + 'MIGHTYENA = "SHACHOUND"\n')
         self.assertEqual(r.returncode, 0, r.stdout)
 
     def test_unknown_keys_and_values_fail(self):
-        r = self.run_tool("--dry-run", table='[replace]\nNOTAMON = "SHADEPUP"\nPOOCHYENA = "NOTREAL"\n')
+        r = self.run_tool("--dry-run", table='[replace]\nNOTAMON = "SHACHOUND"\nPOOCHYENA = "NOTREAL"\n')
         self.assertEqual(r.returncode, 1)
         self.assertIn("table key NOTAMON is not a vanilla species", r.stdout)
         self.assertIn("table value NOTREAL", r.stdout)
@@ -168,21 +176,48 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertEqual(r.returncode, 2)
         self.assertEqual(self.files(), (self.party0, self.wild0))
 
-    def test_check_species_refs_reads_the_same_scope(self):
+    def test_check_species_refs_reads_the_same_scope_file(self):
         cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "early", "--json"]
         found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
         by_cat = collections.Counter(f["category"] for f in found)
-        self.assertEqual((by_cat["party"], by_cat["wild"]), (7, 36))
-        self.assertEqual(by_cat["script"] + by_cat["text"], 0)  # Johto starters are in exclude_refs
+        # [early] is migrated (strict since step 4b): nothing is left in the real game data, including
+        # data/scripts/players_house.inc (script_files); the Johto starters are in exclude_refs.
+        self.assertEqual(sum(by_cat.values()), 0, found[:3])
 
     def test_strict_scope_with_vanilla_left_fails(self):
-        scope = self.table('[early]\nstrict = true\nwild_maps = ["Route101"]\nwild_kinds = ["land_mons"]\n', "scope.toml")
+        # Reads the real game: Route 113 is late-game and stays vanilla until its own scope is migrated.
+        scope = self.table('[early]\nstrict = true\nwild_maps = ["Route113"]\nwild_kinds = ["land_mons"]\n', "scope.toml")
         cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--strict-scopes", "--summary",
                "--scope-file", scope]
         r = subprocess.run(cmd, capture_output=True, text=True)
         self.assertEqual(r.returncode, 1, r.stdout)
         self.assertIn("strict scopes: early", r.stdout)
         self.assertIn("wild           12 refs", r.stdout)
+
+    def test_script_files_bring_shared_scripts_into_scope(self):
+        # kecleon.inc (data/scripts/) has a playmoncry and a text reference to KECLEON; no map's
+        # `maps` entry covers it, so it is in scope only through script_files.
+        def refs(body):
+            scope = self.table(body, "scope.toml")
+            cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
+                   "--scope-file", scope]
+            return json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        self.assertEqual(refs('[s]\nmaps = ["Route101"]\n'), [])  # migrated map, no shared script
+        found = refs('[s]\nscript_files = ["data/scripts/kecleon.inc"]\n')
+        self.assertTrue(found)
+        self.assertEqual({f["file"] for f in found}, {"data/scripts/kecleon.inc"})
+        self.assertEqual({f["species"] for f in found}, {"SPECIES_KECLEON"})
+        excluded = refs('[s]\nscript_files = ["data/scripts/kecleon.inc"]\n'
+                        'exclude_refs = ["data/scripts/kecleon.inc:SPECIES_KECLEON"]\n')
+        self.assertEqual(excluded, [])
+
+    def test_script_files_must_be_shared_scripts(self):
+        scope = self.table('[bad]\nscript_files = ["data/scripts/nope.inc", "data/maps/Route101/scripts.inc"]\n',
+                           "scope.toml")
+        r = self.run_tool("--scope", "bad", "--scope-file", scope, "--dry-run")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("data/scripts/nope.inc does not exist", r.stdout + r.stderr)
+        self.assertIn("data/maps/Route101/scripts.inc is not a data/scripts/*.inc file", r.stdout + r.stderr)
 
     def test_scope_file_typos_fail(self):
         scope = self.table('[bad]\ntrainers = ["TRAINER_NOBODY"]\nmaps = ["Nowhere*"]\nwlid_maps = []\n', "scope.toml")
