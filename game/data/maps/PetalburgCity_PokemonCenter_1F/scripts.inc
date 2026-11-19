@@ -41,7 +41,8 @@ PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
 	end
 
 PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType::
-	msgbox PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType, MSGBOX_DEFAULT
+	bufferspeciesname STR_VAR_1, SPECIES_TREECKO
+	msgbox PetalburgCity_PokemonCenter_1F_Text_TreeckoTypeInfo, MSGBOX_DEFAULT
 	return
 
 PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType::
@@ -69,13 +70,13 @@ PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 	.string "Depending on the types of POKéMON,\n"
 	.string "a battle could be easy or hard.$"
 
-PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:
-	.string "For example, your TREECKO\n"
-	.string "is a GRASS type.\p"
-	.string "It's strong against the WATER and\n"
-	.string "GROUND types.\p"
-	.string "But, it's weak against FIRE-type\n"
-	.string "POKéMON.$"
+PetalburgCity_PokemonCenter_1F_Text_TreeckoTypeInfo:
+	.string "For example, your {STR_VAR_1}\n"
+	.string "is a GRASS and ROCK type.\p"
+	.string "It's strong against WATER,\n"
+	.string "GROUND, FIRE and FLYING types.\p"
+	.string "But, it's weak against ICE, BUG,\n"
+	.string "FIGHTING and STEEL-type POKéMON.$"
 
 PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:
 	.string "For example, your TORCHIC\n"
