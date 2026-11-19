@@ -390,6 +390,13 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 
 腳本**停在 Brawly 的第一個回合**：Lv17 的 Grinpack 被 Karuvajra 的 Karate Chop 一下打掉 44/45，而它所有的招式打格鬥/飛行都只有一半效果，這不是多練幾級能解決的。這跟 Roxanne 一樣是草系御三家的平衡問題，留給使用者決定。Old Rod 和 Steven 的信沒有涵蓋，因為跟角色遷移無關。
 
+**Brawly 的平衡（2026-11-20，David 暫定採用方案 F，見 `DECISIONS.md` 和 `balance.md`）**：`TRAINER_BRAWLY_1` 的王牌從 Shishiblaze Lv19 改成 Komarock Lv17：
+- 沿用原本王牌的 Sitrus 果和 24 的 IV。
+- 招式是 Arm Thrust、Vital Throw、Rock Tomb、Bulk Up。
+- Karuvajra 和 Gachirinza 降到 Lv14。
+
+重戰的 `TRAINER_BRAWLY_2`–`5` 沒有改：它們在破關後，等級和隊伍的平衡要跟其他重戰一起看，不適合照第一戰的比例調整。
+
 錄製時學到的事：
 - Rustboro 南口的勁敵會問要不要對戰，用 B 推進等於回答 NO。
 - Devon 社長之後的 PokéNav 教學，要選 POKéNAV → MATCH CALL → MR. STONE → CALL 才會結束。
