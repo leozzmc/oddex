@@ -4600,7 +4600,9 @@ bool16 HasAllHoennMons(void)
     for (i = 0; i < HOENN_DEX_COUNT - 1; i++)
     {
         j = HoennToNationalOrder(i + 1);
-        if (!(gSpeciesInfo[j].isMythical && !gSpeciesInfo[j].dexForceRequired) && !GetSetPokedexFlag(j, FLAG_GET_CAUGHT))
+        // oddex: index gSpeciesInfo by species, not dex number; they only coincide for vanilla species.
+        const struct SpeciesInfo *info = &gSpeciesInfo[NationalPokedexNumToSpecies(j)];
+        if (!(info->isMythical && !info->dexForceRequired) && !GetSetPokedexFlag(j, FLAG_GET_CAUGHT))
             return FALSE;
     }
     return TRUE;

@@ -3,7 +3,7 @@
 # fresh when the content or the generator changes. A stamp stands in for the outputs
 # because GNU Make 3.81 (macOS) has no grouped targets.
 
-ODDEX_SPECIES_SRC := $(wildcard ../content/species/*.toml) ../content/roles.toml ../tools/oddex/gen_species.py
+ODDEX_SPECIES_SRC := $(wildcard ../content/species/*.toml) ../content/roles.toml ../content/regional_dex.toml ../tools/oddex/gen_species.py ../tools/oddex/species_data.py
 ODDEX_SPECIES_STAMP := $(BUILD_DIR)/oddex_species.stamp
 ODDEX_SPECIES_OUT := \
 	$(INCLUDE_DIRS)/constants/species.h \
