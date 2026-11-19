@@ -71,7 +71,9 @@ grep OddexGuide /tmp/out/events.inc
 cp data/maps/LittlerootTown/scripts.inc /tmp/lr.s && ./tools/preproc/preproc /tmp/lr.s charmap.txt >/dev/null && echo OK
 ```
 
-已確認：mapjson 成功；`LOCALID_LITTLEROOT_TWIN/MOM/RIVAL/BIRCH` 仍然是 1/4/7/8；preproc 接受所有新字串。**完整 ROM 編譯與實機畫面尚未驗證**（等 arm-none-eabi-gcc）。
+已確認：mapjson 成功；`LOCALID_LITTLEROOT_TWIN/MOM/RIVAL/BIRCH` 仍然是 1/4/7/8；preproc 接受所有新字串。**完整 ROM 編譯已通過**（`make` exit 0，1 分 55 秒，32 MB ROM；210 個 warning 全部來自 libpng 和 ld，沒有跟本分支修改相關的）。從 `pokeemerald.elf` 的符號位址回頭解碼 ROM：四段新文字都正確，`LittlerootTown_MapEvents` 的 object 數量是 9，第 9 筆是 (9,12)、elevation 3、flag 0，腳本指標等於 `LittlerootTown_EventScript_OddexGuide`。**遊戲畫面尚未驗證**（等模擬器截圖工具）。
+
+ROM 內字串的驗證方式：`arm-none-eabi-nm pokeemerald.elf | grep <label>` 取得位址，減去 `0x08000000` 就是檔案偏移；依照 `charmap.txt` 反查每個 byte，直到遇到 `0xFF` 為止（`FE`=`\n`、`FA`=`\l`、`FB`=`\p`、`FD 02`=`{STR_VAR_1}`）。
 
 ### 實機測試步驟（給模擬器自動化）
 
