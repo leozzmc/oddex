@@ -4,6 +4,12 @@
 
 // Story/gameplay roles. Code, scripts, trainers.party and wild_encounters.json refer to
 // these instead of a concrete species, so recasting a role is a one-line content change.
-#define SPECIES_ODDEX_STARTER_GRASS            SPECIES_MOSSPRIT
+#define SPECIES_ODDEX_STARTER_GRASS            SPECIES_TREECKO
+#define SPECIES_ODDEX_STARTER_FIRE             SPECIES_TORCHIC
+#define SPECIES_ODDEX_STARTER_WATER            SPECIES_MUDKIP
+#define SPECIES_ODDEX_INTRO_MON                SPECIES_LOTAD
+#define SPECIES_ODDEX_RESCUE_WILD              SPECIES_ZIGZAGOON
+#define SPECIES_ODDEX_TUTORIAL_CATCH           SPECIES_RALTS
+#define SPECIES_ODDEX_TUTORIAL_LENT            SPECIES_ZIGZAGOON
 
 #endif // GUARD_CONSTANTS_ODDEX_SPECIES_H
