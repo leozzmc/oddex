@@ -488,7 +488,7 @@ SlateportCity_EventScript_DollClerk::
 SlateportCity_PokemartDecor_Dolls:
 	.2byte DECOR_AZURILL_DOLL
 	.2byte DECOR_MARILL_DOLL
-	.2byte DECOR_SKITTY_DOLL
+	.2byte DECOR_MANDALUMB_DOLL
 	pokemartlistend
 
 SlateportCity_EventScript_ComeBackWithSecretPower::

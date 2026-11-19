@@ -1,0 +1,16 @@
+# Decoration dolls: each vanilla doll slot (decoration, Game Corner prize, bedroom object) becomes a
+# doll of an original species. tools/oddex/make_dolls.py draws the 16x16 sprite from the species'
+# overworld front frame in the shared NPC_1 object palette, as
+# graphics/object_events/pics/dolls/<species>_doll.png.
+# Keys are the vanilla doll; values follow content/replacements.toml where it has the species.
+
+[dolls]
+TREECKO = "GRINPACK"    # the starters' dolls follow the starters (Rustboro Flat1 2F, Game Corner)
+TORCHIC = "TREKKEYE"
+MUDKIP = "RIDGECAP"
+SKITTY = "MANDALUMB"    # Rustboro Flat1 2F
+PIKACHU = "INARIZUMA"   # Rustboro Flat1 2F
+# Not in replacements.toml yet:
+PICHU = "KYOKON"        # May's room. Inarizuma is a single stage and already has the Pikachu doll;
+                        # Kyokon is the other fox.
+SWABLU = "UTOGHAST"     # Brendan's room. The flying original (Utoghast replaces Wingull).

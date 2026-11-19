@@ -27,8 +27,8 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarLeft::
 
 	.align 2
 LilycoveCity_DepartmentStore_5F_Pokemart_Dolls:
-	.2byte DECOR_PICHU_DOLL
-	.2byte DECOR_PIKACHU_DOLL
+	.2byte DECOR_KYOKON_DOLL
+	.2byte DECOR_INARIZUMA_DOLL
 	.2byte DECOR_MARILL_DOLL
 	.2byte DECOR_JIGGLYPUFF_DOLL
 	.2byte DECOR_DUSKULL_DOLL
@@ -36,8 +36,8 @@ LilycoveCity_DepartmentStore_5F_Pokemart_Dolls:
 	.2byte DECOR_BALTOY_DOLL
 	.2byte DECOR_KECLEON_DOLL
 	.2byte DECOR_AZURILL_DOLL
-	.2byte DECOR_SKITTY_DOLL
-	.2byte DECOR_SWABLU_DOLL
+	.2byte DECOR_MANDALUMB_DOLL
+	.2byte DECOR_UTOGHAST_DOLL
 	.2byte DECOR_GULPIN_DOLL
 	pokemartlistend
 

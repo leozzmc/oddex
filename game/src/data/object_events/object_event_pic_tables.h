@@ -680,12 +680,12 @@ static const struct SpriteFrameImage sPicTable_SubmarineShadow[] = {
     obj_frame_tiles(gObjectEventPic_SubmarineShadow),
 };
 
-static const struct SpriteFrameImage sPicTable_PichuDoll[] = {
-    obj_frame_tiles(gObjectEventPic_PichuDoll),
+static const struct SpriteFrameImage sPicTable_KyokonDoll[] = {
+    obj_frame_tiles(gObjectEventPic_KyokonDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_PikachuDoll[] = {
-    obj_frame_tiles(gObjectEventPic_PikachuDoll),
+static const struct SpriteFrameImage sPicTable_InarizumaDoll[] = {
+    obj_frame_tiles(gObjectEventPic_InarizumaDoll),
 };
 
 static const struct SpriteFrameImage sPicTable_MarillDoll[] = {
@@ -728,16 +728,16 @@ static const struct SpriteFrameImage sPicTable_SmoochumDoll[] = {
     obj_frame_tiles(gObjectEventPic_SmoochumDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_TreeckoDoll[] = {
-    obj_frame_tiles(gObjectEventPic_TreeckoDoll),
+static const struct SpriteFrameImage sPicTable_GrinpackDoll[] = {
+    obj_frame_tiles(gObjectEventPic_GrinpackDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_TorchicDoll[] = {
-    obj_frame_tiles(gObjectEventPic_TorchicDoll),
+static const struct SpriteFrameImage sPicTable_TrekkeyeDoll[] = {
+    obj_frame_tiles(gObjectEventPic_TrekkeyeDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_MudkipDoll[] = {
-    obj_frame_tiles(gObjectEventPic_MudkipDoll),
+static const struct SpriteFrameImage sPicTable_RidgecapDoll[] = {
+    obj_frame_tiles(gObjectEventPic_RidgecapDoll),
 };
 
 static const struct SpriteFrameImage sPicTable_DuskullDoll[] = {
@@ -760,12 +760,12 @@ static const struct SpriteFrameImage sPicTable_AzurillDoll[] = {
     obj_frame_tiles(gObjectEventPic_AzurillDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_SkittyDoll[] = {
-    obj_frame_tiles(gObjectEventPic_SkittyDoll),
+static const struct SpriteFrameImage sPicTable_MandalumbDoll[] = {
+    obj_frame_tiles(gObjectEventPic_MandalumbDoll),
 };
 
-static const struct SpriteFrameImage sPicTable_SwabluDoll[] = {
-    obj_frame_tiles(gObjectEventPic_SwabluDoll),
+static const struct SpriteFrameImage sPicTable_UtoghastDoll[] = {
+    obj_frame_tiles(gObjectEventPic_UtoghastDoll),
 };
 
 static const struct SpriteFrameImage sPicTable_GulpinDoll[] = {
