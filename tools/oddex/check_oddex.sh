@@ -7,7 +7,8 @@
 #   ODDEX_STRICT_MAPS        comma-separated maps that must have no vanilla references
 #                            (empty: report counts only)
 #   ODDEX_REGRESSION_SCRIPTS space-separated names under tools/headless/scripts/
-#   ODDEX_SHOTS_BASELINE     optional dir with <script>/<shot>.png to compare pixel-exactly
+#   ODDEX_SHOTS_BASELINE     dir with <script>/<shot>.png to compare pixel-exactly
+#                            (default tools/headless/baselines; set empty to skip)
 #   ODDEX_RUN                headless runner (default ~/oddex-toolchain/bin/oddex-run)
 set -uo pipefail
 
@@ -16,6 +17,7 @@ ROM="$ROOT/game/pokeemerald.gba"
 OUT="$ROOT/game/build/oddex-check"
 RUN="${ODDEX_RUN:-$HOME/oddex-toolchain/bin/oddex-run}"
 SCRIPTS="${ODDEX_REGRESSION_SCRIPTS:-to_littleroot to_starter}"
+ODDEX_SHOTS_BASELINE="${ODDEX_SHOTS_BASELINE-$ROOT/tools/headless/baselines}"
 fail=0
 
 echo "== generated species files are up to date"
