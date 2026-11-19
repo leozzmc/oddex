@@ -49,7 +49,15 @@ expansion 同一份原始碼同時包含 Emerald 和 FRLG 的內容，但 Emeral
 
 - **勁敵戰（Route 103）**：`TRAINER_{MAY,BRENDAN}_ROUTE_103_{TREECKO,TORCHIC,MUDKIP}`，共 6 組，各帶 1 隻剋制玩家的御三家。之後在 Route 104／Rustboro 還有 6 組（第二隻是 Lotad／Slugma／Torkoal／Wingull）。
 - **野生（可以走到的陸地）**：Route 101：Poochyena、Wurmple、Zigzagoon；Route 103：Poochyena、Zigzagoon、Wingull；Route 102：Poochyena、Wurmple、Zigzagoon、Lotad、Seedot、Ralts。水上和釣魚（Magikarp、Tentacool、Wailmer、Marill、Goldeen、Corphish…）要有釣竿或衝浪才碰得到，不算早期。
-- **訓練家**：Route 102：Calvin（Poochyena）、Rick（Wurmple×2）、Tiana（Zigzagoon、Shroomish）、Allen（Zigzagoon、Taillow）。Route 103 還有 Daisy、Isabelle、Marcos、Miguel、Rhett、Amy & Liv、Pete、Andrew（共 8 組）；其中哪些不需要衝浪就能遇到，**尚未確認**（要看各自的座標和地形）。
+- **訓練家**：Route 102：Calvin（Poochyena）、Rick（Wurmple×2）、Tiana（Zigzagoon、Shroomish）、Allen（Zigzagoon、Taillow）。Route 103 的 8 組訓練家，**早期一組都遇不到**。從 Oldale 進來的西側陸地（x 2–23）四面被水和樹包住，只有劇情的勁敵戰：
+
+| 訓練家 | 座標 | 怎麼遇到 |
+|---|---|---|
+| Daisy、Amy & Liv、Andrew、Miguel | (71,11)、(64–65,12)、(50,8)、(56,13) | 從 Route 110 走陸路（中期，過了 Slateport 之後） |
+| Rhett、Marcos | (67,5)、(67,9) | Route 110 加上居合斬（(67,7)、(72,8) 的 `CUTTABLE_TREE`） |
+| Isabelle、Pete | (36,6)、(36,13) | 衝浪（站在 `MB_OCEAN_WATER` 上，elevation 1） |
+
+判斷方式：讀 `map.bin`，依 tileset 的 `metatile_attributes.bin` 判斷 behavior，從地圖邊緣做 BFS。只走 collision 0 的非水面格子，遵守 elevation 規則（相同 elevation，或其中一邊是 0/15），平台（`MB_JUMP_*`）只能往跳下的方向通過，物件當成障礙。只要訓練家四周有一格走得到，就算遇得到。
 - **腳本與文字**：`PetalburgCity_PokemonCenter_1F` 的初始角色屬性說明（Treecko 那段已經改成 `bufferspeciesname`，Torchic／Mudkip 還寫死）；`PetalburgCity_Gym` 的 Wally 教學文字提到 ZIGZAGOON；研究所裡 Johto 御三家（Chikorita 等）的 `givemon` 是破關後才會出現。
 - **地圖物件造型**：Route 101 追人的 Zigzagoon（`ZIGZAGOON_1`）、家裡搬家的 Vigoroth（4 個）、2F 的 Swablu／Pichu 娃娃。這些是獨立的物件圖，關掉 species 也不會壞，但畫面上仍然是原版的造型，需要美術替換。
 - **圖鑑**：拿到圖鑑後，地區圖鑑的順序和內容（`pokedex_orders` 等）由 Mark 處理。
@@ -89,9 +97,35 @@ expansion 同一份原始碼同時包含 Emerald 和 FRLG 的內容，但 Emeral
 
 腳本 149 處、文字約 186 處、地圖物件 147 個，大多跟劇情綁在一起（例如 `playmoncry` 配合特定 NPC），自動替換很容易出錯。依路線進度分批處理，**每一段都用無頭截圖驗證**（未白鎮那次就是靠截圖才抓到 NPC 被屋頂蓋住）。對戰設施和其他系統（§1 最後幾列）放到最後；破關後的內容可以先停用。
 
-### 3.4 守門檢查
+### 3.4 守門檢查：`tools/oddex/check_species_refs.py`
 
-把本次盤點用的 script 整理成 `tools/oddex/check_species_refs.py`：列出所有引用到「已停用 species」的位置（party、json、腳本、C），放進 build 或 CI。這樣每批改寫都能看到剩下多少，也能防止新的原版引用混進來。
+只讀，不修改任何檔案。「原版」的定義是：定義在 `src/data/pokemon/species_info/gen_*_families.h` 裡的 species（會解析 `species.h` 的別名，例如 `SPECIES_CASTFORM`）。Mark 之後新增在其他檔案裡的原創角色，以及 `SPECIES_ODDEX_*` 代號，都不會被回報。FRLG 的內容和生成檔一律跳過。
+
+```bash
+python3 tools/oddex/check_species_refs.py --summary                    # 各類別的數量
+python3 tools/oddex/check_species_refs.py --maps LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity
+python3 tools/oddex/check_species_refs.py --category c                 # 只看寫死在 C 裡的劇情或內容
+python3 tools/oddex/check_species_refs.py --strict --summary           # 有引用就以 exit 1 結束（給 CI 用）
+python3 tools/oddex/check_species_refs.py --json > refs.json
+```
+
+目前結果（develop 0885db43）：
+
+| 類別 | 處數 | 檔案 | 說明 | `--strict` |
+|---|---|---|---|---|
+| party | 1,825 | 1 | `trainers.party` | 會擋 |
+| wild | 2,107 | 1 | Hoenn 1,975 + pyramid 84 + pike 48 | 會擋 |
+| script | 141 | 54 | 腳本裡的 `SPECIES_*` | 會擋 |
+| c | 228 | 32 | 寫死在 C 裡的劇情或內容（contest 對手 104、交換 31、`battle_setup.c` 20…） | 會擋 |
+| unknown | 0 | 0 | party／wild 裡無法辨識的名稱（打錯字，或解析器漏掉的） | 會擋 |
+| text | 186 | 61 | `.string` 裡寫死的角色名 | 只回報 |
+| gfx | 94 | 49 | 寶可夢造型的地圖物件 | 只回報 |
+| facility | 1,809 | 10 | 對戰設施（遷移期間停用） | 只回報 |
+| dictionary | 839 | 3 | easy chat 詞庫、吟遊詩人的發音表 | 只回報 |
+| mechanics | 335 | 34 | 戰鬥、形態、動畫機制 | 只回報 |
+
+`--maps` 會依地圖篩選：訓練家是看被哪張地圖的腳本引用，所以 `Route103` 也會列出中期才遇得到的訓練家（見 §2.2 的表）。`c`、`mechanics` 不屬於任何地圖，篩選時會被排除。
+分類清單（`MECHANICS_C`、`FACILITY_C_PREFIXES`、`DICTIONARY_C_PREFIXES`）是人工整理的。如果某個檔案歸錯類別，直接修改腳本頂端的清單即可。
 
 ### 3.5 建議順序
 
