@@ -28,8 +28,12 @@
 ### 會顯示角色名字、但不在 species 資料裡的地方
 `speciesName` 改掉後,下列地方**仍然寫死原名**,需要另外處理(大多屬於事件/地圖線):
 
-- `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc:73`:「For example, your TREECKO…」+ 說它是 GRASS 屬性 → **Sonia**
-- 裝飾品 `DECOR_TREECKO_DOLL`:`src/data/decoration/header.h`(名稱/說明)、`src/data/script_menu.h:268`(遊戲角「TREECKO DOLL 1,000 COINS」)、`OBJ_EVENT_GFX_TREECKO_DOLL` 圖像
+- `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc:73`:「For example, your TREECKO…」+ 說它是 GRASS 屬性 → **已由 Sonia 在 `feat/events` 修正**(改用 `bufferspeciesname` 讀取資料)
+- 裝飾品 `DECOR_TREECKO_DOLL` → **已改成 MOSSPRIT DOLL**:
+  - 名稱/說明:`src/data/decoration/header.h`(`name` 是 `u8[16]`,最多 15 字);遊戲角選單:`src/data/script_menu.h`(`MultichoiceList_GameCornerDolls`,視窗寬度會依最長字串自動計算)。地圖腳本用 `bufferdecorationname`,不用改
+  - 圖像:`graphics/object_events/pics/dolls/treecko_doll.png`,16×16 4bpp。**沒有自己的調色盤**,用共用的 `OBJ_EVENT_PAL_TAG_NPC_3`(`graphics/object_events/palettes/npc_3.pal`,見 `object_event_graphics_info.h` 的 `gObjectEventGraphicsInfo_TreeckoDoll`),所以只能用那 16 色(沒有黃色)。秘密基地的放置也透過 `DecorGfx_TREECKO_DOLL` 引用同一張圖
+  - 產生:`python3 ../scripts/species/gen_mossprit.py graphics/pokemon/treecko graphics/object_events/pics/dolls/treecko_doll.png`。16×16 用程序化繪製會太擠,所以玩偶是腳本裡手動排的對稱像素圖(`DOLL_LEFT`)
+- **尚未處理**:秘密基地裝飾品 `DECOR_GREEN_POSTER` 的說明「A small poster with a TREECKO print.」(`src/data/decoration/header.h`)。海報圖案在秘密基地 tileset 裡,要連圖案一起換
 - `src/data/trainers.party`:隊伍用的是 species 識別名(`Treecko` → `SPECIES_TREECKO`),**名稱改了也不用改這裡**;trainer 常數名稱如 `TRAINER_MAY_ROUTE_103_TREECKO` 只是識別字
 - 單元測試(見第 6 節)
 
@@ -93,10 +97,27 @@ tools/gbagfx/gbagfx graphics/pokemon/treecko/normal.pal /tmp/n.gbapal     # 應�
 - `cryId` 仍是 `CRY_TREECKO`(原創叫聲需要音訊素材,見第 4 節)
 - 進化仍是 Lv16 → Grovyle;蛋招式、TM 相容性(`all_learnables.json`)維持原樣
 - 圖鑑號 `NATIONAL_DEX_TREECKO` 不變
-- 第 1 節列出的寫死文字(Petalburg 對話、玩偶)
+- 第 1 節列出的寫死文字(之後已處理:Petalburg 對話由 Sonia 修正,玩偶在後續 commit 改成 MOSSPRIT DOLL;GREEN POSTER 延到第二階段)
 
-### 目前的驗證程度
-ARM 編譯器還沒裝好,所以**還沒在 ROM 上實際跑過**。已完成:
+### 驗證
+**模擬器畫面驗證(回歸腳本)**:`tools/headless/scripts/to_starter.txt` 從開機一路玩到選御三家、第一場戰鬥、Birch 研究所、隊伍、能力畫面和 sprite 檢視器,共 10 張截圖,約 31,000 幀,執行時間約 6 秒:
+
+```bash
+. tools/env.sh
+mkdir -p ~/oddex-shots/mark && cd ~/oddex-shots/mark
+$ODDEX_RUN <worktree>/game/pokeemerald.gba <worktree>/tools/headless/scripts/to_starter.txt   # → shots/01..10
+```
+
+結果:選擇畫面顯示「Moss Pebble POKéMON / Mossprit」;確認畫面的圖置中、沒有裁切;背面圖的位置和原版 Torchic 一致(腳都剛好碰到文字框上緣);能力畫面的屬性、特性、招式、能力值正確;隊伍 icon 正常。**當對手時的正面圖**是用 sprite 檢視器驗證的:它用戰鬥中的實際位置畫出正面(敵方)和背面圖,Mossprit 站在平台上的位置和旁邊原版的 0253 Grovyle 一致。不需要調整任何偏移量。
+
+寫腳本時學到的:
+- 文字速度無法透過 OPTION 預先調快,因為 NEW GAME 會呼叫 `SetDefaultOptions()` 重設選項。
+- 對話盡量用 **B** 推進:A 在對話結束後會再跟面前的 NPC 說話,遇到 YES/NO 時還會選 YES(例如取暱稱)。需要回答 YES 的地方(時鐘、Birch 的「去見我的孩子?」)要算好次數再按 A。B 在 YES/NO 時等於選 NO,可能造成對話循環。
+- 要先等提示框真的出現再按方向鍵,否則方向鍵會被前一個畫面吃掉(設時鐘時就轉動了指針)。
+- 刻意避開需要穿過草叢的路線(例如去 Route 103 跟 May 對戰),因為隨機遭遇會讓腳本一改 ROM 就失準。檢查敵方正面圖用 sprite 檢視器比較穩定:能力畫面按 SELECT,物種編號逐位調整(LEFT/RIGHT 換位數、UP/DOWN 改數字),START 切換異色。
+- 檢視器下方顯示的 BACK/FRONT 動畫名稱會晚一步更新(顯示的是前一個物種的),不要當真。
+
+**ROM 編譯前的靜態驗證**(工具鏈還沒裝好時的做法,保留作參考):
 1. `make -k` 建出所有 host 端資產,新圖成功產生 `.4bpp.smol` / `.gbapal`,compresSmol 壓縮/解壓縮來回一致。
 2. 用與 Makefile 相同的管線 `cpp → tools/preproc/preproc → clang -fsyntax-only` 檢查 `src/pokemon.c`(它 include 了 species_info、learnsets 和圖像宣告):0 錯誤。指令:
    ```bash
@@ -107,8 +128,6 @@ ARM 編譯器還沒裝好,所以**還沒在 ROM 上實際跑過**。已完成:
    clang --target=armv4t-none-eabi -ffreestanding -fsyntax-only -idirafter $SDK/usr/include -std=gnu17 -w -x c /tmp/pokemon.pp.c
    ```
    (前提:先跑過 `make -k` 讓 `build/assets` 存在,否則 preproc 會因找不到 `.smol` 失敗。)
-
-工具鏈好了以後要確認:開場選御三家畫面、戰鬥前/後圖位置、能力畫面、圖鑑、隊伍 icon、shiny。
 
 ---
 
