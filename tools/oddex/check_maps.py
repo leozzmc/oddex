@@ -6,8 +6,9 @@
   check_maps.py --render MAP [-o OUT.png]   draw a map with collision/object/warp/trigger overlays
 
 Checks: map size limit, connection reciprocity, warp destinations, object event count, region
-(non-Hoenn maps are silently dropped from the Emerald build), event coordinates in bounds, and
-object events standing on tiles whose top metatile layer is drawn over sprites.
+(non-Hoenn maps are silently dropped from the Emerald build), event coordinates in bounds, object
+events standing on tiles whose top metatile layer is drawn over sprites, and talkable objects,
+signs and triggers that no tile reachable from a warp or connection can get to.
 Findings already present in vanilla are accepted in tools/oddex/check_maps_baseline.json;
 only new findings fail (rerun with --update-baseline after reviewing them).
 """
@@ -235,7 +236,101 @@ def check(maps, prefixes):
             if cov >= OCCLUDED_RATIO:
                 errors.append(f"{where}: {o['graphics_id']} at ({x},{y}) stands under a top layer "
                               f"({cov:.0%} of the tile is drawn over sprites at elevation {o['elevation']})")
+        errors += unreachable_events(j, lay, where)
     return errors
+
+
+@lru_cache(None)
+def behavior_names():
+    with open(g("include/constants/metatile_behaviors.h"), encoding="utf-8") as f:
+        return re.findall(r"^\s*(MB_[A-Z0-9_]+)", f.read(), re.M)
+
+
+STEP = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
+JUMP = {"MB_JUMP_EAST": "right", "MB_JUMP_WEST": "left", "MB_JUMP_NORTH": "up", "MB_JUMP_SOUTH": "down"}
+WATER = ("WATER", "OCEAN", "WATERFALL", "CURRENT")
+
+
+def reachable_tiles(j, lay):
+    """Tiles reachable from any warp or connected edge, assuming every field move (Surf included).
+
+    Walking follows the game's rules: collision 0, same elevation unless one side is 0/15, ledges
+    only in their direction. Water is walkable from land at any elevation (Surf). Object events
+    do not block, since flags hide many of them.
+    """
+    names = behavior_names()
+
+    def beh(x, y):
+        attr = lay.meta(lay.cell(x, y)[0])[1]
+        return names[attr & 0xFF] if (attr & 0xFF) < len(names) else "?"
+
+    def inside(x, y):
+        return 0 <= x < lay.w and 0 <= y < lay.h
+
+    def water(x, y):
+        return any(w in beh(x, y) for w in WATER)
+
+    starts = {(w["x"], w["y"]) for w in j.get("warp_events") or [] if inside(w["x"], w["y"])}
+    for c in j.get("connections") or []:
+        d = c["direction"]
+        edge = {"up": [(x, 0) for x in range(lay.w)], "down": [(x, lay.h - 1) for x in range(lay.w)],
+                "left": [(0, y) for y in range(lay.h)], "right": [(lay.w - 1, y) for y in range(lay.h)]}.get(d, [])
+        starts |= {t for t in edge if lay.cell(*t)[1] == 0 or water(*t)}
+    seen, todo = set(starts), list(starts)
+    while todo:
+        x, y = todo.pop()
+        el, wet = lay.cell(x, y)[2], water(x, y)
+        for d, (dx, dy) in STEP.items():
+            nx, ny = x + dx, y + dy
+            if not inside(nx, ny) or (nx, ny) in seen:
+                continue
+            b = beh(nx, ny)
+            if b in JUMP:
+                if JUMP[b] == d and inside(nx + dx, ny + dy) and lay.cell(nx + dx, ny + dy)[1] == 0 and (nx + dx, ny + dy) not in seen:
+                    seen.add((nx + dx, ny + dy))
+                    todo.append((nx + dx, ny + dy))
+                continue
+            _, col, nel = lay.cell(nx, ny)
+            nwet = any(w in b for w in WATER)
+            if col and not nwet:
+                continue
+            if not (el == nel or el in (0, 15) or nel in (0, 15) or wet or nwet):
+                continue
+            seen.add((nx, ny))
+            todo.append((nx, ny))
+    return seen, beh
+
+
+def unreachable_events(j, lay, where):
+    """Talkable objects, signs and triggers that no walkable tile can reach."""
+    if not (j.get("warp_events") or j.get("connections")):
+        return []
+    seen, beh = reachable_tiles(j, lay)
+
+    def can_interact(x, y):
+        if (x, y) in seen:
+            return True
+        for dx, dy in STEP.values():
+            if (x + dx, y + dy) in seen:
+                return True
+            # Nurses and clerks are talked to across a counter tile.
+            if 0 <= x + dx < lay.w and 0 <= y + dy < lay.h and beh(x + dx, y + dy) == "MB_COUNTER" and (x + 2 * dx, y + 2 * dy) in seen:
+                return True
+        return False
+
+    out = []
+    for i, o in enumerate(j.get("object_events") or []):
+        if o.get("script") in (None, "", "0x0", "NULL") or not (0 <= o["x"] < lay.w and 0 <= o["y"] < lay.h):
+            continue
+        if not can_interact(o["x"], o["y"]):
+            out.append(f"{where}: object_events[{i}] {o['graphics_id']} at ({o['x']},{o['y']}) cannot be reached from any warp or connection")
+    for i, e in enumerate(j.get("bg_events") or []):
+        if 0 <= e["x"] < lay.w and 0 <= e["y"] < lay.h and not can_interact(e["x"], e["y"]):
+            out.append(f"{where}: bg_events[{i}] at ({e['x']},{e['y']}) cannot be reached from any warp or connection")
+    for i, e in enumerate(j.get("coord_events") or []):
+        if 0 <= e["x"] < lay.w and 0 <= e["y"] < lay.h and (e["x"], e["y"]) not in seen:
+            out.append(f"{where}: coord_events[{i}] at ({e['x']},{e['y']}) cannot be reached from any warp or connection")
+    return out
 
 
 def render(j, out):
