@@ -101,13 +101,37 @@ repeat 19 press B 2 30
 shot shots/03_battle_send_out.png
 repeat 4 press B 2 30
 shot shots/04_battle_menu.png
-repeat 90 press A 2 30
 
-# Birch's lab. The "go meet my kid?" prompt appears after the 18th B; answer YES with A.
-repeat 72 press B 2 30
-repeat 18 press B 2 30
+# The battle must not depend on RNG: the KO takes 1-3 Leafages depending on natures/IVs.
+# Each turn: A (Battle) -> DOWN (Leafage) -> A, then a long B run. B does nothing on the
+# battle menu, only advances text afterwards, and answers NO to "nickname?", so if the
+# battle ends during a turn, that turn's B run carries us past the nickname prompt into
+# the stable "go meet my kid?" -> NO -> "don't be that way" loop before the next turn's
+# A presses arrive. Four turns leave margin; Zigzagoon (Tackle/Growl) can't KO us in four.
+# 250 B (8000 frames) is needed: text doesn't speed up on B, and the battle end -> Route 101
+# -> lab -> nickname stretch alone takes about 120 presses.
+press A 2 20
+press DOWN 2 10
 press A 2 30
-repeat 12 press B 2 30
+repeat 250 press B 2 30
+press A 2 20
+press DOWN 2 10
+press A 2 30
+repeat 250 press B 2 30
+press A 2 20
+press DOWN 2 10
+press A 2 30
+repeat 250 press B 2 30
+press A 2 20
+press DOWN 2 10
+press A 2 30
+
+# Back in Birch's lab, in the loop above (about 8 presses per lap). Switching to A
+# answers YES at the next prompt, so 20 A covers two laps. Extra A re-talks to Birch, whose "rate your
+# Pokedex?" question ends either way, so the final B run always leaves us free to move.
+repeat 250 press B 2 30
+repeat 20 press A 2 30
+repeat 20 press B 2 30
 wait 30
 
 # Party screen (icon) and summary pages.
