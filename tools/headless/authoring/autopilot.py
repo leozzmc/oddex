@@ -1,8 +1,8 @@
 """Closed-loop route authoring for oddex-run scripts.
 
 Executes a route one unit at a time from a savestate, reads the player's map/position/callback
-after each unit, recovers (one battle press at a time: A, or B to decline forgetting a move; B when a script
-message blocks movement,
+after each unit, recovers (one battle press at a time: A with the cursor on the most effective move
+against the opponent's types, or B to decline forgetting a move; B when a script message blocks movement,
 replanning when off course, swapping a damaging move back into slot 1 after a level-up put a
 status move there or its PP ran out), and prints
 the exact command sequence that worked. Because the game is deterministic, replaying those
@@ -51,19 +51,62 @@ def where(ss):
 
 
 @lru_cache(None)
-def move_power():
-    """{move id: base power}; conditional powers take the updated (post-'?') value."""
+def move_info():
+    """{move id: (base power, type id)}; conditional powers take the updated (post-'?') value."""
     import re as _re
     ids = {k: v for v, k in W["move_names"]().items()}
-    with open(os.path.join(os.path.dirname(ROM), "src/data/moves_info.h"), encoding="utf-8") as f:
+    game = os.path.dirname(ROM)
+    with open(os.path.join(game, "include/constants/pokemon.h"), encoding="utf-8") as f:
+        types = {k: int(v) for k, v in _re.findall(r"\bTYPE_([A-Z]+)\s*=\s*(\d+)", f.read())}
+    with open(os.path.join(game, "src/data/moves_info.h"), encoding="utf-8") as f:
         blocks = _re.split(r"\n\s*\[MOVE_([A-Z0-9_]+)\]\s*=", f.read())
     out = {}
     for i in range(1, len(blocks), 2):
         m = _re.search(r"\.power\s*=\s*([^,\n]+),", blocks[i + 1])
+        t = _re.search(r"\.type\s*=\s*TYPE_([A-Z]+)", blocks[i + 1])
         if m and blocks[i] in ids:
             nums = _re.findall(r"\d+", m.group(1).split("?")[-1])
-            out[ids[blocks[i]]] = int(nums[0]) if nums else 0
+            out[ids[blocks[i]]] = (int(nums[0]) if nums else 0, types.get(t.group(1), 0) if t else 0)
     return out
+
+
+def move_power():
+    return {m: p for m, (p, _) in move_info().items()}
+
+
+@lru_cache(None)
+def type_chart():
+    """gTypeEffectivenessTable[attacker][defender] as floats, read from the built ROM
+    (uq4_12_t is a u32 holding a 4.12 fixed-point value, include/fpmath.h)."""
+    import struct as _struct
+    n = 21  # NUMBER_OF_MON_TYPES (include/constants/pokemon.h)
+    with open(ROM, "rb") as f:
+        f.seek(SYMS["gTypeEffectivenessTable"] - 0x08000000)
+        raw = _struct.unpack(f"<{n * n}I", f.read(4 * n * n))
+    return [[raw[a * n + d] / 4096 for d in range(n)] for a in range(n)]
+
+
+BATTLE_MON = 0x8C  # sizeof(struct BattlePokemon); moves at +12 (u16 x4), types at +34 (u8 x3), pp at +37
+
+
+def best_move(st):
+    """Slot of the move with the highest power x type effectiveness x STAB against battler 1 that
+    still has PP, or None when nothing damaging is usable."""
+    base = SYMS["gBattleMons"]
+    moves = W["read"](st, base + 12, "<4H")
+    own = set(W["read"](st, base + 34, "<3B")) - {0}
+    pp = W["read"](st, base + 37, "<4B")
+    foe = [t for t in set(W["read"](st, base + BATTLE_MON + 34, "<3B")) if t]
+    info, chart = move_info(), type_chart()
+    scored = []
+    for i, (m, p) in enumerate(zip(moves, pp)):
+        power, t = info.get(m, (0, 0))
+        if m and p and power > 0:
+            eff = 1.0
+            for d in foe:
+                eff *= chart[t][d]
+            scored.append((power * eff * (1.5 if t in own else 1.0), power, -i, i))
+    return max(scored)[3] if scored else None
 
 
 def controls_free(ss):
@@ -120,24 +163,20 @@ def fix_lead(ss, prefix, k, slot=None):
 
 
 def battle_press(ss):
-    """Next single input in battle: B at "delete a move?", cursor moves away from a slot with no
-    PP in the move menu, otherwise A (fight with the selected move)."""
+    """Next single input in battle: B at "delete a move?"; in the move menu, move the cursor to the
+    best move against the opponent's types (best_move); otherwise A."""
     st = W["state"](ss)
     instr = W["read"](st, SYMS["gBattlescriptCurrInstr"], "<I")[0]
     if SYMS["BattleScript_AskToLearnMove"] <= instr < SYMS["BattleScript_ForgotAndLearnedNewMove"]:
         return "press B 2 30"
     func = W["read"](st, SYMS["gBattlerControllerFuncs"], "<I")[0] & ~1
     if func == SYMS["HandleInputChooseMove"]:
-        moves, pp = W["lead_moves"](st, SYMS)
-        power = move_power()
         cur = W["read"](st, SYMS["gMoveSelectionCursor"], "<B")[0] & 3
-        if not (pp[cur] and power.get(moves[cur], 0) > 0):
-            usable = [(power.get(m, 0), i) for i, (m, p) in enumerate(zip(moves, pp)) if m and p and power.get(m, 0) > 0]
-            if usable:
-                to = max(usable)[1]
-                if to % 2 != cur % 2:
-                    return "press RIGHT 2 20" if to % 2 else "press LEFT 2 20"
-                return "press DOWN 2 20" if to // 2 else "press UP 2 20"
+        to = best_move(st)
+        if to is not None and to != cur:
+            if to % 2 != cur % 2:
+                return "press RIGHT 2 20" if to % 2 else "press LEFT 2 20"
+            return "press DOWN 2 20" if to // 2 else "press UP 2 20"
     return "press A 2 30"
 
 
@@ -218,8 +257,8 @@ def main():
                 if (name, x, y) == goal:
                     goal = spec[2] if goal == spec[1] else spec[1]
             if cb != "CB2_Overworld":
-                # One press at a time in battle: A fights with move slot 1, but at "delete a move
-                # to make room?" A would answer YES and forget slot 1, so B (NO) is pressed there.
+                # One press at a time in battle: A fights with the move best_move picks, but at
+                # "delete a move to make room?" A would answer YES and forget a move, so B (NO).
                 cmds, exp = [battle_press(ss)], None
                 presses += 1
                 if presses > MAX_BATTLE_PRESSES:

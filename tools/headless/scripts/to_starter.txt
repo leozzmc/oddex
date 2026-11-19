@@ -149,15 +149,17 @@ shot shots/08_summary_moves.png
 press LEFT 2 60
 press LEFT 2 60
 
-# Sprite visualizer (SELECT on the summary): dial species 0001 -> 0252 to see the
-# front sprite at the enemy position, the back sprite, shiny, icon and footprint.
+# Sprite visualizer (SELECT on the summary): dial species 0001 -> 1573 (SPECIES_OKINOIR, the
+# grass starter) to see the front sprite at the enemy position, the back sprite, shiny, icon and
+# footprint. The cursor starts on the thousands digit.
 press SELECT 2 120
-press RIGHT 2 10
-repeat 2 press UP 2 20
+press UP 2 20
 press RIGHT 2 10
 repeat 5 press UP 2 20
 press RIGHT 2 10
-press UP 2 90
+repeat 7 press UP 2 20
+press RIGHT 2 10
+repeat 2 press UP 2 90
 shot shots/09_visualizer_normal.png
 press START 2 90
 shot shots/10_visualizer_shiny.png

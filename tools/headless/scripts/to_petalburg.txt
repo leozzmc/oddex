@@ -1,33 +1,15 @@
 # NEW GAME -> ... -> first battle -> Birch's lab (to_starter), then Route 103 rival, Pokedex,
 # Route 102 and the Petalburg Gym Wally tutorial; ends after the Petalburg Pokemon Center type talk.
-# Covers the plan B step 2b sites: rival party (STARTER_*), TUTORIAL_LENT/TUTORIAL_CATCH and
-# the Petalburg Pokemon Center starter type text.
-# Authored closed-loop: routes were generated step by step with a position/HP/callback reader
-# on savestates, and every grass step is followed by an A run that fights any wild encounter with
-# move slot 1 and does nothing in the overworld. Recalibrate if anything before a step changes
-# (species, moves, text length); the runner's pinned RTC makes the result reproducible.
+# Covers the plan B step 2b/4b sites: rival party (STARTER_*), TUTORIAL_LENT/TUTORIAL_CATCH, the
+# early-scope wild and trainer species, and the Petalburg Pokemon Center starter type text.
+# Generated closed-loop with tools/headless/authoring/autopilot.py (battles pick the most effective
+# move against the opponent's types); the waits for scripted scenes were counted from savestates.
+# Regenerate if anything before a step changes (species, moves, text length); the runner's pinned
+# RTC makes the result reproducible.
 include to_starter.txt
 
 # Leave the sprite visualizer, summary, party and start menu.
 repeat 6 press B 2 40
-wait 30
-
-# Summary > moves: put Leafage (special, 40 PP) in slot 1 so A runs use it; wild Zigzagoon's
-# Growl makes Tackle useless.
-press START 2 40
-press A 2 90
-press A 2 40
-press A 2 90
-press RIGHT 2 60
-press RIGHT 2 60
-press A 2 40
-press DOWN 2 20
-press DOWN 2 20
-press A 2 40
-press UP 2 20
-press UP 2 20
-press A 2 60
-repeat 8 press B 2 60
 wait 30
 
 # Options: text FAST, battle scene OFF, battle style SET (no 'switch Pokemon?' prompt).
@@ -42,7 +24,8 @@ press RIGHT 2 15
 repeat 3 press B 2 60
 wait 30
 
-# Out of the lab (the exit mat needs one more DOWN), then Route 101 -> Oldale -> Route 103 below the rival (10,3).
+# Out of the lab, then Route 101 -> Oldale -> Route 103 below the rival (10,3).
+press LEFT 3 20
 hold LEFT 16
 hold DOWN 96
 hold RIGHT 16
@@ -59,122 +42,481 @@ hold LEFT 64
 hold UP 112
 hold RIGHT 64
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press RIGHT 3 20
 hold RIGHT 16
-repeat 60 press A 2 30
-repeat 40 press A 2 30
-repeat 40 press A 2 30
+wait 40
 hold RIGHT 16
 hold UP 32
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 16
-repeat 60 press A 2 30
-repeat 40 press A 2 30
-repeat 40 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
-hold LEFT 16
-repeat 60 press A 2 30
+wait 40
+repeat 64 press A 2 30
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 32
-hold UP 240
-hold UP 304
+hold UP 544
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
-repeat 40 press A 2 30
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 80
 hold UP 80
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 hold UP 16
 hold RIGHT 80
 
-# Rock Throw to slot 1 for the rival's Torchic (Scratch is resisted; Ember is neutral), face her and battle.
-press START 2 40
-repeat 4 press UP 2 15
-press A 2 90
-press A 2 40
-press A 2 90
-press RIGHT 2 60
-press RIGHT 2 60
-press A 2 40
-repeat 3 press DOWN 2 20
-press A 2 40
-repeat 3 press UP 2 20
-press A 2 60
-repeat 8 press B 2 60
-press UP 3 20
-press A 2 60
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-shot shots/p01_rival_battle.png
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-repeat 10 press A 2 30
-
-# Oldale Pokemon Center: heal (the rival battle leaves us low), back out.
-press DOWN 3 20
-hold DOWN 256
+# The rival's Shishiblaze (fire/fighting, Ember) beats a Lv5 Okinoir (grass/ground): train to Lv9
+# in the grass beside her, healing at the Oldale Pokemon Center when HP runs low.
+hold RIGHT 16
+hold UP 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
 press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 45 press A 2 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 46 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 40 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 63 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 28 press A 2 30
+hold RIGHT 16
+wait 40
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 80 press A 2 30
+wait 30
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 31 press A 2 30
+press DOWN 3 20
+hold DOWN 16
+hold LEFT 16
+hold DOWN 256
+hold DOWN 32
 hold LEFT 16
 hold DOWN 272
 hold LEFT 48
+wait 30
+press UP 3 20
 hold UP 32
 wait 120
 hold UP 64
+wait 30
+press UP 3 20
 press A 2 40
 repeat 20 press A 2 30
 repeat 6 press B 2 30
 hold DOWN 64
 hold DOWN 32
 wait 120
+press RIGHT 3 20
+hold RIGHT 48
+hold UP 416
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+press LEFT 3 20
+hold LEFT 80
+hold UP 80
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 30 press A 2 30
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 16
+hold RIGHT 96
+hold UP 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 24 press A 2 30
+hold LEFT 16
+wait 40
+repeat 15 press B 2 30
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 33 press A 2 30
+wait 30
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+press LEFT 3 20
+hold LEFT 16
+wait 40
+repeat 14 press A 2 30
+press DOWN 2 20
+repeat 28 press A 2 30
+repeat 9 press B 2 30
+repeat 2 press A 2 30
 
-# Route 101 back to Littleroot (the Oldale rival trigger is cleared with B) and into the lab: Pokedex.
+# Heal, come back, face her and talk.
+press DOWN 3 20
+hold DOWN 16
+hold LEFT 32
+hold DOWN 256
 hold DOWN 32
-hold RIGHT 32
+hold LEFT 16
+hold DOWN 272
+hold LEFT 48
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press RIGHT 3 20
+hold RIGHT 48
+hold UP 416
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press DOWN 2 20
+repeat 14 press A 2 30
+hold RIGHT 16
+wait 40
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+press LEFT 3 20
+hold LEFT 80
+hold UP 80
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 16
+hold RIGHT 80
+press UP 3 20
+press A 2 60
+repeat 30 press B 2 30
+shot shots/p01_rival_battle.png
+press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 46 press A 2 30
+press LEFT 3 20
+hold LEFT 16
+repeat 15 press B 2 30
+hold LEFT 16
+
+# Route 103 -> Littleroot, into the lab: Birch gives the Pokedex.
+press DOWN 3 20
+hold DOWN 528
+hold DOWN 32
+hold LEFT 16
+hold DOWN 288
 hold DOWN 256
 repeat 15 press B 2 30
 hold DOWN 256
@@ -186,39 +528,17 @@ hold DOWN 160
 hold RIGHT 16
 hold DOWN 80
 hold LEFT 48
+wait 30
 press UP 3 20
 hold UP 32
 wait 60
-repeat 10 press B 2 30
-repeat 10 press B 2 30
+repeat 18 press B 2 30
 shot shots/p02_pokedex.png
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
-repeat 10 press B 2 30
+repeat 36 press B 2 30
 
-# Leafage back to slot 1 (the start menu now opens on POKeDEX, so DOWN reaches POKeMON).
-press START 2 40
-press DOWN 2 15
-press A 2 90
-press A 2 40
-press A 2 90
-press RIGHT 2 60
-press RIGHT 2 60
-press A 2 40
-repeat 3 press DOWN 2 20
-press A 2 40
-repeat 3 press UP 2 20
-press A 2 60
-repeat 8 press B 2 60
-
-# Out again; Mom's Running Shoes stop in Littleroot is cleared with B. Heal in Oldale.
+# Out of the lab, Littleroot (Mom's Running Shoes stop) -> Route 101 -> Oldale -> Route 102 ->
+# Petalburg Gym (door at 15,8).
+press LEFT 3 20
 hold LEFT 16
 hold DOWN 96
 hold RIGHT 16
@@ -232,61 +552,54 @@ hold UP 160
 hold UP 112
 repeat 15 press B 2 30
 hold UP 112
-repeat 15 press B 2 30
-hold UP 112
-repeat 15 press B 2 30
-hold UP 112
+press RIGHT 3 20
 hold RIGHT 16
+repeat 15 press B 2 30
+hold RIGHT 16
+press LEFT 3 20
+hold LEFT 16
+repeat 15 press B 2 30
+hold LEFT 16
+hold UP 112
+hold RIGHT 32
 hold UP 80
 hold LEFT 64
 hold UP 112
 hold RIGHT 64
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press RIGHT 3 20
 hold RIGHT 16
-repeat 60 press A 2 30
+wait 40
 hold RIGHT 16
 hold UP 32
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
+repeat 73 press A 2 30
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
+hold LEFT 16
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 32
 hold UP 96
-hold LEFT 64
-hold UP 32
-press UP 3 20
-hold UP 32
-wait 120
+hold LEFT 96
 hold UP 64
-press A 2 40
-repeat 20 press A 2 30
-repeat 6 press B 2 30
-hold DOWN 64
-hold DOWN 32
-wait 120
-
-# Route 102 (path avoids trainer sight where possible) -> Petalburg Gym door (15,8).
-press LEFT 3 20
-hold LEFT 32
-hold UP 32
 hold LEFT 32
 hold UP 64
 hold LEFT 256
@@ -296,60 +609,67 @@ hold DOWN 16
 hold LEFT 32
 hold LEFT 16
 repeat 15 press B 2 30
-repeat 40 press A 2 30
+repeat 13 press A 2 30
+press DOWN 2 20
 repeat 40 press A 2 30
 hold LEFT 16
+press DOWN 3 20
 hold DOWN 16
-hold LEFT 96
+hold LEFT 112
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
-repeat 40 press A 2 30
-repeat 40 press A 2 30
-repeat 40 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
+repeat 48 press A 2 30
 press UP 3 20
 hold UP 64
 hold UP 16
-repeat 60 press A 2 30
+wait 40
+repeat 70 press A 2 30
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 press LEFT 3 20
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 press UP 3 20
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 hold UP 16
-repeat 60 press A 2 30
+wait 40
 hold UP 48
 hold LEFT 128
 hold DOWN 16
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 hold LEFT 16
-repeat 60 press A 2 30
+wait 40
 press DOWN 3 20
 hold DOWN 16
-repeat 60 press A 2 30
+wait 40
 hold DOWN 16
 hold LEFT 320
+hold LEFT 16
+repeat 15 press B 2 30
+hold LEFT 16
+hold UP 16
+repeat 15 press B 2 30
 hold UP 16
 hold LEFT 16
 hold UP 128
 hold LEFT 16
+wait 30
 press UP 3 20
 hold UP 32
 wait 120
@@ -360,40 +680,35 @@ wait 10
 press A 2 60
 repeat 35 press B 2 30
 shot shots/p03_wally_lent_mon.png
-repeat 45 press B 2 30
-shot shots/p04_wally_battle.png
-repeat 100 press B 2 30
-shot shots/p05_wally_caught.png
 repeat 60 press B 2 30
+shot shots/p04_wally_battle.png
+repeat 85 press B 2 30
+shot shots/p05_wally_caught.png
+repeat 52 press B 2 30
 
 # Out of the gym to the Petalburg Pokemon Center; the woman at (5,4) explains our starter's types.
-hold DOWN 80
+hold DOWN 64
 wait 150
 press RIGHT 3 20
 hold RIGHT 16
 hold DOWN 128
 hold RIGHT 64
+wait 30
 press UP 3 20
 hold UP 32
 wait 120
 press LEFT 3 20
 hold LEFT 32
 hold UP 48
+wait 30
 press UP 3 20
 press A 2 60
-press B 2 40
-press B 2 40
-press B 2 40
-press B 2 40
-press B 2 40
-press B 2 40
+repeat 6 press B 2 40
 shot shots/p06_type_talk_1.png
-press B 2 40
-press B 2 40
-press B 2 40
-press B 2 40
+repeat 2 press B 2 40
 shot shots/p07_type_talk_2.png
 press B 2 40
-press B 2 40
-press B 2 40
+shot shots/p08_type_talk_3.png
+repeat 2 press B 2 40
+shot shots/p09_type_talk_4.png
 press B 2 40

@@ -3,20 +3,21 @@
 # Code, scripts, trainers.party ("Oddex Starter Grass") and wild_encounters.json refer to
 # SPECIES_ODDEX_<ROLE>, so recasting a role only touches this file.
 # A value may be an original species id (content/species/*.toml) or a vanilla one.
-# Until plan B step 4b every role still points at its vanilla species (gameplay unchanged).
+# Since plan B step 4b every role points at an original; each follows the vanilla species it
+# replaced in content/replacements.toml (vanilla name in the comment).
 
 # Route 101 starter choice; also the Route 103 rival and Petalburg PC type talk.
-STARTER_GRASS = "TREECKO"
-STARTER_FIRE = "TORCHIC"
-STARTER_WATER = "MUDKIP"
+STARTER_GRASS = "OKINOIR"       # Treecko
+STARTER_FIRE = "SHISHIBLAZE"    # Torchic
+STARTER_WATER = "KAMORAI"       # Mudkip
 
 # Pokemon Birch shows during the new-game intro (src/main_menu.c).
-INTRO_MON = "LOTAD"
+INTRO_MON = "SHOJOBOB"          # Lotad
 
 # Wild Pokemon chasing Birch on Route 101, the player's first battle (src/battle_controllers.c).
-RESCUE_WILD = "ZIGZAGOON"
+RESCUE_WILD = "KYOKON"          # Zigzagoon
 
 # Wally's catching tutorial in Petalburg: the target (src/battle_setup.c) and the Pokemon
 # lent to Wally (src/field_specials.c).
-TUTORIAL_CATCH = "RALTS"
-TUTORIAL_LENT = "ZIGZAGOON"
+TUTORIAL_CATCH = "OMOTELLE"     # Ralts
+TUTORIAL_LENT = "KYOKON"        # Zigzagoon

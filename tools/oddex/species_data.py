@@ -30,6 +30,20 @@ def load_species():
     return species
 
 
+def renamed_ids(all_species=None):
+    """{old id: current id} from every TOML's previous_ids."""
+    if all_species is None:
+        all_species = load_species()
+    return {old: s['id'] for s in all_species for old in s.get('previous_ids', [])}
+
+
+def old_name_hint(species_id, renamed):
+    """' (X is the old name of Y; use Y)' when species_id was renamed, else ''."""
+    if species_id in renamed:
+        return f' ({species_id} is the old name of {renamed[species_id]}; use {renamed[species_id]})'
+    return ''
+
+
 def load_roles():
     with ROLES.open('rb') as fp:
         return tomllib.load(fp)

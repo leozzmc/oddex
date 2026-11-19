@@ -24,7 +24,7 @@ description: Migrate a stretch of the oddex game (a route, town or story segment
 
 ## 2. 先錄原版基準
 
-改內容之前，先有一支能從開機獨立跑到這段路線的回歸腳本（`tools/headless/scripts/to_<地點>.txt`，用 `include` 接前一段，不要 `load` 別支腳本的 savestate），在**還沒遷移**的 ROM 上錄好基準截圖，連跑兩次逐像素一致，並加進 `check_oddex.sh` 預設的腳本清單。這樣之後每一步都能證明「只有預期的畫面改變了」。路線用 `tools/headless/authoring/autopilot.py` 閉環產生：草叢逐格走；戰鬥一次按一鍵（A，遇到「要忘掉招式嗎？」按 B，選招畫面遇到沒 PP 的招式就把游標移開）；被腳本擋住按 B；第一格變成狀態招式或 PP 低於 5 時，在大地圖上換招式；被走過來的訓練家擋路時繞路；需要練等級用 `grind:Map:x1:y1:x2:y2:LV`。組好之後從開機連跑一次，確認跟分段結果相同，再連跑兩次確認逐像素一致。確定性靠的是固定的 RTC，所以角色或 ROM 一改就要重新產生。
+改內容之前，先有一支能從開機獨立跑到這段路線的回歸腳本（`tools/headless/scripts/to_<地點>.txt`，用 `include` 接前一段，不要 `load` 別支腳本的 savestate），在**還沒遷移**的 ROM 上錄好基準截圖，連跑兩次逐像素一致，並加進 `check_oddex.sh` 預設的腳本清單。這樣之後每一步都能證明「只有預期的畫面改變了」。路線用 `tools/headless/authoring/autopilot.py` 閉環產生：草叢逐格走；戰鬥一次按一鍵（A，遇到「要忘掉招式嗎？」按 B，選招畫面依對手的屬性把游標移到最有效、還有 PP 的攻擊招式）；被腳本擋住按 B；第一格變成狀態招式或 PP 低於 5 時，在大地圖上換招式；被走過來的訓練家擋路時繞路；需要練等級用 `grind:Map:x1:y1:x2:y2:LV`。組好之後從開機連跑一次，確認跟分段結果相同，再連跑兩次確認逐像素一致。確定性靠的是固定的 RTC，所以角色或 ROM 一改就要重新產生。
 
 ## 3. 對照表與代號
 

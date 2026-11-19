@@ -1384,13 +1384,13 @@ const struct Decoration gDecorations[] =
     [DECOR_TREECKO_DOLL] =
     {
         .id = DECOR_TREECKO_DOLL,
-        .name = _("MOSSPRIT DOLL"),
+        .name = _("TREECKO DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A MOSSPRIT doll.\n"
+            "A TREECKO doll.\n"
             "Place it on a mat\n"
             "or a desk."),
         .tiles = DecorGfx_TREECKO_DOLL,
