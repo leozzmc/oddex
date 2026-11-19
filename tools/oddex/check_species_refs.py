@@ -47,6 +47,16 @@ SKIP_C = {
 SPECIES_TOKEN = re.compile(r"\bSPECIES_[A-Z0-9_]+\b")
 
 
+def read_text(path, errors=None):
+    with open(path, encoding="utf-8", errors=errors) as f:
+        return f.read()
+
+
+def read_json(path):
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
 def is_frlg(path):
     return "frlg" in path.lower()
 
@@ -55,11 +65,11 @@ def load_species(game):
     """Return (vanilla keys, all known species names, alias -> target)."""
     vanilla, known = set(), set()
     for f in glob.glob(os.path.join(game, "src/data/pokemon/species_info/*.h")):
-        keys = re.findall(r"^\s*\[(SPECIES_[A-Z0-9_]+)\]\s*=", open(f, encoding="utf-8").read(), re.M)
+        keys = re.findall(r"^\s*\[(SPECIES_[A-Z0-9_]+)\]\s*=", read_text(f), re.M)
         known.update(keys)
         if re.search(r"gen_\d+_families\.h$", f):
             vanilla.update(keys)
-    header = open(os.path.join(game, "include/constants/species.h"), encoding="utf-8").read()
+    header = read_text(os.path.join(game, "include/constants/species.h"))
     aliases = dict(re.findall(r"\b(SPECIES_[A-Z0-9_]+)\s*=\s*(SPECIES_[A-Z0-9_]+)\s*,", header))
     known.update(re.findall(r"^\s*(SPECIES_[A-Z0-9_]+)\b", header, re.M))
     return vanilla, known, aliases
@@ -79,7 +89,7 @@ def party_species_token(line):
 def scan_party(game, add):
     path = "src/data/trainers.party"
     trainer, after_blank, in_header = None, False, False
-    for ln, raw in enumerate(open(os.path.join(game, path), encoding="utf-8"), 1):
+    for ln, raw in enumerate(read_text(os.path.join(game, path)).split("\n"), 1):
         line = raw.rstrip("\n")
         m = re.match(r"^=== (TRAINER_\w+) ===", line)
         if m:
@@ -98,7 +108,7 @@ def scan_party(game, add):
 def map_regions(game):
     regions, names = {}, {}
     for f in glob.glob(os.path.join(game, "data/maps/*/map.json")):
-        j = json.load(open(f, encoding="utf-8"))
+        j = read_json(f)
         regions[j["id"]] = j.get("region")
         names[j["id"]] = j["name"]
     return regions, names
@@ -106,7 +116,7 @@ def map_regions(game):
 
 def scan_wild(game, add, regions, names):
     path = "src/data/wild_encounters.json"
-    data = json.load(open(os.path.join(game, path), encoding="utf-8"))
+    data = read_json(os.path.join(game, path))
     for group in data["wild_encounter_groups"]:
         for enc in group.get("encounters", []):
             mp = enc.get("map", "")
@@ -131,7 +141,7 @@ def scan_scripts(game, add, vanilla_words):
         rel = os.path.relpath(f, game)
         if is_frlg(rel) or rel.endswith("debug.inc"):
             continue
-        for ln, line in enumerate(open(f, encoding="utf-8", errors="replace"), 1):
+        for ln, line in enumerate(read_text(f, "replace").split("\n"), 1):
             s = line.strip()
             if s.startswith("@"):
                 continue
@@ -157,7 +167,7 @@ def scan_c(game, add):
             cat = "dictionary"
         else:
             cat = "c"
-        for ln, line in enumerate(open(f, encoding="utf-8", errors="replace"), 1):
+        for ln, line in enumerate(read_text(f, "replace").split("\n"), 1):
             for tok in SPECIES_TOKEN.findall(line):
                 add(cat, rel, ln, tok, "")
 
@@ -165,7 +175,7 @@ def scan_c(game, add):
 def scan_gfx(game, add, regions, vanilla_words):
     for f in sorted(glob.glob(os.path.join(game, "data/maps/*/map.json"))):
         rel = os.path.relpath(f, game)
-        j = json.load(open(f, encoding="utf-8"))
+        j = read_json(f)
         if j.get("region") != "REGION_HOENN":
             continue
         for i, o in enumerate(j.get("object_events", [])):
@@ -179,16 +189,38 @@ def trainer_maps(game):
     out = collections.defaultdict(set)
     for f in glob.glob(os.path.join(game, "data/maps/*/scripts.inc")):
         m = f.split(os.sep)[-2]
-        for t in re.findall(r"\b(TRAINER_[A-Z0-9_]+)\b", open(f, encoding="utf-8").read()):
+        for t in re.findall(r"\b(TRAINER_[A-Z0-9_]+)\b", read_text(f)):
             out[t].add(m)
     return out
+
+
+def in_scope(f, scope):
+    """Whether a finding belongs to a content/migration_scope.toml scope (see that file's comments)."""
+    cat, ctx = f["category"], f["context"]
+    if cat == "unknown":
+        cat = "party" if f["file"].endswith(".party") else "wild"
+    if cat == "party":
+        return ctx in scope.trainers
+    if cat == "wild":
+        map_name, _, kind = ctx.partition(":")
+        return scope.has_wild(map_name, kind)
+    if cat in ("script", "text", "gfx"):
+        map_name = ctx.split(" ")[0]
+        return bool(map_name) and scope.has_map(map_name) and not scope.excludes(f["file"], f["species"])
+    if cat == "c":
+        return f["file"] in scope.c_files
+    return False
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--game", default=os.path.join(os.path.dirname(__file__), "..", "..", "game"))
     ap.add_argument("--category", action="append", choices=CATEGORIES, help="limit to these categories (repeatable)")
-    ap.add_argument("--maps", help="comma-separated map name prefixes, e.g. LittlerootTown,Route101 (filters party/wild/script/text/gfx)")
+    ap.add_argument("--scope", action="append", help="only findings inside this scope of content/migration_scope.toml (repeatable)")
+    ap.add_argument("--scope-file", help=argparse.SUPPRESS)
+    ap.add_argument("--strict-scopes", action="store_true",
+                    help="check every scope with strict = true; exit 1 if any finding falls inside one")
+    ap.add_argument("--maps", help="ad hoc: comma-separated map name prefixes, e.g. LittlerootTown,Route101 (filters party/wild/script/text/gfx)")
     ap.add_argument("--summary", action="store_true", help="print counts only")
     ap.add_argument("--json", action="store_true", help="print findings as JSON")
     ap.add_argument("--strict", action="store_true", help=f"exit 1 if any finding in {','.join(STRICT_DEFAULT)} (or --category)")
@@ -218,6 +250,18 @@ def main():
 
     cats = args.category or CATEGORIES
     findings = [f for f in findings if f["category"] in cats]
+    if (args.scope or args.strict_scopes) and args.maps:
+        ap.error("use either --scope/--strict-scopes or --maps")
+    if args.scope or args.strict_scopes:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import migration_scope
+        scope_file = args.scope_file or migration_scope.SCOPE_FILE
+        if args.scope:
+            scopes = migration_scope.get(game, args.scope, scope_file)
+        else:
+            scopes = [s for s in migration_scope.load(game, scope_file).values() if s.strict]
+            print(f"strict scopes: {', '.join(s.name for s in scopes) or 'none'}")
+        findings = [f for f in findings if any(in_scope(f, s) for s in scopes)]
     if args.maps:
         prefixes = [p.strip() for p in args.maps.split(",") if p.strip()]
         tmaps = trainer_maps(game)
@@ -249,6 +293,8 @@ def main():
                 loc = f"{f['file']}:{f['line']}" if f["line"] else f["file"]
                 print(f"{f['category']}\t{loc}\t{f['species']}\t{f['context']}")
 
+    if args.strict_scopes and findings:
+        sys.exit(1)
     if args.strict:
         strict = args.category or STRICT_DEFAULT
         if any(f["category"] in strict for f in findings):

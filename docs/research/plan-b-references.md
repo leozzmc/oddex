@@ -165,32 +165,44 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 下表「驗證」欄寫的 `make check-oddex`，是 Mark 實作的（feat/species a1c3394f，`game/oddex.mk` + `tools/oddex/check_oddex.sh`）。它會依序執行：
 
 1. `gen_species.py --check`：產生檔是最新的。
-2. `check_species_refs.py`：預設只回報；設定 `ODDEX_STRICT_MAPS` 後，改成 `--strict --maps $ODDEX_STRICT_MAPS`。
+2. `check_species_refs.py`：先回報全部的數量，再跑 `--strict-scopes`：`content/migration_scope.toml` 裡 `strict = true` 的範圍只要有原版引用就失敗（範圍檔見 §5.2.2）。
 3. 用 runner 跑 `ODDEX_REGRESSION_SCRIPTS`（預設 `to_littleroot to_starter`）：只要出現 crash screen 就失敗。Mark 讓 `src/assertf.c` 在 debug build 的 CrashScreen 多輸出一行 `ODDEX_CRASH_SCREEN assert: <檔案:行號: 訊息>` 到 mGBA log，所以「全程沒有 assert」可以自動判定（已驗證：關掉第 3 世代時會抓到 `disabled species: 270`）。
 4. 選用：`ODDEX_SHOTS_BASELINE=<dir>` 會拿 `<dir>/<腳本名>/*.png` 逐像素比對。
 
 使用規則：
 - **2c 完成時**，把 `to_petalburg` 加進 `check_oddex.sh` 預設的 `ODDEX_REGRESSION_SCRIPTS`，並把原版基準截圖放到 `ODDEX_SHOTS_BASELINE/to_petalburg/`。
-- **4b 完成時**，把早期路線寫進 `game/oddex.mk` 的 `ODDEX_STRICT_MAPS ?=` 預設值（`LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity`），之後每遷移一段就往上加。
+- **4b 完成時**，把 `content/migration_scope.toml` 的 `[early]` 改成 `strict = true`；之後每遷移一段，就新增一個範圍並在完成時設成 strict。
 - **回歸腳本必須能獨立執行**：`check_oddex.sh` 會讓每份腳本在自己全新的目錄裡、從開機開始跑，不能 `load` 其他腳本留下的 savestate。所以 `to_petalburg` 要從開機一路跑到 Petalburg（`littleroot_npcs` 目前依賴 `to_littleroot` 的存檔，因此沒放進回歸清單）。如果重複的開頭段落太多，可以請 David 在 runner 加一個 `include <script>` 指令。
 
 ### 5.2.1 4a：`tools/oddex/apply_replacements.py`（已完成，尚未套用）
 
 ```bash
-python3 tools/oddex/apply_replacements.py --maps Route101,Route102 --kinds land_mons --dry-run   # 先看會改什麼
-python3 tools/oddex/apply_replacements.py --maps Route101,Route102 --kinds land_mons             # 就地改寫
-python3 tools/oddex/test_apply_replacements.py                                                    # 10 個單元測試，約 2 秒
+python3 tools/oddex/apply_replacements.py --scope early --dry-run   # 先看會改什麼（目前：party 7 隻、wild 36 格）
+python3 tools/oddex/apply_replacements.py --scope early             # 就地改寫
+python3 tools/oddex/test_apply_replacements.py                       # 15 個單元測試，約 4 秒
 ```
 
 - 替換表：`content/replacements.toml`（還沒建立，等 Mark 定案角色名字）。`[replace]` 的 key 是原版名稱（每個進化階段一行），value 是 `content/species/*.toml` 的 `id`；頂層可以寫 `stage_mismatch_ok = [...]`。
 - 改寫規則：party 只改每隻寶可夢第一行裡的 species 那一段（暱稱、性別、持有物保留），原創角色寫成 trainerproc 會轉回 `SPECIES_<ID>` 的名字（`FOO_BAR` → `Foo Bar`）；原本是 `SPECIES_X` 寫法的就維持常數寫法。json 只替換 `"species"` 的值，不重新排版。已經是原創角色（含 `SPECIES_ODDEX_*` 代號）的不會再動，所以重複執行結果不變。
-- 範圍：`--maps` 的規則跟 `check_species_refs.py` 一樣（訓練家看被哪張地圖的腳本引用；野生看遭遇表的地圖）；`--kinds` 只改指定的遭遇表（例如 `land_mons`）；Kanto（FRLG）的表一律跳過。
+- 範圍：正式用法是 `--scope NAME`，讀 `content/migration_scope.toml`（§5.2.2），訓練家是明確清單、野生是地圖加表的種類。臨時用法 `--maps`／`--kinds` 依地圖推斷，兩種方式不能同時用。Kanto（FRLG）的表一律跳過。
 - 失敗條件（什麼都不寫入）：表的 key 不是原版角色、value 不是現有的 id、進化階段不一致（除非列在 `stage_mismatch_ok`）、範圍內有表沒涵蓋的原版角色（全部列出；可以用 `--fallback ID` 先填佔位）。
-- 測試（全部在暫存副本上跑，不會動到 repo 的檔案）：只改範圍內的 species 字樣且行數不變、重複執行沒有變化、缺漏時全部列出且不寫入、`--fallback`、範圍外不變、`--dry-run`、進化階段不一致、未知的 key／value、party 的各種寫法、名稱經 trainerproc 規則可以轉回 `SPECIES_<ID>`。另外手動確認過：改寫後的副本經過 `cpp` + `trainerproc`，產生的是 `SPECIES_SHADEPUP` 這類常數。
+- 測試（全部在暫存副本上跑，不會動到 repo 的檔案）：只改範圍內的 species 字樣且行數不變、重複執行沒有變化、缺漏時全部列出且不寫入、`--fallback`、範圍外不變、`--dry-run`、進化階段不一致、未知的 key／value、party 的各種寫法、名稱經 trainerproc 規則可以轉回 `SPECIES_<ID>`、`--scope early` 的數量、`--scope` 跟 `--maps` 互斥、`check_species_refs` 讀到同一個範圍、strict 範圍有原版引用時失敗、範圍檔打錯字時失敗。另外手動確認過：改寫後的副本經過 `cpp` + `trainerproc`，產生的是 `SPECIES_SHADEPUP` 這類常數。
 
-用 Mark 目前的 12 隻當暫時替換表做 dry run，觀察到兩件 4b 要決定的事：
-1. **只改陸地遭遇**：`--maps Route101,Route102,Route103` 不加 `--kinds` 的話，水上和釣魚的 Marill、Goldeen、Corphish、Magikarp、Tentacool、Wailmer、Pelipper、Sharpedo 都會被列為缺漏。這些要等拿到釣竿或衝浪才遇得到，4b 用 `--kinds land_mons` 就好。
-2. **Route 103 的地圖範圍包含中期的訓練家**：Daisy、Amy & Liv、Andrew、Miguel、Rhett、Marcos、Isabelle、Pete（§2.2，早期都遇不到）會被列為缺漏（Roselia、Plusle、Minun、Skitty、Voltorb、Makuhita…）。4b 可以 (a) 用 `--fallback`，(b) 把這些角色也加進表，或 (c) 改寫時先排除這幾名訓練家。另外 `PetalburgCity` 這個前綴也會包含 `PetalburgCity_Gym`（Norman 和道館訓練家是第 5 個徽章），4b 的 `--maps` 要寫 `PetalburgCity` 以外的明確清單，或接受這些也被列出。
+### 5.2.2 遷移範圍：`content/migration_scope.toml`
+
+David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的範圍檔，由 `apply_replacements.py`（`--scope`：要改寫什麼）和 `check_species_refs.py`（`--scope`：只看範圍內的引用；`--strict-scopes`：所有 `strict = true` 的範圍不能有原版引用）一起讀，避免兩邊的規則漂移。`make check-oddex` 會跑 `--strict-scopes`，所以這份檔案也是**遷移進度表**：某段遷移完成，就把它設成 `strict = true`。
+
+| 欄位 | 用途 |
+|---|---|
+| `wild_maps`、`wild_kinds` | 哪些地圖的哪些遭遇表（早期：Route 101/102/103 的 `land_mons`；水上和釣魚要有釣竿或衝浪） |
+| `trainers` | 明確的訓練家清單，不依地圖推斷（早期：Route 102 的 4 名＋ Route 103 勁敵 6 組。Route 103 其他 8 組是中期才遇得到，Petalburg 道館的訓練家是第 5 個徽章，都不在範圍內） |
+| `maps`、`exclude_maps` | 腳本、文字、寶可夢造型地圖物件的範圍，可以用萬用字元（早期：`LittlerootTown*`、`Route101`、`OldaleTown*`、`Route103`、`Route102`、`PetalburgCity*`） |
+| `exclude_refs` | `"<檔案>:SPECIES_X"`，個別排除（早期：研究所裡破關後才給的 Johto 御三家） |
+| `c_files` | 檔案內所有引用都要遷移完的 C 原始碼（早期：無；劇情角色在 2a／2b 已改成代號） |
+
+載入時會驗證：未知欄位、不存在的地圖或萬用字元沒有對到任何地圖、不在 `trainers.party` 的訓練家、不存在的檔案，都會直接報錯，避免打錯字被靜默忽略。
+
+`[early]` 目前的工作清單（`check_species_refs.py --scope early`）：訓練家 7 隻（Route 102）、野生 36 格、腳本 0、文字 0，以及**地圖造型 7 個**：未白鎮兩戶人家幫忙搬家的 Vigoroth ×4、2F 的 Swablu／Pichu 娃娃，以及 Route 101 追 Birch 的 Zigzagoon。4b 要嘛換成佔位的 overworld 圖，要嘛把它們列進 `exclude_refs` 並寫明理由，否則 `[early]` 設成 strict 之後檢查會失敗。
 
 ### 5.3 第二階段實作順序
 
@@ -203,9 +215,9 @@ python3 tools/oddex/test_apply_replacements.py                                  
 | 2c | 新增 `to_petalburg.txt`：從開機開始，走 `to_starter` 的路線 → Oldale → Route 103 勁敵 → 研究所拿圖鑑 → Route 102 → Petalburg Wally 教學。**先在原版上錄好基準截圖**。必須能獨立執行（見 §5.2） | Sonia | — | 從開機跑兩次結果相同，並加進 `ODDEX_REGRESSION_SCRIPTS` |
 | 3 | 早期約 10 隻原創角色的資料和圖像。依使用者決策，先把佔位圖產生器通用化：配色依屬性、幾種體型模板、屬性記號、同一條進化線共用配色，參數放在 TOML 的選填區段 `[graphics.placeholder]`（換正式美術時只要換圖檔、刪掉那一段）；圖檔匯入要能吃外部 PNG（自動量化成 15 色、對應共用 icon 調色盤）。詳見 Mark 的 `species-plan-b.md` §5.1 | Mark | 0 | 產生器驗證、sprite 檢視器、`make check-oddex` |
 | 4a | `apply_replacements.py`（§5.1 的要求） | Sonia（階段比對：Mark） | 3 | 單元測試：重複執行、最小 diff、缺漏時失敗 |
-| 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | 早期路線寫進 `ODDEX_STRICT_MAPS` 後，`make check-oddex` 通過（`--maps` 會排除 C，C 的部分由 2a／2b 涵蓋） |
-| 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `make check-oddex`（含 `ODDEX_STRICT_MAPS` 早期路線，以及 `to_littleroot`、`to_starter`、`to_petalburg` 全程沒有 crash screen） |
-| 6 | 依路線往後擴充。**每條路線的必要項目**：替換表套用（訓練家、野生）；腳本裡的 `SPECIES_*`，**包含 `playmoncry`**（原版角色的叫聲在 debug build 會 assert，見下方說明）；文字裡寫死的角色名；寶可夢造型的地圖物件改用佔位 overworld 圖。最後是設施 stub | 兩人 | 5 | `make check-oddex`：把該路線加進 `ODDEX_STRICT_MAPS`，並加入或更新該路線的回歸腳本 |
+| 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | `[early]` 設成 `strict = true` 後，`make check-oddex` 通過（C 的部分由 2a／2b 的代號涵蓋） |
+| 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `make check-oddex`（含 strict 的 `[early]` 範圍，以及 `to_littleroot`、`to_starter`、`to_petalburg` 全程沒有 crash screen） |
+| 6 | 依路線往後擴充。**每條路線的必要項目**：替換表套用（訓練家、野生）；腳本裡的 `SPECIES_*`，**包含 `playmoncry`**（原版角色的叫聲在 debug build 會 assert，見下方說明）；文字裡寫死的角色名；寶可夢造型的地圖物件改用佔位 overworld 圖。最後是設施 stub | 兩人 | 5 | `make check-oddex`：在 `migration_scope.toml` 新增該路線的範圍，完成時設成 strict，並加入或更新該路線的回歸腳本 |
 
 1、2a、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）；2b 要等 2c 錄好基準截圖再改，才能證明改完遊戲內容不變。
 

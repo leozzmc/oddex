@@ -2,7 +2,7 @@
 
     python3 tools/oddex/test_apply_replacements.py
 """
-import json, os, shutil, subprocess, sys, tempfile, unittest
+import collections, json, os, shutil, subprocess, sys, tempfile, unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -148,6 +148,48 @@ class ApplyReplacementsTest(unittest.TestCase):
     def test_display_name_round_trips_through_trainerproc_rules(self):
         for oddex_id in ("SHADEPUP", "FOO_BAR", "MOSS2"):
             self.assertEqual(refs.party_species_token(ar.display_name(oddex_id)), "SPECIES_" + oddex_id)
+
+    # --- content/migration_scope.toml -------------------------------------------------------
+
+    def test_scope_early_rewrites_its_trainers_and_land_tables_only(self):
+        r = self.run_tool("--scope", "early")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        # Route 102's four trainers (the Route 103 rival is already role aliases); 12 land slots
+        # each on Route 101/102/103. Route 103's mid-game trainers and water/fishing stay vanilla.
+        self.assertIn("party: 7 Pokemon, wild: 36 slots", r.stdout)
+        party, wild = self.files()
+        self.assertIn("Skitty", party)  # Miguel on Route 103 is out of scope
+        enc = {e["map"]: e for g in json.loads(wild)["wild_encounter_groups"] for e in g.get("encounters", [])
+               if e.get("map") in ("MAP_ROUTE102", "MAP_ROUTE103")}
+        self.assertIn("SPECIES_MAGIKARP", {m["species"] for m in enc["MAP_ROUTE102"]["fishing_mons"]["mons"]})
+
+    def test_scope_and_ad_hoc_options_are_exclusive(self):
+        r = self.run_tool("--scope", "early", "--maps", "Route101")
+        self.assertEqual(r.returncode, 2)
+        self.assertEqual(self.files(), (self.party0, self.wild0))
+
+    def test_check_species_refs_reads_the_same_scope(self):
+        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "early", "--json"]
+        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        by_cat = collections.Counter(f["category"] for f in found)
+        self.assertEqual((by_cat["party"], by_cat["wild"]), (7, 36))
+        self.assertEqual(by_cat["script"] + by_cat["text"], 0)  # Johto starters are in exclude_refs
+
+    def test_strict_scope_with_vanilla_left_fails(self):
+        scope = self.table('[early]\nstrict = true\nwild_maps = ["Route101"]\nwild_kinds = ["land_mons"]\n', "scope.toml")
+        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--strict-scopes", "--summary",
+               "--scope-file", scope]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 1, r.stdout)
+        self.assertIn("strict scopes: early", r.stdout)
+        self.assertIn("wild           12 refs", r.stdout)
+
+    def test_scope_file_typos_fail(self):
+        scope = self.table('[bad]\ntrainers = ["TRAINER_NOBODY"]\nmaps = ["Nowhere*"]\nwlid_maps = []\n', "scope.toml")
+        r = self.run_tool("--scope", "bad", "--scope-file", scope, "--dry-run")
+        self.assertNotEqual(r.returncode, 0)
+        for text in ("unknown field wlid_maps", "TRAINER_NOBODY is not in trainers.party", "Nowhere* matches no map"):
+            self.assertIn(text, r.stdout + r.stderr)
 
 
 if __name__ == "__main__":

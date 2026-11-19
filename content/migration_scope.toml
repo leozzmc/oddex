@@ -1,0 +1,38 @@
+# Plan B migration scopes: which content has moved (or is moving) from vanilla to original species.
+# Shared by tools/oddex/apply_replacements.py (--scope NAME: what to rewrite) and
+# tools/oddex/check_species_refs.py (--scope NAME: what to report; --strict-scopes: fail on every
+# scope with strict = true). `make check-oddex` runs --strict-scopes, so this file is also the
+# migration progress table: flip `strict` to true once a scope is migrated.
+#
+# Fields (all optional):
+#   wild_maps     map names (map.json "name") whose wild encounter tables are in scope
+#   wild_kinds    encounter tables to include, e.g. ["land_mons"] (default: all kinds)
+#   trainers      explicit TRAINER_* constants; trainers are never inferred from maps
+#   maps          map names for scripts, text and Pokemon-shaped map objects; shell-style
+#                 wildcards allowed ("LittlerootTown*" includes the town's interiors)
+#   exclude_maps  map names/wildcards removed from `maps`
+#   exclude_refs  "<file relative to game/>:SPECIES_X" pairs that stay out of scope
+#   c_files       C sources (relative to game/) whose species references must all be migrated
+
+[early]
+description = "Littleroot -> Petalburg: plan B step 4b"
+strict = false
+wild_maps = ["Route101", "Route102", "Route103"]
+wild_kinds = ["land_mons"]   # water and fishing need a rod or Surf; not reachable this early
+trainers = [
+    # Route 102. Route 103's other trainers are mid-game (reached from Route 110 or by Surf).
+    "TRAINER_CALVIN_1", "TRAINER_RICK", "TRAINER_TIANA", "TRAINER_ALLEN",
+    # Route 103 rival; already role aliases (Oddex Starter *) since step 2b.
+    "TRAINER_MAY_ROUTE_103_TREECKO", "TRAINER_MAY_ROUTE_103_TORCHIC", "TRAINER_MAY_ROUTE_103_MUDKIP",
+    "TRAINER_BRENDAN_ROUTE_103_TREECKO", "TRAINER_BRENDAN_ROUTE_103_TORCHIC", "TRAINER_BRENDAN_ROUTE_103_MUDKIP",
+]
+maps = ["LittlerootTown*", "Route101", "OldaleTown*", "Route103", "Route102", "PetalburgCity*"]
+exclude_refs = [
+    # Birch gives a Johto starter after the Hall of Fame; post-game, not part of this scope.
+    "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_CHIKORITA",
+    "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_CYNDAQUIL",
+    "data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:SPECIES_TOTODILE",
+]
+# The story Pokemon of this stretch (intro, rescue, starters, Wally's tutorial) are role aliases
+# since steps 2a/2b, so no C file has to be listed here.
+c_files = []
