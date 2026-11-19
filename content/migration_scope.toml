@@ -91,3 +91,41 @@ trainers = [
 ]
 maps = ["RusturfTunnel", "DewfordTown*", "Route106", "Route107", "GraniteCave*"]
 c_files = []
+
+[mauville]
+description = "Briney to Route 109 -> Slateport -> Route 110 -> Mauville, up to Wattson"
+# strict stays false: the Route 110 rival and Edwin are left out below until their evolution lines
+# exist, and to_mauville is recorded once Brawly's balance is decided (the route has to pass him).
+strict = false
+# Route 109 and Slateport have only water and fishing tables; fishing is in scope since the Old Rod
+# (Dewford). Water tables need Surf. Mauville has no wild table.
+wild_maps = ["Route109", "SlateportCity", "Route110"]
+wild_kinds = ["land_mons", "fishing_mons"]
+# stage_reach.py from the Route 109 dock reaches Route 109's beach, Slateport and southern
+# Route 110 only: it cannot cross the bridges under the Cycling Road. The rest of Route 110 and
+# Mauville are on the story path, and the bike from Mauville (before Wattson) opens the Cycling Road.
+trainers = [
+    # Route 109 beach and the Seashore House (David, Alice, Gwen, Austina, Carter, Mel & Paul and
+    # Elijah are swimmers: Surf).
+    "TRAINER_HUEY", "TRAINER_EDMOND", "TRAINER_RICKY_1", "TRAINER_LOLA_1", "TRAINER_HAILEY", "TRAINER_CHANDLER",
+    "TRAINER_DWAYNE", "TRAINER_JOHANNA", "TRAINER_SIMON",
+    # Aqua grunts in the Oceanic Museum.
+    "TRAINER_GRUNT_MUSEUM_1", "TRAINER_GRUNT_MUSEUM_2",
+    # Route 110 and the Cycling Road. Left out until the user decides the evolution lines (no
+    # replacement yet, so apply_replacements would refuse the whole scope):
+    #   TRAINER_{MAY,BRENDAN}_ROUTE_110_{TREECKO,TORCHIC,MUDKIP}: the starters' stage 2;
+    #   TRAINER_EDWIN_1: Nuzleaf (Bekurama's stage 2).
+    "TRAINER_ABIGAIL_1", "TRAINER_ALYSSA", "TRAINER_ANTHONY", "TRAINER_BENJAMIN_1", "TRAINER_DALE", "TRAINER_EDWARD",
+    "TRAINER_ISABEL_1", "TRAINER_JACLYN", "TRAINER_JACOB", "TRAINER_JASMINE", "TRAINER_JOSEPH", "TRAINER_KALEB",
+    "TRAINER_TIMMY",
+    # Trick House puzzle 1: Sally is reachable; Eddie and Robin need Cut.
+    "TRAINER_SALLY",
+    # Wally outside the gym, the gym and Wattson.
+    "TRAINER_WALLY_MAUVILLE",
+    "TRAINER_ANGELO", "TRAINER_BEN", "TRAINER_KIRK", "TRAINER_SHAWN", "TRAINER_VIVIAN", "TRAINER_WATTSON_1",
+]
+maps = ["Route109*", "SlateportCity*", "Route110*", "MauvilleCity*"]
+# The Battle Tent is a facility; Trick House puzzles 2-8 come with later field moves.
+exclude_maps = ["SlateportCity_BattleTent*", "Route110_TrickHousePuzzle[2-8]", "Route110_TrickHouseEnd",
+                "Route110_TrickHouseCorridor"]
+c_files = []
