@@ -1,0 +1,7 @@
+# Story/gameplay roles -> species. Generates game/include/constants/oddex_species.h:
+#   STARTER_GRASS = "MOSSPRIT"  ->  #define SPECIES_ODDEX_STARTER_GRASS SPECIES_MOSSPRIT
+# Code, scripts, trainers.party ("Oddex Starter Grass") and wild_encounters.json refer to
+# SPECIES_ODDEX_<ROLE>, so recasting a role only touches this file.
+# A value may be an original species id (content/species/*.toml) or a vanilla one.
+
+STARTER_GRASS = "MOSSPRIT"

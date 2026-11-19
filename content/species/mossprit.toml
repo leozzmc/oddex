@@ -1,0 +1,67 @@
+# One file per original species. Read by tools/oddex/gen_species.py.
+# Constants are written without their prefix (GRASS -> TYPE_GRASS, OVERGROW -> ABILITY_OVERGROW).
+
+id = "MOSSPRIT"                 # -> SPECIES_MOSSPRIT, NATIONAL_DEX_MOSSPRIT, gMonFrontPic_Mossprit ...
+name = "Mossprit"               # in-game name, max 12 characters
+category = "Moss Pebble"        # "<category> POKéMON", max 12 characters
+
+types = ["GRASS", "ROCK"]
+abilities = ["OVERGROW", "NONE", "STURDY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 50, atk = 45, def = 65, spa = 60, spd = 55, spe = 35 }
+ev_yield = { def = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 50.0                   # percent female, or "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["GRASS", "MINERAL"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "GRAY"
+cry = "NONE"                    # no original cry yet; every vanilla CRY_* disappears with its family
+
+[dex]
+height = 4                      # decimetres
+weight = 180                    # hectograms
+text = """
+A pebble that soaked up rain and sun for
+a hundred years until moss woke it up.
+It naps in riverbeds, and the flower on
+its head closes whenever it is scared."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "GROWL"], [3, "LEAFAGE"], [6, "ROCK_THROW"], [9, "MEGA_DRAIN"],
+    [12, "DEFENSE_CURL"], [15, "ROLLOUT"], [18, "ROCK_TOMB"], [21, "GIGA_DRAIN"],
+    [24, "ANCIENT_POWER"], [27, "INGRAIN"], [30, "ENERGY_BALL"], [33, "STEALTH_ROCK"],
+    [36, "SYNTHESIS"], [39, "LEAF_STORM"],
+]
+# TM/tutor compatibility; the build keeps only moves that are actually teachable in-game.
+teachable = [
+    "ATTRACT", "BULLET_SEED", "DIG", "DOUBLE_TEAM", "FACADE", "FRUSTRATION", "GIGA_DRAIN",
+    "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB",
+    "SAFEGUARD", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SOLAR_BEAM", "STRENGTH",
+    "SUBSTITUTE", "SUNNY_DAY", "TOXIC", "ENDURE", "MUD_SLAP", "SNORE", "SWAGGER",
+]
+egg = []
+
+evolutions = []                 # e.g. [{ method = "LEVEL", param = 16, into = "MOSSLAB" }]
+
+[graphics]
+dir = "graphics/pokemon/oddex/mossprit"     # relative to game/; made by scripts/species/gen_mossprit.py
+icon_palette = 1
+front_size = [56, 56]
+front_y_offset = 8
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_size = [48, 56]
+back_y_offset = 8
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+# Not used by the generator: design notes for the vanilla -> oddex replacement table and maps.
+[design]
+habitat = ["starter"]
+level_band = [5, 5]
+family = ["MOSSPRIT"]
