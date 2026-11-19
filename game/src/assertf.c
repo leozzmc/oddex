@@ -7,6 +7,7 @@
 #include "m4a.h"
 #include "constants/characters.h"
 #include "constants/rgb.h"
+#include "mini_printf.h"
 
 enum Mode { MODE_ASSERTF, MODE_FATALF };
 #define MODE_COUNT 2
@@ -331,10 +332,29 @@ struct Backup
 
 /* Blue Screen of Death style screen that displays the error message and
  * hijacks the main loop until the start button is pressed. */
+#if !defined(NDEBUG) && LOG_HANDLER == LOG_HANDLER_MGBA_PRINT
+// oddex: mirror the crash screen to the emulator log so headless runs can fail on it.
+static void LogCrashToEmulator(enum Mode mode, const char *fmt, va_list va)
+{
+    char message[0x100];
+    va_list copy;
+
+    va_copy(copy, va);
+    mini_vsnprintf(message, sizeof(message), fmt, copy);
+    va_end(copy);
+    if (MgbaOpen())
+        MgbaPrintf(MGBA_LOG_ERROR, "ODDEX_CRASH_SCREEN %s: %s", mode == MODE_FATALF ? "fatal" : "assert", message);
+}
+#else
+#define LogCrashToEmulator(mode, fmt, va)
+#endif
+
 static void CrashScreen(enum Mode mode, const void *return1, const void *return0, const char *fmt, va_list va)
 {
     // Backup and override hardware state.
     struct Backup *backup = NULL;
+
+    LogCrashToEmulator(mode, fmt, va);
 
     // Allocate on heap if possible.
     if (!backup)
