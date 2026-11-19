@@ -8,5 +8,8 @@ AUTO_GEN_TARGETS += test/battle/trainer_control.h
 AUTO_GEN_TARGETS += test/battle/partner_control.h
 AUTO_GEN_TARGETS += src/data/debug_trainers.h
 
+# cpp runs as its own step: in a pipe its failure was masked and left an empty, never-rebuilt header.
 %.h: %.party $(TRAINERPROC)
-	$(CPP) $(CPPFLAGS) -traditional-cpp - < $< | $(TRAINERPROC) -o $@ -i $< -
+	$(CPP) $(CPPFLAGS) -traditional-cpp - < $< > $@.i
+	$(TRAINERPROC) -o $@ -i $< - < $@.i
+	@rm -f $@.i
