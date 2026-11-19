@@ -1,0 +1,54 @@
+# The Mandalumb line (see docs/research/mask-designs.md): a mandala that grows from a simple circle to a full
+# mandala; layout only, never a deity. Stats and moves are provisional.
+
+id = "MANDARING"
+name = "Mandaring"
+category = "Mandala"
+
+types = ["NORMAL", "GROUND"]
+abilities = ["OWN_TEMPO", "NONE", "SOUNDPROOF"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 80, atk = 65, def = 70, spa = 65, spd = 65, spe = 55 }   # total 400
+ev_yield = { hp = 2 }
+catch_rate = 120
+exp_yield = 140
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["AMORPHOUS"]
+growth_rate = "FAST"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 38, into = "MANDALOKA" }]   # [{ method, param, into }]
+
+[dex]
+height = 8
+weight = 180
+text = """
+Its pattern has grown a second ring of
+petals and a circle of gold beads. It
+hums as it turns, and the sand under
+it settles into the same pattern."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "POUND"], [1, "GROWL"], [1, "SAND_ATTACK"], [8, "RAPID_SPIN"], [12, "MUD_SHOT"], [16, "ROUND"], [20, "BULLDOZE"], [26, "HYPER_VOICE"], [32, "EARTH_POWER"], [38, "BOOMBURST"],
+]
+teachable = [
+    "ATTRACT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/mandaring"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "H_JUMPS"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [20, 38]
+family = ["MANDALUMB", "MANDARING", "MANDALOKA"]

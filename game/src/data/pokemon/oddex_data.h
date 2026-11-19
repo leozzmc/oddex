@@ -897,3 +897,72 @@ static const struct SpriteFrameImage sPicTable_Komorimen[] = {
     overworld_ascending_frames(gObjectEventPic_Komorimen, 4, 4),
 };
 #endif
+
+// Mandaloka
+static const struct LevelUpMove sMandalokaLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_POUND),
+    LEVEL_UP_MOVE( 1, MOVE_GROWL),
+    LEVEL_UP_MOVE( 1, MOVE_SAND_ATTACK),
+    LEVEL_UP_MOVE( 1, MOVE_EMBER),
+    LEVEL_UP_MOVE( 8, MOVE_RAPID_SPIN),
+    LEVEL_UP_MOVE(12, MOVE_MUD_SHOT),
+    LEVEL_UP_MOVE(16, MOVE_ROUND),
+    LEVEL_UP_MOVE(20, MOVE_BULLDOZE),
+    LEVEL_UP_MOVE(26, MOVE_HYPER_VOICE),
+    LEVEL_UP_MOVE(32, MOVE_EARTH_POWER),
+    LEVEL_UP_MOVE(38, MOVE_FIRE_SPIN),
+    LEVEL_UP_MOVE(44, MOVE_LAVA_PLUME),
+    LEVEL_UP_MOVE(50, MOVE_BOOMBURST),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Mandaloka[] = INCGFX_U32("graphics/pokemon/oddex/mandaloka/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Mandaloka[] = INCGFX_U32("graphics/pokemon/oddex/mandaloka/back.png", ".4bpp.smol");
+const u16 gMonPalette_Mandaloka[] = INCGFX_U16("graphics/pokemon/oddex/mandaloka/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Mandaloka[] = INCGFX_U16("graphics/pokemon/oddex/mandaloka/shiny.pal", ".gbapal");
+const u8 gMonIcon_Mandaloka[] = INCGFX_U8("graphics/pokemon/oddex/mandaloka/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Mandaloka[] = INCGFX_U8("graphics/pokemon/oddex/mandaloka/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Mandaloka[] = INCGFX_COMP("graphics/pokemon/oddex/mandaloka/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Mandaloka[] = INCGFX_U16("graphics/pokemon/oddex/mandaloka/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Mandaloka[] = INCGFX_U16("graphics/pokemon/oddex/mandaloka/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Mandaloka[] = {
+    overworld_ascending_frames(gObjectEventPic_Mandaloka, 4, 4),
+};
+#endif
+
+// Mandaring
+static const struct LevelUpMove sMandaringLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_POUND),
+    LEVEL_UP_MOVE( 1, MOVE_GROWL),
+    LEVEL_UP_MOVE( 1, MOVE_SAND_ATTACK),
+    LEVEL_UP_MOVE( 8, MOVE_RAPID_SPIN),
+    LEVEL_UP_MOVE(12, MOVE_MUD_SHOT),
+    LEVEL_UP_MOVE(16, MOVE_ROUND),
+    LEVEL_UP_MOVE(20, MOVE_BULLDOZE),
+    LEVEL_UP_MOVE(26, MOVE_HYPER_VOICE),
+    LEVEL_UP_MOVE(32, MOVE_EARTH_POWER),
+    LEVEL_UP_MOVE(38, MOVE_BOOMBURST),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Mandaring[] = INCGFX_U32("graphics/pokemon/oddex/mandaring/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Mandaring[] = INCGFX_U32("graphics/pokemon/oddex/mandaring/back.png", ".4bpp.smol");
+const u16 gMonPalette_Mandaring[] = INCGFX_U16("graphics/pokemon/oddex/mandaring/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Mandaring[] = INCGFX_U16("graphics/pokemon/oddex/mandaring/shiny.pal", ".gbapal");
+const u8 gMonIcon_Mandaring[] = INCGFX_U8("graphics/pokemon/oddex/mandaring/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Mandaring[] = INCGFX_U8("graphics/pokemon/oddex/mandaring/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Mandaring[] = INCGFX_COMP("graphics/pokemon/oddex/mandaring/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Mandaring[] = INCGFX_U16("graphics/pokemon/oddex/mandaring/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Mandaring[] = INCGFX_U16("graphics/pokemon/oddex/mandaring/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Mandaring[] = {
+    overworld_ascending_frames(gObjectEventPic_Mandaring, 4, 4),
+};
+#endif
