@@ -74,24 +74,25 @@ PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 
 PetalburgCity_PokemonCenter_1F_Text_StarterGrassTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a GRASS and ROCK type.\p"
-	.string "It's strong against WATER,\n"
-	.string "GROUND, FIRE and FLYING types.\p"
-	.string "But, it's weak against ICE, BUG,\n"
-	.string "FIGHTING and STEEL-type POKéMON.$"
+	.string "is a GRASS and GROUND type.\p"
+	.string "It's strong against WATER, ROCK,\n"
+	.string "ELECTRIC and STEEL types.\p"
+	.string "ELECTRIC moves don't even touch it!\p"
+	.string "But, it's weak against ICE, FIRE,\n"
+	.string "FLYING and BUG-type POKéMON.$"
 
 PetalburgCity_PokemonCenter_1F_Text_StarterFireTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a FIRE type.\p"
-	.string "It's strong against the GRASS and\n"
-	.string "BUG types.\p"
-	.string "But, it's weak against WATER-type\n"
-	.string "POKéMON.$"
+	.string "is a FIRE and FIGHTING type.\p"
+	.string "It's strong against GRASS, ICE,\n"
+	.string "STEEL and NORMAL types.\p"
+	.string "But, it's weak against WATER,\n"
+	.string "GROUND, FLYING and PSYCHIC types.$"
 
 PetalburgCity_PokemonCenter_1F_Text_StarterWaterTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a WATER type.\p"
-	.string "It's strong against the FIRE type.\p"
-	.string "But, it's weak against GRASS-type\n"
-	.string "and ELECTRIC-type POKéMON.$"
-
+	.string "is a WATER and ELECTRIC type.\p"
+	.string "It's strong against FIRE, ROCK,\n"
+	.string "WATER and FLYING types.\p"
+	.string "But, it's weak against GRASS-\n"
+	.string "and GROUND-type POKéMON.$"
