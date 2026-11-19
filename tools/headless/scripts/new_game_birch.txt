@@ -1,0 +1,10 @@
+# Title -> NEW GAME -> Birch intro; shots go to $PWD/out/
+wait 700
+press START
+repeat 4 press A 2 50
+shot out/menu.png
+repeat 3 press A 2 50
+repeat 6 press A 2 50
+shot out/birch_1.png
+repeat 2 press A 2 50
+shot out/birch_2.png
