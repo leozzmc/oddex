@@ -160,7 +160,11 @@ python3 tools/oddex/check_maps.py --update-baseline           # 逐一確認新�
 
 可達性：從地圖的每個 warp 和有 connection 的那幾邊出發，依遊戲規則走（collision 0；elevation 相同，或任一邊是 0/15；平台只能往下跳），**水面一律可以走**（假設已經有衝浪等所有場地招式），物件不算障礙（很多 NPC 會被 flag 隱藏）。有腳本的 NPC 和 bg event 必須站在走得到的格子上，或有一個鄰格走得到（櫃台 `MB_COUNTER` 可以隔一格對話）；coord trigger 本身那一格必須走得到。原版有 58 個走不到的事件，都有原因：New Mauville（25 個，開關會改變地圖）、海底地圖（靠潛水出入，不是 warp）、機關屋謎題、卡車內部、Mauville 道館的 Wattson（要先踩開關），以及幾個放在牆上、不會觸發的 trigger。已驗證：把科學家放進樹叢、把 trigger 放在牆上，都會被抓到。
 
-還沒做：交界處 tileset 相容性檢查。
+交界處 tileset 相容性：遊戲畫相連的地圖時，用的是**目前所在地圖**載入的 tileset。所以：
+- 相連的兩張地圖 primary tileset 要相同，不同就直接回報。
+- secondary 不同時，對方在交界 `BORDER_VIEW`（8）格內、沿著本圖範圍左右各多 8 格的區域，只能用 primary 的 metatile（編號 < 512）；用到對方 secondary 的格子會回報數量和第一個座標。
+
+原版有 18 處這種交界（例如 Route 104 看得到 Petalburg 左上角用 Petalburg secondary 的圖塊），都列進 baseline。測試在 `tools/oddex/test_check_maps.py`。
 
 ## 6. Porymap／Poryscript 評估
 
