@@ -1,6 +1,6 @@
 #!/bin/sh
 # Writes a code-only copy of game/pokeemerald.elf for REA/Ghidra (see docs/research/build.md).
-# The full 34 MB ELF makes REA's Ghidra start time out on asset data in .rodata.
+# Optional speed-up: Ghidra analyzes this in ~2 min vs ~4 min for the full ELF, but data refs stay raw addresses.
 set -e
 . "$(dirname "$0")/../env.sh"
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)

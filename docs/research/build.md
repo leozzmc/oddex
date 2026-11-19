@@ -65,13 +65,15 @@ cp game/build/oddex-check/<script>/**/*.png tools/headless/baselines/<script>/
 ## 用 REA 分析編譯產物
 分析「實際編進 ROM 的東西」時，優先用 REA（`reverse-engineer-anything` skill，後端是 Ghidra 12.1.4），不要手動 `nm` 加上逐位元組解碼。原始碼本身的問題，還是直接讀原始碼。
 
-> **目前狀態（2026-11-19）：REA 的 Ghidra 啟動在所有 session 都會失敗**（`GhidraLaunchError`，約 1 秒內就失敗，連很小的 ELF 也一樣）。Java、Ghidra 和手動執行 `analyzeHeadless` 都正常，原因還在調查。之前認為是「完整 ELF 太大」的推論是錯的。修好之前，佐證先用 `arm-none-eabi-objdump -d`，並標明「非 REA」。
+> **`GhidraLaunchError` 的原因（2026-11-19 已查明）**：REA 在 macOS 啟動 Ghidra 前，會先用 `xcrun swiftc` 編譯一個追蹤行程用的小工具（`bridge/process/ProcessRunTokenReader.swift`）。這台電腦還沒同意 Xcode 授權，所以 `xcrun` 失敗（exit 69），REA 只回報「Ghidra headless launch failed」。跟 ELF 大小無關；之前成功的幾次，剛好都是在先 source 了 `tools/env.sh`（會設定 `DEVELOPER_DIR=/Library/Developer/CommandLineTools`）的 shell 裡執行。
+>
+> **用法**：在 shell 裡先 `. tools/env.sh` 再執行 `rea ...`（CLI），就能正常使用。MCP 版的 REA 工具（`mcp__rea__*`）是由 `rea mcp` 行程執行，環境裡沒有 `DEVELOPER_DIR`，所以**目前一定會失敗，請改用 CLI**。根本解法要由使用者決定：在終端機執行 `sudo xcodebuild -license accept`（同時也會修好 Homebrew），或在 `~/.claude.json` 的 REA MCP 註冊中加上 `DEVELOPER_DIR=/Library/Developer/CommandLineTools` 並重新啟動 session。
 
-建議還是先產生只保留程式碼和符號的版本，讓分析時間縮短到約 2 分鐘：
+完整的 `game/pokeemerald.elf`（34 MB）可以直接分析，第一次約 4 分鐘，資料符號也會解析出名稱（例如 `&sStarterMon`）。如果只需要看程式邏輯，可以先產生只保留程式碼和符號的版本，第一次分析約 2 分鐘，但資料位址只會顯示成 `0x08xxxxxx`：
 ```bash
 tools/oddex/rea_code_elf.sh    # → game/build/pokeemerald.code.elf（約 7 MB）
 ```
-第一次分析約 2 分鐘，之後在同一個 session 裡查詢很快。可以用 `close_binary` 的 `snapshot_path` 存快照，下次 `open_binary` 帶 `snapshot_path` 就能重用分析結果。
+之後在同一個 session 裡查詢很快。可以用 `close_binary` 的 `snapshot_path` 存快照，下次 `open_binary` 帶 `snapshot_path` 就能重用分析結果。
 
 適合的用途：
 - 反編譯確認某次修改實際編出來的邏輯（例如代號最後解析成哪個 species 常數）。
