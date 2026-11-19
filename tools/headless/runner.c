@@ -1,6 +1,7 @@
 #include <mgba/flags.h>
 #include <mgba/core/core.h>
 #include <mgba/core/config.h>
+#include <mgba/core/log.h>
 #include <mgba/core/serialize.h>
 #include <mgba-util/png-io.h>
 #include <mgba-util/vfs.h>
@@ -9,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 static struct mCore* core;
 static color_t* video;
@@ -46,7 +48,20 @@ static void run(uint32_t keys, unsigned long frames) {
 	core->setKeys(core, 0);
 }
 
+static void makeParents(const char* path) {
+	char buf[512];
+	snprintf(buf, sizeof(buf), "%s", path);
+	for (char* p = buf + 1; *p; ++p) {
+		if (*p == '/') {
+			*p = '\0';
+			mkdir(buf, 0755);
+			*p = '/';
+		}
+	}
+}
+
 static void screenshot(const char* path) {
+	makeParents(path);
 	struct VFile* vf = VFileOpen(path, O_CREAT | O_TRUNC | O_WRONLY);
 	if (!vf) {
 		fprintf(stderr, "cannot write %s\n", path);
