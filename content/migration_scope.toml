@@ -43,7 +43,7 @@ script_files = ["data/scripts/players_house.inc"]
 
 [rustboro]
 description = "Petalburg -> Route 104 -> Petalburg Woods -> Rustboro, up to Roxanne (first badge)"
-strict = false
+strict = true
 # Route 104 water and fishing need Surf or a rod (the Old Rod comes in Dewford). Route 116 is open
 # before the first badge and to_rustboro trains there, so its land table is in scope.
 wild_maps = ["Route104", "PetalburgWoods", "Route116"]

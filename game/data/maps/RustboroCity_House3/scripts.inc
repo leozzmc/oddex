@@ -9,12 +9,12 @@ RustboroCity_House3_EventScript_OldWoman::
 	msgbox RustboroCity_House3_Text_NamingPikachuPekachu, MSGBOX_NPC
 	end
 
-@ Misspelling on purpose, see nickname
+@ Misspelling on purpose, see nickname (oddex: INARIZUMI for the INARIZUMA, RUSTBORO_PET)
 RustboroCity_House3_EventScript_Pekachu::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_PIKACHU, CRY_MODE_NORMAL
+	playmoncry SPECIES_ODDEX_RUSTBORO_PET, CRY_MODE_NORMAL
 	msgbox RustboroCity_House3_Text_Pekachu, MSGBOX_DEFAULT
 	waitmoncry
 	release
@@ -27,11 +27,11 @@ RustboroCity_House3_Text_IGivePerfectlySuitedNicknames:
 	.string "originality, yes, that's it!$"
 
 RustboroCity_House3_Text_NamingPikachuPekachu:
-	.string "But giving the name PEKACHU to\n"
-	.string "a PIKACHU? It seems pointless.\p"
+	.string "But giving the name INARIZUMI to\n"
+	.string "an INARIZUMA? It seems pointless.\p"
 	.string "I suppose it is good to use a name\n"
 	.string "that's easy to understand, but…$"
 
 RustboroCity_House3_Text_Pekachu:
-	.string "PEKACHU: Peka!$"
+	.string "INARIZUMI: Kon!$"
 
