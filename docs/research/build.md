@@ -65,7 +65,9 @@ cp game/build/oddex-check/<script>/**/*.png tools/headless/baselines/<script>/
 ## 用 REA 分析編譯產物
 分析「實際編進 ROM 的東西」時，優先用 REA（`reverse-engineer-anything` skill，後端是 Ghidra 12.1.4），不要手動 `nm` 加上逐位元組解碼。原始碼本身的問題，還是直接讀原始碼。
 
-完整的 `pokeemerald.elf`（34 MB，大部分是 `.rodata` 裡的圖像）會讓 REA 的 Ghidra 啟動失敗（`GhidraLaunchError`）。請先產生只保留程式碼和符號的版本：
+> **目前狀態（2026-11-19）：REA 的 Ghidra 啟動在所有 session 都會失敗**（`GhidraLaunchError`，約 1 秒內就失敗，連很小的 ELF 也一樣）。Java、Ghidra 和手動執行 `analyzeHeadless` 都正常，原因還在調查。之前認為是「完整 ELF 太大」的推論是錯的。修好之前，佐證先用 `arm-none-eabi-objdump -d`，並標明「非 REA」。
+
+建議還是先產生只保留程式碼和符號的版本，讓分析時間縮短到約 2 分鐘：
 ```bash
 tools/oddex/rea_code_elf.sh    # → game/build/pokeemerald.code.elf（約 7 MB）
 ```
