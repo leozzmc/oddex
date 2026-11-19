@@ -413,6 +413,7 @@ include spritesheet_rules.mk
 include json_data_rules.mk
 include audio_rules.mk
 include trainer_rules.mk
+include oddex.mk
 
 # NOTE: Tools must have been built prior (FIXME)
 # so you can't really call this rule directly

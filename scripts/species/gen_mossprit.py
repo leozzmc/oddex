@@ -204,7 +204,8 @@ def read_jasc(path):
 
 def main(out_dir):
     out = Path(out_dir)
-    gfx_root = out.parent
+    out.mkdir(parents=True, exist_ok=True)
+    gfx_root = next(p for p in out.resolve().parents if (p / 'icon_palettes').is_dir())
 
     # Front: 64x128, two 64x64 animation frames. Feet end on row 55, leaving the
     # 8 empty bottom rows that frontPicYOffset/backPicYOffset = 8 expect.
