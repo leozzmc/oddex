@@ -100,7 +100,7 @@ tools/gbagfx/gbagfx graphics/pokemon/treecko/normal.pal /tmp/n.gbapal     # 應�
 - 第 1 節列出的寫死文字(之後已處理:Petalburg 對話由 Sonia 修正,玩偶在後續 commit 改成 MOSSPRIT DOLL;GREEN POSTER 延到第二階段)
 
 ### 驗證
-**模擬器畫面驗證(回歸腳本)**:`tools/headless/scripts/to_starter.txt` 從開機一路玩到選御三家、第一場戰鬥、Birch 研究所、隊伍、能力畫面和 sprite 檢視器,共 10 張截圖,約 31,000 幀,執行時間約 6 秒:
+**模擬器畫面驗證(回歸腳本)**:`tools/headless/scripts/to_starter.txt` 從開機一路玩到選御三家、第一場戰鬥、Birch 研究所、隊伍、能力畫面和 sprite 檢視器,共 10 張截圖,約 58,500 幀,執行時間約 10 秒。runner 已固定 RTC,同一個 ROM 連跑兩次的截圖逐像素一致:
 
 ```bash
 . tools/env.sh
@@ -114,6 +114,7 @@ $ODDEX_RUN <worktree>/game/pokeemerald.gba <worktree>/tools/headless/scripts/to_
 - 文字速度無法透過 OPTION 預先調快,因為 NEW GAME 會呼叫 `SetDefaultOptions()` 重設選項。
 - 對話盡量用 **B** 推進:A 在對話結束後會再跟面前的 NPC 說話,遇到 YES/NO 時還會選 YES(例如取暱稱)。需要回答 YES 的地方(時鐘、Birch 的「去見我的孩子?」)要算好次數再按 A。B 在 YES/NO 時等於選 NO,可能造成對話循環。
 - 要先等提示框真的出現再按方向鍵,否則方向鍵會被前一個畫面吃掉(設時鐘時就轉動了指針)。
+- **不要讓輸入依賴亂數**。RTC 固定前,同一個 ROM 每次跑的亂數都不同;固定後雖然可以重現,但只要 ROM 一改,亂數的消耗量就會不同。第一場戰鬥的回合數會隨性格、個體值和會心一擊改變(用 Leafage 需要 1~3 回合),所以腳本改成 4 輪「Battle → Leafage」,每輪後面接 250 次 B。B 在戰鬥選單上沒有作用,戰後只會推進文字,遇到「取暱稱?」會選 NO,最後一定會停在「去見我的孩子?→ NO → 別這樣嘛」的穩定循環,再改按 A 選 YES。250 次是必要的:文字印出途中按 B 不會加速,從戰鬥結束到取暱稱提示就要大約 120 次。驗證方式:在戰鬥前插入 0~987 幀的等待打亂亂數,16 種狀態全部成功走到最後。
 - 刻意避開需要穿過草叢的路線(例如去 Route 103 跟 May 對戰),因為隨機遭遇會讓腳本一改 ROM 就失準。檢查敵方正面圖用 sprite 檢視器比較穩定:能力畫面按 SELECT,物種編號逐位調整(LEFT/RIGHT 換位數、UP/DOWN 改數字),START 切換異色。
 - 檢視器下方顯示的 BACK/FRONT 動畫名稱會晚一步更新(顯示的是前一個物種的),不要當真。
 
