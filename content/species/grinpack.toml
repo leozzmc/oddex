@@ -1,5 +1,5 @@
-# Starter, mountain-trail trio (docs/research/friends-designs.md): an unmasked head-only character; the
-# repo holds only the cartoon version. Stats and moves are provisional; Lv5 moves match the starter it would replace.
+# Starter, mountain-trail trio (docs/research/friends-designs.md): an unmasked head-only character. The
+# sprites are likenesses built by tools/oddex/likeness/compose.py (sources stay outside the repo). Stats and moves are provisional; Lv5 moves match the starter it would replace.
 
 id = "GRINPACK"
 name = "Grinpack"
@@ -40,7 +40,7 @@ egg = []
 
 
 [graphics]
-dir = "graphics/pokemon/oddex/grinpack"   # rendered by tools/oddex/blender/make_art.py
+dir = "graphics/pokemon/oddex/grinpack"   # built by tools/oddex/likeness/compose.py
 front_anim = "V_SQUISH_AND_BOUNCE"
 front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
 back_anim = "CONCAVE_ARC_LARGE"

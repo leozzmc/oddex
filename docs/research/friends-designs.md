@@ -6,26 +6,24 @@
 - 主屬性維持草、火、水三角相剋;第二屬性要怪。
 - 原本的御三家 Okinoir、Shishiblaze、Kamorai 保留,之後再安排位置(見 `mask-designs.md`)。
 
-## 兩套圖
+## 美術:寫實的臉
 
-**公開版**放在 repo 的 `game/graphics/pokemon/oddex/<dir>/`:
-- 臉是 Blender 建模的卡通版,認得出造型元素(墨鏡、齊瀏海、紅帽加圓眼鏡),但不是真實的臉孔。
-- `make check-oddex` 和畫廊基準截圖都用這一版。
+2026-11-20 使用者核准**寫實版**作為正式造型,並同意放進 GitHub(`CLAUDE.md` 的「私人素材」一節)。
 
-**私人寫實版**放在 `~/oddex-private/likeness/<dir>/`,**絕對不能進 repo**:
-- 由 `tools/oddex/likeness/compose.py` 產生。repo 裡只有程式;參考照片、`crop.toml`(臉在照片裡的位置)和產出都在 `~/oddex-private/`。
-- 做法:
-  1. 從照片裁出頭部(蛋形遮罩,下半部往下巴收窄),減到 8 色。
-  2. 夾在 Blender 渲染的「頭後面的部位」和「頭前面的部位」之間。
-  3. 跑 make_art 的同一套流程,量化成 15 色。
+- **sprite 放在 repo** 的 `game/graphics/pokemon/oddex/<dir>/`,由 `tools/oddex/likeness/compose.py` 產生:
+  1. 從參考照片裁出頭部(蛋形遮罩,下半部往下巴收窄)。
+  2. 拉高對比、稍微加強飽和度,減到 8 色。
+  3. 夾在 Blender 渲染的「頭後面的部位」和「頭前面的部位」之間。
+  4. 跑 make_art 的同一套流程,量化成 15 色。
 - 背面和 overworld 用 Blender 的後腦勺和頭髮,膚色和髮色取自照片。
-- 用 `tools/oddex/build_private.sh` 編成本機的 ROM。
-
-文件、TOML、commit 訊息都不寫真名,外型只寫造型元素。
+- **來源不進 repo**:參考照片和 `crop.toml`(臉在照片裡的位置)只放在 `~/oddex-private/`,compose.py 從那裡讀。`--keep`、`--preview` 的中間檔也要放在 repo 外。
+- 文件、TOML、commit 訊息都不寫真名。
+- Blender 模型裡的卡通臉仍然留著,用在背面、overworld,以及沒有照片的時候(例如別人 clone repo 後重新跑 make_art)。用 make_art 重新產生的話會變成卡通版;正式的圖要用 compose.py 產生。
+- 如果以後有只能留在本機的素材,用 `compose.py --private` 輸出到 `~/oddex-private/likeness/`,再用 `tools/oddex/build_private.sh` 編譯。
 
 **建模的分層**:
-- 每個模型用 `maskkit.tag()` 把臉、頭髮、眼鏡標成 `head`,私人版會用照片取代這一層。
-- 疊在臉前面的附加物標成 `front`,兩版都會畫出來。
+- 每個模型用 `maskkit.tag()` 把臉、頭髮、眼鏡標成 `head`,compose.py 會用照片取代這一層。
+- 疊在臉前面的附加物標成 `front`。
 - 其餘的部位都畫在頭的後面。
 - `render_species.py` 在設定 `ODDEX_LAYERS` 時,會另外輸出分層的圖和頭部的像素框。
 

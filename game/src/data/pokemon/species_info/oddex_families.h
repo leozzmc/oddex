@@ -1035,7 +1035,7 @@
         .palette = gMonPalette_Grinpack,
         .shinyPalette = gMonShinyPalette_Grinpack,
         .iconSprite = gMonIcon_Grinpack,
-        .iconPalIndex = 1,
+        .iconPalIndex = 5,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Grinpack)
@@ -1175,7 +1175,7 @@
         .palette = gMonPalette_Trekkeye,
         .shinyPalette = gMonShinyPalette_Trekkeye,
         .iconSprite = gMonIcon_Trekkeye,
-        .iconPalIndex = 3,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Trekkeye)

@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""Build the private likeness sprites for head-only characters (the starters).
+"""Build the likeness sprites for head-only characters (the starters) from reference photos.
 
 Usage (repository root, after `. tools/env.sh`):
-  python3 tools/oddex/likeness/compose.py TREKKEYE [ID ...] [--preview sheet.png] [--keep DIR]
+  python3 tools/oddex/likeness/compose.py TREKKEYE [ID ...] [--private] [--preview sheet.png] [--keep DIR]
 
-Everything this reads and writes lives outside the repository, under $ODDEX_PRIVATE
-(default ~/oddex-private), and must never be committed (CLAUDE.md, private art):
+The user approved the likeness sprites as the official art (2026-11-20, CLAUDE.md), so by default
+the sprites are written to the species' [graphics] dir in the repo. The *sources* never are:
+the photos and crop.toml stay under $ODDEX_PRIVATE (default ~/oddex-private):
   crop.toml                 per id: photo (relative to $ODDEX_PRIVATE), the head ellipse
                             center/radii in that photo, and points to sample colours from
-  likeness/<dir>/...        output, mirroring game/graphics/pokemon/oddex/<dir>/;
-                            tools/oddex/build_private.sh lays it over the public sprites
+With --private the output goes to $ODDEX_PRIVATE/likeness/<dir>/ instead (for art that may only
+stay local; tools/oddex/build_private.sh lays that directory over the repo's sprites).
+--keep and --preview hold photo-derived intermediates, so they must point outside the repo.
 
 For each id the species' Blender model is rendered with ODDEX_LAYERS (the parts behind the head,
 the parts in front of it, and the head's pixel box) and with colours sampled from the photo
@@ -32,7 +34,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parent / 'blender'))
 from make_art import preview_sheet, render, write_sprites  # noqa: E402
-from species_data import load_species  # noqa: E402
+from species_data import GAME, load_species  # noqa: E402
 
 PRIVATE = Path(os.environ.get('ODDEX_PRIVATE', Path.home() / 'oddex-private'))
 FACE_COLOURS = 8
@@ -93,7 +95,7 @@ def compose_front(render_dir, frame, cut):
     out.save(render_dir / f'{frame}.png')
 
 
-def build(spec, cfg, keep=None):
+def build(spec, cfg, keep=None, private=False):
     module = spec['graphics'].get('model', spec['id'].lower())
     photo = ImageOps.exif_transpose(Image.open(PRIVATE / cfg['photo'])).convert('RGB')
     colours = {k: tuple(to_linear(v) for v in sample(photo, xy)) for k, xy in cfg.get('sample', {}).items()}
@@ -108,13 +110,14 @@ def build(spec, cfg, keep=None):
             render(module, variant, base / variant, env={'ODDEX_LAYERS': '1', 'ODDEX_PALETTE': str(pal)})
             for frame in ('front', 'front2'):
                 compose_front(base / variant, frame, cut)
-        out = PRIVATE / 'likeness' / Path(spec['graphics']['dir']).name
+        out = PRIVATE / 'likeness' / Path(spec['graphics']['dir']).name if private else GAME / spec['graphics']['dir']
         return write_sprites(base, out), out
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('ids', nargs='+')
+    ap.add_argument('--private', action='store_true', help='write to $ODDEX_PRIVATE/likeness instead of the repo')
     ap.add_argument('--keep', help='keep the layered renders under this directory (keep it private too)')
     ap.add_argument('--preview', help='write a contact sheet here (keep it private too)')
     args = ap.parse_args()
@@ -127,7 +130,7 @@ def main():
     for sid in args.ids:
         if sid not in by_id or sid not in crops:
             sys.exit(f'compose: {sid} needs a content/species TOML and an entry in {PRIVATE}/crop.toml')
-        (front, back, icon, ow, pal, s_pal, icon_index), out = build(by_id[sid], crops[sid], args.keep)
+        (front, back, icon, ow, pal, s_pal, icon_index), out = build(by_id[sid], crops[sid], args.keep, args.private)
         print(f'{sid}: {len([c for c in pal[1:] if c != (0, 0, 0)])} palette colours, icon palette {icon_index} -> {out}')
         rows.append((front, back, icon, ow, pal, s_pal))
     if args.preview:
