@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 GAME = ROOT / 'game'
 CONTENT = ROOT / 'content' / 'species'
 ROLES = ROOT / 'content' / 'roles.toml'
+REGIONAL_DEX = ROOT / 'content' / 'regional_dex.toml'
 
 _BLOCK = re.compile(r'^\s*\[SPECIES_(\w+)\]\s*=', re.M)
 _EVO_TARGET = re.compile(r'\{\s*EVO_\w+\s*,[^{}]*?SPECIES_(\w+)')
@@ -32,6 +33,11 @@ def load_species():
 def load_roles():
     with ROLES.open('rb') as fp:
         return tomllib.load(fp)
+
+
+def load_regional_dex():
+    with REGIONAL_DEX.open('rb') as fp:
+        return tomllib.load(fp)['order']
 
 
 def _stages(edges, names):

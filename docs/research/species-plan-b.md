@@ -33,12 +33,22 @@
 
 | 問題 | 原因 | 處理方式 |
 |---|---|---|
-| **地區圖鑑**(玩家看到的編號) | `FOREACH_SPECIES_IN_HOENN_DEX_ORDER`(`include/constants/pokedex.h`)不受開關影響,永遠列出 Treecko~Deoxys;`HOENN_DEX_COUNT` 寫死成 `HOENN_DEX_DEOXYS + 1`。我們的角色不在表裡,能力畫面顯示 **No000**(實驗截圖 `06_summary_info`) | 由產生器輸出我們的地區圖鑑順序,取代 Hoenn 列表(第二階段第 1 步) |
-| **叫聲** | `include/constants/cries.h` 每一個 `CRY_*` 都包在 `#if P_FAMILY_X` 裡,全部關掉後只剩 `CRY_NONE` | 原型先用 `CRY_NONE`(沒有聲音)。之後需要原創叫聲(**需要使用者決定**,見第 5 節) |
+| **地區圖鑑**(玩家看到的編號) | `FOREACH_SPECIES_IN_HOENN_DEX_ORDER`(`include/constants/pokedex.h`)不受開關影響,永遠列出 Treecko~Deoxys;`HOENN_DEX_COUNT` 寫死成 `HOENN_DEX_DEOXYS + 1`。我們的角色不在表裡,能力畫面顯示 **No000**(實驗截圖 `06_summary_info`) | **已處理(第 1 步)**:見 §1.5 |
+| **叫聲** | `include/constants/cries.h` 每一個 `CRY_*` 都包在 `#if P_FAMILY_X` 裡,全部關掉後只剩 `CRY_NONE` | 使用者決定先無聲(`CRY_NONE`),見第 5 節 |
 | **全國圖鑑數量** | `NATIONAL_DEX_COUNT` 的 `#if` 鏈還會看 cross-evo、regional form 等開關;只關 `P_GEN_x` 時會變成 `NATIONAL_DEX_HYDRAPPLE` | 產生器在 `oddex:dex-count` 區段覆寫成我們最後一隻。建議同時把 `P_CROSS_GENERATION_EVOS`、`P_REGIONAL_FORMS`、`P_MEGA_EVOLUTIONS`、`P_GIGANTAMAX_FORMS`、`P_TERA_FORMS`、`P_FUSION_FORMS`、`P_PIKACHU_EXTRA_FORMS` 也關掉,讓設定一致 |
-| **sprite 檢視器** | 從 #0001 開始,一打開就 assert(`09_visualizer_normal`) | 讓它從第一個啟用的 species 開始(小改 `src/pokemon_sprite_visualizer.c`) |
+| **sprite 檢視器** | 從 #0001 開始,一打開就 assert(`09_visualizer_normal`) | **已處理(第 1 步)**:見 §1.5 |
 | 存檔 | 圖鑑旗標的大小跟著 `NATIONAL_DEX_COUNT` 變 | 開發期間每次改動都要開新遊戲,不需要處理相容性 |
 | 原版內容引用 | 訓練家、野生、腳本、文字、地圖物件等 | 見 Sonia 的 §1–§3 |
+
+### 1.5 第 1 步:地區圖鑑與 sprite 檢視器(已完成)
+- `include/constants/pokedex.h`:原版列表改名為 `VANILLA_HOENN_DEX_ORDER`。`FOREACH_SPECIES_IN_HOENN_DEX_ORDER` 改成**第 3 世代開著時用原版列表再接上原創角色;關掉時只有原創角色**。原創角色的順序由 `content/regional_dex.toml` 決定,產生器寫進 `oddex:regional-dex` 區段(同時定義 `HOENN_DEX_LAST`),`HOENN_DEX_COUNT` 改成 `HOENN_DEX_LAST + 1`。每隻原創角色都必須在順序表裡出現恰好一次,否則產生器會報錯。
+- `src/pokemon_sprite_visualizer.c`:改成從第一個啟用的 species 開始(原版開著時仍然是 Bulbasaur,畫面不變)。
+- `src/pokedex.c` `HasAllHoennMons()`:原本用**全國圖鑑編號**當索引去查 `gSpeciesInfo`,原版的編號剛好等於 species ID,所以沒出問題;原創角色(全國 1026、species 1573)就會查錯角色,誤判是否為幻之寶可夢。改成先轉成 species 再查。
+- 驗證(截圖在 `~/oddex-shots/mark/step1/`):
+  - 原版開著、御三家改成原創 Mossprit:能力畫面顯示 **No215**(接在原版的 214 隻後面)。
+  - 全部世代關掉、早期代號都指向 Mossprit:顯示 **No001**;sprite 檢視器直接從 #1573 開始;整個 `to_starter` 沒有任何 crash screen。
+  - 正式設定(原版開著、代號指向原版):`make check-oddex` 的 16 張截圖和基準 0 差異。
+- 副作用(原版開著時):地區圖鑑多了原創角色,所以「抓滿地區圖鑑」需要多抓這幾隻,`RANDOM_MON_DEX_HOENN` 的隨機池也會包含它們。第 5 步關掉原版之後,這就是我們要的行為。
 
 ## 2. 三種格式(和 Sonia 對齊用的草稿)
 

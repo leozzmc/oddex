@@ -1207,6 +1207,19 @@ static void ResetPokemonSpriteVisualizerWindows(void)
 #define MALE_PERSONALITY 0xFE
 #define FEMALE_PERSONALITY 0X0
 
+// oddex: start on the first enabled species; Bulbasaur is disabled once vanilla generations are off.
+static enum Species FirstEnabledSpecies(void)
+{
+    enum Species species;
+
+    for (species = SPECIES_NONE + 1; species < NUM_SPECIES; species++)
+    {
+        if (IsSpeciesEnabled(species))
+            return species;
+    }
+    return SPECIES_NONE;
+}
+
 void CB2_Pokemon_Sprite_Visualizer(void)
 {
     u8 taskId;
@@ -1254,7 +1267,7 @@ void CB2_Pokemon_Sprite_Visualizer(void)
         AllocateMonSpritesGfx();
 
         LoadPalette(sBgColor, BG_PLTT_ID(0), 2);
-        LoadMonIconPalette(SPECIES_BULBASAUR);
+        LoadMonIconPalette(FirstEnabledSpecies());
 
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
         ShowBg(0);
@@ -1268,7 +1281,7 @@ void CB2_Pokemon_Sprite_Visualizer(void)
         data = AllocZeroed(sizeof(struct PokemonSpriteVisualizer));
         SetStructPtr(taskId, data);
 
-        data->currentmonId = SPECIES_BULBASAUR;
+        data->currentmonId = FirstEnabledSpecies();
         species = IsSpeciesEnabled(data->currentmonId) ? SanitizeSpeciesId(data->currentmonId) : SPECIES_NONE;
 
         //Print instructions
