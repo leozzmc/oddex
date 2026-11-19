@@ -50,10 +50,16 @@ if [ -z "$gmain" ]; then
     exit 1
 fi
 export ODDEX_RESET_WATCH=$(printf '0x%x' $((0x$gmain + 0x20)))
+# Each script runs from boot in its own directory, so they can all run at once.
 for name in $SCRIPTS; do
     dir="$OUT/$name"
     rm -rf "$dir" && mkdir -p "$dir"
-    if ! (cd "$dir" && "$RUN" "$ROM" "$ROOT/tools/headless/scripts/$name.txt" > run.log 2> err.log); then
+    (cd "$dir" && "$RUN" "$ROM" "$ROOT/tools/headless/scripts/$name.txt" > run.log 2> err.log; echo $? > status) &
+done
+wait
+for name in $SCRIPTS; do
+    dir="$OUT/$name"
+    if [ "$(cat "$dir/status")" != 0 ]; then
         echo "$name: runner failed (see $dir/err.log)"
         fail=1
         continue
