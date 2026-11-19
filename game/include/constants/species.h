@@ -1707,6 +1707,9 @@ enum __attribute__((packed)) Species
     SPECIES_USOBUZZ,
     SPECIES_DEIGLOOM,
     SPECIES_HANNYAGON,
+    SPECIES_GRINPACK,
+    SPECIES_RIDGECAP,
+    SPECIES_TREKKEYE,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

@@ -371,6 +371,97 @@ def beast_behind_mask(mask_height, body_mat, **kw):
     return parts
 
 
+# --- heads (unmasked characters whose whole body is one big head) ---------------------------
+
+def head_point(center, radii, x, z, lift=0.0):
+    """Point on the front (-Y) of an ellipsoid head at offset x (right) and height z (absolute),
+    pushed lift outward. Features are placed relative to the head instead of a mask shell."""
+    cx, cy, cz = center
+    rx, ry, rz = radii
+    u = min(0.999, (x / rx) ** 2 + ((z - cz) / rz) ** 2)
+    return Vector((cx + x, cy - ry * math.sqrt(1 - u) - lift, z))
+
+
+def limb(a, b, radius, mat, hand_mat=None, hand=0.0):
+    """A straight limb from a to b, with a round hand (or foot) of radius hand at b."""
+    rod(a, b, radius, mat)
+    if hand:
+        ellipsoid(b, (hand, hand, hand), hand_mat or mat)
+
+
+def tag(objs, layer):
+    """Mark objects for layered renders (render_species with ODDEX_LAYERS): 'head' is the face
+    and everything painted on it, which a likeness overlay replaces; 'front' sits in front of
+    the head. Untagged parts are drawn behind the head."""
+    for o in objs:
+        o['oddex_layer'] = layer
+    return objs
+
+
+# --- appendages shared by the starters and the Rustboro batch ------------------------------
+
+def spider_leg(root, direction, length, mat, tip_mat=None, radius=0.045, lift=0.55, ground=0.0):
+    """One jointed spider leg: a femur rising from root to a high knee, then a long shin down to
+    a pointed tip on the ground. direction is the horizontal heading (x, y) of the leg."""
+    root = Vector(root)
+    d = Vector((direction[0], direction[1], 0)).normalized()
+    knee = root + d * length * 0.45 + Vector((0, 0, length * lift))
+    foot = Vector((root.x + d.x * length, root.y + d.y * length, ground + radius))
+    rod(root, knee, radius, mat)
+    ellipsoid(knee, (radius * 1.5,) * 3, mat)
+    rod(knee, foot.lerp(knee, 0.18), radius * 0.85, mat)
+    spike(foot.lerp(knee, 0.2), foot, radius * 0.8, tip_mat or mat)
+    return knee, foot
+
+
+def spider_legs(center, pairs, length, mat, tip_mat=None, radius=0.045, spread=(-60, 60), lift=0.55,
+                ground=0.0, ring=0.0):
+    """pairs legs on each side, fanned between spread degrees (0 = straight out to the side,
+    negative = toward the viewer). ring offsets each root from center along its heading."""
+    center = Vector(center)
+    for side in (-1, 1):
+        for i in range(pairs):
+            t = 0.5 if pairs == 1 else i / (pairs - 1)
+            ang = math.radians(spread[0] + (spread[1] - spread[0]) * t)
+            d = (side * math.cos(ang), math.sin(ang))
+            root = center + Vector((d[0], d[1], 0)) * ring
+            spider_leg(root, d, length, mat, tip_mat, radius, lift, ground)
+
+
+def membrane(points, mat, name=None):
+    """A flat polygon fan (wing or fin membrane) from points[0] through the rest, in order."""
+    mesh = bpy.data.meshes.new(name or 'membrane')
+    verts = [tuple(p) for p in points]
+    faces = [(0, i, i + 1) for i in range(1, len(verts) - 1)]
+    mesh.from_pydata(verts, [], faces)
+    obj = bpy.data.objects.new(name or 'membrane', mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    obj.data.materials.append(mat)
+    mod = obj.modifiers.new('thick', 'SOLIDIFY')
+    mod.thickness = 0.02
+    return obj
+
+
+def wing(root, side, span, mat, rib_mat=None, ribs=4, sweep=(-35, 50), droop=0.25, depth=0.15, scallop=0.3):
+    """A ribbed wing or fin on one side (side = -1 left, 1 right): ribs fan out from root between
+    sweep degrees (0 = straight out, positive = up); the membrane between rib tips is scalloped
+    inward by scallop, so it reads as bat wing or fish fin depending on the colours."""
+    root = Vector(root)
+    tips = []
+    for i in range(ribs):
+        t = i / (ribs - 1)
+        ang = math.radians(sweep[0] + (sweep[1] - sweep[0]) * t)
+        tip = root + Vector((side * span * math.cos(ang), depth * t, span * math.sin(ang) - droop * (1 - t)))
+        tips.append(tip)
+        rod(root, tip, 0.03, rib_mat or mat)
+    outline = [root]
+    for a, b in zip(tips, tips[1:]):
+        outline.append(a)
+        outline.append(root.lerp((a + b) / 2, 1 - scallop))
+    outline.append(tips[-1])
+    return membrane(outline, mat)
+
+
 # --- rendering --------------------------------------------------------------------------
 
 def frame_all(scene, margin=1.08):

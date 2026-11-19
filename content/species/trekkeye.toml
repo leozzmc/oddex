@@ -1,0 +1,54 @@
+# Starter, mountain-trail trio (docs/research/friends-designs.md): an unmasked head-only character. The
+# sprites are likenesses built by tools/oddex/likeness/compose.py (sources stay outside the repo). Stats and moves are provisional; Lv5 moves match the starter it would replace.
+
+id = "TREKKEYE"
+name = "Trekkeye"
+category = "Wheel Head"
+
+types = ["FIRE", "STEEL"]
+abilities = ["BLAZE", "NONE", "FLASH_FIRE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 44, atk = 58, def = 42, spa = 62, spd = 42, spe = 62 }
+ev_yield = { spa = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "BLACK"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 320
+text = """
+A head that rolls the night trails in a
+burning wheel, walking on its spokes.
+The eye on its brow records everything,
+and the recording light never goes out."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "METAL_CLAW"], [9, "FLAME_CHARGE"], [12, "IRON_DEFENSE"], [15, "FLAME_WHEEL"], [18, "IRON_HEAD"], [21, "FLAMETHROWER"], [24, "FLASH_CANNON"], [27, "OVERHEAT"],
+]
+teachable = [
+    "ATTRACT", "BRICK_BREAK", "DIG", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "IRON_TAIL", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/trekkeye"   # built by tools/oddex/likeness/compose.py
+front_anim = "H_JUMPS"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["TREKKEYE"]

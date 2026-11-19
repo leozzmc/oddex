@@ -3,6 +3,7 @@
 # vanilla 210 entries; once vanilla is disabled (plan B step 5) the first one is No. 001.
 
 order = [
+    "GRINPACK", "TREKKEYE", "RIDGECAP",
     "OKINOIR", "SHISHIBLAZE", "KAMORAI",
     "SHACHOUND", "KYOKON", "USOBUZZ", "SHAWABOLT", "UTOGHAST",
     "SHOJOBOB", "BEKURAMA", "YAMAMBRR", "OMOTELLE", "DEIGLOOM", "HANNYAGON",
