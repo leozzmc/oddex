@@ -54,7 +54,8 @@ def where(ss):
 
 @lru_cache(None)
 def move_info():
-    """{move id: (base power, type id)}; conditional powers take the updated (post-'?') value."""
+    """{move id: (base power, type id, is special)}; conditional powers take the updated (post-'?')
+    value."""
     import re as _re
     ids = {k: v for v, k in W["move_names"]().items()}
     game = os.path.dirname(ROM)
@@ -65,15 +66,17 @@ def move_info():
     out = {}
     for i in range(1, len(blocks), 2):
         m = _re.search(r"\.power\s*=\s*([^,\n]+),", blocks[i + 1])
-        t = _re.search(r"\.type\s*=\s*TYPE_([A-Z]+)", blocks[i + 1])
+        # ".type = B_UPDATED_MOVE_TYPES >= GEN_2 ? TYPE_DARK : TYPE_NORMAL": the updated type comes first
+        t = _re.search(r"\.type\s*=[^,\n]*?TYPE_([A-Z]+)", blocks[i + 1])
+        special = "DAMAGE_CATEGORY_SPECIAL" in blocks[i + 1].split("\n\n")[0]
         if m and blocks[i] in ids:
             nums = _re.findall(r"\d+", m.group(1).split("?")[-1])
-            out[ids[blocks[i]]] = (int(nums[0]) if nums else 0, types.get(t.group(1), 0) if t else 0)
+            out[ids[blocks[i]]] = (int(nums[0]) if nums else 0, types.get(t.group(1), 0) if t else 0, special)
     return out
 
 
 def move_power():
-    return {m: p for m, (p, _) in move_info().items()}
+    return {m: p for m, (p, _, _) in move_info().items()}
 
 
 @lru_cache(None)
@@ -89,25 +92,38 @@ def type_chart():
 
 
 BATTLE_MON = 0x8C  # sizeof(struct BattlePokemon); moves at +12 (u16 x4), types at +34 (u8 x3), pp at +37
+# struct BattlePokemon: attack +2, defense +4, spAttack +8, spDefense +10 (u16); statStages +24
+# (s8 x8, STAT_HP/ATK/DEF/SPEED/SPATK/SPDEF/ACC/EVASION, 6 = no change).
+
+
+def battle_stat(st, battler, offset, stage_index):
+    """A battler's stat with its stat stage applied (2/2 .. 8/2 and 2/8 .. 2/3, as in the game)."""
+    base = SYMS["gBattleMons"] + battler * BATTLE_MON
+    value = W["read"](st, base + offset, "<H")[0]
+    stage = W["read"](st, base + 24 + stage_index, "<b")[0] - 6
+    return value * (2 + max(stage, 0)) / (2 + max(-stage, 0))
 
 
 def best_move(st):
-    """Slot of the move with the highest power x type effectiveness x STAB against battler 1 that
-    still has PP, or None when nothing damaging is usable."""
+    """Slot of the move with the highest power x type effectiveness x STAB x attack/defense ratio
+    (Attack against Defense for physical moves, Sp. Atk against Sp. Def for special ones, stat
+    stages included) against battler 1 that still has PP, or None when nothing damaging is usable."""
     base = SYMS["gBattleMons"]
     moves = W["read"](st, base + 12, "<4H")
     own = set(W["read"](st, base + 34, "<3B")) - {0}
     pp = W["read"](st, base + 37, "<4B")
     foe = [t for t in set(W["read"](st, base + BATTLE_MON + 34, "<3B")) if t]
+    ratio = {False: battle_stat(st, 0, 2, 1) / max(1, battle_stat(st, 1, 4, 2)),
+             True: battle_stat(st, 0, 8, 4) / max(1, battle_stat(st, 1, 10, 5))}
     info, chart = move_info(), type_chart()
     scored = []
     for i, (m, p) in enumerate(zip(moves, pp)):
-        power, t = info.get(m, (0, 0))
+        power, t, special = info.get(m, (0, 0, False))
         if m and p and power > 0:
             eff = 1.0
             for d in foe:
                 eff *= chart[t][d]
-            scored.append((power * eff * (1.5 if t in own else 1.0), power, -i, i))
+            scored.append((power * eff * (1.5 if t in own else 1.0) * ratio[special], power, -i, i))
     return max(scored)[3] if scored else None
 
 
@@ -132,7 +148,7 @@ def should_flee(st):
     threat = max((eff(t, own) for t in foe), default=1.0) >= 2
     moves = W["read"](st, base + 12, "<4H")
     pp = W["read"](st, base + 37, "<4B")
-    best = max((eff(info[m][1], foe) for m, p in zip(moves, pp) if m and p and info.get(m, (0, 0))[0] > 0),
+    best = max((eff(info[m][1], foe) for m, p in zip(moves, pp) if m and p and info.get(m, (0, 0, False))[0] > 0),
                default=0.0)
     return threat and best < 2
 
@@ -164,20 +180,36 @@ def player_choose_action():
 SUMMARY_FIRST_MOVE_INDEX = 16588  # offsetof(struct PokemonSummaryScreenData, firstMoveIndex)
 
 
-def move_value(move, types):
-    power, t = move_info().get(move, (0, 0))
-    return power * (1.5 if t in types else 1.0)
+def move_value(move, types, stats=(1, 1)):
+    """Power x STAB x the lead's own Attack (physical) or Sp. Atk (special); 0 for status moves."""
+    power, t, special = move_info().get(move, (0, 0, False))
+    return power * (1.5 if t in types else 1.0) * stats[special]
 
 
 def slot_to_forget(st):
-    """Move slot to replace with gMoveToLearn, or None to decline: learn when the new move is worth
-    more (power x STAB) than the weakest current move, and forget that one (status moves first)."""
+    """Move slot to replace with gMoveToLearn, or None to decline. The new move is learned when it
+    is worth more (move_value) than the weakest current move, which is forgotten (status moves
+    first) unless it is the lead's only physical or only special damaging move and the new move
+    is of the other category: then the next weakest goes, so the lead keeps both kinds."""
     new = W["read"](st, SYMS["gMoveToLearn"], "<H")[0]
     base = SYMS["gBattleMons"]
     types = set(W["read"](st, base + 34, "<3B")) - {0}
+    stats = (W["read"](st, base + 2, "<H")[0], W["read"](st, base + 8, "<H")[0])
     moves, _ = W["lead_moves"](st, SYMS)
-    worst = min(range(4), key=lambda i: (move_value(moves[i], types), -i))
-    return worst if move_value(new, types) > move_value(moves[worst], types) else None
+    info = move_info()
+
+    def kind(m):
+        power, _, special = info.get(m, (0, 0, False))
+        return special if power > 0 else None
+    order = sorted(range(4), key=lambda i: (move_value(moves[i], types, stats), -i))
+    for slot in order:
+        k = kind(moves[slot])
+        if k is not None and k != kind(new) and sum(kind(m) == k for m in moves) == 1:
+            continue  # last move of its category
+        if move_value(new, types, stats) > move_value(moves[slot], types, stats):
+            return slot
+        return None
+    return None
 
 
 def controls_free(ss):
