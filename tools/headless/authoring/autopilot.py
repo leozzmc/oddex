@@ -9,6 +9,8 @@ the exact command sequence that worked. Because the game is deterministic, repla
 commands in one continuous run reproduces the same result (verified separately).
 
 usage: autopilot.py START.ss OUT_PREFIX FACING WAYPOINT [WAYPOINT ...]
+(AP_PARTIAL=1: when the route cannot be finished, still print the commands executed so far and
+the state they end in, instead of failing)
 WAYPOINT = Map:x:y, or grind:Map:x1:y1:x2:y2:LEVEL to walk between two grass tiles until the lead
 reaches LEVEL (stops early when its HP drops below GRIND_MIN_HP percent, default 35, or its
 damaging moves have fewer than 10 PP left, so the caller can heal). Wild battles against an
@@ -357,8 +359,27 @@ def main():
             goals.append(("grind", (m, x1, y1), (m, x2, y2), lvl))
         else:
             goals.append((parts[0], int(parts[1]), int(parts[2])))
-    out, k, stopped, stuck, presses, cooldown = [], 0, True, False, 0, 0
+    out = []
+    try:
+        walk(goals, ss, prefix, facing, out)
+    except SystemExit as e:
+        if not os.environ.get("AP_PARTIAL") or not isinstance(e.code, str):
+            raise
+        # AP_PARTIAL=1: report what was executed up to the failure, so the caller can continue
+        # from the last state by hand (the commands reproduce it exactly).
+        print(f"# stopped: {e.code}", file=sys.stderr)
+    ss, facing = PROGRESS["ss"], PROGRESS["facing"]
+    print("\n".join(compress(out)))
+    print(f"# end {where(ss)} facing {facing} state {ss}", file=sys.stderr)
+
+
+PROGRESS = {}
+
+
+def walk(goals, ss, prefix, facing, out):
+    k, stopped, stuck, presses, cooldown = 0, True, False, 0, 0
     blocked_once = {}
+    PROGRESS.update(ss=ss, facing=facing)
     for spec in goals:
         tries = 0
         grind = spec[0] == "grind"
@@ -399,6 +420,7 @@ def main():
                 if cmds:
                     out += cmds
                     ss = fixed
+                    PROGRESS.update(ss=ss, facing=facing)
                     stopped = True
                 else:
                     cooldown = 3
@@ -416,6 +438,7 @@ def main():
             k += 1
             out += cmds
             ss = nxt
+            PROGRESS.update(ss=ss, facing=facing)
             got = where(ss)
             stuck = bool(exp) and got[:3] == (name, x, y) and got[3] == "CB2_Overworld"
             grind_tiles = {spec[1], spec[2]} if grind else set()
@@ -435,8 +458,7 @@ def main():
                 print(f"# off course: expected {exp}, got {got}", file=sys.stderr)
                 if tries > 20:
                     raise SystemExit("giving up")
-    print("\n".join(compress(out)))
-    print(f"# end {where(ss)} facing {facing} state {ss}", file=sys.stderr)
+    PROGRESS.update(ss=ss, facing=facing)
 
 
 main()
