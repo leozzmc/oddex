@@ -127,16 +127,38 @@ python3 tools/oddex/gen_species.py --check    # 產生檔不是最新的就 exit
 4. **不能讓 `all_learnables.json` 依賴 stamp**:它已經有一條 recipe(`make_learnables.py`,會從 porymoves 整份重建,把我們的 key 洗掉)。改成讓它的使用者(`teachable_learnsets.h`、`all_teaching_types.json`)依賴 stamp。
 5. **沒有 arm-none-eabi-cpp 時,`trainers.h` 會無聲變成空的**:管線的結束碼只看 trainerproc。David 已經在 develop 修好(拆成兩步)。教訓:**ROM 大小不合理時先 `make clean`**。我一開始拿這個殘缺版本的大小當基準,算出的差異多了 65 KB。
 
-## 4. 建議的第二階段順序(Mark 的部分,要和 Sonia 的 §3.5 合併)
+## 4. 第二階段順序
 
-1. **地區圖鑑產生**:產生器輸出我們的地區圖鑑順序和 `HOENN_DEX_COUNT`,取代 Hoenn 列表;順便修好 sprite 檢視器的起始編號。這是關掉原版之前的前置作業。
-2. **代號接上劇情位置**:§1.3 的 5 處 C,加上 Route 103 勁敵的 6 組隊伍(Sonia),改成用 `SPECIES_ODDEX_*`。這時代號先指向原版角色,遊戲內容不變。
-3. **早期約 10 隻原創角色**(御三家 3 隻 + 早期野生 6–7 種,見 Sonia §2)的資料和圖像,寫成 `content/species/*.toml`。
-4. **替換表工具**(§2.2)+ 套用早期角色;改代號指向原創角色。
-5. **關掉原版世代**(連同 §1.4 建議的 forms/cross-evo 開關);用 `to_littleroot`、`to_starter` 和新的到 Petalburg 的腳本截圖驗證,搭配 debug assert 和 `check_species_refs.py --strict`。
-6. 往後依路線擴充;設施類最後。
+已和 Sonia 合併,以 `docs/research/plan-b-references.md` §5 為準。
 
-## 5. 需要使用者決定的事
-1. **原創角色的美術**:目前的 Mossprit 是程式產生的佔位圖。早期約 10 隻要用什麼方式製作?(繼續程式產生佔位圖、手繪像素圖、或外包/委託)這會決定第 3 步的工期。
-2. **叫聲**:關掉原版後,所有原版叫聲都會消失。選項:暫時無聲(`CRY_NONE`)、用程式合成原創叫聲、或另外製作音效。
-3. **資料格式用 TOML**(David 確認即可)。
+## 5. 使用者決策(已決定,`docs/DECISIONS.md`)
+1. **美術**:先全部用程式產生的佔位圖,之後再統一設計所有角色。
+2. **叫聲**:關掉原版後先無聲(`CRY_NONE`),不合成。注意:這只是指原創角色本身。腳本裡對**原版**角色的 `playmoncry` 仍然會觸發 `disabled species` 的 assert,要在第 6 步依路線改掉(Sonia §5)。
+3. **資料格式**:TOML。
+
+### 5.1 佔位圖產生器的要求(第 3 步)
+依美術決策,`scripts/species/gen_mossprit.py` 要擴充成通用的佔位圖產生器:
+- **一眼就能分辨**:主色和副色依屬性決定(例如草 = 綠、火 = 橘、水 = 藍);輪廓用幾種體型模板(圓球、直立、四足、有翼、蛇形),由角色資料指定;身上加一個屬性記號(葉子、火焰、水滴…);進化階段越後面體型越大、細節越多,同一條進化線共用同一套配色。
+- **之後換正式美術只換圖檔**:佔位圖的參數放在 TOML 的選填區段 `[graphics.placeholder]`,產生器只讀這一段,輸出到 `[graphics] dir` 指定的資料夾。換成正式美術時,把同一個資料夾裡的圖檔換掉,再刪掉 `[graphics.placeholder]` 就好,其他欄位結構都不用動;只有圖像相關的數值(大小、Y 位移、影子)可能需要依新圖調整。
+- **圖檔匯入要能吃外部 PNG**(David 的建議,見 `docs/research/art-assets.md`):`[graphics] dir` 裡放的圖不一定是我們產生的,所以驗證流程要能接受一般 PNG(例如 CC0 的 64×64 素材),自動量化成透明色加 15 色、寫出 `normal.pal`,icon 對應到最接近的共用 icon 調色盤,並檢查尺寸和 Y 位移。這樣之後無論換成哪種正式美術,都走同一條匯入流程。
+- 工期:通用產生器大約一次工作階段;之後每隻角色是填一份 TOML(數值、招式、佔位圖參數),再用 sprite 檢視器檢查。
+
+### 5.2 給 `apply_replacements.py` 用的載入函式
+`tools/oddex/species_data.py`:`load_species()`、`load_roles()`、`oddex_stages()`(原創角色的進化階段,由 TOML 的 `evolutions` 計算)、`vanilla_stages()`(原版的,解析 `gen_*_families.h` 的 `.evolutions`;1,571 種,Wurmple 1 → Silcoon/Cascoon 2 → Beautifly/Dustox 3 這類分歧也算得正確)。Mega 等型態不是進化,一律算第 1 階段;替換表本來就不會用它們當 key。`gen_species.py` 也改用這個模組。
+
+## 6. 建置防線:`make check-oddex`
+因為「編譯不會壞、release 默默變成 `SPECIES_NONE`」,能抓到漏網之魚的只有內容檢查和 debug build 的 assert。這兩者都排進建置流程,不靠人記得去跑:
+
+```bash
+cd game && . ../tools/env.sh
+make check-oddex TOOLCHAIN=$TOOLCHAIN -j$(sysctl -n hw.ncpu)        # 先建好 ROM,再跑下面三項
+make check-oddex ODDEX_STRICT_MAPS=LittlerootTown,Route101 ...        # 指定的路線不准有原版引用
+```
+
+`tools/oddex/check_oddex.sh` 依序執行,任何一項失敗就 exit 1:
+1. `gen_species.py --check`:產生的檔案是最新的。
+2. `check_species_refs.py`:預設只回報數量;設定 `ODDEX_STRICT_MAPS` 後,改成 `--strict --maps`,指定路線有原版引用就失敗。第 4b 步完成後,把早期路線寫進 `oddex.mk` 的預設值,之後每遷移一段就加上去。
+3. 用 headless runner 跑回歸腳本(預設 `to_littleroot to_starter`,第 2c 步之後加上 `to_petalburg`),**只要出現 crash screen 就失敗**。做法:`src/assertf.c` 的 `CrashScreen` 在 debug build 會多送一行 `ODDEX_CRASH_SCREEN assert: <檔案:行號: 訊息>` 到 mGBA 的除錯 log(release build 不會編進去),runner 本來就會把 ERROR 等級的 log 印到 stderr,腳本只要 grep 就能抓到。已驗證:把第 3 世代關掉,runner 印出 `ODDEX_CRASH_SCREEN assert: src/pokemon.c:6389: disabled species: 270`(開場的 Lotad)。
+   - 選用:`ODDEX_SHOTS_BASELINE=<dir>` 會把 `<dir>/<腳本名>/*.png` 和這次的截圖逐像素比對。
+
+輸出在 `game/build/oddex-check/<腳本名>/`(含 `err.log`)。目前 develop 加上這次的修改:三項全部通過(引用檢查是回報模式),乾淨的 ROM 建置加檢查約 40 秒。
