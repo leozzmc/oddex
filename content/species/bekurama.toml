@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "BEKURAMA"
+previous_ids = ["ACORNIK"]   # keeps the save slot of the old placeholder
+name = "Bekurama"
+category = "Tengu Mask"
+
+types = ["GRASS", "STEEL"]
+abilities = ["CHLOROPHYLL", "EARLY_BIRD", "HEAVY_METAL"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 40, def = 50, spa = 30, spd = 30, spe = 30 }   # total 220
+ev_yield = { def = 1 }
+catch_rate = 255
+exp_yield = 44
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD", "GRASS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 120
+text = """
+A tengu mask with its lips pressed shut
+so hard they never open. It drills young
+swordsmen in the mountain cedars at night
+and never says a single word."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "HARDEN"], [3, "ABSORB"], [7, "GROWTH"], [11, "METAL_CLAW"], [15, "MAGICAL_LEAF"], [19, "IRON_DEFENSE"], [23, "FLASH_CANNON"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH_CANNON", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/bekurama"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route102"]
+level_band = [2, 8]
+family = ["BEKURAMA"]

@@ -1,0 +1,53 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "DEIGLOOM"
+name = "Deigloom"
+category = "Gilded Eyes"
+
+types = ["PSYCHIC", "GHOST"]
+abilities = ["SYNCHRONIZE", "TRACE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 35, def = 35, spa = 70, spd = 60, spe = 50 }   # total 290
+ev_yield = { spa = 2 }
+catch_rate = 120
+exp_yield = 97
+gender = 100.0
+egg_cycles = 20
+egg_groups = ["AMORPHOUS", "DRAGON"]
+growth_rate = "SLOW"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 36, into = "HANNYAGON" }]   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 90
+text = """
+The same pale face, but its eyes are now
+painted gold. It no longer looks at you;
+it looks through you. The air turns cold
+wherever it has been waiting."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "CONFUSION"], [1, "ASTONISH"], [1, "DOUBLE_TEAM"], [1, "HYPNOSIS"], [20, "NIGHT_SHADE"], [23, "DRAGON_BREATH"], [26, "CALM_MIND"], [29, "HEX"], [32, "PSYCHIC"], [35, "SHADOW_BALL"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "DRAGON_PULSE", "DREAM_EATER", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "REFLECT", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/deigloom"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [2, 8]
+family = ["OMOTELLE", "DEIGLOOM", "HANNYAGON"]

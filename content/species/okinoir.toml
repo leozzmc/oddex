@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "OKINOIR"
+previous_ids = ["MOSSPRIT"]   # keeps the save slot of the old placeholder
+name = "Okinoir"
+category = "Sower Mask"
+
+types = ["GRASS", "GROUND"]
+abilities = ["OVERGROW", "NONE", "HARVEST"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 50, atk = 45, def = 65, spa = 60, spd = 55, spe = 35 }   # total 310
+ev_yield = { def = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["MINERAL", "GRASS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "BLACK"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 4
+weight = 180
+text = """
+The black old man's mask from the
+seed-sowing dance. Its loose jaw clacks
+in time with bells no one is ringing,
+and fields it passes sprout overnight."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "GROWL"], [3, "LEAFAGE"], [6, "MUD_SLAP"], [9, "MEGA_DRAIN"], [12, "GROWTH"], [15, "BULLDOZE"], [18, "SEED_BOMB"], [21, "GIGA_DRAIN"], [24, "DIG"], [27, "ENERGY_BALL"], [30, "SYNTHESIS"], [33, "EARTH_POWER"], [36, "LEAF_STORM"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "DIG", "EARTHQUAKE", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/okinoir"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["OKINOIR"]

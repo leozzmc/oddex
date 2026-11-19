@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "OMOTELLE"
+previous_ids = ["DOZELET"]   # keeps the save slot of the old placeholder
+name = "Omotelle"
+category = "Maiden Mask"
+
+types = ["PSYCHIC", "DRAGON"]
+abilities = ["SYNCHRONIZE", "TRACE", "TELEPATHY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 28, atk = 25, def = 25, spa = 45, spd = 35, spe = 40 }   # total 198
+ev_yield = { spa = 1 }
+catch_rate = 235
+exp_yield = 40
+gender = 100.0
+egg_cycles = 20
+egg_groups = ["AMORPHOUS", "DRAGON"]
+growth_rate = "SLOW"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 20, into = "DEIGLOOM" }]   # [{ method, param, into }]
+
+[dex]
+height = 4
+weight = 66
+text = """
+A young woman's mask, white as chalk and
+without expression. Its empty eyes follow
+you. It is said that a grudge kept for
+too long will open them gold."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "GROWL"], [1, "CONFUSION"], [4, "DOUBLE_TEAM"], [7, "TELEPORT"], [10, "DRAGON_BREATH"], [13, "HYPNOSIS"], [16, "DRAGON_RAGE"], [19, "CALM_MIND"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "DRAGON_PULSE", "DREAM_EATER", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "REFLECT", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/omotelle"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route102"]
+level_band = [2, 8]
+family = ["OMOTELLE", "DEIGLOOM", "HANNYAGON"]

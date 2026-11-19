@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "SHOJOBOB"
+previous_ids = ["PADLILY"]   # keeps the save slot of the old placeholder
+name = "Shojobob"
+category = "Sea Sprite"
+
+types = ["WATER", "FAIRY"]
+abilities = ["SWIFT_SWIM", "RAIN_DISH", "OWN_TEMPO"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 30, def = 30, spa = 40, spd = 50, spe = 30 }   # total 220
+ev_yield = { spd = 1 }
+catch_rate = 255
+exp_yield = 44
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "AMORPHOUS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 26
+text = """
+The red, laughing face of a sea spirit.
+It floats on calm water with its hair
+spread around it, and dances on the waves
+whenever someone kind walks by."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ASTONISH"], [1, "GROWL"], [3, "WATER_GUN"], [6, "FAIRY_WIND"], [9, "ABSORB"], [12, "DISARMING_VOICE"], [15, "BUBBLE_BEAM"], [18, "DRAINING_KISS"],
+]
+teachable = [
+    "ATTRACT", "DAZZLING_GLEAM", "ENDURE", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "ICE_BEAM", "LIGHT_SCREEN", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shojobob"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route102"]
+level_band = [2, 8]
+family = ["SHOJOBOB"]

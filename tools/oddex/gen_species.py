@@ -144,6 +144,13 @@ def validate(all_species, roles, regional, idents):
             errors.append(f'{f}: id must be UPPER_SNAKE_CASE')
         if ids.count(s['id']) > 1:
             errors.append(f'{f}: duplicate id {s["id"]}')
+        for table in ('dex', 'learnset', 'graphics', 'design'):
+            if 'evolutions' in s.get(table, {}):
+                errors.append(f'{f}: evolutions is inside [{table}]; it must be a top-level key '
+                              'written before the first [table] header')
+        for old in s.get('previous_ids', []):
+            if old in ids:
+                errors.append(f'{f}: previous id {old} is still used by another species')
         if f'SPECIES_{s["id"]}' in idents:
             errors.append(f'{f}: SPECIES_{s["id"]} already exists in vanilla; pick another id')
         if len(s['name']) > NAME_MAX:
@@ -170,8 +177,11 @@ def validate(all_species, roles, regional, idents):
             need(s, 'MOVE_', move, 'move')
         for evo in s.get('evolutions', []):
             need(s, 'EVO_', evo['method'], 'evolution method')
-            if evo['into'] not in ids and f'SPECIES_{evo["into"]}' not in idents:
-                errors.append(f'{f}: evolves into unknown species {evo["into"]}')
+            # Only into another original: vanilla species are disabled in plan B (a vanilla
+            # target would hit the disabled-species assert on level up).
+            if evo['into'] not in ids:
+                errors.append(f'{f}: evolves into {evo["into"]}, which is not an oddex species '
+                              f'(content/species/*.toml)')
         g = s['graphics']
         need(s, 'ANIM_', g['front_anim'], 'front animation')
         need(s, 'BACK_ANIM_', g['back_anim'], 'back animation')
@@ -349,6 +359,9 @@ def gen_info(all_species):
 def gen_learnables(all_species, current_text):
     data = json.loads(current_text)
     for s in all_species:
+        for old in s.get('previous_ids', []):
+            data.pop(old, None)
+    for s in all_species:
         data[s['id']] = sorted(f'MOVE_{m}' for m in s['learnset'].get('teachable', []))
     return json.dumps(data, indent=2)
 
@@ -358,10 +371,14 @@ CUSTOM_START = 1572  # SPECIES_CUSTOM_START (= SPECIES_GLIMMORA_MEGA) in expansi
 
 def stable_order(all_species):
     """Species ids are saved in save files, so keep the order already in species.h and
-    append new species at the end (sorted by id). Removing one shifts the ones after it."""
+    append new species at the end (sorted by id). Renaming keeps the slot via previous_ids;
+    removing a species shifts the ones after it."""
     text = (GAME / 'include/constants/species.h').read_text()
     region = re.search(r'// oddex:species-ids begin[^\n]*\n(.*?)// oddex:species-ids end', text, re.S)
     existing = re.findall(r'SPECIES_(\w+),', region.group(1)) if region else []
+    # A renamed species lists its old ids in previous_ids and keeps the old slot (and number).
+    renamed = {old: s['id'] for s in all_species for old in s.get('previous_ids', [])}
+    existing = [renamed.get(i, i) for i in existing]
     by_id = {s['id']: s for s in all_species}
     kept = [by_id[i] for i in existing if i in by_id]
     removed = [i for i in existing if i not in by_id]

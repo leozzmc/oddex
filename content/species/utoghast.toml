@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "UTOGHAST"
+previous_ids = ["GULLWISP"]   # keeps the save slot of the old placeholder
+name = "Utoghast"
+category = "Gaunt Mask"
+
+types = ["FLYING", "GHOST"]
+abilities = ["KEEN_EYE", "NONE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 30, def = 30, spa = 55, spd = 30, spe = 85 }   # total 270
+ev_yield = { spe = 1 }
+catch_rate = 190
+exp_yield = 54
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FLYING", "AMORPHOUS"]
+growth_rate = "MEDIUM_FAST"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 40
+text = """
+The gaunt mask of a hunter's ghost who
+took seabirds all his life. Now it flies
+with them over the sea at dusk, and they
+peck at it whenever it tries to land."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "GROWL"], [1, "ASTONISH"], [5, "GUST"], [9, "QUICK_ATTACK"], [13, "NIGHT_SHADE"], [17, "WING_ATTACK"], [21, "SHADOW_SNEAK"], [25, "AERIAL_ACE"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "ENDURE", "FACADE", "FLY", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/utoghast"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NORMAL"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route103"]
+level_band = [2, 8]
+family = ["UTOGHAST"]

@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "SHISHIBLAZE"
+previous_ids = ["EMBERKIT"]   # keeps the save slot of the old placeholder
+name = "Shishiblaze"
+category = "Lion Mask"
+
+types = ["FIRE", "FIGHTING"]
+abilities = ["BLAZE", "NONE", "IRON_FIST"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 45, atk = 60, def = 40, spa = 55, spd = 45, spe = 65 }   # total 310
+ev_yield = { spe = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 95
+text = """
+A lion cub that wears the mask of the
+lion who dances among peonies. When it
+shakes its red mane, sparks fly, and the
+mask's mouth seems to grin on its own."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "LOW_KICK"], [9, "BITE"], [12, "FLAME_WHEEL"], [15, "KARATE_CHOP"], [18, "BULK_UP"], [21, "FLAMETHROWER"], [24, "DRAIN_PUNCH"], [27, "OVERHEAT"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BRICK_BREAK", "BULK_UP", "CRUNCH", "DIG", "DRAIN_PUNCH", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shishiblaze"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "FAST"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["SHISHIBLAZE"]

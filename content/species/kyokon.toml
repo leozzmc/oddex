@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "KYOKON"
+previous_ids = ["SCRUFFLE"]   # keeps the save slot of the old placeholder
+name = "Kyokon"
+category = "Fox Mask"
+
+types = ["NORMAL", "GHOST"]
+abilities = ["PICKUP", "NONE", "FRISK"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 38, atk = 30, def = 41, spa = 30, spd = 41, spe = 60 }   # total 240
+ev_yield = { spe = 1 }
+catch_rate = 255
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 4
+weight = 150
+text = """
+A fox wearing a white fox mask over its
+own face. It disguises itself as a monk
+to talk hunters out of their traps, then
+cannot resist the bait on the way home."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "GROWL"], [3, "ASTONISH"], [6, "TAIL_WHIP"], [9, "QUICK_ATTACK"], [12, "LICK"], [15, "FEINT_ATTACK"], [18, "SHADOW_SNEAK"], [21, "DOUBLE_EDGE"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "CALM_MIND", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kyokon"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NORMAL"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route101", "Route102", "Route103"]
+level_band = [2, 8]
+family = ["KYOKON"]
