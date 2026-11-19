@@ -143,3 +143,31 @@ press A 2 150
 shot dex/244_mandaloka.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/245_suzurai.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/246_kagurai.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/247_raijumen.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/248_raijuoh.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/249_torobi.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/250_tomoeden.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/251_shojomai.png
+press B 2 90
+press DOWN 2 20

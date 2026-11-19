@@ -17,7 +17,7 @@ egg_groups = ["WATER_1", "AMORPHOUS"]
 growth_rate = "MEDIUM_SLOW"
 body_color = "RED"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 14, into = "SHOJOMAI" }]   # [{ method, param, into }]
 
 [dex]
 height = 5
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route102", "Route106"]
 level_band = [2, 8]
-family = ["SHOJOBOB"]
+family = ["SHOJOBOB", "SHOJOMAI"]

@@ -966,3 +966,232 @@ static const struct SpriteFrameImage sPicTable_Mandaring[] = {
     overworld_ascending_frames(gObjectEventPic_Mandaring, 4, 4),
 };
 #endif
+
+// Kagurai
+static const struct LevelUpMove sKaguraiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_THUNDER_SHOCK),
+    LEVEL_UP_MOVE( 1, MOVE_SUPERSONIC),
+    LEVEL_UP_MOVE( 9, MOVE_METAL_SOUND),
+    LEVEL_UP_MOVE(13, MOVE_SPARK),
+    LEVEL_UP_MOVE(17, MOVE_MIRROR_SHOT),
+    LEVEL_UP_MOVE(21, MOVE_ELECTRO_BALL),
+    LEVEL_UP_MOVE(25, MOVE_FLASH_CANNON),
+    LEVEL_UP_MOVE(29, MOVE_DISCHARGE),
+    LEVEL_UP_MOVE(30, MOVE_TRI_ATTACK),
+    LEVEL_UP_MOVE(36, MOVE_LOCK_ON),
+    LEVEL_UP_MOVE(42, MOVE_ZAP_CANNON),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Kagurai[] = INCGFX_U32("graphics/pokemon/oddex/kagurai/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Kagurai[] = INCGFX_U32("graphics/pokemon/oddex/kagurai/back.png", ".4bpp.smol");
+const u16 gMonPalette_Kagurai[] = INCGFX_U16("graphics/pokemon/oddex/kagurai/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Kagurai[] = INCGFX_U16("graphics/pokemon/oddex/kagurai/shiny.pal", ".gbapal");
+const u8 gMonIcon_Kagurai[] = INCGFX_U8("graphics/pokemon/oddex/kagurai/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Kagurai[] = INCGFX_U8("graphics/pokemon/oddex/kagurai/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Kagurai[] = INCGFX_COMP("graphics/pokemon/oddex/kagurai/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Kagurai[] = INCGFX_U16("graphics/pokemon/oddex/kagurai/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Kagurai[] = INCGFX_U16("graphics/pokemon/oddex/kagurai/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Kagurai[] = {
+    overworld_ascending_frames(gObjectEventPic_Kagurai, 4, 4),
+};
+#endif
+
+// Raijumen
+static const struct LevelUpMove sRaijumenLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_THUNDER_WAVE),
+    LEVEL_UP_MOVE( 4, MOVE_LEER),
+    LEVEL_UP_MOVE( 8, MOVE_BITE),
+    LEVEL_UP_MOVE(12, MOVE_SHOCK_WAVE),
+    LEVEL_UP_MOVE(16, MOVE_THUNDER_FANG),
+    LEVEL_UP_MOVE(20, MOVE_HOWL),
+    LEVEL_UP_MOVE(24, MOVE_CRUNCH),
+    LEVEL_UP_MOVE(28, MOVE_DISCHARGE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Raijumen[] = INCGFX_U32("graphics/pokemon/oddex/raijumen/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Raijumen[] = INCGFX_U32("graphics/pokemon/oddex/raijumen/back.png", ".4bpp.smol");
+const u16 gMonPalette_Raijumen[] = INCGFX_U16("graphics/pokemon/oddex/raijumen/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Raijumen[] = INCGFX_U16("graphics/pokemon/oddex/raijumen/shiny.pal", ".gbapal");
+const u8 gMonIcon_Raijumen[] = INCGFX_U8("graphics/pokemon/oddex/raijumen/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Raijumen[] = INCGFX_U8("graphics/pokemon/oddex/raijumen/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Raijumen[] = INCGFX_COMP("graphics/pokemon/oddex/raijumen/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Raijumen[] = INCGFX_U16("graphics/pokemon/oddex/raijumen/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Raijumen[] = INCGFX_U16("graphics/pokemon/oddex/raijumen/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Raijumen[] = {
+    overworld_ascending_frames(gObjectEventPic_Raijumen, 4, 4),
+};
+#endif
+
+// Raijuoh
+static const struct LevelUpMove sRaijuohLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_THUNDER_WAVE),
+    LEVEL_UP_MOVE( 1, MOVE_LEER),
+    LEVEL_UP_MOVE( 8, MOVE_BITE),
+    LEVEL_UP_MOVE(12, MOVE_SHOCK_WAVE),
+    LEVEL_UP_MOVE(16, MOVE_THUNDER_FANG),
+    LEVEL_UP_MOVE(20, MOVE_HOWL),
+    LEVEL_UP_MOVE(24, MOVE_CRUNCH),
+    LEVEL_UP_MOVE(26, MOVE_WILD_CHARGE),
+    LEVEL_UP_MOVE(30, MOVE_DISCHARGE),
+    LEVEL_UP_MOVE(36, MOVE_DARK_PULSE),
+    LEVEL_UP_MOVE(42, MOVE_THUNDER),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Raijuoh[] = INCGFX_U32("graphics/pokemon/oddex/raijuoh/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Raijuoh[] = INCGFX_U32("graphics/pokemon/oddex/raijuoh/back.png", ".4bpp.smol");
+const u16 gMonPalette_Raijuoh[] = INCGFX_U16("graphics/pokemon/oddex/raijuoh/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Raijuoh[] = INCGFX_U16("graphics/pokemon/oddex/raijuoh/shiny.pal", ".gbapal");
+const u8 gMonIcon_Raijuoh[] = INCGFX_U8("graphics/pokemon/oddex/raijuoh/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Raijuoh[] = INCGFX_U8("graphics/pokemon/oddex/raijuoh/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Raijuoh[] = INCGFX_COMP("graphics/pokemon/oddex/raijuoh/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Raijuoh[] = INCGFX_U16("graphics/pokemon/oddex/raijuoh/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Raijuoh[] = INCGFX_U16("graphics/pokemon/oddex/raijuoh/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Raijuoh[] = {
+    overworld_ascending_frames(gObjectEventPic_Raijuoh, 4, 4),
+};
+#endif
+
+// Shojomai
+static const struct LevelUpMove sShojomaiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 1, MOVE_GROWL),
+    LEVEL_UP_MOVE( 1, MOVE_ABSORB),
+    LEVEL_UP_MOVE(14, MOVE_TEETER_DANCE),
+    LEVEL_UP_MOVE(18, MOVE_BUBBLE_BEAM),
+    LEVEL_UP_MOVE(22, MOVE_DRAINING_KISS),
+    LEVEL_UP_MOVE(26, MOVE_FAKE_TEARS),
+    LEVEL_UP_MOVE(30, MOVE_MOONBLAST),
+    LEVEL_UP_MOVE(34, MOVE_RAIN_DANCE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Shojomai[] = INCGFX_U32("graphics/pokemon/oddex/shojomai/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Shojomai[] = INCGFX_U32("graphics/pokemon/oddex/shojomai/back.png", ".4bpp.smol");
+const u16 gMonPalette_Shojomai[] = INCGFX_U16("graphics/pokemon/oddex/shojomai/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Shojomai[] = INCGFX_U16("graphics/pokemon/oddex/shojomai/shiny.pal", ".gbapal");
+const u8 gMonIcon_Shojomai[] = INCGFX_U8("graphics/pokemon/oddex/shojomai/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Shojomai[] = INCGFX_U8("graphics/pokemon/oddex/shojomai/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Shojomai[] = INCGFX_COMP("graphics/pokemon/oddex/shojomai/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Shojomai[] = INCGFX_U16("graphics/pokemon/oddex/shojomai/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Shojomai[] = INCGFX_U16("graphics/pokemon/oddex/shojomai/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Shojomai[] = {
+    overworld_ascending_frames(gObjectEventPic_Shojomai, 4, 4),
+};
+#endif
+
+// Suzurai
+static const struct LevelUpMove sSuzuraiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_THUNDER_SHOCK),
+    LEVEL_UP_MOVE( 5, MOVE_SUPERSONIC),
+    LEVEL_UP_MOVE( 9, MOVE_METAL_SOUND),
+    LEVEL_UP_MOVE(13, MOVE_SPARK),
+    LEVEL_UP_MOVE(17, MOVE_MIRROR_SHOT),
+    LEVEL_UP_MOVE(21, MOVE_ELECTRO_BALL),
+    LEVEL_UP_MOVE(25, MOVE_FLASH_CANNON),
+    LEVEL_UP_MOVE(29, MOVE_DISCHARGE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Suzurai[] = INCGFX_U32("graphics/pokemon/oddex/suzurai/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Suzurai[] = INCGFX_U32("graphics/pokemon/oddex/suzurai/back.png", ".4bpp.smol");
+const u16 gMonPalette_Suzurai[] = INCGFX_U16("graphics/pokemon/oddex/suzurai/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Suzurai[] = INCGFX_U16("graphics/pokemon/oddex/suzurai/shiny.pal", ".gbapal");
+const u8 gMonIcon_Suzurai[] = INCGFX_U8("graphics/pokemon/oddex/suzurai/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Suzurai[] = INCGFX_U8("graphics/pokemon/oddex/suzurai/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Suzurai[] = INCGFX_COMP("graphics/pokemon/oddex/suzurai/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Suzurai[] = INCGFX_U16("graphics/pokemon/oddex/suzurai/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Suzurai[] = INCGFX_U16("graphics/pokemon/oddex/suzurai/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Suzurai[] = {
+    overworld_ascending_frames(gObjectEventPic_Suzurai, 4, 4),
+};
+#endif
+
+// Tomoeden
+static const struct LevelUpMove sTomoedenLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_NUZZLE),
+    LEVEL_UP_MOVE( 1, MOVE_HELPING_HAND),
+    LEVEL_UP_MOVE( 4, MOVE_CONFUSION),
+    LEVEL_UP_MOVE( 8, MOVE_SPARK),
+    LEVEL_UP_MOVE(12, MOVE_ENCORE),
+    LEVEL_UP_MOVE(16, MOVE_PSYBEAM),
+    LEVEL_UP_MOVE(20, MOVE_CHARGE),
+    LEVEL_UP_MOVE(24, MOVE_ELECTRO_BALL),
+    LEVEL_UP_MOVE(28, MOVE_PSYCHIC),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Tomoeden[] = INCGFX_U32("graphics/pokemon/oddex/tomoeden/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Tomoeden[] = INCGFX_U32("graphics/pokemon/oddex/tomoeden/back.png", ".4bpp.smol");
+const u16 gMonPalette_Tomoeden[] = INCGFX_U16("graphics/pokemon/oddex/tomoeden/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Tomoeden[] = INCGFX_U16("graphics/pokemon/oddex/tomoeden/shiny.pal", ".gbapal");
+const u8 gMonIcon_Tomoeden[] = INCGFX_U8("graphics/pokemon/oddex/tomoeden/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Tomoeden[] = INCGFX_U8("graphics/pokemon/oddex/tomoeden/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Tomoeden[] = INCGFX_COMP("graphics/pokemon/oddex/tomoeden/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Tomoeden[] = INCGFX_U16("graphics/pokemon/oddex/tomoeden/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Tomoeden[] = INCGFX_U16("graphics/pokemon/oddex/tomoeden/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Tomoeden[] = {
+    overworld_ascending_frames(gObjectEventPic_Tomoeden, 4, 4),
+};
+#endif
+
+// Torobi
+static const struct LevelUpMove sTorobiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_CONFUSE_RAY),
+    LEVEL_UP_MOVE( 5, MOVE_QUICK_ATTACK),
+    LEVEL_UP_MOVE( 9, MOVE_STRUGGLE_BUG),
+    LEVEL_UP_MOVE(13, MOVE_SHOCK_WAVE),
+    LEVEL_UP_MOVE(17, MOVE_MOONLIGHT),
+    LEVEL_UP_MOVE(21, MOVE_BUG_BUZZ),
+    LEVEL_UP_MOVE(25, MOVE_THUNDERBOLT),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Torobi[] = INCGFX_U32("graphics/pokemon/oddex/torobi/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Torobi[] = INCGFX_U32("graphics/pokemon/oddex/torobi/back.png", ".4bpp.smol");
+const u16 gMonPalette_Torobi[] = INCGFX_U16("graphics/pokemon/oddex/torobi/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Torobi[] = INCGFX_U16("graphics/pokemon/oddex/torobi/shiny.pal", ".gbapal");
+const u8 gMonIcon_Torobi[] = INCGFX_U8("graphics/pokemon/oddex/torobi/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Torobi[] = INCGFX_U8("graphics/pokemon/oddex/torobi/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Torobi[] = INCGFX_COMP("graphics/pokemon/oddex/torobi/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Torobi[] = INCGFX_U16("graphics/pokemon/oddex/torobi/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Torobi[] = INCGFX_U16("graphics/pokemon/oddex/torobi/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Torobi[] = {
+    overworld_ascending_frames(gObjectEventPic_Torobi, 4, 4),
+};
+#endif

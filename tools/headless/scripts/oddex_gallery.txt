@@ -220,19 +220,17 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press RIGHT 2 10
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press LEFT 2 10
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
 press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 wait 120
@@ -251,4 +249,46 @@ wait 120
 shot gallery/1602_mandaring.png
 press START 2 120
 shot gallery/1602_mandaring_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1603_kagurai.png
+press START 2 120
+shot gallery/1603_kagurai_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1604_raijumen.png
+press START 2 120
+shot gallery/1604_raijumen_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1605_raijuoh.png
+press START 2 120
+shot gallery/1605_raijuoh_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1606_shojomai.png
+press START 2 120
+shot gallery/1606_shojomai_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1607_suzurai.png
+press START 2 120
+shot gallery/1607_suzurai_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1608_tomoeden.png
+press START 2 120
+shot gallery/1608_tomoeden_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1609_torobi.png
+press START 2 120
+shot gallery/1609_torobi_shiny.png
 press START 2 120

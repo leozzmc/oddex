@@ -1,0 +1,54 @@
+# Mauville batch (see docs/research/mask-designs.md; pending the user's review): fused mask parts plus
+# Shinto / folk imagery, never a deity. Replaces Lombre (Route 110 rival, Edwin); Shojobob evolves into it at Lv14. Stats and moves are provisional.
+
+id = "SHOJOMAI"
+name = "Shojomai"
+category = "Sea Sprite"
+
+types = ["WATER", "FAIRY"]
+abilities = ["SWIFT_SWIM", "RAIN_DISH", "OWN_TEMPO"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 50, def = 50, spa = 60, spd = 70, spe = 50 }   # total 340
+ev_yield = { spd = 2 }
+catch_rate = 120
+exp_yield = 68
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "FAIRY"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 12
+weight = 325
+text = """
+It rises from the sea on calm nights and
+dances on the waves with a ladle in its
+hand. Fishers who join the dance find
+their nets full in the morning."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "WATER_GUN"], [1, "GROWL"], [1, "ABSORB"], [14, "TEETER_DANCE"], [18, "BUBBLE_BEAM"], [22, "DRAINING_KISS"], [26, "FAKE_TEARS"], [30, "MOONBLAST"], [34, "RAIN_DANCE"],
+]
+teachable = [
+    "BLIZZARD", "ICE_BEAM", "RAIN_DANCE", "SURF", "WATER_PULSE", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shojomai"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route110", "evolution"]
+level_band = [14, 30]
+family = ["SHOJOBOB", "SHOJOMAI"]

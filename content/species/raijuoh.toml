@@ -1,0 +1,54 @@
+# Mauville batch (see docs/research/mask-designs.md; pending the user's review): fused mask parts plus
+# Shinto / folk imagery, never a deity. Replaces Manectric (Wattson's ace). Stats and moves are provisional.
+
+id = "RAIJUOH"
+name = "Raijuoh"
+category = "Thunderbeast"
+
+types = ["ELECTRIC", "DARK"]
+abilities = ["STATIC", "LIGHTNING_ROD", "INTIMIDATE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 75, def = 60, spa = 105, spd = 60, spe = 105 }   # total 475
+ev_yield = { spe = 2 }
+catch_rate = 45
+exp_yield = 95
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "SLOW"
+body_color = "BLUE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 15
+weight = 402
+text = """
+A ring of drums thunders behind it as it
+runs. Where it lands, the ground is
+scorched in the shape of its paws, and
+the smell of rain lingers for days."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "THUNDER_WAVE"], [1, "LEER"], [8, "BITE"], [12, "SHOCK_WAVE"], [16, "THUNDER_FANG"], [20, "HOWL"], [24, "CRUNCH"], [26, "WILD_CHARGE"], [30, "DISCHARGE"], [36, "DARK_PULSE"], [42, "THUNDER"],
+]
+teachable = [
+    "CRUNCH", "DARK_PULSE", "DIG", "SHOCK_WAVE", "THUNDERBOLT", "THUNDER_WAVE", "THUNDER", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/raijuoh"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["MauvilleGym", "evolution"]
+level_band = [24, 45]
+family = ["RAIJUMEN", "RAIJUOH"]
