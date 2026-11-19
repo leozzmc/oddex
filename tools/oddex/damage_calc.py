@@ -128,7 +128,13 @@ def load_party(trainer, ref=None):
                               cwd=GAME).stdout
     else:
         text = (GAME / 'src/data/trainers.party').read_text()
-    block = text.split(f'=== TRAINER_{trainer} ===', 1)[1].split('\n=== ', 1)[0]
+    name = trainer.upper().removeprefix('TRAINER_')
+    header = f'=== TRAINER_{name} ==='
+    if header not in text:
+        near = sorted({h for h in re.findall(r'=== TRAINER_(\w+) ===', text) if h.startswith(name.split('_')[0])})[:8]
+        raise SystemExit(f'damage_calc: no trainer TRAINER_{name} in trainers.party'
+                         + (f' (did you mean: {", ".join(near)}?)' if near else ''))
+    block = text.split(header, 1)[1].split('\n=== ', 1)[0]
     party = []
     for chunk in block.split('\n\n')[1:]:
         lines = [ln.strip() for ln in chunk.strip().split('\n') if ln.strip()]
@@ -296,7 +302,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--summary', action='store_true',
                     help='per starter, the lowest level that wins every one-on-one (worst-case rolls)')
-    ap.add_argument('trainer')
+    ap.add_argument('trainer', help='trainer id, with or without TRAINER_ (e.g. BRAWLY_1)')
     ap.add_argument('--levels', default='14-18')
     ap.add_argument('--set', action='append', default=[], help='SPECIES:types=A,B, SPECIES:level=N, SPECIES:moves=A,B,C,D or SPECIES:species=OTHER (swap; later keys use the new species)')
     ap.add_argument('--drop', action='append', default=[])
