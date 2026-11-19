@@ -49,6 +49,6 @@ shadow = { x = 0, y = 4, size = "M" }
 overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 
 [design]
-habitat = ["starter"]
-level_band = [2, 8]
+habitat = ["Route104", "Route106", "Route107", "DewfordTown"]   # former starter, reassigned (mask-designs.md)
+level_band = [10, 20]
 family = ["KAMORAI"]
