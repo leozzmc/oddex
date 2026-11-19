@@ -7,8 +7,11 @@
 
 Checks: map size limit, connection reciprocity, warp destinations, object event count, region
 (non-Hoenn maps are silently dropped from the Emerald build), event coordinates in bounds, object
-events standing on tiles whose top metatile layer is drawn over sprites, and talkable objects,
-signs and triggers that no tile reachable from a warp or connection can get to.
+events standing on tiles whose top metatile layer is drawn over sprites, talkable objects, signs
+and triggers that no tile reachable from a warp or connection can get to, and tileset
+compatibility across connections: a connected map is drawn with the current map's tilesets, so the
+primary tilesets must match, and when the secondary tilesets differ the neighbor's tiles within
+BORDER_VIEW of the border may only use primary metatiles.
 Findings already present in vanilla are accepted in tools/oddex/check_maps_baseline.json;
 only new findings fail (rerun with --update-baseline after reviewing them).
 """
@@ -56,8 +59,20 @@ def tileset_sources():
     return out
 
 
+def read_bytes(path):
+    with open(g(path), "rb") as f:
+        return f.read()
+
+
+def read_image(path):
+    with Image.open(g(path)) as im:
+        im.load()
+        return im.copy()
+
+
 def read_pal(path):
-    lines = open(g(path)).read().split()
+    with open(g(path)) as f:
+        lines = f.read().split()
     vals = [int(v) for v in lines[3:3 + 48]]
     return [tuple(vals[i:i + 3]) for i in range(0, 48, 3)]
 
@@ -65,19 +80,18 @@ def read_pal(path):
 @lru_cache(None)
 def tileset(sym):
     src = tileset_sources()[sym]
-    tiles = Image.open(g(src["tiles"])) if src["tiles"] else None
     return {
-        "tiles": tiles,
+        "tiles": read_image(src["tiles"]) if src["tiles"] else None,
         "pals": [read_pal(p) for p in src["palettes"]],
-        "metatiles": open(g(src["metatiles"]), "rb").read(),
-        "attrs": open(g(src["attributes"]), "rb").read(),
+        "metatiles": read_bytes(src["metatiles"]),
+        "attrs": read_bytes(src["attributes"]),
     }
 
 
 class Layout:
     def __init__(self, lay):
         self.id, self.w, self.h = lay["id"], lay["width"], lay["height"]
-        self.blk = open(g(lay["blockdata_filepath"]), "rb").read()
+        self.blk = read_bytes(lay["blockdata_filepath"])
         self.primary, self.secondary = tileset(lay["primary_tileset"]), tileset(lay["secondary_tileset"])
 
     def cell(self, x, y):
@@ -167,6 +181,41 @@ def load_maps():
 ELEVATION_TO_PRIORITY = [2, 2, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 0, 2]
 BASELINE_PATH = os.path.join(ROOT, "tools", "oddex", "check_maps_baseline.json")
 OPPOSITE = {"up": "down", "down": "up", "left": "right", "right": "left"}
+# How far into a connected map the player can see from the border (mapping.md: 7-8 tiles; the
+# 15x10 view shows 7 columns to each side and the scrolling buffer one more).
+BORDER_VIEW = 8
+
+
+def border_cells(a_w, a_h, b_w, b_h, direction, offset, view=BORDER_VIEW):
+    """Cells of map B visible from map A across A's `direction` connection to B, in B's
+    coordinates. `offset` is the connection's offset in A's map.json: B's x (up/down) or y
+    (left/right) origin in A's coordinates. Covers `view` rows or columns from the border, along
+    A's extent widened by `view` on both sides."""
+    if direction in ("up", "down"):
+        rows = range(max(0, b_h - view), b_h) if direction == "up" else range(min(view, b_h))
+        cols = [xb for xb in range(b_w) if -view <= xb + offset < a_w + view]
+        return [(x, y) for y in rows for x in cols]
+    cols = range(max(0, b_w - view), b_w) if direction == "left" else range(min(view, b_w))
+    rows = [yb for yb in range(b_h) if -view <= yb + offset < a_h + view]
+    return [(x, y) for x in cols for y in rows]
+
+
+def connection_tileset_errors(where, mine, theirs, other_name, c):
+    """Tileset compatibility of one connection; `mine`/`theirs` are layouts.json entries."""
+    if mine["primary_tileset"] != theirs["primary_tileset"]:
+        return [f"{where}: connection {c['direction']} to {other_name}: primary tileset "
+                f"{theirs['primary_tileset']} differs from this map's {mine['primary_tileset']} "
+                f"(the neighbor is drawn with this map's tilesets)"]
+    if mine["secondary_tileset"] == theirs["secondary_tileset"]:
+        return []
+    a, b = layout(mine["id"]), layout(theirs["id"])
+    bad = [(x, y) for x, y in border_cells(a.w, a.h, b.w, b.h, c["direction"], int(c["offset"]))
+           if b.cell(x, y)[0] >= NUM_METATILES_IN_PRIMARY]
+    if not bad:
+        return []
+    return [f"{where}: connection {c['direction']} to {other_name}: {len(bad)} of its tiles within "
+            f"{BORDER_VIEW} of the border use its secondary tileset {theirs['secondary_tileset']}, "
+            f"not this map's {mine['secondary_tileset']} (first at {bad[0]})"]
 
 
 def is_emerald_map(j):
@@ -215,6 +264,8 @@ def check(maps, prefixes):
                 errors.append(f"{where}: connection {c['direction']} to {other['name']} has no {OPPOSITE[c['direction']]} connection back")
             elif int(back[0]["offset"]) != -int(c["offset"]):
                 errors.append(f"{where}: connection offset {c['offset']} to {other['name']} is not the negation of {back[0]['offset']}")
+            if other.get("layout") in layouts() and is_emerald_map(other):
+                errors += connection_tileset_errors(where, layouts()[lid], layouts()[other["layout"]], other["name"], c)
         for i, w in enumerate(j.get("warp_events") or []):
             dest = maps.get(w["dest_map"])
             if w["dest_map"] in ("MAP_DYNAMIC", "MAP_NONE"):
