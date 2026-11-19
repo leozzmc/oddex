@@ -246,7 +246,11 @@ LittlerootTown_EventScript_FatMan::
 	end
 
 LittlerootTown_EventScript_Boy::
-	msgbox LittlerootTown_Text_BirchSpendsDaysInLab, MSGBOX_NPC
+	msgbox LittlerootTown_Text_OddexBoy, MSGBOX_NPC
+	end
+
+LittlerootTown_EventScript_OddexGuide::
+	msgbox LittlerootTown_Text_OddexGuide, MSGBOX_NPC
 	end
 
 LittlerootTown_EventScript_Twin::
@@ -957,12 +961,16 @@ LittlerootTown_Text_CanUsePCToStoreItems:
 	.string "and POKéMON.\p"
 	.string "The power of science is staggering!$"
 
-LittlerootTown_Text_BirchSpendsDaysInLab:
-	.string "PROF. BIRCH spends days in his LAB\n"
-	.string "studying, then he'll suddenly go out in\l"
-	.string "the wild to do more research…\p"
-	.string "When does PROF. BIRCH spend time\n"
-	.string "at home?$"
+LittlerootTown_Text_OddexBoy:
+	.string "Did you hear? Something odd was\n"
+	.string "seen near the tall grass again.\p"
+	.string "Nobody can find it in any book!$"
+
+LittlerootTown_Text_OddexGuide:
+	.string "Hello, newcomer! I'm the ODDEX\n"
+	.string "test guide.\p"
+	.string "If you can read this, the new\n"
+	.string "map event works!$"
 
 LittlerootTown_Text_IfYouGoInGrassPokemonWillJumpOut:
 	.string "Um, um, um!\p"
