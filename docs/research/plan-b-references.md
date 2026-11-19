@@ -129,9 +129,48 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 
 ### 3.5 建議順序
 
-1. 先對齊 YAML 欄位和替換表格式（Sonia × Mark）。
-2. 建立代號層，改寫 §2.1 的 5 個 C 引用和 Route 103 勁敵隊伍。
-3. 產生器套用早期約 12 種原版角色的替換，跑 `to_littleroot` 和 `to_starter`，再一路截圖到 Petalburg。
-4. 依路線往後擴充替換表和逐處修改；設施類最後處理。
+已和 Mark 的版本合併，見 §5。
 
-## 4. 關掉原版世代後會壞在哪裡、YAML + 產生器設計（Mark，待補）
+## 4. 關掉原版世代後會壞在哪裡、格式與產生器（Mark）
+
+見 [`species-plan-b.md`](species-plan-b.md)（目前在 feat/species daec035c）：關掉原版的實驗結果、三種格式（角色資料 TOML、替換表、代號）、產生器 `gen_species.py`。
+
+## 5. 格式定案與第二階段實作順序（Sonia × Mark 合併版）
+
+### 5.1 格式
+
+- **角色資料**：採用 Mark 的 `content/species/<id>.toml`。地圖和事件這邊**不需要新增 `[design]` 欄位**：劇情用途以 `content/roles.toml` 為準，出現位置以替換表為準，避免同一件事有兩份資料。只有一個要求：`habitat` 一律使用 `map.json` 的 `name`（例如 `Route101`，這也是 `check_species_refs.py --maps` 用的名稱），特殊用途用標籤（例如 `starter`）。
+- **代號**：採用 Mark 的 `content/roles.toml` → `oddex_species.h`（四條路都已驗證）。早期需要的代號：
+
+  | 代號 | 位置 | 目前（第 2 步先指向原版） |
+  |---|---|---|
+  | `STARTER_GRASS` / `STARTER_FIRE` / `STARTER_WATER` | `starter_choose.c:113–115`；Route 103 勁敵 6 組；`PetalburgCity_PokemonCenter_1F` 的 3 段屬性說明 | Treecko / Torchic / Mudkip |
+  | `INTRO_MON` | `main_menu.c:1409`、`:1909` | Lotad |
+  | `RESCUE_WILD` | `battle_controllers.c:163`；Route 101 追 Birch 的物件造型 | Zigzagoon |
+  | `TUTORIAL_CATCH` | `battle_setup.c:516`（Wally 要抓的） | Ralts |
+  | `TUTORIAL_LENT` | `field_specials.c:1531`；`PetalburgCity_Gym` 文字裡的 ZIGZAGOON | Zigzagoon |
+
+  每個用途都給自己的代號，即使一開始指向同一隻角色，之後也能分開調整。
+- **替換表**：採用 Mark 的 `content/replacements.toml`（key 是原版的每一隻，所以包含進化階段）。`trainers.party` 和 `wild_encounters.json` 由 Sonia 決定，**採就地改寫**：改寫後這兩個檔案就是原始資料，平衡調整直接改檔案，殘留的原版引用由 `check_species_refs.py --strict` 擋下。改寫工具的要求：
+  1. **只替換 species 字樣、保持最小 diff**：party 只改每隻寶可夢的第一行；json 只改 `"species": "..."` 的值，不重新排版整個檔案。
+  2. **可以依路線分段套用**：`--maps Route101,Route102,...`（party 依訓練家被哪張地圖引用來判斷，跟 `check_species_refs.py` 的規則相同）。
+  3. **重複執行結果不變**：已經換成原創角色的地方不會再動。
+  4. 替換表缺少原版角色時，失敗並列出全部；可選 `--fallback`。
+  - 分工：進化階段的比對需要讀 TOML，由 Mark 提供（`gen_species.py` 的載入函式）；改寫 party 和 json 由 Sonia 實作（`tools/oddex/apply_replacements.py`）。
+
+### 5.2 第二階段實作順序
+
+| 步 | 內容 | 負責 | 依賴 | 驗證 |
+|---|---|---|---|---|
+| 0 | 使用者決定：原創角色的美術製作方式、叫聲、TOML 格式（Mark §5） | 使用者 | — | — |
+| 1 | 產生地區圖鑑、修好 sprite 檢視器的起始編號 | Mark | — | 能力畫面不再顯示 No000 |
+| 2a | 代號接上 C：開場 ×2、救 Birch、御三家 ×3 | Mark | — | `to_starter` 截圖逐像素不變 |
+| 2b | 代號接上 C：Wally 教學 ×2；Route 103 勁敵 6 組；Petalburg 寶可夢中心 3 段、道館 1 段改用 `bufferspeciesname` 代號 | Sonia | — | `to_petalburg` 截圖不變 |
+| 2c | 新增 `to_petalburg.txt`：接在 `to_starter` 之後 → Oldale → Route 103 勁敵 → 研究所拿圖鑑 → Route 102 → Petalburg Wally 教學。**先在原版上錄好基準截圖** | Sonia | — | 腳本可重現 |
+| 3 | 早期約 10 隻原創角色的資料和圖像 | Mark | 0 | 產生器驗證、sprite 檢視器 |
+| 4a | `apply_replacements.py`（§5.1 的要求） | Sonia（階段比對：Mark） | 3 | 單元測試：重複執行、最小 diff、缺漏時失敗 |
+| 4b | 套用早期替換：Route 101/102/103 陸地野生 7 種、Route 102 訓練家 4 名；代號改指向原創角色；Route 101 追人的物件改用原創角色的 overworld 圖 | Sonia × Mark | 3、4a | `check_species_refs.py --strict --maps LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity` 通過（`--maps` 會排除 C，C 的部分由 2a／2b 涵蓋） |
+| 5 | 關掉原版世代（連同 forms／cross-evo 開關） | Mark | 1、4b | `to_littleroot`、`to_starter`、`to_petalburg` 截圖全程沒有 assert |
+| 6 | 依路線往後擴充替換表、腳本和文字；美術（搬家的 Vigoroth、娃娃等）；最後是設施 stub | 兩人 | 5 | 每段都要跑 `--strict --maps` 和截圖 |
+
+1、2a、2b、2c 彼此獨立，可以同時進行。第 3 步卡在第 0 步的美術決策。
