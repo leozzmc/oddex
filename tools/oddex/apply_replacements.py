@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Rewrite vanilla species in trainers.party and wild_encounters.json to oddex species, in place.
 
-  apply_replacements.py [--table content/replacements.toml] [--maps A,B] [--kinds land_mons]
-                        [--fallback ID] [--dry-run]
+  apply_replacements.py [--table content/replacements.toml] --scope early [--fallback ID] [--dry-run]
+  apply_replacements.py [--table ...] [--maps A,B] [--kinds land_mons] ...   (ad hoc scope)
 
 The table maps each vanilla species (one key per evolution stage) to an original species id:
 
@@ -12,9 +12,10 @@ The table maps each vanilla species (one key per evolution stage) to an original
 
 Only species tokens change: the species of each Pokemon in trainers.party (nickname, gender and
 item kept) and the "species" values in wild_encounters.json (no reformatting). Species that are
-already original are left alone, so running twice changes nothing. Scope and vanilla detection
-follow check_species_refs.py: --maps selects trainers referenced by those maps' scripts and those
-maps' encounter tables; FRLG (Kanto) tables are skipped. Without --fallback, any vanilla species
+already original are left alone, so running twice changes nothing. What to rewrite comes from a
+scope in content/migration_scope.toml (explicit trainers, wild maps and table kinds), shared with
+check_species_refs.py. For ad hoc runs, --maps selects trainers referenced by those maps' scripts
+and those maps' encounter tables, and --kinds limits the tables. FRLG (Kanto) tables are skipped. Without --fallback, any vanilla species
 in scope that the table does not cover is listed and nothing is written.
 """
 import argparse, collections, json, os, re, sys, tomllib
@@ -22,6 +23,7 @@ import argparse, collections, json, os, re, sys, tomllib
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import check_species_refs as refs  # noqa: E402
+import migration_scope  # noqa: E402
 from species_data import load_species, oddex_stages, vanilla_stages  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -105,8 +107,7 @@ class Replacer:
         self.missing[name].append(where)
         return None
 
-    def party(self, text, prefixes):
-        trainer_maps = refs.trainer_maps(GAME)
+    def party(self, text, select_trainer):
         lines = text.split("\n")
         trainer, after_blank, in_header = None, False, False
         for i, line in enumerate(lines):
@@ -120,8 +121,7 @@ class Replacer:
                 after_blank, in_header = True, False
                 continue
             if after_blank and not in_header:
-                maps = trainer_maps.get(trainer, set())
-                if not prefixes or any(in_scope(mp, prefixes) for mp in maps):
+                if select_trainer(trainer):
                     a, b = species_span(line)
                     old = line[a:b]
                     const = old if old.startswith("SPECIES_") else refs.party_species_token(old)
@@ -132,7 +132,7 @@ class Replacer:
             after_blank = False
         return "\n".join(lines)
 
-    def wild(self, text, prefixes, kinds=None):
+    def wild(self, text, select_table):
         regions, names = refs.map_regions(GAME)
         data = json.loads(text)
         slots = []
@@ -143,7 +143,7 @@ class Replacer:
                 where = names.get(mp, enc.get("base_label", ""))
                 for kind, table in enc.items():
                     if isinstance(table, dict) and "mons" in table:
-                        selected = hoenn and in_scope(where, prefixes) and (not kinds or kind in kinds)
+                        selected = hoenn and select_table(where, kind)
                         for mon in table["mons"]:
                             slots.append((selected, f"{where}:{kind}", mon["species"]))
         matches = list(re.finditer(r'("species"\s*:\s*")(SPECIES_[A-Z0-9_]+)(")', text))
@@ -163,14 +163,31 @@ class Replacer:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--table", default=TABLE)
-    ap.add_argument("--maps", help="comma-separated map name prefixes (same rule as check_species_refs.py)")
-    ap.add_argument("--kinds", help="comma-separated encounter tables to rewrite, e.g. land_mons (default: all)")
+    ap.add_argument("--scope", help="a scope in content/migration_scope.toml (trainers + wild_maps/wild_kinds)")
+    ap.add_argument("--scope-file", default=migration_scope.SCOPE_FILE, help=argparse.SUPPRESS)
+    ap.add_argument("--maps", help="ad hoc instead of --scope: map name prefixes (same rule as check_species_refs.py)")
+    ap.add_argument("--kinds", help="ad hoc instead of --scope: encounter tables to rewrite, e.g. land_mons")
     ap.add_argument("--fallback", help="original species id for vanilla species the table does not cover")
     ap.add_argument("--party", default=PARTY, help="trainers.party to rewrite (default: the game's)")
     ap.add_argument("--wild", default=WILD, help="wild_encounters.json to rewrite (default: the game's)")
     ap.add_argument("--dry-run", action="store_true", help="report only; write nothing")
     args = ap.parse_args()
-    prefixes = [p for p in (args.maps or "").split(",") if p]
+    if args.scope and (args.maps or args.kinds):
+        ap.error("--scope already defines what to rewrite; drop --maps/--kinds")
+    if args.scope:
+        scope = migration_scope.get(GAME, [args.scope], args.scope_file)[0]
+        select_trainer = scope.trainers.__contains__
+        select_table = scope.has_wild
+    else:
+        prefixes = [p for p in (args.maps or "").split(",") if p]
+        kinds = {k for k in (args.kinds or "").split(",") if k}
+        trainer_maps = refs.trainer_maps(GAME)
+
+        def select_trainer(trainer):
+            return not prefixes or any(in_scope(mp, prefixes) for mp in trainer_maps.get(trainer, ()))
+
+        def select_table(where, kind):
+            return in_scope(where, prefixes) and (not kinds or kind in kinds)
 
     r = Replacer(args.table, args.fallback)
     if r.errors:
@@ -178,8 +195,8 @@ def main():
         sys.exit(1)
     party_in = read(args.party)
     wild_in = read(args.wild)
-    party_out = r.party(party_in, prefixes)
-    wild_out = r.wild(wild_in, prefixes, [k for k in (args.kinds or "").split(",") if k])
+    party_out = r.party(party_in, select_trainer)
+    wild_out = r.wild(wild_in, select_table)
 
     if r.missing:
         print("vanilla species in scope that the table does not cover (nothing written):")

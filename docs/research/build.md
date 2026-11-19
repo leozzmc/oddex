@@ -54,7 +54,7 @@ runner 把 RTC 固定成「從 2026-01-01 12:00 UTC（白天）開始、隨幀�
 ```bash
 cd game && . ../tools/env.sh && make check-oddex -j$(sysctl -n hw.ncpu)
 ```
-依序檢查產生檔是否過期、原版角色的引用（設定 `ODDEX_STRICT_MAPS` 後，指定路線有引用就失敗）、回歸腳本有沒有出現 crash screen，最後跟 `tools/headless/baselines/` 的基準截圖逐像素比對。
+依序檢查產生檔是否過期、原版角色的引用（`content/migration_scope.toml` 裡 `strict = true` 的範圍有引用就失敗）、回歸腳本有沒有出現 crash screen，最後跟 `tools/headless/baselines/` 的基準截圖逐像素比對。
 
 **基準截圖有放進 git。** 刻意改變畫面時（例如改對話、換圖），請在同一個 commit 裡更新基準：
 ```bash

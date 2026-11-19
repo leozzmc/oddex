@@ -3,9 +3,9 @@
 # still compile (their SPECIES_* constants exist), so leftovers only show up as vanilla
 # references in content or as debug-build crash screens at run time.
 #
+# Scopes marked `strict = true` in content/migration_scope.toml must have no vanilla references.
+#
 # Environment:
-#   ODDEX_STRICT_MAPS        comma-separated maps that must have no vanilla references
-#                            (empty: report counts only)
 #   ODDEX_REGRESSION_SCRIPTS space-separated names under tools/headless/scripts/
 #   ODDEX_SHOTS_BASELINE     dir with <script>/<shot>.png to compare pixel-exactly
 #                            (default tools/headless/baselines; set empty to skip)
@@ -23,12 +23,11 @@ fail=0
 echo "== generated species files are up to date"
 python3 "$ROOT/tools/oddex/gen_species.py" --check || fail=1
 
-echo "== vanilla species references"
-if [ -n "${ODDEX_STRICT_MAPS:-}" ]; then
-    python3 "$ROOT/tools/oddex/check_species_refs.py" --strict --summary --maps "$ODDEX_STRICT_MAPS" || fail=1
-else
-    python3 "$ROOT/tools/oddex/check_species_refs.py" --summary
-fi
+echo "== vanilla species references (all content, counts only)"
+python3 "$ROOT/tools/oddex/check_species_refs.py" --summary
+
+echo "== migrated scopes must be free of vanilla species (content/migration_scope.toml, strict = true)"
+python3 "$ROOT/tools/oddex/check_species_refs.py" --strict-scopes || fail=1
 
 echo "== map checks (new findings fail; accepted ones are in tools/oddex/check_maps_baseline.json)"
 python3 "$ROOT/tools/oddex/check_maps.py" || fail=1

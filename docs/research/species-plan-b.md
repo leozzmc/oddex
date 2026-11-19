@@ -198,12 +198,12 @@ python3 tools/oddex/gen_species.py --check    # 產生檔不是最新的就 exit
 ```bash
 cd game && . ../tools/env.sh
 make check-oddex TOOLCHAIN=$TOOLCHAIN -j$(sysctl -n hw.ncpu)        # 先建好 ROM,再跑下面三項
-make check-oddex ODDEX_STRICT_MAPS=LittlerootTown,Route101 ...        # 指定的路線不准有原版引用
+make check-oddex                                                      # strict 範圍不准有原版引用（content/migration_scope.toml）
 ```
 
 `tools/oddex/check_oddex.sh` 依序執行,任何一項失敗就 exit 1:
 1. `gen_species.py --check`:產生的檔案是最新的。
-2. `check_species_refs.py`:預設只回報數量;設定 `ODDEX_STRICT_MAPS` 後,改成 `--strict --maps`,指定路線有原版引用就失敗。第 4b 步完成後,把早期路線寫進 `oddex.mk` 的預設值,之後每遷移一段就加上去。
+2. `check_species_refs.py`:先回報全部數量,再用 `--strict-scopes` 檢查 `content/migration_scope.toml` 裡 `strict = true` 的範圍,有原版引用就失敗(取代原本的 `ODDEX_STRICT_MAPS`,Sonia 改)。第 4b 步完成後,把 `[early]` 設成 strict,之後每遷移一段就新增一個範圍。
 3. 用 headless runner 跑回歸腳本(預設 `to_littleroot to_starter`,第 2c 步之後加上 `to_petalburg`),**只要出現 crash screen 就失敗**。做法:`src/assertf.c` 的 `CrashScreen` 在 debug build 會多送一行 `ODDEX_CRASH_SCREEN assert: <檔案:行號: 訊息>` 到 mGBA 的除錯 log(release build 不會編進去),runner 本來就會把 ERROR 等級的 log 印到 stderr,腳本只要 grep 就能抓到。已驗證:把第 3 世代關掉,runner 印出 `ODDEX_CRASH_SCREEN assert: src/pokemon.c:6389: disabled species: 270`(開場的 Lotad)。
    - 選用:`ODDEX_SHOTS_BASELINE=<dir>` 會把 `<dir>/<腳本名>/*.png` 和這次的截圖逐像素比對。
 
