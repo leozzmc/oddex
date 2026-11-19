@@ -24,7 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import check_species_refs as refs  # noqa: E402
 import migration_scope  # noqa: E402
-from species_data import load_species, oddex_stages, vanilla_stages  # noqa: E402
+from species_data import load_species, oddex_stages, old_name_hint, renamed_ids, vanilla_stages  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(HERE))
 GAME = os.path.join(ROOT, "game")
@@ -70,6 +70,7 @@ class Replacer:
         self.vanilla, self.known, self.aliases = refs.load_species(GAME)
         originals = load_species()
         self.oddex_ids = {s["id"] for s in originals}
+        self.renamed = renamed_ids(originals)
         self.oddex_stage = oddex_stages(originals)
         self.vanilla_stage = vanilla_stages(GAME)
         self.errors = []
@@ -83,7 +84,8 @@ class Replacer:
             if self.aliases.get(const, const) not in self.vanilla:
                 self.errors.append(f"table key {key} is not a vanilla species")
             if value not in self.oddex_ids:
-                self.errors.append(f"table value {value} (for {key}) is not an id in content/species/*.toml")
+                self.errors.append(f"table value {value} (for {key}) is not an id in content/species/*.toml"
+                                   f"{old_name_hint(value, self.renamed)}")
                 continue
             vs = self.vanilla_stage.get(self.aliases.get(const, const)[len("SPECIES_"):])
             os_ = self.oddex_stage.get(value)
@@ -91,7 +93,8 @@ class Replacer:
                 self.errors.append(f"{key} is evolution stage {vs} but {value} is stage {os_} "
                                    f"(add {key} to stage_mismatch_ok if intended)")
         if self.fallback and self.fallback not in self.oddex_ids:
-            self.errors.append(f"--fallback {self.fallback} is not an id in content/species/*.toml")
+            self.errors.append(f"--fallback {self.fallback} is not an id in content/species/*.toml"
+                               f"{old_name_hint(self.fallback, self.renamed)}")
 
     def target(self, const, where):
         """Original species id for a vanilla SPECIES_ constant, or None to leave it unchanged."""
