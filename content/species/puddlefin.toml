@@ -1,0 +1,58 @@
+# Placeholder species for plan B step 3 (stats, moves and art are provisional).
+id = "PUDDLEFIN"
+name = "Puddlefin"
+category = "Static Fish"
+
+types = ["WATER", "ELECTRIC"]
+abilities = ["TORRENT", "NONE", "VOLT_ABSORB"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 55, atk = 50, def = 50, spa = 55, spd = 50, spe = 50 }   # total 310
+ev_yield = { spa = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["WATER_1", "FIELD"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "BLUE"
+cry = "NONE"
+
+[dex]
+height = 4
+weight = 76
+text = """
+It naps in rain puddles and hums with
+a faint buzz. Touching its fins during
+a storm makes your hair stand up for
+the rest of the day."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "TAIL_WHIP"], [3, "WATER_GUN"], [6, "THUNDER_SHOCK"], [9, "AQUA_JET"], [12, "THUNDER_WAVE"], [15, "BUBBLE_BEAM"], [18, "SPARK"], [21, "WATER_PULSE"], [24, "DISCHARGE"], [27, "SURF"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SURF", "SWAGGER", "THUNDERBOLT", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+evolutions = []
+
+[graphics]
+dir = "graphics/pokemon/oddex/puddlefin"   # drawn by tools/oddex/placeholder_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[graphics.placeholder]   # delete this table once real art is in [graphics] dir
+body = "quadruped"
+size = 0.78
+features = ["fins", "tail"]
+eyes = "round"
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["PUDDLEFIN"]

@@ -1,0 +1,58 @@
+# Placeholder species for plan B step 3 (stats, moves and art are provisional).
+id = "SHADEPUP"
+name = "Shadepup"
+category = "Shade Pup"
+
+types = ["DARK"]
+abilities = ["RUN_AWAY", "QUICK_FEET", "STRONG_JAW"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 35, atk = 55, def = 35, spa = 30, spd = 30, spe = 35 }   # total 220
+ev_yield = { atk = 1 }
+catch_rate = 255
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "BLACK"
+cry = "NONE"
+
+[dex]
+height = 5
+weight = 130
+text = """
+It hides in the shadow of tall grass and
+nips at the ankles of anyone who walks
+by. A pack of them can make a whole
+route feel strangely dark."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [4, "HOWL"], [7, "SAND_ATTACK"], [10, "BITE"], [13, "PURSUIT"], [16, "SNARL"], [19, "SUCKER_PUNCH"], [22, "CRUNCH"],
+]
+teachable = [
+    "ATTRACT", "CRUNCH", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNARL", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+evolutions = []
+
+[graphics]
+dir = "graphics/pokemon/oddex/shadepup"   # drawn by tools/oddex/placeholder_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "FAST"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[graphics.placeholder]   # delete this table once real art is in [graphics] dir
+body = "quadruped"
+size = 0.62
+features = ["ears", "tail"]
+eyes = "fierce"
+
+[design]
+habitat = ["Route101", "Route102", "Route103"]
+level_band = [2, 8]
+family = ["SHADEPUP"]
