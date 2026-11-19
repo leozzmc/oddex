@@ -68,7 +68,7 @@ c_files = []
 
 [dewford]
 description = "Devon Goods (Rusturf Tunnel), Route 104 rival, Mr. Briney to Dewford, Brawly, Granite Cave"
-strict = false
+strict = true
 # Checked with stage_reach.py from Rustboro and from Dewford (Briney's boat), without Surf, Cut,
 # Rock Smash or Strength. The Old Rod comes from the Dewford fisherman, so fishing is in scope on
 # the maps Briney connects (Dewford, Route 104, 106, 107); fishing_mons also holds the Good/Super
