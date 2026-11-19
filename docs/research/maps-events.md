@@ -54,9 +54,9 @@ data/map_events.s (.include events.inc) ─ 同上 ▶ map_events.o
 |---|---|---|---|
 | a | `data/text/birch_speech.inc` `gText_Birch_Welcome` | 開場白改成 oddex 原創文字（含「Welcome to the world of ODDEX!」） | 標題畫面 → NEW GAME，Birch 開口的第一段話 |
 | b | `data/maps/LittlerootTown/scripts.inc` | Boy NPC（位於 (14,17) 研究所旁，flag 為 `0`，一開始就會出現）的對話改掉；標籤 `LittlerootTown_Text_BirchSpendsDaysInLab` 改名為 `LittlerootTown_Text_OddexBoy`（只有這裡引用） | 走出家門 → 往南走到研究所右側找男孩對話 |
-| c | `map.json` + `scripts.inc` | 新增 NPC：`OBJ_EVENT_GFX_SCIENTIST_1`，位於 (9,12)，面朝下、不移動，腳本為 `LittlerootTown_EventScript_OddexGuide`；加在 object_events 最後（local id 9） | 走出家門後，廣場中央的科學家，對話內容是「...the new map event works!」 |
+| c | `map.json` + `scripts.inc` | 新增 NPC：`OBJ_EVENT_GFX_SCIENTIST_1`，位於 (10,11)，面朝下、不移動，腳本為 `LittlerootTown_EventScript_OddexGuide`；加在 object_events 最後（local id 9） | 走出家門後，廣場中央的科學家，對話內容是「...the new map event works!」 |
 
-(9,12) 是從 `map.bin` 解析 collision/elevation 後挑的格子：可行走、elevation 3、不在任何 coord trigger 上（(10–11,1–2)、(8–11,9)），也不會擋住玩家從家門往南、往北的路線。
+(10,11) 的 metatile 是 `1`（一般地面）、collision 0、elevation 3，不在任何 coord trigger 上（(10–11,1–2)、(8–11,9)），也不會擋住玩家從家門往南、往北的路線。原本放在 (9,12)：那一格雖然可以行走，但 metatile `0x20e` 是研究所屋頂的邊緣，上層圖層會把 NPC 蓋住，結果是能對話卻看不到人（見坑 #9）。
 
 ### 驗證（不需 arm-gcc）
 
@@ -80,7 +80,7 @@ ROM 內字串的驗證方式：`arm-none-eabi-nm pokeemerald.elf | grep <label>`
 1. 標題畫面請用 **START/A → NEW GAME**。**不要用 SELECT（Quickstart）**：`src/quickstart.c` 會直接呼叫 `CB2_SkipToNewGame`，跳過 Birch 開場，(a) 就看不到。
 2. (a)：第一個文字框應該出現 `Ah, there you are! The odd one!`，下一頁是 `Welcome to the world of ODDEX!`。
 3. 開場結束後，進入卡車 → 家 → 調整時鐘 → 出門（依照原版流程）。
-4. (c)：出門後，廣場 (9,12) 會有一位科學家。
+4. (c)：出門後，廣場 (10,11) 會有一位科學家。
 5. (b)：研究所右側 (14,17) 的男孩，對話內容是 `Did you hear? Something odd was…`。
 6. 捷徑：debug 版可以按住 R + START 開啟 overworld debug menu（`DEBUG_OVERWORLD_MENU`）來設定 flag/var 或傳送。
 
@@ -93,7 +93,30 @@ ROM 內字串的驗證方式：`arm-none-eabi-nm pokeemerald.elf | grep <label>`
 5. `mapjson map` 會讀取 `include/constants/map_groups.h`，必須先用 `make` 產生。另外 `make` 有些目標（例：`src/data/trainers.h`）需要 `arm-none-eabi-cpp`，在工具鏈裝好前會失敗。
 6. `preproc` 是依副檔名判斷模式，直接丟 `.inc` 會報 `unknown file extension`，要改成 `.s` 再處理。
 7. 腳本文字裡有寫死的角色名和屬性（例：`PetalburgCity_PokemonCenter_1F` 的初始角色屬性說明）。替換角色後要改用 `bufferspeciesname STR_VAR_1, SPECIES_X` 加 `{STR_VAR_1}`，讓名字跟著 species 資料走；屬性相剋的說明則需要手動更新。Mossprit（Grass/Rock）已經用這個方式修正。
-8. develop 首次匯入時，`game/.gitignore` 的 `tools/compresSmol/` 規則把上游 force-add 的原始碼略過了（已由 David 在 782c1ad2 修正）。
+9. **可行走不代表看得到**。挑 NPC 位置時，除了 collision 和 elevation，還要看 metatile：屋頂邊緣、樹頂這類格子的上層圖層畫在物件上方，NPC 會被蓋住。最可靠的做法是只放在跟已知空地相同 metatile 的格子上（未白鎮的一般地面是 `1`），**而且一定要用截圖確認**。這個問題只有實際截圖才抓得到，mapjson 和編譯都檢查不出來。
+10. develop 首次匯入時，`game/.gitignore` 的 `tools/compresSmol/` 規則把上游 force-add 的原始碼略過了（已由 David 在 782c1ad2 修正）。
+
+### 無頭截圖驗證（`oddex-run`）
+
+腳本放在 `tools/headless/scripts/`（請在要放 `out/` 的目錄下執行）：
+
+```bash
+. tools/env.sh
+$ODDEX_RUN game/pokeemerald.gba tools/headless/scripts/to_littleroot.txt    # 開機 → 未白鎮，存 out/littleroot.ss
+$ODDEX_RUN game/pokeemerald.gba tools/headless/scripts/littleroot_npcs.txt  # 讀 out/littleroot.ss → 科學家、男孩對話
+```
+
+- `to_littleroot.txt`：NEW GAME → Birch 開場（BOY，名字 "Odd"）→ 卡車 → 家裡（調時鐘、看電視）→ 站在家門外 (5,9)。共 15,405 幀，最後存 `out/littleroot.ss`。御三家／Route 101 的腳本可以直接 `load` 這個存檔接著做。
+- `littleroot_npcs.txt`：截圖 10–15（科學家、男孩）。
+
+腳本操作的坑：
+- **RTC 會讓結果無法重現**：遊戲會讀 RTC，模擬器預設用主機時間，所以從開機跑兩次，NPC 的隨機走動不一樣。同一個 savestate 重播則是確定性的。需要在 runner 把 RTC 固定（`core->rtc.override = RTC_FAKE_EPOCH`），已經把 patch 交給 David。`littleroot_npcs.txt` 裡男孩的路線是在固定 RTC（2026-01-01 12:00 UTC）下校準的。
+- **推進對話用 B，不要用 A**：B 也能推進和關閉 msgbox，但不會觸發新的互動；多按一次 A 會跟面前的 NPC 再對話一次。
+- 標題畫面按 START 之後，總共要按 79 次 A 才會到「What's your name?」。取名畫面：打完第一個字後，鍵盤切換到小寫有一段動畫，期間的方向鍵會被吃掉，要等大約 80 幀。
+- 調時鐘時「Is this the correct time?」的游標預設在 **NO**。要先按 A 讓選單出現，再按 UP、A；在時鐘畫面裡按 UP 會轉動指針。
+- 1F 門口 (8,8) 在 `VAR_LITTLEROOT_INTRO_STATE == 4` 時有 trigger，所以不調時鐘就出不了門。
+- 會隨機走動的 NPC：用暴力搜尋「等待幀數 × 靠近方向」，再挑可行範圍最寬的組合（男孩的有效等待區間是 0–56 幀）。
+- `save` 不會自動建立目錄（`shot` 會）。
 
 ## 6. Porymap／Poryscript 評估
 

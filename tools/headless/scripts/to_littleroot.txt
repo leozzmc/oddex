@@ -1,0 +1,70 @@
+# Boot -> NEW GAME -> Birch intro (BOY, name "Odd") -> truck -> house (set clock, TV)
+# -> standing outside the player's house in Littleroot with free control (player at (5,9)).
+# Ends with `save out/littleroot.ss` so follow-up scripts can `load` it (same ROM build only).
+# Do NOT press SELECT on the title screen (Quickstart skips the Birch intro).
+wait 700
+press START
+repeat 4 press A 2 50
+shot out/01_main_menu.png
+repeat 13 press A 2 50
+shot out/02_birch_welcome_1.png
+repeat 6 press A 2 50
+shot out/03_birch_welcome_2.png
+repeat 4 press A 2 50
+shot out/03_birch_welcome_3.png
+# 79 A presses after START in total reach "What's your name?"
+repeat 52 press A 2 50
+# "What's your name?" -> naming screen
+press A 2 80
+# Type "Odd": O = row 2 col 2 (uppercase page); wait for the switch to lowercase; d = row 0 col 3
+press DOWN 2 10
+press DOWN 2 10
+press RIGHT 2 10
+press RIGHT 2 10
+press A 2 80
+press UP 2 10
+press UP 2 10
+press RIGHT 2 10
+press A 2 20
+press A 2 30
+shot out/04_name_odd.png
+press START 2 20
+press A 2 90
+# "So it's Odd?" YES, rest of the intro
+repeat 36 press A 2 50
+# Truck: wait for the door to open, then walk out
+wait 800
+hold RIGHT 64
+wait 120
+repeat 45 press A 2 50
+repeat 8 press A 2 50
+wait 30
+# 1F -> stairs -> 2F
+hold UP 120
+wait 120
+# Wall clock at (5,1): step left twice, face up, open it
+hold LEFT 32
+wait 10
+press UP 3 20
+repeat 4 press A 2 50
+wait 60
+press A 2 60
+# Confirm the time; the YES/NO cursor starts on NO
+press A 2 60
+press UP 2 20
+press A 2 90
+wait 120
+repeat 21 press A 2 50
+wait 30
+# Downstairs: TV report event
+hold RIGHT 32
+hold UP 30
+wait 150
+repeat 37 press A 2 50
+wait 30
+# Out the front door
+hold RIGHT 64
+hold DOWN 64
+wait 180
+shot out/05_littleroot.png
+save out/littleroot.ss
