@@ -1,0 +1,54 @@
+# The Mandalumb line (see docs/research/mask-designs.md): a mandala that grows from a simple circle to a full
+# mandala; layout only, never a deity. Stats and moves are provisional.
+
+id = "MANDALOKA"
+name = "Mandaloka"
+category = "Mandala"
+
+types = ["GROUND", "FIRE"]
+abilities = ["OWN_TEMPO", "NONE", "SOUNDPROOF"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 105, atk = 90, def = 90, spa = 95, spd = 90, spe = 70 }   # total 540
+ev_yield = { spa = 3 }
+catch_rate = 45
+exp_yield = 230
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["AMORPHOUS"]
+growth_rate = "FAST"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 16
+weight = 860
+text = """
+The full mandala stands upright inside
+a ring of fire that keeps out anything
+impure. When it is done it sweeps its
+own pattern away and begins again."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "POUND"], [1, "GROWL"], [1, "SAND_ATTACK"], [1, "EMBER"], [8, "RAPID_SPIN"], [12, "MUD_SHOT"], [16, "ROUND"], [20, "BULLDOZE"], [26, "HYPER_VOICE"], [32, "EARTH_POWER"], [38, "FIRE_SPIN"], [44, "LAVA_PLUME"], [50, "BOOMBURST"],
+]
+teachable = [
+    "ATTRACT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "FIRE_BLAST", "FLAMETHROWER", "SANDSTORM", "SUNNY_DAY", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/mandaloka"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [38, 60]
+family = ["MANDALUMB", "MANDARING", "MANDALOKA"]

@@ -17,7 +17,7 @@ egg_groups = ["AMORPHOUS"]
 growth_rate = "FAST"
 body_color = "RED"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 20, into = "MANDARING" }]   # [{ method, param, into }]
 
 [dex]
 height = 3
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["PetalburgWoods", "Route116"]
 level_band = [5, 10]
-family = ["MANDALUMB"]
+family = ["MANDALUMB", "MANDARING", "MANDALOKA"]

@@ -1189,35 +1189,35 @@ const struct Decoration gDecorations[] =
         .icon = {NULL, NULL},
     },
 
-    [DECOR_PICHU_DOLL] =
+    [DECOR_KYOKON_DOLL] =
     {
-        .id = DECOR_PICHU_DOLL,
-        .name = _("PICHU DOLL"),
+        .id = DECOR_KYOKON_DOLL,
+        .name = _("KYOKON DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A PICHU doll.\n"
+            "A KYOKON doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_PICHU_DOLL,
+        .tiles = DecorGfx_KYOKON_DOLL,
         .icon = {NULL, NULL},
     },
 
-    [DECOR_PIKACHU_DOLL] =
+    [DECOR_INARIZUMA_DOLL] =
     {
-        .id = DECOR_PIKACHU_DOLL,
-        .name = _("PIKACHU DOLL"),
+        .id = DECOR_INARIZUMA_DOLL,
+        .name = _("INARIZUMA DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A PIKACHU doll.\n"
+            "A INARIZUMA doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_PIKACHU_DOLL,
+        .tiles = DecorGfx_INARIZUMA_DOLL,
         .icon = {NULL, NULL},
     },
 
@@ -1381,51 +1381,51 @@ const struct Decoration gDecorations[] =
         .icon = {NULL, NULL},
     },
 
-    [DECOR_TREECKO_DOLL] =
+    [DECOR_GRINPACK_DOLL] =
     {
-        .id = DECOR_TREECKO_DOLL,
-        .name = _("TREECKO DOLL"),
+        .id = DECOR_GRINPACK_DOLL,
+        .name = _("GRINPACK DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A TREECKO doll.\n"
+            "A GRINPACK doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_TREECKO_DOLL,
+        .tiles = DecorGfx_GRINPACK_DOLL,
         .icon = {NULL, NULL},
     },
 
-    [DECOR_TORCHIC_DOLL] =
+    [DECOR_TREKKEYE_DOLL] =
     {
-        .id = DECOR_TORCHIC_DOLL,
-        .name = _("TORCHIC DOLL"),
+        .id = DECOR_TREKKEYE_DOLL,
+        .name = _("TREKKEYE DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A TORCHIC doll.\n"
+            "A TREKKEYE doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_TORCHIC_DOLL,
+        .tiles = DecorGfx_TREKKEYE_DOLL,
         .icon = {NULL, NULL},
     },
 
-    [DECOR_MUDKIP_DOLL] =
+    [DECOR_RIDGECAP_DOLL] =
     {
-        .id = DECOR_MUDKIP_DOLL,
-        .name = _("MUDKIP DOLL"),
+        .id = DECOR_RIDGECAP_DOLL,
+        .name = _("RIDGECAP DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A MUDKIP doll.\n"
+            "A RIDGECAP doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_MUDKIP_DOLL,
+        .tiles = DecorGfx_RIDGECAP_DOLL,
         .icon = {NULL, NULL},
     },
 
@@ -1509,35 +1509,35 @@ const struct Decoration gDecorations[] =
         .icon = {NULL, NULL},
     },
 
-    [DECOR_SKITTY_DOLL] =
+    [DECOR_MANDALUMB_DOLL] =
     {
-        .id = DECOR_SKITTY_DOLL,
-        .name = _("SKITTY DOLL"),
+        .id = DECOR_MANDALUMB_DOLL,
+        .name = _("MANDALUMB DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A SKITTY doll.\n"
+            "A MANDALUMB doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_SKITTY_DOLL,
+        .tiles = DecorGfx_MANDALUMB_DOLL,
         .icon = {NULL, NULL},
     },
 
-    [DECOR_SWABLU_DOLL] =
+    [DECOR_UTOGHAST_DOLL] =
     {
-        .id = DECOR_SWABLU_DOLL,
-        .name = _("SWABLU DOLL"),
+        .id = DECOR_UTOGHAST_DOLL,
+        .name = _("UTOGHAST DOLL"),
         .permission = DECORPERM_SPRITE,
         .shape = DECORSHAPE_1x1,
         .category = DECORCAT_DOLL,
         .price = 3000,
         .description = COMPOUND_STRING(
-            "A SWABLU doll.\n"
+            "A UTOGHAST doll.\n"
             "Place it on a mat\n"
             "or a desk."),
-        .tiles = DecorGfx_SWABLU_DOLL,
+        .tiles = DecorGfx_UTOGHAST_DOLL,
         .icon = {NULL, NULL},
     },
 

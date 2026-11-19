@@ -1682,6 +1682,7 @@
         .levelUpLearnset = sMandalumbLevelUpLearnset,
         .teachableLearnset = sMandalumbTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 20, SPECIES_MANDARING}),
     },
 
     [SPECIES_TSUKUYUME] =
@@ -1962,4 +1963,145 @@
         .levelUpLearnset = sKomorimenLevelUpLearnset,
         .teachableLearnset = sKomorimenTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_MANDALOKA] =
+    {
+        .baseHP        = 105,
+        .baseAttack    = 90,
+        .baseDefense   = 90,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 95,
+        .baseSpDefense = 90,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_FIRE),
+        .catchRate = 45,
+        .expYield = 230,
+        .evYield_SpAttack = 3,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
+        .abilities = { ABILITY_OWN_TEMPO, ABILITY_NONE, ABILITY_SOUNDPROOF },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Mandaloka"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_MANDALOKA,
+        .categoryName = _("Mandala"),
+        .height = 16,
+        .weight = 860,
+        .description = COMPOUND_STRING(
+            "The full mandala stands upright inside\n"
+            "a ring of fire that keeps out anything\n"
+            "impure. When it is done it sweeps its\n"
+            "own pattern away and begins again."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Mandaloka,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Mandaloka,
+        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Mandaloka,
+        .shinyPalette = gMonShinyPalette_Mandaloka,
+        .iconSprite = gMonIcon_Mandaloka,
+        .iconPalIndex = 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Mandaloka)
+        OVERWORLD(
+            sPicTable_Mandaloka,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Mandaloka,
+            gShinyOverworldPalette_Mandaloka
+        )
+        .levelUpLearnset = sMandalokaLevelUpLearnset,
+        .teachableLearnset = sMandalokaTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_MANDARING] =
+    {
+        .baseHP        = 80,
+        .baseAttack    = 65,
+        .baseDefense   = 70,
+        .baseSpeed     = 55,
+        .baseSpAttack  = 65,
+        .baseSpDefense = 65,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 120,
+        .expYield = 140,
+        .evYield_HP = 2,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
+        .abilities = { ABILITY_OWN_TEMPO, ABILITY_NONE, ABILITY_SOUNDPROOF },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Mandaring"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_MANDARING,
+        .categoryName = _("Mandala"),
+        .height = 8,
+        .weight = 180,
+        .description = COMPOUND_STRING(
+            "Its pattern has grown a second ring of\n"
+            "petals and a circle of gold beads. It\n"
+            "hums as it turns, and the sand under\n"
+            "it settles into the same pattern."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Mandaring,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_H_JUMPS,
+        .backPic = gMonBackPic_Mandaring,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Mandaring,
+        .shinyPalette = gMonShinyPalette_Mandaring,
+        .iconSprite = gMonIcon_Mandaring,
+        .iconPalIndex = 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Mandaring)
+        OVERWORLD(
+            sPicTable_Mandaring,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Mandaring,
+            gShinyOverworldPalette_Mandaring
+        )
+        .levelUpLearnset = sMandaringLevelUpLearnset,
+        .teachableLearnset = sMandaringTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 38, SPECIES_MANDALOKA}),
     },

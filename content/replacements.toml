@@ -53,6 +53,14 @@ MARILL = "MAGATIDE"
 SKITTY = "MANDALUMB"
 SLAKOTH = "MANDALUMB"
 WHISMUR = "MANDALUMB"
+# Their later stages follow the Mandalumb line (circle -> ring -> full mandala), stage for stage:
+# all three vanilla lines are normal types that grow louder or bigger, and one line keeps the
+# encounter tables from tripling the roster. Skitty has only two stages, so Delcatty is stage 2.
+DELCATTY = "MANDARING"
+VIGOROTH = "MANDARING"
+LOUDRED = "MANDARING"
+SLAKING = "MANDALOKA"
+EXPLOUD = "MANDALOKA"
 PIKACHU = "INARIZUMA"
 # Dewford segment (plan-b-references.md section 7.2). The former starters, kept after the trio took
 # over (mask-designs.md, "原御三家的新位置"): Shishiblaze for the fighting gym's Makuhita and the
