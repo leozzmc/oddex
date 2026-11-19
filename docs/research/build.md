@@ -62,6 +62,22 @@ cp game/build/oddex-check/<script>/**/*.png tools/headless/baselines/<script>/
 ```
 更新前先看過新截圖，確認變化是預期中的。合併時，基準截圖的差異就是畫面變更的紀錄。
 
+## 用 REA 分析編譯產物
+分析「實際編進 ROM 的東西」時，優先用 REA（`reverse-engineer-anything` skill，後端是 Ghidra 12.1.4），不要手動 `nm` 加上逐位元組解碼。原始碼本身的問題，還是直接讀原始碼。
+
+完整的 `pokeemerald.elf`（34 MB，大部分是 `.rodata` 裡的圖像）會讓 REA 的 Ghidra 啟動失敗（`GhidraLaunchError`）。請先產生只保留程式碼和符號的版本：
+```bash
+tools/oddex/rea_code_elf.sh    # → game/build/pokeemerald.code.elf（約 7 MB）
+```
+第一次分析約 2 分鐘，之後在同一個 session 裡查詢很快。可以用 `close_binary` 的 `snapshot_path` 存快照，下次 `open_binary` 帶 `snapshot_path` 就能重用分析結果。
+
+適合的用途：
+- 反編譯確認某次修改實際編出來的邏輯（例如代號最後解析成哪個 species 常數）。
+- 比對兩次 build 的同一個函式（`compare_functions`），確認合併只改到預期的地方。
+- crash screen（`ODDEX_CRASH_SCREEN`）出現時，追呼叫路徑（`procedure_callers`、`get_call_graph`）。
+
+限制：程式碼版的 ELF 不含 `.rodata`，所以資料表（例如 `gSpeciesInfo`、文字）要用完整 ELF 的符號位址去讀 `pokeemerald.gba`；反編譯結果裡指向 `0x08xxxxxx` 的常數位址，就是這些資料。
+
 ## 已知問題
 - mGBA 0.10.5 的 Qt 版沒有命令列腳本參數，所以另外寫了這個 runner。
 - 沒有載入 .sav，每次都是全新遊戲。
