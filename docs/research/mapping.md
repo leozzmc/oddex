@@ -80,7 +80,7 @@
 
 | 部分 | 內容 | 工作量（Agent） | 何時做 | 理由 |
 |---|---|---|---|---|
-| A. 預覽＋檢查 | 讀 `metatiles.bin`（每個 metatile 2 層 × 4 個 tile，含 palette／翻轉）、`tiles.png`、`palettes/*.pal`，把整張地圖畫成 PNG；疊上 collision／elevation、物件、warp、trigger、connection 的標記。同時做靜態檢查：可達性（`plan.py` 已經有 BFS／Dijkstra）、大小上限、connection 是否雙向對稱、warp 目的地是否存在、物件數量、**物件是否放在上層圖層會蓋住的格子**、交界處是否用了對方 tileset 沒有的 metatile | 約 1 天 | **現在就可以做** | 現有地圖也用得到：放 NPC、審 `map.json` 的修改、4b 之後的事件修改。未白鎮那個被屋頂蓋住的 NPC，用這個工具可以在編譯前就抓到 |
+| A. 預覽＋檢查 | 讀 `metatiles.bin`（每個 metatile 2 層 × 4 個 tile，含 palette／翻轉）、`tiles.png`、`palettes/*.pal`，把整張地圖畫成 PNG；疊上 collision／elevation、物件、warp、trigger、connection 的標記。同時做靜態檢查：可達性（`plan.py` 已經有 BFS／Dijkstra）、大小上限、connection 是否雙向對稱、warp 目的地是否存在、物件數量、**物件是否放在上層圖層會蓋住的格子**、交界處是否用了對方 tileset 沒有的 metatile | 約 1 天 | **現在就可以做** | 現有地圖也用得到：放 NPC、審 `map.json` 的修改、4b 之後的事件修改。未白鎮那個被屋頂蓋住的 NPC，用這個工具可以在編譯前就抓到。**狀態：已完成主要部分**，見 `tools/oddex/check_maps.py`（用法寫在 `maps-events.md`「地圖檢查與預覽」）。可達性和交界 tileset 檢查還沒做 |
 | B. graybox 產生器 | 文字網格 → `map.bin`／`border.bin`／`layouts.json`／`map.json`／`map_groups.json`（region 設成 `REGION_HOENN`、connections 雙向寫入）。每個符號對應一個「功能正確」的 metatile（草地、草叢、樹、水、路、牆、單向跳台、門），collision、elevation、behavior 都正確，但不處理邊緣美觀 | 約 1 天（重用 A 的讀取和檢查） | 世界設計（§5 第 1 步）完成後 | 路線還沒定的時候，做出來也沒有東西可畫 |
 | C. 自動接邊 | 樹叢 2×2 拼法、水岸、山壁、跳台兩端等「看起來對」的 metatile 選擇 | 2–4 天，而且每個 tileset 都要個別校準 | **建議不做**，交給使用者用 Porymap 修飾，或等原創 tileset（Porytiles）定案後再決定 | 成本高、跟特定 tileset 綁死；graybox 的目的本來就只是驗證路線 |
 

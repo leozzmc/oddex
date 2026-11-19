@@ -30,6 +30,9 @@ else
     python3 "$ROOT/tools/oddex/check_species_refs.py" --summary
 fi
 
+echo "== map checks (new findings fail; accepted ones are in tools/oddex/check_maps_baseline.json)"
+python3 "$ROOT/tools/oddex/check_maps.py" || fail=1
+
 echo "== headless regression scripts (any crash screen fails)"
 if [ ! -x "$RUN" ]; then
     echo "oddex-run not found at $RUN; build it with tools/headless/build.sh"
