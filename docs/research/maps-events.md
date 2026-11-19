@@ -141,6 +141,25 @@ $ODDEX_RUN game/pokeemerald.gba tools/headless/scripts/littleroot_npcs.txt  # �
 - 劇情觸發：Oldale 南邊出口 (8–10,19) 的勁敵、未白鎮 (8–11,9) 媽媽給跑步鞋，都會開對話框擋住移動；autopilot 判定「沒移動」後用 B 推進。
 - 讀 savestate 再繼續跑，跟一路連續跑的結果是一樣的（實測 600 幀後 RAM 完全相同，只有音效通道狀態和存檔時間不同）。組合腳本時如果結果跟分段不同，一定是**片段之間漏了指令**：這次就是漏了兩個 `wait 30`，亂數每幀都會前進，所以少 30 幀就讓後面所有遭遇都不同。
 
+### 地圖檢查與預覽：`tools/oddex/check_maps.py`
+
+只讀，不需要編譯 ROM，全部 520 張 Emerald 地圖約 0.3 秒跑完。已接進 `make check-oddex`，另外也有 `make check-maps [MAPS=LittlerootTown,Route101]`。
+
+```bash
+python3 tools/oddex/check_maps.py                             # 檢查全部；有新發現就 exit 1
+python3 tools/oddex/check_maps.py --maps LittlerootTown       # 只檢查名稱以此開頭的地圖
+python3 tools/oddex/check_maps.py --render LittlerootTown     # → game/build/maps/LittlerootTown.png
+python3 tools/oddex/check_maps.py --update-baseline           # 逐一確認新發現之後，才把它們接受進基準
+```
+
+檢查項目：地圖大小上限 `(w+15)×(h+14) ≤ 10240`、connections 雙向對稱且 offset 互為相反數、warp 目的地地圖存在且 `dest_warp_id` 在範圍內、object events ≤ 64、事件座標在地圖範圍內、`region` 是 `REGION_HOENN`（否則 mapjson 會靜默排除）、**物件被上層圖層蓋住**。
+
+遮擋的判斷方式：物件所在格子的 metatile 是 NORMAL 或 SPLIT 類型（上層畫在 BG1），而且上層有 ≥ 50% 的像素不透明；同時物件的 elevation 對應到 sprite 優先度 2（`sElevationToPriority`，elevation 4/6/8/10/12 是 1，會畫在上層上面）。原版本身就有刻意被部分遮住的物件（陽傘下、樹下、橋墩旁，共 39 個），另外還有 10 個座標在地圖外的 warp／看板、2 張 Kanto 地圖，這 51 個既有發現都記在 `tools/oddex/check_maps_baseline.json`，**只有新的發現會失敗**。已驗證：把科學家放回 (9,12) 會回報「94% of the tile is drawn over sprites」，把 connection 的 offset 改錯也會被抓到。
+
+預覽圖：metatile 依 tileset 的 `tiles.png`、`palettes/*.pal`、`metatiles.bin` 渲染（下層 → 上層，索引 0 透明，底色是調色盤 0 的第 0 色），再疊上標記：淡紅＝collision、綠圈＝物件（數字是 local id 順序；紅圈＝被上層蓋住）、紫框＝warp（數字是 warp 索引）、橘框＝coord trigger、藍點＝bg event。顏色是調色盤的原色，沒有套用時段的色調。
+
+還沒做：可達性檢查（`tools/headless/authoring/plan.py` 已經有跨地圖找路，可以接上）、交界處 tileset 相容性檢查。
+
 ## 6. Porymap／Poryscript 評估
 
 ### Porymap（地圖 GUI 編輯器，huderlem/porymap）

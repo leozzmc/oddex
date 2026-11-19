@@ -33,3 +33,8 @@ export ODDEX_STRICT_MAPS
 .PHONY: check-oddex
 check-oddex: rom
 	@bash ../tools/oddex/check_oddex.sh
+
+# Static map checks only (no ROM build needed); `make check-maps MAPS=LittlerootTown,Route101`.
+.PHONY: check-maps
+check-maps:
+	@python3 ../tools/oddex/check_maps.py $(if $(MAPS),--maps $(MAPS))
