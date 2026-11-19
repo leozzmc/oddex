@@ -4,9 +4,9 @@
 
 // Story/gameplay roles. Code, scripts, trainers.party and wild_encounters.json refer to
 // these instead of a concrete species, so recasting a role is a one-line content change.
-#define SPECIES_ODDEX_STARTER_GRASS            SPECIES_OKINOIR
-#define SPECIES_ODDEX_STARTER_FIRE             SPECIES_SHISHIBLAZE
-#define SPECIES_ODDEX_STARTER_WATER            SPECIES_KAMORAI
+#define SPECIES_ODDEX_STARTER_GRASS            SPECIES_GRINPACK
+#define SPECIES_ODDEX_STARTER_FIRE             SPECIES_TREKKEYE
+#define SPECIES_ODDEX_STARTER_WATER            SPECIES_RIDGECAP
 #define SPECIES_ODDEX_INTRO_MON                SPECIES_SHOJOBOB
 #define SPECIES_ODDEX_RESCUE_WILD              SPECIES_KYOKON
 #define SPECIES_ODDEX_TUTORIAL_CATCH           SPECIES_OMOTELLE

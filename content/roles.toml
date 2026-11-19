@@ -7,9 +7,9 @@
 # replaced in content/replacements.toml (vanilla name in the comment).
 
 # Route 101 starter choice; also the Route 103 rival and Petalburg PC type talk.
-STARTER_GRASS = "OKINOIR"       # Treecko
-STARTER_FIRE = "SHISHIBLAZE"    # Torchic
-STARTER_WATER = "KAMORAI"       # Mudkip
+STARTER_GRASS = "GRINPACK"      # Treecko (the trio, docs/research/friends-designs.md)
+STARTER_FIRE = "TREKKEYE"       # Torchic
+STARTER_WATER = "RIDGECAP"      # Mudkip
 
 # Pokemon Birch shows during the new-game intro (src/main_menu.c).
 INTRO_MON = "SHOJOBOB"          # Lotad

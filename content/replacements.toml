@@ -15,9 +15,9 @@ stage_mismatch_ok = []
 
 [replace]
 # Starters (also STARTER_* in roles.toml, rival teams on Route 103).
-TREECKO = "OKINOIR"
-TORCHIC = "SHISHIBLAZE"
-MUDKIP = "KAMORAI"
+TREECKO = "GRINPACK"
+TORCHIC = "TREKKEYE"
+MUDKIP = "RIDGECAP"
 # Early wild (Routes 101-103) and Route 102 trainers.
 POOCHYENA = "SHACHOUND"
 ZIGZAGOON = "KYOKON"

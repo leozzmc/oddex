@@ -52,6 +52,6 @@
 - 這樣 `to_starter` 的招式順序不用改。
 
 ## 在遊戲中的位置
-- 風格核准後,`roles.toml` 的 `STARTER_GRASS/FIRE/WATER` 才改成指向 GRINPACK、TREKKEYE、RIDGECAP;`replacements.toml` 裡的 TREECKO、TORCHIC、MUDKIP 也一起改。`regional_dex.toml` 要把三隻移到最前面。
-- 這一步要和 Sonia 協調,重錄 `to_starter`、`to_petalburg` 的基準截圖。
+- 2026-11-20 已經接手御三家:`roles.toml` 的 `STARTER_GRASS/FIRE/WATER` 改成 GRINPACK、TREKKEYE、RIDGECAP;`replacements.toml` 的 TREECKO、TORCHIC、MUDKIP 也一起改;`regional_dex.toml` 把三隻移到最前面(地區圖鑑 No.1~3,原版世代關掉之後才會從 1 開始)。
+- `to_starter`、`to_petalburg`、`to_rustboro` 的基準截圖,以及 Petalburg 寶可夢中心的屬性說明,由 Sonia 重錄和改寫。
 - 目前只有一個階段;要不要做進化線,之後再問使用者。
