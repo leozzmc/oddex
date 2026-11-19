@@ -90,6 +90,10 @@ def step(name, x, y, d):
     return other, 0, ny - off
 
 
+# (map, x, y) tiles found blocked at authoring time, e.g. a trainer who walked over after a battle.
+EXTRA_BLOCKED = set()
+
+
 def plan(start, goal, grass=False, avoid_sight=False, want_steps=False):
     sights = {}
     prev = {start: None}
@@ -109,7 +113,7 @@ def plan(start, goal, grass=False, avoid_sight=False, want_steps=False):
                 continue
             nn, nx, ny = nxt
             m = load(nn)
-            if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"]:
+            if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"] or (nn, nx, ny) in EXTRA_BLOCKED:
                 continue
             col, nel, beh = cell(m, nx, ny)
             if beh in JUMP:

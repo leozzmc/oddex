@@ -2,7 +2,8 @@
 
 usage: where.py STATE.ss [...]   (symbols come from game/pokeemerald.elf; build first)
 """
-import glob, json, os, struct, subprocess, sys, zlib
+import glob, json, os, re, struct, subprocess, sys, zlib
+from functools import lru_cache
 
 GAME = os.path.join(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..")), "game")
 NM = os.path.join(os.environ.get("ODDEX_TOOLCHAIN", os.path.expanduser("~/oddex-toolchain")), "arm-none-eabi/bin/arm-none-eabi-nm")
@@ -49,6 +50,28 @@ def map_names():
     return names
 
 
+SUBSTRUCT_SLOT_1 = [1, 1, 2, 3, 2, 3, 0, 0, 0, 0, 0, 0, 2, 3, 1, 1, 3, 2, 2, 3, 1, 1, 3, 2]  # sSubstructOffsets[1]
+SUBSTRUCT_BYTES = 12
+
+
+def lead_moves(st, syms):
+    """Decrypt the lead party Pokemon's moves and PP (src/pokemon.c EncryptBoxMon/GetSubstruct)."""
+    base = syms["gParties"]
+    personality, ot_id = read(st, base, "<II")
+    raw = [w ^ personality ^ ot_id for w in read(st, base + 32, "<12I")]
+    sub = struct.pack("<12I", *raw)[SUBSTRUCT_BYTES * SUBSTRUCT_SLOT_1[personality % 24]:][:SUBSTRUCT_BYTES]
+    words = struct.unpack_from("<4H", sub)
+    moves = [w & 0x7FF for w in words]
+    pp = [b & 0x7F for b in sub[8:12]]
+    return moves, pp
+
+
+@lru_cache(None)
+def move_names():
+    text = open(os.path.join(GAME, "include/constants/moves.h"), encoding="utf-8").read()
+    return {int(v): k[len("MOVE_"):] for k, v in re.findall(r"\b(MOVE_[A-Z0-9_]+)\s*=\s*(\d+)\s*,", text)}
+
+
 S = syms()
 names = map_names()
 for path in sys.argv[1:]:
@@ -61,4 +84,6 @@ for path in sys.argv[1:]:
     p = S["gParties"] + 80
     lvl = read(st, p + 4, "<B")[0]
     hp, mhp = read(st, p + 6, "<HH")
-    print(f"{path}: {names.get((grp, num), (grp, num))} ({x},{y}) cb2={cb[1]} lead=Lv{lvl} {hp}/{mhp}")
+    moves, pp = lead_moves(st, S)
+    mv = " ".join(f"{move_names().get(m, m)}:{p}" for m, p in zip(moves, pp) if m)
+    print(f"{path}: {names.get((grp, num), (grp, num))} ({x},{y}) cb2={cb[1]} lead=Lv{lvl} {hp}/{mhp} [{mv}]")

@@ -222,3 +222,83 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 1、2a、2c、3 彼此獨立，可以同時進行（第 0 步已決定，第 3 步用佔位圖就能開始）；2b 要等 2c 錄好基準截圖再改，才能證明改完遊戲內容不變。
 
 **注意：「先無聲」不代表 `playmoncry` 可以不改。** `playmoncry` → `GetCryIdBySpecies` → `SanitizeSpeciesId`（`src/pokemon.c:6388`）。在 debug build 裡，播放已停用 species 的叫聲**一樣會跳出 `disabled species` 的 assert**（release build 會靜默變成 `SPECIES_NONE`）。所以腳本裡原版角色的 `playmoncry`（Emerald 共 71 處）還是要在第 6 步依路線改成原創角色或代號；原創角色本身的叫聲是 `CRY_NONE`，沒有問題。早期路線（到 Petalburg）沒有 `playmoncry`，所以不影響第 5 步的驗收。地圖上寶可夢造型的物件，依決策先換成原創角色的佔位 overworld 圖。
+
+## 6. 第 6 步第一段的事前準備：Petalburg → Route 104 → Petalburg Woods → Rustboro（到 Roxanne）
+
+### 6.1 範圍：`[rustboro]`（`content/migration_scope.toml`，`strict = false`）
+
+- **野生**：Route 104、Petalburg Woods、Route 116 的 `land_mons`。Route 104 的水上和釣魚要衝浪或釣竿（舊釣竿在 Dewford），不在範圍內。Route 116 在拿第一個徽章前就能走，而且 `to_rustboro` 在那裡練等級（見 §6.4），所以納入範圍。
+- **訓練家**：以「陸路可達性」確認（從 Petalburg 出發，可以跨 connection 和 warp，但不能衝浪、居合斬、碎岩、怪力；可砍的樹和可碎的岩石都當成障礙）：
+  - Route 104：Haley、Ivan、Gina & Mia、Winston、Cindy、Billy、Darian（全部）。
+  - Petalburg Woods：Lyle、James，以及 Devon 研究員事件中的 Aqua 手下（`TRAINER_GRUNT_PETALBURG_WOODS`）。
+  - Route 116：Joey、Jose、Clark、Karen、Johnson、Devan。Janice、Jerry、Sarah、Dawson 要居合斬，不在範圍內。
+  - Rustboro 道館：Josh、Tommy、Marc、Roxanne。
+  - Route 104 的勁敵戰（`TRAINER_{MAY,BRENDAN}_RUSTBORO_*`）在 Devon 貨物事件之後，屬於下一段。
+- **地圖**：`Route104*`、`PetalburgWoods`、`RustboroCity*`、`Route116`。例外：Devon 2F 用化石復活 Lileep／Anorith，化石要到 Route 111 的沙漠才拿得到，排除。
+
+### 6.2 新的原創角色需求（給使用者：下一批面具要設計幾隻）
+
+扣掉早期已經涵蓋的位置（Poochyena、Zigzagoon、Wurmple、Wingull、Lotad、Seedot、Ralts→Kirlia→Gardevoir/Gallade、Shroomish、Taillow、御三家），這一段還有 **12 個原版位置**沒有對應的原創角色（由 `check_species_refs.py --scope rustboro` 的訓練家和野生遭遇統計）：
+
+| 原版 | 屬性 | 進化階段 | 訓練家隊伍 | 野生格數 | 出現在 | 說明 |
+|---|---|---|---|---|---|---|
+| Geodude | 岩石／地面 | 1 | 10 | 0 | Rustboro 道館（Josh、Marc、Tommy、Roxanne）、Route 116 的 Clark、Devan | **道館主題，必要** |
+| Nosepass | 岩石 | 1 | 1 | 0 | Roxanne 的王牌 | 道館館主的招牌角色 |
+| Nincada | 蟲／地面 | 1 | 3 | 2 | Woods 的 James、Route 116 的 Jose、Route 116 野生 | |
+| Magikarp | 水 | 1 | 4 | 0 | Route 104 的釣魚人 Ivan、Darian | 只出現在訓練家隊伍 |
+| Marill | 水／妖精 | 2（Azurill 是第 1 階段） | 0 | 2 | Route 104 野生 | 可以對到第 1 階段的原創角色，並列進 `stage_mismatch_ok` |
+| Skitty | 一般 | 1 | 0 | 2 | Route 116 野生（也是 Rustboro 民宅 NPC 的寵物，見 §6.3） | |
+| Slakoth | 一般 | 1 | 0 | 2 | Petalburg Woods 野生 | |
+| Whismur | 一般 | 1 | 0 | 1 | Route 116 野生 | |
+| Machop | 格鬥 | 1 | 1 | 0 | Route 116 的 Joey | |
+| Abra | 超能力 | 1 | 0 | 1 | Route 116 野生 | |
+| Silcoon | 蟲 | 2 | 0 | 1 | Petalburg Woods 野生 | Wurmple（早期的 Sproutworm）的第 2 階段 |
+| Cascoon | 蟲 | 2 | 0 | 1 | Petalburg Woods 野生 | 同上，分支進化的另一邊 |
+
+另外，**Pikachu（電）**不在訓練家和野生遭遇裡，但它是 Rustboro 民宅 NPC 的寵物（叫聲、文字、造型都有，見 §6.3），所以也需要一個角色。
+
+**需要的數量**：一對一的話是 13 隻（上表 12 隻＋Pikachu）。替換表允許多對一，合併同一種角色後最少大約 **8 隻**：
+- 一般：Skitty、Whismur、Slakoth 合成 1–2 隻。
+- 水：Magikarp、Marill 合成 1 隻。
+- 蟲繭：Silcoon、Cascoon 合成 1 隻，作為 Sproutworm 的第 2 階段。
+- 岩石：Geodude、Nosepass 各 1 隻，因為道館要有代表性。
+- Nincada、Machop、Abra、Pikachu：各 1 隻，或依面具設計併進現有的角色線（例如 Abra 可以併進小面那條超能力線，前提是屬性對得上）。
+
+這是設計上的選擇，請使用者決定。
+
+### 6.3 這段路線要逐處處理的腳本、文字、物件造型（`--scope rustboro`，訓練家和野生以外）
+
+| 類別 | 位置 | 內容 | 處理方式 |
+|---|---|---|---|
+| `playmoncry` | `Route104_MrBrineysHouse/scripts.inc:91` | Mr. Briney 的 Wingull（Peeko）叫聲 | 改成 Wingull 的替代角色（Gullwisp），或新增一個代號 |
+| `playmoncry` | `RustboroCity_Flat2_1F/scripts.inc:12` | NPC 的 Skitty 叫聲 | 改成 Skitty 的替代角色 |
+| `playmoncry` | `RustboroCity_House3/scripts.inc:17` | NPC 的 Pikachu 叫聲 | 改成 Pikachu 的替代角色 |
+| 文字 | `PetalburgWoods/scripts.inc:324` | 提到 SHROOMISH | `bufferspeciesname`，或改寫文字 |
+| 文字 | `RustboroCity_Flat2_1F/scripts.inc:23` | SKITTY | 同上 |
+| 文字 | `RustboroCity_House3/scripts.inc:31` | PIKACHU | 同上 |
+| 文字 | `RustboroCity_Mart/scripts.inc:70` | SHROOMISH | 同上 |
+| 文字 | `RustboroCity_PokemonSchool/scripts.inc:267` | SEEDOT | 同上 |
+| 地圖造型 | `Route104_MrBrineysHouse` 物件 #2 | `OBJ_EVENT_GFX_WINGULL`（Peeko） | `OBJ_EVENT_GFX_SPECIES(...)` 換成替代角色 |
+| 地圖造型 | `RustboroCity_Flat2_1F` 物件 #1 | `OBJ_EVENT_GFX_SKITTY` | 同上 |
+| 地圖造型 | `RustboroCity_House3` 物件 #3 | `OBJ_EVENT_GFX_PIKACHU` | 同上 |
+| 地圖造型 | `RustboroCity_Flat1_2F` 物件 #3–8 | Skitty、Treecko、Torchic、Mudkip、Pikachu 娃娃 | 跟 `[early]` 的娃娃一樣，先列進 `exclude_refs`，裝飾品統一處理 |
+
+`playmoncry` 這 3 處在原版角色停用後會讓 debug build 跳出 assert，是 strict 之前一定要處理的。
+
+### 6.4 `to_rustboro`（原版基準）：暫停，等 4b 之後在新的 ROM 上重錄
+
+已經用 `tools/headless/authoring/` 打通的部分：Petalburg 回血 → Route 104 → Petalburg Woods（Devon 研究員和 Aqua 手下）→ Route 104 北段 → Rustboro 回血 → 道館的 Josh、Tommy、Marc。**Roxanne 輸了兩次**，因為佔位的 Mossprit（原地替換 Treecko）在 Lv16 照原版規則進化成 Grovyle（純草），Leafage 打不動帶著 Oran 樹果、館主又會用兩瓶傷藥的 Nosepass。必須在 Route 116 練到大約 Lv20 以上。
+
+暫停的原因：`to_rustboro` 從 `to_starter` 開始就會經過很多戰鬥，4b 換掉早期角色之後，戰鬥長度和亂數全部都會變，現在錄的路線會整段作廢。而且 Rustboro 段的「遷移前基準」本來就應該錄在 4b 之後的 ROM 上。
+
+執行時間估計：光是練到 Lv16 就要大約 15 萬幀（約 37 秒），加上 `to_petalburg` 的 47 秒，`to_rustboro` 一定會超過 2 分鐘。David 的方案是：`check-oddex` 預設只跑到 Petalburg，`to_rustboro` 改成另一個目標（例如 `make check-oddex-full`），合併前再跑完整版。
+
+為了這一段，`autopilot.py` 新增了以下能力（也會用在 4b 的重新校準）：
+- **戰鬥一次按一鍵**：從 RAM 讀 `gBattlescriptCurrInstr`。進入 `BattleScript_AskToLearnMove` 時按 B，拒絕學新招式（`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以只有一個提示），避免 A 把第一格的攻擊招式忘掉。
+- **選招畫面**（`gBattlerControllerFuncs[0] == HandleInputChooseMove`）：遊標所在的招式沒有 PP 或不是攻擊招式時，把遊標移到威力最高、還有 PP 的攻擊招式。
+- **大地圖上換招式**：第一格是狀態招式，或 PP 低於 5 時，打開能力畫面把攻擊招式換到第一格。開始選單的遊標會記住位置而且會繞圈，所以從 `sCurrentStartMenuActions`／`sStartMenuCursorPos` 讀出來再計算按法；操作被腳本鎖住時（`sLockFieldControls`、`sGlobalScriptContextStatus`）不換。
+- 同一步走不動兩次（已經按 B 排除對話框的可能）時，把那一格當成障礙並重新規劃。例如道館裡打完戰鬥、走過來擋在一格寬通道上的訓練家。
+- `grind:Map:x1:y1:x2:y2:LV`：在兩格草叢之間來回走到指定等級；HP 低於 35% 或攻擊招式的 PP 總和低於 10 時暫停，讓呼叫者去回血。
+- 戰鬥中按超過 600 次就直接報錯（避免像 PP 用完那次，無限產生存檔）。
+- `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
+- `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
