@@ -6,7 +6,7 @@ Usage (repository root, after `. tools/env.sh`):
 
 Everything this reads and writes lives outside the repository, under $ODDEX_PRIVATE
 (default ~/oddex-private), and must never be committed (CLAUDE.md, private art):
-  likeness/crop.toml        per id: photo (relative to $ODDEX_PRIVATE), the head ellipse
+  crop.toml                 per id: photo (relative to $ODDEX_PRIVATE), the head ellipse
                             center/radii in that photo, and points to sample colours from
   likeness/<dir>/...        output, mirroring game/graphics/pokemon/oddex/<dir>/;
                             tools/oddex/build_private.sh lays it over the public sprites
@@ -121,12 +121,12 @@ def main():
     for path in [args.keep, args.preview]:
         if path and Path(path).resolve().is_relative_to(HERE.parent.parent.parent):
             sys.exit('compose: --keep/--preview must point outside the repository')
-    crops = tomllib.loads((PRIVATE / 'likeness' / 'crop.toml').read_text())
+    crops = tomllib.loads((PRIVATE / 'crop.toml').read_text())
     by_id = {s['id']: s for s in load_species()}
     rows = []
     for sid in args.ids:
         if sid not in by_id or sid not in crops:
-            sys.exit(f'compose: {sid} needs a content/species TOML and an entry in {PRIVATE}/likeness/crop.toml')
+            sys.exit(f'compose: {sid} needs a content/species TOML and an entry in {PRIVATE}/crop.toml')
         (front, back, icon, ow, pal, s_pal, icon_index), out = build(by_id[sid], crops[sid], args.keep)
         print(f'{sid}: {len([c for c in pal[1:] if c != (0, 0, 0)])} palette colours, icon palette {icon_index} -> {out}')
         rows.append((front, back, icon, ow, pal, s_pal))
