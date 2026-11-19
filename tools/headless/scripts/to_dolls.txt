@@ -1,0 +1,62 @@
+# Littleroot, then the debug menu to show the original-species decoration dolls (content/dolls.toml,
+# tools/oddex/make_dolls.py): the two bedroom dolls are hidden until a late Lilycove event, so their
+# hide flags are cleared with Flags & Vars -> Set Flag XYZ, then Utilities -> Warp to map warp visits
+# each room. Debug menu: hold R and press START (debug builds only).
+include to_littleroot.txt
+wait 60
+press R+START 2 60
+# Flags & Vars -> Set Flag XYZ (the input starts at 0001, ones digit; RIGHT moves to tens, hundreds).
+repeat 8 press DOWN 2 12
+press A 2 60
+press A 2 60
+# 0815 = FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_SWABLU_DOLL (0x32F): TRUE -> FALSE
+repeat 4 press UP 2 12
+press RIGHT 2 12
+press UP 2 12
+press RIGHT 2 12
+repeat 8 press UP 2 12
+press A 2 60
+# 0849 = FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL (0x351): TRUE -> FALSE
+repeat 4 press UP 2 12
+press RIGHT 2 12
+repeat 3 press UP 2 12
+press A 2 60
+press B 2 60
+press B 2 60
+# Utilities -> Warp to map warp: group 1, map 1 (Brendan's house 2F), warp 0 (the stairs).
+press A 2 60
+press DOWN 2 12
+press A 2 60
+press UP 2 12
+press A 2 60
+press UP 2 12
+press A 2 60
+press A 2 240
+shot dolls/01_brendans_room_utoghast.png
+# Group 1, map 3 (May's house 2F), warp 0.
+press R+START 2 60
+press A 2 60
+press DOWN 2 12
+press A 2 60
+press UP 2 12
+press A 2 60
+repeat 3 press UP 2 12
+press A 2 60
+press A 2 240
+shot dolls/02_mays_room_kyokon.png
+# Group 11, map 9 (Rustboro City Flat1 2F), warp 0; step off the stairs toward the dolls.
+press R+START 2 60
+press A 2 60
+press DOWN 2 12
+press A 2 60
+press UP 2 12
+press RIGHT 2 12
+press UP 2 12
+press A 2 60
+repeat 9 press UP 2 12
+press A 2 60
+press A 2 240
+hold DOWN 16
+hold RIGHT 48
+wait 30
+shot dolls/03_rustboro_flat_dolls.png

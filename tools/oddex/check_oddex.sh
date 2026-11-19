@@ -16,7 +16,7 @@ ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 ROM="$ROOT/game/pokeemerald.gba"
 OUT="$ROOT/game/build/oddex-check"
 RUN="${ODDEX_RUN:-$HOME/oddex-toolchain/bin/oddex-run}"
-SCRIPTS="${ODDEX_REGRESSION_SCRIPTS:-to_littleroot to_starter oddex_gallery to_petalburg}"
+SCRIPTS="${ODDEX_REGRESSION_SCRIPTS:-to_littleroot to_starter oddex_gallery to_petalburg to_dolls}"
 ODDEX_SHOTS_BASELINE="${ODDEX_SHOTS_BASELINE-$ROOT/tools/headless/baselines}"
 fail=0
 
