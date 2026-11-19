@@ -45,6 +45,10 @@ KEYS：`A B SELECT START RIGHT LEFT UP DOWN R L`，可用 `+` 組合（例如 `A
 參考腳本見 `tools/headless/scripts/`。目前時機（原版 1.17.2）：約第 700 幀進到 GAME FREAK 標題動畫；按 START 進標題畫面；之後每 52 幀按一次 A，第 4 次出現選單（NEW GAME），約第 7 次開始 Birch 開場白。
 **不要按 SELECT**：標題畫面的 SELECT 是 Quickstart，會跳過 Birch 開場。
 
+## 決定性（determinism）
+runner 把 RTC 固定成「從 2026-01-01 00:00 UTC 開始、隨幀數前進」的假時鐘（`RTC_FAKE_EPOCH`）。如果改用真實時間，遊戲的亂數會受影響，同一支腳本每次跑出來的戰鬥都會不一樣。
+現在「同一個 ROM + 同一支腳本」每次都會產生逐像素相同的截圖。不過 ROM 一改（例如對話長度、程式碼），亂數的時機也可能跟著變，所以會經過戰鬥或草叢的腳本可能要重新調整。
+
 ## 已知問題
 - mGBA 0.10.5 的 Qt 版沒有命令列腳本參數，所以另外寫了這個 runner。
 - 沒有載入 .sav，每次都是全新遊戲。

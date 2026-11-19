@@ -155,6 +155,9 @@ int main(int argc, char** argv) {
 	core->desiredVideoDimensions(core, &width, &height);
 	video = calloc(width * height, BYTES_PER_PIXEL);
 	core->setVideoBuffer(core, video, width);
+	// Wall-clock RTC feeds the game's RNG, so pin it to make runs reproducible.
+	core->rtc.override = RTC_FAKE_EPOCH;
+	core->rtc.value = 1767225600000LL; // 2026-01-01T00:00:00Z
 	if (!mCoreLoadFile(core, argv[1])) {
 		fprintf(stderr, "cannot load %s\n", argv[1]);
 		return 1;
