@@ -10,4 +10,6 @@ order = [
     # Rustboro batch (appended so earlier numbers stay; reorder by route when vanilla is disabled).
     "KOMAROCK", "IWADAWN", "KUMOZUKA", "MAGATIDE", "MANDALUMB", "TSUNACOON", "TSUKUYUME", "KARUVAJRA",
     "INARIZUMA",
+    # Dewford pair.
+    "GACHIRINZA", "KOMORIMEN",
 ]

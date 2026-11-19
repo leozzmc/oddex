@@ -833,3 +833,67 @@ static const struct SpriteFrameImage sPicTable_Tsunacoon[] = {
     overworld_ascending_frames(gObjectEventPic_Tsunacoon, 4, 4),
 };
 #endif
+
+// Gachirinza
+static const struct LevelUpMove sGachirinzaLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_BIDE),
+    LEVEL_UP_MOVE( 1, MOVE_MEDITATE),
+    LEVEL_UP_MOVE( 4, MOVE_CONFUSION),
+    LEVEL_UP_MOVE( 8, MOVE_DETECT),
+    LEVEL_UP_MOVE(12, MOVE_FORCE_PALM),
+    LEVEL_UP_MOVE(16, MOVE_CALM_MIND),
+    LEVEL_UP_MOVE(20, MOVE_PSYBEAM),
+    LEVEL_UP_MOVE(24, MOVE_DRAIN_PUNCH),
+    LEVEL_UP_MOVE(28, MOVE_ZEN_HEADBUTT),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Gachirinza[] = INCGFX_U32("graphics/pokemon/oddex/gachirinza/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Gachirinza[] = INCGFX_U32("graphics/pokemon/oddex/gachirinza/back.png", ".4bpp.smol");
+const u16 gMonPalette_Gachirinza[] = INCGFX_U16("graphics/pokemon/oddex/gachirinza/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Gachirinza[] = INCGFX_U16("graphics/pokemon/oddex/gachirinza/shiny.pal", ".gbapal");
+const u8 gMonIcon_Gachirinza[] = INCGFX_U8("graphics/pokemon/oddex/gachirinza/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Gachirinza[] = INCGFX_U8("graphics/pokemon/oddex/gachirinza/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Gachirinza[] = INCGFX_COMP("graphics/pokemon/oddex/gachirinza/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Gachirinza[] = INCGFX_U16("graphics/pokemon/oddex/gachirinza/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Gachirinza[] = INCGFX_U16("graphics/pokemon/oddex/gachirinza/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Gachirinza[] = {
+    overworld_ascending_frames(gObjectEventPic_Gachirinza, 4, 4),
+};
+#endif
+
+// Komorimen
+static const struct LevelUpMove sKomorimenLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_ABSORB),
+    LEVEL_UP_MOVE( 1, MOVE_SUPERSONIC),
+    LEVEL_UP_MOVE( 5, MOVE_ASTONISH),
+    LEVEL_UP_MOVE( 9, MOVE_POISON_FANG),
+    LEVEL_UP_MOVE(13, MOVE_WING_ATTACK),
+    LEVEL_UP_MOVE(17, MOVE_BITE),
+    LEVEL_UP_MOVE(21, MOVE_AIR_CUTTER),
+    LEVEL_UP_MOVE(25, MOVE_POISON_JAB),
+    LEVEL_UP_MOVE(29, MOVE_AIR_SLASH),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Komorimen[] = INCGFX_U32("graphics/pokemon/oddex/komorimen/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Komorimen[] = INCGFX_U32("graphics/pokemon/oddex/komorimen/back.png", ".4bpp.smol");
+const u16 gMonPalette_Komorimen[] = INCGFX_U16("graphics/pokemon/oddex/komorimen/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Komorimen[] = INCGFX_U16("graphics/pokemon/oddex/komorimen/shiny.pal", ".gbapal");
+const u8 gMonIcon_Komorimen[] = INCGFX_U8("graphics/pokemon/oddex/komorimen/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Komorimen[] = INCGFX_U8("graphics/pokemon/oddex/komorimen/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Komorimen[] = INCGFX_COMP("graphics/pokemon/oddex/komorimen/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Komorimen[] = INCGFX_U16("graphics/pokemon/oddex/komorimen/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Komorimen[] = INCGFX_U16("graphics/pokemon/oddex/komorimen/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Komorimen[] = {
+    overworld_ascending_frames(gObjectEventPic_Komorimen, 4, 4),
+};
+#endif

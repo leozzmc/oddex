@@ -261,7 +261,17 @@
 - **Aron → Bekurama**(草/鋼):Granite Cave 裡需要一隻鋼屬性,第 1 階段的鋼系只有它;大癋見是鞍馬山的天狗,住在山裡和洞窟也說得通。Aron 原本是 3 階段的進化線,之後 Bekurama 有進化型時再補 Lairon/Aggron。
 - **Sableye → Kyokon**(一般/幽靈):保留幽靈屬性;會化身的狐狸,在暗處盯著寶石,跟 Sableye 的形象接近。
 - **Tentacool → Shojobob**(水/妖精):照 Sonia 的建議;雖然沒有毒屬性,但都是浮在水面上的角色。
-- **Meditite、Zubat**:做新角色(Dewford 的 2 隻,接在原御三家之後做)。
+- **Meditite、Zubat**:做成新角色,也就是下面的 Dewford 2 隻。
+
+### Dewford 的 2 隻(新角色)
+
+| 暫定名 | 取代的原版 | 屬性 | 形體 | 融合來源 | 宗教／文化元素 |
+|---|---|---|---|---|---|
+| Gachirinza | Meditite(Brawly、Jocelyn、Laura、Lilith) | 格鬥/超能力 | 面具本體加手腳(盤腿坐) | Tsukuyume 閉成新月的眼睛、Karuvajra 的兩隻手臂(改成在身前合起的手勢)、Tsukuyume 的月亮(改成滿月) | 東密:月輪觀(對著滿月冥想)的意象;不放種子字,也不做成佛像 |
+| Komorimen | Zubat(Granite Cave 各層) | 毒/飛行 | 面具本體加蝙蝠翅膀 | Utoghast 痩男的凹陷臉和空洞的眼睛、共用零件 `wing`(蝙蝠翅膀)、Shachound 的立耳、共用零件 `rope`(額頭的小注連繩) | 神道:洞窟神社的注連繩 |
+
+- Gachirinza 冥想到雙手越來越重(格鬥),月光代表心念(超能力)。Komorimen 的毒來自滴著毒液的獠牙。
+- 兩隻都是第 1 階段。Zubat 和 Meditite 原本都有進化型(Golbat／Crobat、Medicham),之後再補。
 
 ## 還沒用到的候選
 - 能:殺生石(野干或小飛出)、熊坂(長霊癋見)、邯鄲男、真蛇(Omotelle 線如果要有第 4 階段)、増女(〈羽衣〉的天女)、童子(〈菊慈童〉)、黒髭(龍神)、小癋見(〈野守〉〈鵜飼〉的地獄小鬼)、怪士(〈船弁慶〉的平知盛亡靈)。

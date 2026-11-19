@@ -1719,6 +1719,8 @@ enum __attribute__((packed)) Species
     SPECIES_MANDALUMB,
     SPECIES_TSUKUYUME,
     SPECIES_TSUNACOON,
+    SPECIES_GACHIRINZA,
+    SPECIES_KOMORIMEN,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

@@ -63,8 +63,10 @@ TORKOAL = "SHISHIBLAZE"
 WAILMER = "KAMORAI"
 ODDISH = "OKINOIR"
 # Existing species for the rest: Bekurama is the only stage-1 steel type (Aron); Kyokon keeps the
-# ghost type (Sableye); Shojobob floats on the water like Tentacool. Meditite and Zubat get new
-# species (the Dewford pair).
+# ghost type (Sableye); Shojobob floats on the water like Tentacool. The Dewford pair are new:
+# Gachirinza for the gym's Meditite, Komorimen for Granite Cave's Zubat.
 ARON = "BEKURAMA"
 SABLEYE = "KYOKON"
 TENTACOOL = "SHOJOBOB"
+MEDITITE = "GACHIRINZA"
+ZUBAT = "KOMORIMEN"
