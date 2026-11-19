@@ -177,8 +177,11 @@ def validate(all_species, roles, regional, idents):
             need(s, 'MOVE_', move, 'move')
         for evo in s.get('evolutions', []):
             need(s, 'EVO_', evo['method'], 'evolution method')
-            if evo['into'] not in ids and f'SPECIES_{evo["into"]}' not in idents:
-                errors.append(f'{f}: evolves into unknown species {evo["into"]}')
+            # Only into another original: vanilla species are disabled in plan B (a vanilla
+            # target would hit the disabled-species assert on level up).
+            if evo['into'] not in ids:
+                errors.append(f'{f}: evolves into {evo["into"]}, which is not an oddex species '
+                              f'(content/species/*.toml)')
         g = s['graphics']
         need(s, 'ANIM_', g['front_anim'], 'front animation')
         need(s, 'BACK_ANIM_', g['back_anim'], 'back animation')
