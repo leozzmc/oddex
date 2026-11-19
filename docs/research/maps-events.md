@@ -152,13 +152,15 @@ python3 tools/oddex/check_maps.py --render LittlerootTown     # → game/build/m
 python3 tools/oddex/check_maps.py --update-baseline           # 逐一確認新發現之後，才把它們接受進基準
 ```
 
-檢查項目：地圖大小上限 `(w+15)×(h+14) ≤ 10240`、connections 雙向對稱且 offset 互為相反數、warp 目的地地圖存在且 `dest_warp_id` 在範圍內、object events ≤ 64、事件座標在地圖範圍內、`region` 是 `REGION_HOENN`（否則 mapjson 會靜默排除）、**物件被上層圖層蓋住**。
+檢查項目：地圖大小上限 `(w+15)×(h+14) ≤ 10240`、connections 雙向對稱且 offset 互為相反數、warp 目的地地圖存在且 `dest_warp_id` 在範圍內、object events ≤ 64、事件座標在地圖範圍內、`region` 是 `REGION_HOENN`（否則 mapjson 會靜默排除）、**物件被上層圖層蓋住**、**事件走不到**。
 
-遮擋的判斷方式：物件所在格子的 metatile 是 NORMAL 或 SPLIT 類型（上層畫在 BG1），而且上層有 ≥ 50% 的像素不透明；同時物件的 elevation 對應到 sprite 優先度 2（`sElevationToPriority`，elevation 4/6/8/10/12 是 1，會畫在上層上面）。原版本身就有刻意被部分遮住的物件（陽傘下、樹下、橋墩旁，共 39 個），另外還有 10 個座標在地圖外的 warp／看板、2 張 Kanto 地圖，這 51 個既有發現都記在 `tools/oddex/check_maps_baseline.json`，**只有新的發現會失敗**。已驗證：把科學家放回 (9,12) 會回報「94% of the tile is drawn over sprites」，把 connection 的 offset 改錯也會被抓到。
+遮擋的判斷方式：物件所在格子的 metatile 是 NORMAL 或 SPLIT 類型（上層畫在 BG1），而且上層有 ≥ 50% 的像素不透明；同時物件的 elevation 對應到 sprite 優先度 2（`sElevationToPriority`，elevation 4/6/8/10/12 是 1，會畫在上層上面）。原版本身就有刻意被部分遮住的物件（陽傘下、樹下、橋墩旁，共 39 個），另外還有 10 個座標在地圖外的 warp／看板、2 張 Kanto 地圖，這 51 個既有發現，加上下面可達性的 58 個，共 109 個都記在 `tools/oddex/check_maps_baseline.json`，**只有新的發現會失敗**。已驗證：把科學家放回 (9,12) 會回報「94% of the tile is drawn over sprites」，把 connection 的 offset 改錯也會被抓到。
 
 預覽圖：metatile 依 tileset 的 `tiles.png`、`palettes/*.pal`、`metatiles.bin` 渲染（下層 → 上層，索引 0 透明，底色是調色盤 0 的第 0 色），再疊上標記：淡紅＝collision、綠圈＝物件（數字是 local id 順序；紅圈＝被上層蓋住）、紫框＝warp（數字是 warp 索引）、橘框＝coord trigger、藍點＝bg event。顏色是調色盤的原色，沒有套用時段的色調。
 
-還沒做：可達性檢查（`tools/headless/authoring/plan.py` 已經有跨地圖找路，可以接上）、交界處 tileset 相容性檢查。
+可達性：從地圖的每個 warp 和有 connection 的那幾邊出發，依遊戲規則走（collision 0；elevation 相同，或任一邊是 0/15；平台只能往下跳），**水面一律可以走**（假設已經有衝浪等所有場地招式），物件不算障礙（很多 NPC 會被 flag 隱藏）。有腳本的 NPC 和 bg event 必須站在走得到的格子上，或有一個鄰格走得到（櫃台 `MB_COUNTER` 可以隔一格對話）；coord trigger 本身那一格必須走得到。原版有 58 個走不到的事件，都有原因：New Mauville（25 個，開關會改變地圖）、海底地圖（靠潛水出入，不是 warp）、機關屋謎題、卡車內部、Mauville 道館的 Wattson（要先踩開關），以及幾個放在牆上、不會觸發的 trigger。已驗證：把科學家放進樹叢、把 trigger 放在牆上，都會被抓到。
+
+還沒做：交界處 tileset 相容性檢查。
 
 ## 6. Porymap／Poryscript 評估
 
