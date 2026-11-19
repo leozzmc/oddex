@@ -110,3 +110,74 @@
 | 10 | Shojobob ← Azurill | +16% | **不改** | 嬰兒寶可夢本來就特別弱,只超出 1% |
 
 照這些建議做的話,只有 Bekurama 會從標記中移除,被標記的從 8 隻變成 7 隻。Shojobob 還有 Azurill(+16%),Shishiblaze 還有 Makuhita,Kamorai 還有 Wailmer。最大的差距(Tentacool、Aron)會消失,剩下的每一項都寫了暫時不改的理由。
+
+## Brawly 戰的選項(2026-11-20,Mark;用數據比較,只是分析,數值都還沒改)
+
+### 怎麼算的
+- 工具是 `tools/oddex/damage_calc.py`,用 Gen 5 以後的傷害公式。
+  - 中性性格,不加努力值。玩家的個體值算 15,對手照 `trainers.party` 寫的值。
+  - 招式的威力、屬性、物理或特殊,取自 `moves_info.h`(取新世代的值)。
+  - 不算會心、特性、道具、天氣和能力等級的變化。
+  - Focus Punch 不算:它最後才出手,只要使用者先被打中就會失敗,而玩家一定會先攻擊它。
+- 「打得過」的判定:一對一、雙方都用最好的招式,我方用最低的亂數,對手用最高的亂數。我方需要的擊倒次數不比對手多(對手先出手的話要少一次),就算贏。這是很保守的標準,實際上有道具、換人和等級優勢,會比這裡好打。
+- **基準**:用同樣的標準算原版,Treecko、Torchic、Mudkip 打原版 Brawly(Machop、Meditite、Makuhita)要 **Lv19–21**(`--vanilla 421e141a`)。所以目標是三隻御三家都落在 Lv19–21,彼此差不多。
+
+### 現況:三人組 Lv17 對 Brawly(Karuvajra Lv16、Gachirinza Lv16、Shishiblaze Lv19)
+| 御三家 | Lv | 對手 | 我方最佳招式 | 打對手 | 幾下擊倒 | 對手最佳招式 | 打我方 | 幾下擊倒 | 速度 |
+|---|---|---|---|---|---|---|---|---|---|
+| Grinpack | 17 | Karuvajra Lv16 | Sucker Punch | 18–22% | 5–6 | Karate Chop | 65–78% | 2 | 我方先 |
+| Grinpack | 17 | Gachirinza Lv16 | Sucker Punch | 45–56% | 2–3 | — | 0% | ∞ | 對手先 |
+| Grinpack | 17 | Shishiblaze Lv19 | Sucker Punch | 16–20% | 5–7 | Vital Throw | 97–117% | 1–2 | 對手先 |
+| Trekkeye | 17 | Karuvajra Lv16 | Flame Wheel | 32–38% | 3–4 | Low Kick | 90–109% | 1–2 | 我方先 |
+| Trekkeye | 17 | Gachirinza Lv16 | Flame Wheel | 40–48% | 3 | — | 0% | ∞ | 我方先 |
+| Trekkeye | 17 | Shishiblaze Lv19 | Scratch | 14–18% | 6–8 | Vital Throw | 120–143% | 1 | 對手先 |
+| Ridgecap | 17 | Karuvajra Lv16 | Wing Attack | 60–72% | 2 | Seismic Toss | 34–34% | 3 | 我方先 |
+| Ridgecap | 17 | Gachirinza Lv16 | Wing Attack | 75–89% | 2 | — | 0% | ∞ | 對手先 |
+| Ridgecap | 17 | Shishiblaze Lv19 | Bubble Beam | 60–72% | 2 | Vital Throw | 21–25% | 4–5 | 對手先 |
+
+- **問題的核心**:草/惡和火/鋼的第二屬性都怕格鬥。王牌 Shishiblaze(火/格鬥)又同時抵抗草和惡(Grinpack 的全部攻擊屬性),以及火和鋼(Trekkeye 的全部攻擊屬性),所以這兩隻練到幾級都打不過它。
+- 反過來,Ridgecap(水/飛行)的飛行屬性抵抗格鬥,Lv14 就全贏,比原版的 Mudkip(Lv20)輕鬆很多。
+
+### 各選項打得過的最低等級(Lv14–24 的範圍內;✗ 表示這個範圍內打不過)
+
+| 選項 | Grinpack | Trekkeye | Ridgecap | 說明 |
+|---|---|---|---|---|
+| 原版基準(Treecko/Torchic/Mudkip) | Lv21 | Lv19 | Lv20 | 目標範圍 |
+| 現況 | ✗ | ✗ | Lv14 | Shishiblaze 擋住兩隻,Ridgecap 太輕鬆 |
+| (a1) Karuvajra 改成格鬥/幽靈 | ✗ | ✗ | Lv14 | 沒有用:問題出在王牌,而且 Karuvajra 的格鬥招一樣打得到 |
+| (a2) Karuvajra 改成格鬥/火 | ✗ | ✗ | Lv14 | 同上,火屬性讓 Trekkeye 更難打 |
+| (b1) 王牌改成 Karuvajra Lv19(招式不變) | ✗ | Lv24 | Lv17 | Grinpack 還是打不動(暗、草都被抵抗) |
+| (b2) 王牌改成 Komarock Lv19(岩石/格鬥) | Lv24 | Lv24 | Lv14 | 有解但太高 |
+| (b3) 王牌降到 Lv17 | ✗ | ✗ | Lv14 | 等級降低沒有用,屬性才是問題 |
+| (b4) 全隊降 2 級(14/14/17) | ✗ | ✗ | Lv14 | 同上 |
+| (c) Grinpack、Trekkeye 在 Lv15 學會 Aerial Ace | ✗ | Lv22 | Lv14 | 飛行打格鬥是 2 倍;但 Grinpack 打 Shishiblaze 還是不夠 |
+| (b4)+(c) | Lv24 | Lv20 | Lv14 | |
+| (b2)+(c)+全隊降級:王牌 Komarock Lv17,其餘 Lv14 | Lv19 | Lv21 | Lv14 | 草和火進入目標範圍,水還是太輕鬆 |
+| **(F) 同上,再把王牌的 Reversal 換成 Rock Tomb** | **Lv19** | **Lv21** | **Lv16** | **三隻最接近原版**;Rock Tomb 打飛行是 2 倍,讓 Ridgecap 也有壓力 |
+| (F),王牌改成 Lv18 | Lv21 | Lv23 | Lv17 | 偏難 |
+
+### 建議
+- **推薦 (F)**:
+  - Brawly 的王牌從 Shishiblaze 換成 Komarock(Lv17,招式 Arm Thrust、Vital Throw、Rock Tomb、Bulk Up),Karuvajra 和 Gachirinza 降到 Lv14。
+  - Grinpack 和 Trekkeye 在 Lv15 學會 Aerial Ace,寫在 TOML 的 learnset。這也能幫他們打之後的格鬥系訓練家。
+  - 這樣三隻御三家需要的等級都在原版的 Lv19–21 附近,而且不會讓任何一隻變得太簡單或太難。
+  - 這個方案要動 `trainers.party`(Sonia 的範圍)和三人組的 TOML(我的範圍)。
+- **不推薦**:只改 Karuvajra 的屬性(a1、a2),或只降等級(b3、b4),算出來都沒有用。
+- **連帶影響**:Shishiblaze 原本被安排在 Makuhita 的位置。如果它不再當王牌,Makuhita 在 Dewford 的野生和 Cristian 的隊伍可以保留 Shishiblaze;平衡報告裡 Makuhita 那筆(+31%)主要的影響也會跟著消失,因為不再是王牌。
+
+### Roxanne 用同樣的方法重算(三人組 Lv15)
+| 御三家 | Lv | 對手 | 我方最佳招式 | 打對手 | 幾下擊倒 | 對手最佳招式 | 打我方 | 幾下擊倒 | 速度 |
+|---|---|---|---|---|---|---|---|---|---|
+| Grinpack | 15 | Komarock Lv12 | Mega Drain | 90–109% | 1–2 | Rock Tomb | 26–30% | 4 | 我方先 |
+| Grinpack | 15 | Komarock Lv12 | Mega Drain | 90–109% | 1–2 | Rock Tomb | 26–30% | 4 | 我方先 |
+| Grinpack | 15 | Iwadawn Lv15 | Mega Drain | 40–48% | 3 | Rock Tomb | 33–38% | 3 | 我方先 |
+| Trekkeye | 15 | Komarock Lv12 | Metal Claw | 60–72% | 2 | Rock Tomb | 35–40% | 3 | 我方先 |
+| Trekkeye | 15 | Komarock Lv12 | Metal Claw | 60–72% | 2 | Rock Tomb | 35–40% | 3 | 我方先 |
+| Trekkeye | 15 | Iwadawn Lv15 | Metal Claw | 67–81% | 2 | Rock Tomb | 40–47% | 3 | 我方先 |
+| Ridgecap | 15 | Komarock Lv12 | Bubble Beam | 145–172% | 1 | Rock Tomb | 47–57% | 2–3 | 我方先 |
+| Ridgecap | 15 | Komarock Lv12 | Bubble Beam | 145–172% | 1 | Rock Tomb | 47–57% | 2–3 | 我方先 |
+| Ridgecap | 15 | Iwadawn Lv15 | Bubble Beam | 54–64% | 2 | Rock Tomb | 59–71% | 2 | 我方先 |
+
+- **打得過的最低等級**:Grinpack Lv15、Trekkeye Lv13、Ridgecap Lv15,**都在 Lv14–17 以內**。
+- 原版對照:Treecko Lv16、Mudkip Lv15,Torchic 在 Lv20 以內打不過。
+- 結論:Roxanne 不需要調整。Sonia 之前量到的 Lv22,是因為 autopilot 固定用 Leafage(物理招)去打防禦 135 的 Iwadawn。改用 Mega Drain(特殊招,2 倍)就打得過,autopilot 已經改成依照攻防選招了。
