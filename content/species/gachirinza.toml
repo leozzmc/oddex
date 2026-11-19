@@ -1,0 +1,54 @@
+# Dewford pair (see docs/research/mask-designs.md): fused mask parts plus Shinto / Shingon imagery, never a
+# deity. Replaces Meditite (Dewford Gym: Brawly, Jocelyn, Laura, Lilith). Stats and moves are provisional.
+
+id = "GACHIRINZA"
+name = "Gachirinza"
+category = "Moon Sitter"
+
+types = ["FIGHTING", "PSYCHIC"]
+abilities = ["PURE_POWER", "NONE", "INNER_FOCUS"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 30, atk = 40, def = 55, spa = 40, spd = 55, spe = 60 }   # total 280
+ev_yield = { spe = 1 }
+catch_rate = 180
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_FAST"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 112
+text = """
+It sits all night before a full moon
+with its eyes shut. The longer it sits,
+the heavier its folded hands become,
+until one blow can split a boulder."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "BIDE"], [1, "MEDITATE"], [4, "CONFUSION"], [8, "DETECT"], [12, "FORCE_PALM"], [16, "CALM_MIND"], [20, "PSYBEAM"], [24, "DRAIN_PUNCH"], [28, "ZEN_HEADBUTT"],
+]
+teachable = [
+    "ATTRACT", "BRICK_BREAK", "BULK_UP", "CALM_MIND", "DRAIN_PUNCH", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "PSYCHIC", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/gachirinza"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["DewfordGym"]
+level_band = [14, 19]
+family = ["GACHIRINZA"]

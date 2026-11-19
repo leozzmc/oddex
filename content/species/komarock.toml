@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Geodude (Rustboro Gym, Route 116 trainers). Stats and moves are provisional.
+
+id = "KOMAROCK"
+name = "Komarock"
+category = "Guardian"
+
+types = ["ROCK", "FIGHTING"]
+abilities = ["STURDY", "ROCK_HEAD", "INNER_FOCUS"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 75, def = 90, spa = 25, spd = 35, spe = 20 }   # total 285
+ev_yield = { def = 1 }
+catch_rate = 190
+exp_yield = 57
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["MINERAL"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 200
+text = """
+A stone komainu that guards gates in
+pairs, one mouth open and one shut. It
+bites down on its vajra so hard that the
+stone teeth grind like a millstone."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "DEFENSE_CURL"], [4, "ROCK_THROW"], [8, "LOW_KICK"], [12, "ROCK_TOMB"], [16, "KARATE_CHOP"], [20, "BULLDOZE"], [24, "BRICK_BREAK"], [28, "ROCK_SLIDE"],
+]
+teachable = [
+    "ATTRACT", "BRICK_BREAK", "BULK_UP", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/komarock"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["RustboroGym", "Route116"]
+level_band = [8, 16]
+family = ["KOMAROCK"]

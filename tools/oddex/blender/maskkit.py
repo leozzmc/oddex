@@ -8,7 +8,7 @@ colours that survive the GBA's 15-colour palette.
 import math
 
 import bpy
-from mathutils import Vector
+from mathutils import Euler, Vector  # noqa: F401  (Euler for species modules: k.Euler)
 
 SUN_DIR = Vector((-0.85, -0.5, 0.55)).normalized()  # light from the upper left, raking across the face
 TOON_STEPS = (0.45, 0.72, 1.0)
@@ -460,6 +460,149 @@ def wing(root, side, span, mat, rib_mat=None, ribs=4, sweep=(-35, 50), droop=0.2
         outline.append(root.lerp((a + b) / 2, 1 - scallop))
     outline.append(tips[-1])
     return membrane(outline, mat)
+
+
+# --- Shinto and esoteric Buddhist motifs (Rustboro batch) ----------------------------------
+# Only symbols and imagery: none of these makes a deity catchable (docs/research/mask-designs.md).
+
+def rope(points, thick, mat, dark=None, twists_per_unit=6.0):
+    """A twisted straw rope (shimenawa) along a polyline: two strands of beads spiralling round
+    each other, the second strand in dark (or mat) so the twist reads at 64px."""
+    pts = [Vector(p) for p in points]
+    beads = []
+    for a, b in zip(pts, pts[1:]):
+        seg = b - a
+        n = max(2, int(seg.length * twists_per_unit * 3))
+        axis = seg.normalized()
+        side = axis.cross(Vector((0, 0, 1)))
+        if side.length < 1e-3:
+            side = axis.cross(Vector((1, 0, 0)))
+        side.normalize()
+        up = axis.cross(side)
+        for i in range(n):
+            t = i / n
+            ang = t * seg.length * twists_per_unit * 2 * math.pi
+            for strand, m in ((0, mat), (math.pi, dark or mat)):
+                off = (side * math.cos(ang + strand) + up * math.sin(ang + strand)) * thick * 0.45
+                beads.append(ellipsoid(a + seg * t + off, (thick * 0.62,) * 3, m, segments=12))
+    return beads
+
+
+def ring_rope(center, radius, thick, mat, dark=None, rot=(0, 0, 0), segments=24):
+    """A closed shimenawa loop in the XZ plane (facing -Y) before rotation rot (degrees)."""
+    from mathutils import Euler
+    e = Euler(tuple(math.radians(r) for r in rot))
+    pts = []
+    for i in range(segments + 1):
+        a = i * 2 * math.pi / segments
+        v = Vector((radius * math.cos(a), 0, radius * math.sin(a)))
+        v.rotate(e)
+        pts.append(Vector(center) + v)
+    return rope(pts, thick, mat, dark)
+
+
+def shide(top, length, width, mat, side=1, steps=3):
+    """A zigzag paper streamer (shide/gohei) hanging from top, facing -Y."""
+    top = Vector(top)
+    step = length / steps
+    pts = []
+    for i in range(steps):
+        x0 = top.x + (side * width * 0.5 if i % 2 else 0)
+        z0 = top.z - i * step
+        pts += [(x0, top.y, z0), (x0 + width, top.y, z0), (x0 + width, top.y, z0 - step), (x0, top.y, z0 - step)]
+    objs = []
+    for i in range(steps):
+        quad = [Vector(p) for p in pts[i * 4:i * 4 + 4]]
+        objs.append(membrane([quad[0], quad[1], quad[2], quad[3]], mat, name='shide'))
+    return objs
+
+
+def magatama(center, size, mat, curl=1.0, rot_z=0.0):
+    """A comma-shaped jewel body: a round head and a tail curling round beneath it, in the XZ
+    plane. Returns the head centre (for a face) as a Vector."""
+    c = Vector(center)
+    head = c + Vector((-size * 0.25, 0, size * 0.25))
+    ellipsoid(head, (size * 0.62, size * 0.5, size * 0.62), mat)
+    n = 9
+    for i in range(1, n + 1):
+        t = i / n
+        ang = math.radians(150 - 220 * t * curl + rot_z)
+        r = size * (0.55 + 0.15 * t)
+        p = head + Vector((r * math.cos(ang), 0, r * math.sin(ang) - size * 0.3 * t))
+        s = size * 0.5 * (1 - 0.8 * t)
+        ellipsoid(p, (s, s * 0.85, s), mat, segments=16)
+    return head
+
+
+def mandala_disc(center, radius, ring_mats, petal_mat, gate_mats, tilt=60, petals=8, spin=0.0):
+    """A flat round mandala lying tilted toward the viewer: concentric rings (ring_mats from the
+    outside in), petals round the centre, and four square gates at the cardinal points, each in
+    its own colour (gate_mats). Returns the disc's centre and its normal."""
+    from mathutils import Euler
+    c = Vector(center)
+    e = Euler((math.radians(tilt), 0, math.radians(spin)))
+    normal = Vector((0, 0, 1))
+    normal.rotate(e)
+    n = len(ring_mats)
+    for i, m in enumerate(ring_mats):
+        r = radius * (1 - i / (n + 1))
+        cylinder(c + normal * (0.02 * i), r, 0.04, m, rot=tuple(e), segments=48)
+    for i in range(petals):
+        a = 2 * math.pi * i / petals
+        v = Vector((radius * 0.32 * math.cos(a), radius * 0.32 * math.sin(a), 0))
+        v.rotate(e)
+        ellipsoid(c + v + normal * 0.1, (radius * 0.16, radius * 0.08, 0.03), petal_mat,
+                  rot=(e.x, e.y, e.z + a))
+    for i, m in enumerate(gate_mats[:4]):
+        a = math.pi / 2 * i
+        v = Vector((radius * 1.02 * math.cos(a), radius * 1.02 * math.sin(a), 0))
+        v.rotate(e)
+        cylinder(c + v, radius * 0.16, 0.12, m, rot=(e.x, e.y, e.z + a + math.pi / 4), segments=4)
+    return c, normal
+
+
+def vajra(center, length, mat, axis=(1, 0, 0), prongs=4):
+    """A vajra: a central knob, a lotus ring each side, and prongs bowing out and closing onto a
+    central spike at each end. axis is the direction the vajra lies along."""
+    c, ax = Vector(center), Vector(axis).normalized()
+    side = ax.cross(Vector((0, -1, 0)))
+    if side.length < 1e-3:
+        side = ax.cross(Vector((0, 0, 1)))
+    side.normalize()
+    up = ax.cross(side)
+    ellipsoid(c, (length * 0.12,) * 3, mat)
+    half = length / 2
+    for sgn in (-1, 1):
+        ring = c + ax * sgn * length * 0.14
+        ellipsoid(ring, (length * 0.1,) * 3, mat, segments=16)
+        tip = c + ax * sgn * half
+        spike(ring, tip, length * 0.05, mat)
+        for i in range(prongs):
+            a = 2 * math.pi * i / prongs
+            out = (side * math.cos(a) + up * math.sin(a)) * length * 0.16
+            mid = c + ax * sgn * length * 0.32 + out
+            rod(ring, mid, length * 0.025, mat)
+            rod(mid, tip - ax * sgn * length * 0.03, length * 0.022, mat)
+
+
+def flame_halo(center, radius, mat, inner=None, licks=16, length=0.35, bird=None, depth=0.0):
+    """A ring of flame tongues round center in the XZ plane (a flame mandorla), leaning upward.
+    bird, if given, is a material for a garuda-head flame at the top (karura-en)."""
+    c = Vector(center) + Vector((0, depth, 0))
+    for i in range(licks):
+        a = 2 * math.pi * i / licks + math.pi / licks
+        out = Vector((math.cos(a), 0, math.sin(a)))
+        base = c + out * radius
+        tip = base + (out + Vector((0, 0, 0.6))).normalized() * length
+        spike(base, tip, length * 0.4, mat)
+        if inner is not None:
+            spike(base + out * 0.03, base.lerp(tip, 0.55), length * 0.2, inner)
+    if bird is not None:
+        top = c + Vector((0, -0.02, radius + length * 0.6))
+        ellipsoid(top, (length * 0.45, length * 0.3, length * 0.4), bird)
+        spike(top + Vector((0, -0.05, 0)), top + Vector((length * 0.55, -0.1, -length * 0.15)), length * 0.15, bird)
+        for side in (-1, 1):
+            spike(top, top + Vector((side * length * 0.9, 0, length * 0.5)), length * 0.22, bird)
 
 
 # --- rendering --------------------------------------------------------------------------

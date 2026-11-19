@@ -1,0 +1,54 @@
+# Rustboro batch (see docs/research/mask-designs.md): fused mask parts plus Shinto / Vajrayana / Shingon
+# imagery, never a deity. Replaces Pikachu (Rustboro house pet; role RUSTBORO_PET). Stats and moves are provisional.
+
+id = "INARIZUMA"
+name = "Inarizuma"
+category = "Rice Fox"
+
+types = ["ELECTRIC", "GRASS"]
+abilities = ["STATIC", "LIGHTNING_ROD", "HARVEST"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 35, atk = 55, def = 40, spa = 50, spd = 50, spe = 90 }   # total 320
+ev_yield = { spe = 2 }
+catch_rate = 190
+exp_yield = 64
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 70
+text = """
+A shrine fox that carries rice in its
+mouth. Where it walks the fox-fires
+flicker, and farmers say the lightning
+it brings ripens the harvest."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "THUNDER_SHOCK"], [1, "GROWL"], [4, "LEAFAGE"], [8, "QUICK_ATTACK"], [12, "ELECTRO_BALL"], [16, "MAGICAL_LEAF"], [20, "SPARK"], [24, "GRASS_KNOT"], [28, "THUNDERBOLT"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/inarizuma"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "H_JUMPS"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["RustboroCity"]
+level_band = [5, 10]
+family = ["INARIZUMA"]

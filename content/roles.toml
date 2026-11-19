@@ -21,3 +21,9 @@ RESCUE_WILD = "KYOKON"          # Zigzagoon
 # lent to Wally (src/field_specials.c).
 TUTORIAL_CATCH = "OMOTELLE"     # Ralts
 TUTORIAL_LENT = "KYOKON"        # Zigzagoon
+# Mr. Briney's Peeko: Briney's house (Route 104) and the Aqua grunt's hostage in Rusturf Tunnel
+# (cries and overworld sprites).
+PEEKO = "UTOGHAST"              # Wingull
+
+# The pet in a Rustboro City house (RustboroCity_House3: cry, text and object graphic; was Pikachu).
+RUSTBORO_PET = "INARIZUMA"

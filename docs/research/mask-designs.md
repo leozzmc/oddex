@@ -247,6 +247,32 @@
 - 之前的 4 個問題都已經回答了(見本節開頭)。
 - 御三家換人後 Iwadawn 改成岩石/妖精,已經核准。
 
+## 原御三家的新位置(2026-11-20,Mark 暫定,等使用者看過)
+
+三人組接手御三家之後,Okinoir、Shishiblaze、Kamorai 保留,原本的設計和圖都不動,改放到下面這些位置。三隻都是第 1 階段、種族值總和 310,跟這些位置的原版角色差不多。對照已經寫進 `content/replacements.toml`。
+
+| 角色 | 屬性 | 新位置 | 理由 |
+|---|---|---|---|
+| Shishiblaze(獅子口) | 火/格鬥 | Makuhita(Brawly 的王牌、Cristian、Granite Cave 野生),以及勁敵隊伍裡的 Slugma、Torkoal | Dewford 是格鬥道館,〈石橋〉狂舞的獅子正好對上格鬥;火屬性也接得住勁敵的 Slugma、Torkoal。照 Sonia 在 `plan-b-references.md` §7.2 的建議 |
+| Kamorai(大飛出、別雷神) | 水/電 | Wailmer(Dewford 和 Route 104–107 的 Good/Super Rod 釣魚) | 賀茂川的雷神,出現在水邊;之後 Route 110 的 Electrike(電)也可以考慮用它 |
+| Okinoir(黒式尉) | 草/地面 | Oddish(Route 110、117 以後) | 搖鈴撒種、祈求豐收的老翁;Oddish 是夜裡在田野活動的草系,而且也是第 1 階段。Dewford 這一段沒有草系的位置,所以放到下一段 |
+
+### Dewford 段用現有角色填的位置(David 交代,Mark 挑的)
+- **Aron → Bekurama**(草/鋼):Granite Cave 裡需要一隻鋼屬性,第 1 階段的鋼系只有它;大癋見是鞍馬山的天狗,住在山裡和洞窟也說得通。Aron 原本是 3 階段的進化線,之後 Bekurama 有進化型時再補 Lairon/Aggron。
+- **Sableye → Kyokon**(一般/幽靈):保留幽靈屬性;會化身的狐狸,在暗處盯著寶石,跟 Sableye 的形象接近。
+- **Tentacool → Shojobob**(水/妖精):照 Sonia 的建議;雖然沒有毒屬性,但都是浮在水面上的角色。
+- **Meditite、Zubat**:做成新角色,也就是下面的 Dewford 2 隻。
+
+### Dewford 的 2 隻(新角色)
+
+| 暫定名 | 取代的原版 | 屬性 | 形體 | 融合來源 | 宗教／文化元素 |
+|---|---|---|---|---|---|
+| Gachirinza | Meditite(Brawly、Jocelyn、Laura、Lilith) | 格鬥/超能力 | 面具本體加手腳(盤腿坐) | Tsukuyume 閉成新月的眼睛、Karuvajra 的兩隻手臂(改成在身前合起的手勢)、Tsukuyume 的月亮(改成滿月) | 東密:月輪觀(對著滿月冥想)的意象;不放種子字,也不做成佛像 |
+| Komorimen | Zubat(Granite Cave 各層) | 毒/飛行 | 面具本體加蝙蝠翅膀 | Utoghast 痩男的凹陷臉和空洞的眼睛、共用零件 `wing`(蝙蝠翅膀)、Shachound 的立耳、共用零件 `rope`(額頭的小注連繩) | 神道:洞窟神社的注連繩 |
+
+- Gachirinza 冥想到雙手越來越重(格鬥),月光代表心念(超能力)。Komorimen 的毒來自滴著毒液的獠牙。
+- 兩隻都是第 1 階段。Zubat 和 Meditite 原本都有進化型(Golbat／Crobat、Medicham),之後再補。
+
 ## 還沒用到的候選
 - 能:殺生石(野干或小飛出)、熊坂(長霊癋見)、邯鄲男、真蛇(Omotelle 線如果要有第 4 階段)、増女(〈羽衣〉的天女)、童子(〈菊慈童〉)、黒髭(龍神)、小癋見(〈野守〉〈鵜飼〉的地獄小鬼)、怪士(〈船弁慶〉的平知盛亡靈)。
 - 狂言:武悪(和它的變化形神鳴,〈雷〉的雷神)、乙、賢徳(動物精靈)、猿(〈靭猿〉)、狸、蛸(うそぶき面)、祖父、尼、福の神(神面,不採用)。
