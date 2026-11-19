@@ -20,6 +20,12 @@ SCRIPTS="${ODDEX_REGRESSION_SCRIPTS:-to_littleroot to_starter oddex_gallery to_p
 ODDEX_SHOTS_BASELINE="${ODDEX_SHOTS_BASELINE-$ROOT/tools/headless/baselines}"
 fail=0
 
+echo "== tool unit tests"
+for t in "$ROOT"/tools/oddex/test_*.py; do
+    python3 -W error::ResourceWarning "$t" -q 2>&1 | tail -1 | sed "s|^|$(basename "$t"): |"
+    [ "${PIPESTATUS[0]}" -eq 0 ] || fail=1
+done
+
 echo "== generated species files are up to date"
 python3 "$ROOT/tools/oddex/gen_species.py" --check || fail=1
 
