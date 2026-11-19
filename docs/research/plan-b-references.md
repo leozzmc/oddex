@@ -379,3 +379,19 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 可能遇到的問題：
 - Dewford 道館很暗，要帶 Flash 或摸黑。stage_reach 走得到，但 autopilot 的路線規劃用的是地圖資料，不受亮度影響。
 - Granite Cave B1F 的裂地板要 Mach Bike，不過 Steven 的房間從 1F 就走得到。
+
+
+**錄製結果**：`tools/headless/scripts/to_dewford.txt`（在 `check-oddex-full` 裡，單獨約 160 秒）。截圖 d01–d07 依序是：
+- Rusturf Tunnel 的 Peeko 和 Aqua 手下、手下的 Shachound。
+- Rustboro 的勁敵（Shojobob）。
+- Briney 家的 Peeko、Dewford House1 的 Kyokon。
+- Granite Cave 的野生 Komorimen。
+- Brawly 的 Karuvajra。
+
+腳本**停在 Brawly 的第一個回合**：Lv17 的 Grinpack 被 Karuvajra 的 Karate Chop 一下打掉 44/45，而它所有的招式打格鬥/飛行都只有一半效果，這不是多練幾級能解決的。這跟 Roxanne 一樣是草系御三家的平衡問題，留給使用者決定。Old Rod 和 Steven 的信沒有涵蓋，因為跟角色遷移無關。
+
+錄製時學到的事：
+- Rustboro 南口的勁敵會問要不要對戰，用 B 推進等於回答 NO。
+- Devon 社長之後的 PokéNav 教學，要選 POKéNAV → MATCH CALL → MR. STONE → CALL 才會結束。
+- Briney 和 Peeko 繞著桌子走，要站在路線旁邊一直按 A 等他們經過。
+- 路上的訓練家打完之後會站在路中間，autopilot 會判斷成走不過去。這時加上 `AP_PARTIAL=1`，讓 autopilot 交出已經走過的指令，再手動繞過去。
