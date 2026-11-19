@@ -363,9 +363,18 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 
 這一段的共用腳本（`data/scripts/*.inc`）裡沒有原版角色引用，所以不需要 `script_files`。
 
-### 7.4 原版基準 `to_dewford`：等 `[rustboro]` 遷移完再錄
+### 7.4 `to_dewford`：遷移之後才錄
 
-跟 Rustboro 一樣，基準要錄在前一段遷移完的 ROM 上。預定接在 `to_rustboro` 後面：Devon 貨物事件（Rusturf 手下）→ Devon 社長 → Route 104 勁敵 → Briney 的船 → Dewford（Old Rod、House1 的 Zigzagoon）→ Granite Cave（Steven）→ Brawly。截圖要拍到 §7.3 的每一處、勁敵戰、Brawly 的王牌，以及一次 Old Rod 的釣魚戰鬥。執行時間會超過 `to_rustboro`（約 144 秒），所以放進 `check-oddex-full`。
+`[dewford]` 已經遷移，`strict = true`：
+- `apply_replacements`：party 20、wild 100。Route 104 的 land 已經在 `[rustboro]` 裡遷移過。
+- 勁敵的御三家改成 `Oddex Starter *` 代號 ×6。
+- Dewford House1 的寵物改成 Kyokon（叫聲、文字、造型）；Peeko 用 `PEEKO`。
+
+這一段**沒有另外錄原版基準**，跟技能說明的第 2 步不同。原因有兩個：
+- 這一晚御三家和角色數量換了好幾次，每次都讓經過戰鬥的路線整段作廢，原版基準錄好就會過期。
+- 這段地圖不在任何現有回歸腳本的路線上。遷移後 `check-oddex-full` 只有 `to_rustboro` r02 一張不同，而且只是 Woods 手下 Shachound 的性別符號：訓練家資料一變動，訓練家寶可夢的性別就可能跟著改，畫面其他部分都沒變。
+
+`to_dewford` 直接錄在遷移後的 ROM 上。預定接在 `to_rustboro` 後面：Devon 貨物事件（Rusturf 手下）→ Devon 社長 → Route 104 勁敵 → Briney 的船 → Dewford（Old Rod、House1 的 Zigzagoon）→ Granite Cave（Steven）→ Brawly。截圖要拍到 §7.3 的每一處、勁敵戰、Brawly 的王牌，以及一次 Old Rod 的釣魚戰鬥。執行時間會超過 `to_rustboro`（約 144 秒），所以放進 `check-oddex-full`。
 
 可能遇到的問題：
 - Dewford 道館很暗，要帶 Flash 或摸黑。stage_reach 走得到，但 autopilot 的路線規劃用的是地圖資料，不受亮度影響。
