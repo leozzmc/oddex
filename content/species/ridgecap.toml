@@ -1,0 +1,54 @@
+# Starter, mountain-trail trio (docs/research/friends-designs.md): an unmasked head-only character; the
+# repo holds only the cartoon version. Stats and moves are provisional; Lv5 moves match the starter it would replace.
+
+id = "RIDGECAP"
+name = "Ridgecap"
+category = "Flying Head"
+
+types = ["WATER", "FLYING"]
+abilities = ["TORRENT", "NONE", "RAIN_DISH"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 52, atk = 50, def = 62, spa = 55, spd = 50, spe = 41 }
+ev_yield = { def = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 7
+weight = 150
+text = """
+At night its head leaves to fly over the
+peaks on finned ears. Its glasses fill
+with meltwater, so its eyes swim, and it
+is never sure where it is looking."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "TAIL_WHIP"], [3, "WATER_GUN"], [6, "GUST"], [9, "AQUA_JET"], [12, "WING_ATTACK"], [15, "BUBBLE_BEAM"], [18, "AIR_CUTTER"], [21, "WATER_PULSE"], [24, "AIR_SLASH"], [27, "SURF"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BLIZZARD", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/ridgecap"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_STRETCH"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["RIDGECAP"]

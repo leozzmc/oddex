@@ -1,0 +1,54 @@
+# Starter, mountain-trail trio (docs/research/friends-designs.md): an unmasked head-only character; the
+# repo holds only the cartoon version. Stats and moves are provisional; Lv5 moves match the starter it would replace.
+
+id = "GRINPACK"
+name = "Grinpack"
+category = "Drop Head"
+
+types = ["GRASS", "DARK"]
+abilities = ["OVERGROW", "NONE", "PICKPOCKET"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 50, atk = 55, def = 50, spa = 50, spd = 55, spe = 50 }
+ev_yield = { hp = 1 }
+catch_rate = 45
+exp_yield = 62
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 190
+text = """
+It hangs from a vine over the trail and
+drops onto hikers, grinning from ear to
+ear. If they grin back, its long legs
+carry it up into the trees again."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "GROWL"], [3, "LEAFAGE"], [6, "BITE"], [9, "MEGA_DRAIN"], [12, "SUCKER_PUNCH"], [15, "RAZOR_LEAF"], [18, "GROWTH"], [21, "GIGA_DRAIN"], [24, "CRUNCH"], [27, "SEED_BOMB"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "DIG", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/grinpack"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["starter"]
+level_band = [2, 8]
+family = ["GRINPACK"]

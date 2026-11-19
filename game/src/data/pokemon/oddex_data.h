@@ -449,3 +449,105 @@ static const struct SpriteFrameImage sPicTable_Hannyagon[] = {
     overworld_ascending_frames(gObjectEventPic_Hannyagon, 4, 4),
 };
 #endif
+
+// Grinpack
+static const struct LevelUpMove sGrinpackLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_GROWL),
+    LEVEL_UP_MOVE( 3, MOVE_LEAFAGE),
+    LEVEL_UP_MOVE( 6, MOVE_BITE),
+    LEVEL_UP_MOVE( 9, MOVE_MEGA_DRAIN),
+    LEVEL_UP_MOVE(12, MOVE_SUCKER_PUNCH),
+    LEVEL_UP_MOVE(15, MOVE_RAZOR_LEAF),
+    LEVEL_UP_MOVE(18, MOVE_GROWTH),
+    LEVEL_UP_MOVE(21, MOVE_GIGA_DRAIN),
+    LEVEL_UP_MOVE(24, MOVE_CRUNCH),
+    LEVEL_UP_MOVE(27, MOVE_SEED_BOMB),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Grinpack[] = INCGFX_U32("graphics/pokemon/oddex/grinpack/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Grinpack[] = INCGFX_U32("graphics/pokemon/oddex/grinpack/back.png", ".4bpp.smol");
+const u16 gMonPalette_Grinpack[] = INCGFX_U16("graphics/pokemon/oddex/grinpack/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Grinpack[] = INCGFX_U16("graphics/pokemon/oddex/grinpack/shiny.pal", ".gbapal");
+const u8 gMonIcon_Grinpack[] = INCGFX_U8("graphics/pokemon/oddex/grinpack/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Grinpack[] = INCGFX_U8("graphics/pokemon/oddex/grinpack/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Grinpack[] = INCGFX_COMP("graphics/pokemon/oddex/grinpack/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Grinpack[] = INCGFX_U16("graphics/pokemon/oddex/grinpack/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Grinpack[] = INCGFX_U16("graphics/pokemon/oddex/grinpack/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Grinpack[] = {
+    overworld_ascending_frames(gObjectEventPic_Grinpack, 4, 4),
+};
+#endif
+
+// Ridgecap
+static const struct LevelUpMove sRidgecapLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_TACKLE),
+    LEVEL_UP_MOVE( 1, MOVE_TAIL_WHIP),
+    LEVEL_UP_MOVE( 3, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 6, MOVE_GUST),
+    LEVEL_UP_MOVE( 9, MOVE_AQUA_JET),
+    LEVEL_UP_MOVE(12, MOVE_WING_ATTACK),
+    LEVEL_UP_MOVE(15, MOVE_BUBBLE_BEAM),
+    LEVEL_UP_MOVE(18, MOVE_AIR_CUTTER),
+    LEVEL_UP_MOVE(21, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE(24, MOVE_AIR_SLASH),
+    LEVEL_UP_MOVE(27, MOVE_SURF),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Ridgecap[] = INCGFX_U32("graphics/pokemon/oddex/ridgecap/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Ridgecap[] = INCGFX_U32("graphics/pokemon/oddex/ridgecap/back.png", ".4bpp.smol");
+const u16 gMonPalette_Ridgecap[] = INCGFX_U16("graphics/pokemon/oddex/ridgecap/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Ridgecap[] = INCGFX_U16("graphics/pokemon/oddex/ridgecap/shiny.pal", ".gbapal");
+const u8 gMonIcon_Ridgecap[] = INCGFX_U8("graphics/pokemon/oddex/ridgecap/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Ridgecap[] = INCGFX_U8("graphics/pokemon/oddex/ridgecap/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Ridgecap[] = INCGFX_COMP("graphics/pokemon/oddex/ridgecap/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Ridgecap[] = INCGFX_U16("graphics/pokemon/oddex/ridgecap/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Ridgecap[] = INCGFX_U16("graphics/pokemon/oddex/ridgecap/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Ridgecap[] = {
+    overworld_ascending_frames(gObjectEventPic_Ridgecap, 4, 4),
+};
+#endif
+
+// Trekkeye
+static const struct LevelUpMove sTrekkeyeLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
+    LEVEL_UP_MOVE( 1, MOVE_GROWL),
+    LEVEL_UP_MOVE( 3, MOVE_EMBER),
+    LEVEL_UP_MOVE( 6, MOVE_METAL_CLAW),
+    LEVEL_UP_MOVE( 9, MOVE_FLAME_CHARGE),
+    LEVEL_UP_MOVE(12, MOVE_IRON_DEFENSE),
+    LEVEL_UP_MOVE(15, MOVE_FLAME_WHEEL),
+    LEVEL_UP_MOVE(18, MOVE_IRON_HEAD),
+    LEVEL_UP_MOVE(21, MOVE_FLAMETHROWER),
+    LEVEL_UP_MOVE(24, MOVE_FLASH_CANNON),
+    LEVEL_UP_MOVE(27, MOVE_OVERHEAT),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Trekkeye[] = INCGFX_U32("graphics/pokemon/oddex/trekkeye/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Trekkeye[] = INCGFX_U32("graphics/pokemon/oddex/trekkeye/back.png", ".4bpp.smol");
+const u16 gMonPalette_Trekkeye[] = INCGFX_U16("graphics/pokemon/oddex/trekkeye/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Trekkeye[] = INCGFX_U16("graphics/pokemon/oddex/trekkeye/shiny.pal", ".gbapal");
+const u8 gMonIcon_Trekkeye[] = INCGFX_U8("graphics/pokemon/oddex/trekkeye/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Trekkeye[] = INCGFX_U8("graphics/pokemon/oddex/trekkeye/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Trekkeye[] = INCGFX_COMP("graphics/pokemon/oddex/trekkeye/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Trekkeye[] = INCGFX_U16("graphics/pokemon/oddex/trekkeye/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Trekkeye[] = INCGFX_U16("graphics/pokemon/oddex/trekkeye/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Trekkeye[] = {
+    overworld_ascending_frames(gObjectEventPic_Trekkeye, 4, 4),
+};
+#endif

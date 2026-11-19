@@ -6,4 +6,6 @@ order = [
     "OKINOIR", "SHISHIBLAZE", "KAMORAI",
     "SHACHOUND", "KYOKON", "USOBUZZ", "SHAWABOLT", "UTOGHAST",
     "SHOJOBOB", "BEKURAMA", "YAMAMBRR", "OMOTELLE", "DEIGLOOM", "HANNYAGON",
+    # Mountain-trail trio; moves to the front once they replace the starters in roles.toml.
+    "GRINPACK", "TREKKEYE", "RIDGECAP",
 ]
