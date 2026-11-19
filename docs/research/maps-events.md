@@ -90,7 +90,8 @@ cp data/maps/LittlerootTown/scripts.inc /tmp/lr.s && ./tools/preproc/preproc /tm
 4. 新增 object event 時如果插在陣列中間，會讓後面所有 `LOCALID_*` 偏移。
 5. `mapjson map` 會讀取 `include/constants/map_groups.h`，必須先用 `make` 產生。另外 `make` 有些目標（例：`src/data/trainers.h`）需要 `arm-none-eabi-cpp`，在工具鏈裝好前會失敗。
 6. `preproc` 是依副檔名判斷模式，直接丟 `.inc` 會報 `unknown file extension`，要改成 `.s` 再處理。
-7. develop 首次匯入時，`game/.gitignore` 的 `tools/compresSmol/` 規則把上游 force-add 的原始碼略過了（已由 David 在 782c1ad2 修正）。
+7. 腳本文字裡有寫死的角色名和屬性（例：`PetalburgCity_PokemonCenter_1F` 的初始角色屬性說明）。替換角色後要改用 `bufferspeciesname STR_VAR_1, SPECIES_X` 加 `{STR_VAR_1}`，讓名字跟著 species 資料走；屬性相剋的說明則需要手動更新。Mossprit（Grass/Rock）已經用這個方式修正。
+8. develop 首次匯入時，`game/.gitignore` 的 `tools/compresSmol/` 規則把上游 force-add 的原始碼略過了（已由 David 在 782c1ad2 修正）。
 
 ## 6. Porymap／Poryscript 評估
 
