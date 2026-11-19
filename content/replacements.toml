@@ -1,0 +1,34 @@
+# Vanilla -> oddex species, applied in place to trainers.party and wild_encounters.json by
+# tools/oddex/apply_replacements.py (e.g. --scope early). One key per vanilla evolution stage;
+# the value is an id from content/species/*.toml at the same stage (checked with
+# species_data.vanilla_stages / oddex_stages). See docs/research/mask-designs.md for why each
+# mask fills its slot.
+#
+# Rules for stages we do not have yet: every original line except Omotelle's is a single stage
+# today, so vanilla stage 2/3 species (Mightyena, Linoone, Silcoon/Cascoon, Beautifly/Dustox,
+# Pelipper, Lombre/Ludicolo, Nuzleaf/Shiftry, Breloom, Swellow, the starters' evolutions) are
+# deliberately absent. apply_replacements lists them as missing instead of guessing; the early
+# scope does not contain them. Add each when its line gets an evolution, never by mapping a
+# stage-2 vanilla species onto a stage-1 original (stage_mismatch_ok stays empty).
+
+stage_mismatch_ok = []
+
+[replace]
+# Starters (also STARTER_* in roles.toml, rival teams on Route 103).
+TREECKO = "OKINOIR"
+TORCHIC = "SHISHIBLAZE"
+MUDKIP = "KAMORAI"
+# Early wild (Routes 101-103) and Route 102 trainers.
+POOCHYENA = "SHACHOUND"
+ZIGZAGOON = "KYOKON"
+WURMPLE = "USOBUZZ"
+WINGULL = "UTOGHAST"
+LOTAD = "SHOJOBOB"
+SEEDOT = "BEKURAMA"
+SHROOMISH = "YAMAMBRR"
+TAILLOW = "SHAWABOLT"
+# Ralts line -> Ko-omote / Deigan / Hannya (stages 1 / 2 / 3; Gallade shares Hannya).
+RALTS = "OMOTELLE"
+KIRLIA = "DEIGLOOM"
+GARDEVOIR = "HANNYAGON"
+GALLADE = "HANNYAGON"

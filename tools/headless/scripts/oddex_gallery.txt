@@ -28,48 +28,46 @@ press RIGHT 2 10
 press UP 2 20
 press UP 2 20
 wait 120
-shot gallery/1573_mossprit.png
+shot gallery/1573_okinoir.png
 press START 2 120
-shot gallery/1573_mossprit_shiny.png
-press START 2 120
-press UP 2 20
-wait 120
-shot gallery/1574_acornik.png
-press START 2 120
-shot gallery/1574_acornik_shiny.png
+shot gallery/1573_okinoir_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1575_chirpip.png
+shot gallery/1574_bekurama.png
 press START 2 120
-shot gallery/1575_chirpip_shiny.png
-press START 2 120
-press UP 2 20
-wait 120
-shot gallery/1576_dozelet.png
-press START 2 120
-shot gallery/1576_dozelet_shiny.png
+shot gallery/1574_bekurama_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1577_emberkit.png
+shot gallery/1575_shawabolt.png
 press START 2 120
-shot gallery/1577_emberkit_shiny.png
-press START 2 120
-press UP 2 20
-wait 120
-shot gallery/1578_fungloo.png
-press START 2 120
-shot gallery/1578_fungloo_shiny.png
+shot gallery/1575_shawabolt_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1579_gullwisp.png
+shot gallery/1576_omotelle.png
 press START 2 120
-shot gallery/1579_gullwisp_shiny.png
+shot gallery/1576_omotelle_shiny.png
 press START 2 120
-press DOWN 2 20
-press DOWN 2 20
+press UP 2 20
+wait 120
+shot gallery/1577_shishiblaze.png
+press START 2 120
+shot gallery/1577_shishiblaze_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1578_yamambrr.png
+press START 2 120
+shot gallery/1578_yamambrr_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1579_utoghast.png
+press START 2 120
+shot gallery/1579_utoghast_shiny.png
+press START 2 120
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
@@ -80,32 +78,46 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 wait 120
-shot gallery/1580_padlily.png
+shot gallery/1580_shojobob.png
 press START 2 120
-shot gallery/1580_padlily_shiny.png
+shot gallery/1580_shojobob_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1581_puddlefin.png
+shot gallery/1581_kamorai.png
 press START 2 120
-shot gallery/1581_puddlefin_shiny.png
-press START 2 120
-press UP 2 20
-wait 120
-shot gallery/1582_scruffle.png
-press START 2 120
-shot gallery/1582_scruffle_shiny.png
+shot gallery/1581_kamorai_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1583_shadepup.png
+shot gallery/1582_kyokon.png
 press START 2 120
-shot gallery/1583_shadepup_shiny.png
+shot gallery/1582_kyokon_shiny.png
 press START 2 120
 press UP 2 20
 wait 120
-shot gallery/1584_sproutworm.png
+shot gallery/1583_shachound.png
 press START 2 120
-shot gallery/1584_sproutworm_shiny.png
+shot gallery/1583_shachound_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1584_usobuzz.png
+press START 2 120
+shot gallery/1584_usobuzz_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1585_deigloom.png
+press START 2 120
+shot gallery/1585_deigloom_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1586_hannyagon.png
+press START 2 120
+shot gallery/1586_hannyagon_shiny.png
 press START 2 120

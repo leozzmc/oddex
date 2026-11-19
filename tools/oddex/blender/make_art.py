@@ -12,6 +12,7 @@ and written to the species' [graphics] dir. The shiny palette is read off the sh
 the same pixels, so both palettes share indices exactly.
 """
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -135,6 +136,7 @@ def make(spec, keep=None):
         render(module, 'normal', base / 'normal')
         render(module, 'shiny', base / 'shiny')
         n, s = views(base / 'normal'), views(base / 'shiny')
+        kind = json.loads((base / 'normal' / 'opts.json').read_text())['kind']
 
     def placed(v, names, size, bottom):
         return [fit(v[name], size, bottom) for name in names]
@@ -168,7 +170,7 @@ def make(spec, keep=None):
     back_ix.save(out / 'back.png', bits=4)
     icon_ix.save(out / 'icon.png', bits=4)
     ow_ix.save(out / 'overworld.png', bits=4)
-    footprint('quadruped' if spec['graphics'].get('kind') == 'beast' else 'blob').save(out / 'footprint.png', bits=1)
+    footprint('quadruped' if kind == 'beast' else 'blob').save(out / 'footprint.png', bits=1)
     write_jasc(out / 'normal.pal', pal)
     write_jasc(out / 'shiny.pal', s_pal)
     write_jasc(out / 'overworld_normal.pal', ow_pal)

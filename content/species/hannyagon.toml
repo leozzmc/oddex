@@ -1,0 +1,53 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "HANNYAGON"
+name = "Hannyagon"
+category = "Hannya Mask"
+
+types = ["GHOST", "DRAGON"]
+abilities = ["INTIMIDATE", "NONE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 95, def = 70, spa = 110, spd = 90, spe = 85 }   # total 520
+ev_yield = { spa = 3 }
+catch_rate = 45
+exp_yield = 233
+gender = 100.0
+egg_cycles = 20
+egg_groups = ["AMORPHOUS", "DRAGON"]
+growth_rate = "SLOW"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 12
+weight = 260
+text = """
+Horns have split its brow and its mouth
+has torn open to the ears. Grief has
+become pure rage. Those who look into its
+gold eyes cannot look away."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "SHADOW_SNEAK"], [1, "DRAGON_BREATH"], [1, "BITE"], [1, "SCARY_FACE"], [36, "CRUNCH"], [40, "HEX"], [44, "DRAGON_CLAW"], [48, "SHADOW_BALL"], [52, "DRAGON_PULSE"], [58, "OUTRAGE"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "CRUNCH", "DRAGON_CLAW", "DRAGON_PULSE", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "OUTRAGE", "PROTECT", "PSYCHIC", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/hannyagon"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [2, 8]
+family = ["OMOTELLE", "DEIGLOOM", "HANNYAGON"]

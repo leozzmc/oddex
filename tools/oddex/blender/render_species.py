@@ -41,6 +41,8 @@ for o in scene.objects:
     if o.type not in ('CAMERA', 'LIGHT') and o is not root and o.parent is None:
         o.parent = root
 
+import json
+(out / 'opts.json').write_text(json.dumps({'kind': opts.get('kind', 'mask')}))
 front_az = opts.get('front_az', -22)
 size = opts.get('size', 0.85)
 back_az = 180 + 40 if opts.get('kind', 'mask') == 'mask' else 180 - 20

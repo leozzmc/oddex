@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "SHACHOUND"
+previous_ids = ["SHADEPUP"]   # keeps the save slot of the old placeholder
+name = "Shachound"
+category = "Hound Mask"
+
+types = ["DARK", "PSYCHIC"]
+abilities = ["RUN_AWAY", "QUICK_FEET", "STRONG_JAW"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 35, atk = 55, def = 35, spa = 30, spd = 30, spe = 35 }   # total 220
+ev_yield = { atk = 1 }
+catch_rate = 255
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "BLACK"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 130
+text = """
+A hunting dog wearing a carved mask from
+the dance of the stag and the hounds. It
+chases anything that runs, until a song
+makes it sit down and listen quietly."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [4, "HOWL"], [7, "SAND_ATTACK"], [10, "BITE"], [13, "CONFUSION"], [16, "SNARL"], [19, "PSYBEAM"], [22, "CRUNCH"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "CRUNCH", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNARL", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shachound"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "FAST"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route101", "Route102", "Route103"]
+level_band = [2, 8]
+family = ["SHACHOUND"]

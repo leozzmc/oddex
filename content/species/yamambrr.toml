@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "YAMAMBRR"
+previous_ids = ["FUNGLOO"]   # keeps the save slot of the old placeholder
+name = "Yamambrr"
+category = "Hag Mask"
+
+types = ["ICE", "GROUND"]
+abilities = ["ICE_BODY", "NONE", "SAND_VEIL"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 40, def = 60, spa = 40, spd = 60, spe = 35 }   # total 295
+ev_yield = { hp = 1 }
+catch_rate = 255
+exp_yield = 59
+gender = 100.0
+egg_cycles = 20
+egg_groups = ["AMORPHOUS", "MINERAL"]
+growth_rate = "FLUCTUATING"
+body_color = "BROWN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 45
+text = """
+The deeply lined face of a mountain hag
+who walks every peak through the year.
+Frost hangs in her white hair. Woodcutters
+lost in the snow sometimes find her help."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ASTONISH"], [1, "POWDER_SNOW"], [5, "MUD_SLAP"], [9, "ICE_SHARD"], [13, "BULLDOZE"], [17, "ICY_WIND"], [21, "DIG"], [25, "AVALANCHE"],
+]
+teachable = [
+    "ATTRACT", "BLIZZARD", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/yamambrr"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route102"]
+level_band = [2, 8]
+family = ["YAMAMBRR"]

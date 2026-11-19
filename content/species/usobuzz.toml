@@ -1,0 +1,54 @@
+# Mask species for plan B (see docs/research/mask-designs.md). Stats and moves are provisional.
+
+id = "USOBUZZ"
+previous_ids = ["SPROUTWORM"]   # keeps the save slot of the old placeholder
+name = "Usobuzz"
+category = "Gnat Mask"
+
+types = ["BUG", "FIGHTING"]
+abilities = ["SHIELD_DUST", "NONE", "GUTS"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 45, atk = 45, def = 35, spa = 20, spd = 30, spe = 20 }   # total 195
+ev_yield = { hp = 1 }
+catch_rate = 255
+exp_yield = 56
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["BUG"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 3
+weight = 36
+text = """
+A pursed-lip mask of a mosquito spirit
+that dreams of becoming a sumo wrestler.
+It stamps before every bout, then tries
+to drink its opponent's blood."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "STRING_SHOT"], [5, "LEECH_LIFE"], [9, "ROCK_SMASH"], [13, "BUG_BITE"], [17, "LOW_KICK"],
+]
+teachable = [
+    "ATTRACT", "BRICK_BREAK", "BUG_BUZZ", "BULK_UP", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/usobuzz"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route101", "Route102"]
+level_band = [2, 8]
+family = ["USOBUZZ"]
