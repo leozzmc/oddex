@@ -13,6 +13,8 @@
 #   exclude_maps  map names/wildcards removed from `maps`
 #   exclude_refs  "<file relative to game/>:SPECIES_X" pairs that stay out of scope
 #   c_files       C sources (relative to game/) whose species references must all be migrated
+#   script_files  shared event scripts (game/data/scripts/*.inc) used by this stretch; their script
+#                 and text references count as in scope (map scripts are covered by `maps`)
 
 [early]
 description = "Littleroot -> Petalburg: plan B step 4b"
@@ -39,6 +41,8 @@ exclude_refs = [
 # The story Pokemon of this stretch (intro, rescue, starters, Wally's tutorial) are role aliases
 # since steps 2a/2b, so no C file has to be listed here.
 c_files = []
+# Both Littleroot houses run the shared players' house scripts (movers, Mom, TV).
+script_files = ["data/scripts/players_house.inc"]
 
 [rustboro]
 description = "Petalburg -> Route 104 -> Petalburg Woods -> Rustboro, up to Roxanne (first badge)"
