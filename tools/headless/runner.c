@@ -76,6 +76,9 @@ static void screenshot(const char* path) {
 }
 
 static void stateIo(const char* path, int save) {
+	if (save) {
+		makeParents(path);
+	}
 	struct VFile* vf = VFileOpen(path, save ? (O_CREAT | O_TRUNC | O_WRONLY) : O_RDONLY);
 	if (!vf || !(save ? mCoreSaveStateNamed(core, vf, SAVESTATE_ALL) : mCoreLoadStateNamed(core, vf, SAVESTATE_ALL))) {
 		fprintf(stderr, "%s state failed: %s\n", save ? "save" : "load", path);
@@ -157,7 +160,7 @@ int main(int argc, char** argv) {
 	core->setVideoBuffer(core, video, width);
 	// Wall-clock RTC feeds the game's RNG, so pin it to make runs reproducible.
 	core->rtc.override = RTC_FAKE_EPOCH;
-	core->rtc.value = 1767225600000LL; // 2026-01-01T00:00:00Z
+	core->rtc.value = 1767268800000LL; // 2026-01-01T12:00:00Z, daytime
 	if (!mCoreLoadFile(core, argv[1])) {
 		fprintf(stderr, "cannot load %s\n", argv[1]);
 		return 1;
