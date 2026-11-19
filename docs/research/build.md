@@ -78,6 +78,12 @@ tools/oddex/rea_code_elf.sh    # → game/build/pokeemerald.code.elf（約 7 MB�
 
 限制：程式碼版的 ELF 不含 `.rodata`，所以資料表（例如 `gSpeciesInfo`、文字）要用完整 ELF 的符號位址去讀 `pokeemerald.gba`；反編譯結果裡指向 `0x08xxxxxx` 的常數位址，就是這些資料。
 
+**REA 本身啟動失敗時**（`GhidraLaunchError` / `failure_kind: start`，MCP 和 `rea decompile` 都在 1 秒內失敗，但 `rea doctor` 全部通過）：問題出在 REA 的橋接層，不是 Ghidra 或 ELF（Sonia 在 2b 驗收時遇到；直接用 `analyzeHeadless` 匯入同一個 ELF 是成功的）。替代做法是直接用 REA 的後端 Ghidra 反編譯：
+```bash
+tools/oddex/ghidra_decompile.sh StartWallyTutorialBattle LoadWallyZigzagoon   # 約 10 秒，不做全域分析
+```
+這支腳本會產生程式碼版的 ELF，用暫時的 Ghidra 專案匯入（`-noanalysis`），再用 `tools/oddex/ghidra/DecompileFns.java` 反編譯指定的函式並印出 C。它只適合「確認某個函式編出來的樣子」；呼叫圖、跨函式比對這類需要全域分析的用途，還是要等 REA 修好。
+
 ## 已知問題
 - mGBA 0.10.5 的 Qt 版沒有命令列腳本參數，所以另外寫了這個 runner。
 - 沒有載入 .sav，每次都是全新遊戲。
