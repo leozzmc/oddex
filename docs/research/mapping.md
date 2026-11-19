@@ -1,6 +1,7 @@
 # 地圖製作調查（工具、設計原則、參考作品、流程）
 
 調查日期：2026-11-19。只查網頁資訊與本機原始碼，沒有安裝或下載任何工具與素材。
+審稿：Sonia（地圖／事件線），2026-11-19。修正 §1 的最大尺寸、視野、connection 與 tileset 的說法、§3 第 8 點；新增 §1.1（新增地圖要登記的地方，包含 `region` 會被 mapjson 靜默排除的問題）、§2.4 的工具評估、§3 第 9 點。標示「本機確認」的數字都已經重新驗算過。
 目的：評估社群常用的地圖製作方式，提出適合 oddex（pokeemerald-expansion 1.17.2、macOS arm64、Agent 直接改檔）的流程。
 背景決策：MVP 階段不導入 Porymap 和 Poryscript（`docs/DECISIONS.md`）。本文件是第三階段以後「原創地區」的準備。
 
@@ -13,18 +14,32 @@
 | 畫面大小 | 240×160 px ＝ **15×10 個 metatile**（每格 16×16） | GBA 規格 |
 | 地圖資料格式 `map.bin` | 每格 1 個 u16：bit 0–9 metatile ID、bit 10–11 collision、bit 12–15 elevation | `include/global.fieldmap.h:7–12` |
 | 地圖大小上限 | **(寬 + 15) × (高 + 14) ≤ 10,240**，超過的話地圖不會載入 | `include/fieldmap.h:15,23–25`、`src/fieldmap.c:170–174` |
-| 例：最大正方形 | 約 87×87；Petalburg 是 30×30 | `data/layouts/layouts.json` |
+| 例：最大正方形 | **86×86**（101×100 = 10,100；87×87 會變成 102×101 = 10,302，超過上限）。Petalburg 是 30×30，Hoenn 最大的道路 Route 119 是 40×140（8,470） | `data/layouts/layouts.json`（Sonia 審稿時計算） |
 | metatile 數量 | primary 512 ＋ secondary 512 ＝ 1,024 | `include/fieldmap.h:9,12` |
 | 8×8 tile 數量 | primary 512 ＋ secondary 512 | `include/fieldmap.h:8` |
 | 調色盤 | primary 6 組 ＋ secondary 7 組 ＝ 13 組，每組 15 色 ＋ 透明 | `include/fieldmap.h:10,14` |
 | 每個 metatile 的圖層 | 2 層（dual-layer，Emerald 預設）；可改成 3 層（triple-layer） | [Porytiles 文件](https://grunt-lucas.github.io/porytiles-user-docs/gba-decomp-tileset-system.html) |
-| 現有內容 | 785 個 layout、944 個 map 資料夾（含 FRLG） | 本機 |
+| 現有內容 | 785 個 layout、939 個 `map.json`（含 FRLG；Emerald build 只會用到 `region` 是 `REGION_HOENN` 的地圖，見 §1.1） | 本機 |
 
 設計上的意義：
-- 玩家在畫面中央，**往每個方向大約只看得到 7 格**。重點物件（出口、道具、NPC、地標）要在玩家走到附近之前，就落在這個範圍裡。
+- 玩家在畫面中央：**左右各看得到 7 格**（`MAP_OFFSET 7`，`include/fieldmap.h:19–23` 的註解），**上下只有大約 4–5 格**（畫面高 10 格）。所以垂直方向的路線，要更早讓重點物件（出口、道具、NPC、地標）進入畫面。
 - 地圖比畫面小時，外圍會顯示 `border.bin` 的圖塊（`MAP_OFFSET 7`）。
-- 高度（elevation）：玩家只能在相同高度之間移動。高度 0 是「轉換格」（樓梯、梯子），任何高度都能走上去；高度 15 用在橋這類多層結構。看起來像山坡的地方，其實是靠 collision、elevation 和 metatile behavior（例如 `MB_JUMP_SOUTH` 單向跳台）做出來的，**沒有真正的 3D**。
-- 相連的地圖（connections）是用目前地圖的 tileset 畫鄰居的圖塊。所以相連地圖要使用相同的 tileset 組合，否則交界處會顯示錯誤的圖塊。
+- 高度（elevation）：玩家只能在相同高度之間移動，例外是任一邊為 0 或 15。高度 0 是「轉換格」（樓梯、梯子）；高度 15 用在橋這類多層結構；**高度 1 是水面**（衝浪時的高度，例如 Route 103 的游泳者）。看起來像山坡的地方，其實是靠 collision、elevation 和 metatile behavior（例如 `MB_JUMP_SOUTH` 單向跳台）做出來的，**沒有真正的 3D**。
+- **可以走 ≠ 看得到**：metatile 的上層圖層會畫在 NPC 和玩家上面（屋頂邊緣、樹頂）。未白鎮的測試 NPC 就曾經放在研究所屋頂邊緣（metatile `0x20e`），結果能對話卻看不到人。放置物件時要看 metatile，不能只看 collision（`docs/research/maps-events.md` 坑 #9）。
+- 相連的地圖（connections）是用**目前地圖的 tileset** 畫鄰居的圖塊。所以 **primary tileset 必須相同**。secondary 可以不同（原版 Petalburg 用 `gTileset_Petalburg`、Route 104 用 `gTileset_Rustboro`，兩張就是相連的），但交界處兩邊大約 7–8 格內，要只用 primary tileset 的 metatile（或兩邊 secondary 剛好相同的圖塊），否則從另一側看過去會顯示錯誤的圖塊。
+
+### 1.1 新增一張地圖要登記的地方（本機確認）
+
+| 項目 | 規則 | 不照做會怎樣 |
+|---|---|---|
+| `map.json` 的 `region` | Emerald build **必須是 `REGION_HOENN`**（或留空，留空時預設就是 Hoenn） | `mapjson` 會把其他 region 的地圖列進 `invalid_maps`，**靜默地不放進 map groups**（`tools/mapjson/mapjson.cpp:743–756`）。原創地區如果要用自己的 region 名稱，必須先改 mapjson |
+| `data/maps/map_groups.json` | 地圖名稱要加進某個 group | 不會產生 `MAP_*` 常數 |
+| `data/layouts/layouts.json` | 新增 layout（寬、高、tileset、`map.bin`、`border.bin` 路徑） | 編譯失敗 |
+| connections | **兩張地圖都要寫**，方向相反、offset 互為相反數（Hoenn 的 134 條全部符合，例如 Petalburg `left -50` ↔ Route 104 `right 50`） | 只有一邊寫的話，從另一邊走過去會撞牆，或銜接位置錯開 |
+| warps | `dest_warp_id` 是**目的地地圖 `warp_events` 陣列的索引** | 傳送到錯的門 |
+| `region_map_section` | 地名提示框和地區地圖用的 `MAPSEC_*` | 地名顯示錯誤 |
+| object events | 每張地圖最多 64 個 template、同時最多 16 個存在；新的 NPC 加在陣列最後，避免 `LOCALID_*` 偏移 | 編譯失敗，或腳本指到錯的 NPC |
+| 野生遭遇 | 有草叢或水面的地圖，要在 `wild_encounters.json` 加對應的表 | 草叢踩了也不會遇到寶可夢 |
 
 ## 2. 工具
 
@@ -59,7 +74,17 @@
 `map.bin` 的格式很單純（見 §1），所以可以寫小工具讓 Agent 自動化：
 - **graybox 工具**（提案）：用文字網格描述地形（例如 `.` 草地、`#` 樹、`~` 水、`=` 路），對應到現有 Emerald tileset 的 metatile ID 和 collision，輸出 `map.bin`、`border.bin`，再登記到 `layouts.json`。
 - **地圖預覽工具**（提案）：把 `map.bin` ＋ tileset 畫成 PNG，在不開模擬器的情況下檢查整張地圖。
-- 實際遊玩檢查繼續用 `tools/headless/oddex-run` 截圖，以及 `make check-oddex`。
+- 實際遊玩檢查繼續用 `tools/headless/oddex-run` 截圖，以及 `make check-oddex`。可以從開機走到指定地點的回歸腳本，用 `tools/headless/authoring/`（讀 savestate 的位置／戰鬥狀態、跨地圖找路、閉環產生路線）製作，`to_petalburg.txt` 就是這樣做的。
+
+#### 評估（Sonia）：值得做，但分成三塊，順序是 預覽＋檢查 → graybox → 自動接邊
+
+| 部分 | 內容 | 工作量（Agent） | 何時做 | 理由 |
+|---|---|---|---|---|
+| A. 預覽＋檢查 | 讀 `metatiles.bin`（每個 metatile 2 層 × 4 個 tile，含 palette／翻轉）、`tiles.png`、`palettes/*.pal`，把整張地圖畫成 PNG；疊上 collision／elevation、物件、warp、trigger、connection 的標記。同時做靜態檢查：可達性（`plan.py` 已經有 BFS／Dijkstra）、大小上限、connection 是否雙向對稱、warp 目的地是否存在、物件數量、**物件是否放在上層圖層會蓋住的格子**、交界處是否用了對方 tileset 沒有的 metatile | 約 1 天 | **現在就可以做** | 現有地圖也用得到：放 NPC、審 `map.json` 的修改、4b 之後的事件修改。未白鎮那個被屋頂蓋住的 NPC，用這個工具可以在編譯前就抓到 |
+| B. graybox 產生器 | 文字網格 → `map.bin`／`border.bin`／`layouts.json`／`map.json`／`map_groups.json`（region 設成 `REGION_HOENN`、connections 雙向寫入）。每個符號對應一個「功能正確」的 metatile（草地、草叢、樹、水、路、牆、單向跳台、門），collision、elevation、behavior 都正確，但不處理邊緣美觀 | 約 1 天（重用 A 的讀取和檢查） | 世界設計（§5 第 1 步）完成後 | 路線還沒定的時候，做出來也沒有東西可畫 |
+| C. 自動接邊 | 樹叢 2×2 拼法、水岸、山壁、跳台兩端等「看起來對」的 metatile 選擇 | 2–4 天，而且每個 tileset 都要個別校準 | **建議不做**，交給使用者用 Porymap 修飾，或等原創 tileset（Porytiles）定案後再決定 | 成本高、跟特定 tileset 綁死；graybox 的目的本來就只是驗證路線 |
+
+結論：先做 A（約 1 天，馬上有用），B 等世界設計完成後再做，C 不做。產出的 PNG 也可以直接放進 review 和基準比對。
 
 ## 3. 地圖設計原則
 
@@ -74,14 +99,15 @@
 注意：這些教學大多以 RPG Maker XP / Pokémon Essentials 為例，畫面大小和圖層規則跟 GBA 不同，**原則可以用，數字不能照搬**。
 
 整理成 oddex 可以照做的規則：
-1. **以 15×10 的視野設計**：每走 7–10 格，畫面裡就要出現新東西（岔路、道具、訓練家、地標）。不要有超過一個畫面寬、卻什麼都沒有的空地。
+1. **以 15×10 的視野設計**（左右各 7 格、上下約 4–5 格）：每走 7–10 格，畫面裡就要出現新東西（岔路、道具、訓練家、地標）。不要有超過一個畫面寬、卻什麼都沒有的空地。南北向的路線，看得到的距離比東西向短，所以要排得更密。
 2. **主要道路 2–3 格寬**，讓玩家可以繞過 NPC，也讓訓練家的視線範圍有意義；支線和捷徑可以 1 格。
 3. **地標**：每張地圖至少一個一眼就認得出來的東西（大樹、雕像、特殊建築），用來讓玩家記住位置。
 4. **自然但不迷路**：河道、山壁、森林邊緣避免直線和左右對稱，但主要路線要清楚。
 5. **單向跳台（ledge）**控制路線：回程走捷徑、去程繞遠路，是原版常見的節奏設計。
-6. **草叢和訓練家**擺在玩家必經或「想去」的地方，不要讓玩家被迫穿過一大片草叢才能前進。
-7. **地圖連接**：相連的地圖用相同的 tileset 組合，交界處的地形要對齊。
-8. **大小**：遵守 §1 的上限。長路線可以拆成多張相連的地圖（原版 Route 110、119 的做法）。
+6. **草叢和訓練家**擺在玩家必經或「想去」的地方。原版也會讓玩家**必須**穿過一小段草叢（Route 101 的中段和北段之間只能走草叢），但必經的那段要短；大片草叢放在可以選擇繞開的支線上。訓練家的視線（sight 1–5 格）要能從路線上看出來，避免被看不到的訓練家攔下。
+7. **地圖連接**：相連的地圖 primary tileset 要相同；secondary 不同時，交界處 7–8 格內只用 primary 的圖塊（見 §1）。交界處的地形要對齊，connections 兩邊都要寫（§1.1）。
+8. **大小**：遵守 §1 的上限。原版的長路線是**單張的長地圖**（Route 110 是 40×100、Route 119 是 40×140），不是拆開的；只有超過上限，或想換 secondary tileset 時，才需要拆成多張相連的地圖。
+9. **NPC 和物件的位置**：放在可以走、而且**沒有被上層圖層蓋住**的格子（§1）；擋路的 NPC 要有劇情理由，並用 flag 控制何時消失。
 
 ## 4. 參考作品
 
@@ -112,7 +138,7 @@
 | 3. 遊玩測試 | 從開機走一遍，截圖確認視野、碰撞、傳送點、高度 | Agent | `oddex-run`、`make check-oddex` |
 | 4. 地形美術 | 原創或有授權的 tileset，分層 PNG → Porytiles 編譯 | 美術（使用者／外部）＋ Agent 編譯整合 | Porytiles、Aseprite |
 | 5. NPC 與事件 | NPC、道具、隱藏事件、劇情腳本 | Agent（Sonia 那條線） | 直接改 `map.json`、Poryscript |
-| 6. 回歸 | 每張完成的地圖加一支回歸腳本和基準截圖 | Agent | `tools/headless/baselines/` |
+| 6. 回歸 | 每張完成的地圖加一支回歸腳本和基準截圖 | Agent | `tools/headless/authoring/`（產生路線）、`tools/headless/baselines/`、`make check-oddex` |
 
 分工規則：
 - **使用者用 Porymap 編排的地圖，Agent 在同一時間不碰那張地圖的檔案**；完成後由使用者 commit（或交給 Agent），再由 Agent 補事件和測試。
@@ -127,7 +153,9 @@
 | 同一張地圖讓 Porymap 和 Agent 同時修改 | Porymap 存檔會覆寫整個檔案，另一方的修改會遺失 |
 | 先畫美術再決定路線 | 路線一改，美術就要重畫 |
 | 做超過 (寬 + 15) × (高 + 14) ≤ 10,240 的地圖 | 地圖不會載入 |
-| 相連的地圖用不同的 tileset | 交界處會顯示錯誤的圖塊 |
+| 相連的地圖用不同的 primary tileset，或交界處用了 secondary 專屬的圖塊 | 從另一側看過去，交界處會顯示錯誤的圖塊 |
+| 新地圖的 `region` 設成 `REGION_HOENN` 以外的值 | Emerald build 會靜默排除這張地圖（§1.1） |
+| connections 只寫一邊 | 從另一邊走不過去，或銜接位置錯開 |
 | 照搬 RPG Maker 教學裡的數字 | 畫面大小和圖層規則不同 |
 | 用 AI 圖片直接縮小當 tileset | 色數、8×8 對齊、調色盤數都不會符合，而且授權不清楚 |
 
@@ -136,4 +164,4 @@
 1. **要不要現在安裝 Porymap**：建議等到開始原創地區（第 1 步世界設計完成後）再裝。現階段 Agent 直接改 JSON 就夠了。裝的時候要下載 `porymap-macos-latest.zip`（約數十 MB），並先做一次「不修改就存檔」的 diff 實驗。
 2. **原創地區的世界設計**：地區主題、城鎮數量、劇情順序是使用者的設計決定，Agent 可以協助整理成文件。
 3. **地形美術的來源**：自己畫、用有授權的素材（§4），或購買素材包（例如 Zaebucca，要先讀授權）。
-4. **要不要讓 Agent 做 graybox 工具和地圖預覽工具**（§2.4）：建議在第 1 步完成後再做。
+4. **要不要讓 Agent 做 graybox 工具和地圖預覽工具**（§2.4）：建議**預覽＋檢查現在就做**（約 1 天，現有地圖和事件修改馬上用得到）；graybox 產生器等第 1 步完成後再做；自動接邊不做。
