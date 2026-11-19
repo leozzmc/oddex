@@ -36,3 +36,28 @@ exclude_refs = [
 # The story Pokemon of this stretch (intro, rescue, starters, Wally's tutorial) are role aliases
 # since steps 2a/2b, so no C file has to be listed here.
 c_files = []
+
+[rustboro]
+description = "Petalburg -> Route 104 -> Petalburg Woods -> Rustboro, up to Roxanne (first badge)"
+strict = false
+# Route 104 water and fishing need Surf or a rod (the Old Rod comes in Dewford). Route 116 is open
+# before the first badge and to_rustboro trains there, so its land table is in scope.
+wild_maps = ["Route104", "PetalburgWoods", "Route116"]
+wild_kinds = ["land_mons"]
+# Checked by land reachability from Petalburg without Surf, Cut, Rock Smash or Strength.
+trainers = [
+    "TRAINER_HALEY_1", "TRAINER_IVAN", "TRAINER_GINA_AND_MIA_1", "TRAINER_WINSTON_1",
+    "TRAINER_CINDY_1", "TRAINER_BILLY", "TRAINER_DARIAN",
+    "TRAINER_LYLE", "TRAINER_JAMES_1", "TRAINER_GRUNT_PETALBURG_WOODS",
+    # Route 116 west of the Cut trees and ledges; Janice, Jerry, Sarah and Dawson need Cut.
+    "TRAINER_JOEY", "TRAINER_JOSE", "TRAINER_CLARK", "TRAINER_KAREN_1", "TRAINER_JOHNSON", "TRAINER_DEVAN",
+    "TRAINER_JOSH", "TRAINER_TOMMY", "TRAINER_MARC", "TRAINER_ROXANNE_1",
+    # The Route 104 rival (TRAINER_{MAY,BRENDAN}_RUSTBORO_*) comes after the Devon Goods errand: next scope.
+]
+maps = ["Route104*", "PetalburgWoods", "RustboroCity*", "Route116"]
+exclude_refs = [
+    # Devon revives Lileep/Anorith from fossils found in the desert (Route 111): much later.
+    "data/maps/RustboroCity_DevonCorp_2F/scripts.inc:SPECIES_LILEEP",
+    "data/maps/RustboroCity_DevonCorp_2F/scripts.inc:SPECIES_ANORITH",
+]
+c_files = []
