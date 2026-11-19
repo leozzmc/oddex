@@ -52,6 +52,10 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 **地圖與事件**
 - 直接編輯 `game/data/maps/<Map>/map.json` 和 `scripts.inc`（不用 Porymap）。注意事項見 `docs/research/maps-events.md` 和 `docs/research/mapping.md`：mapjson 會靜默排除 region 不是 `REGION_HOENN` 的地圖；connection 兩邊都要寫、offset 互為相反數；「走得到」不等於「看得到」（上層圖層會蓋住物件）。
 
+## 私人素材（寫實臉孔）
+
+御三家是使用者和朋友，寫實臉孔的圖檔**只能放在 repo 外**的 `~/oddex-private/likeness/<dir>/`（目錄結構對應 `game/graphics/pokemon/oddex/<dir>/`），絕對不能提交，也不能把參考照片或從照片產生的圖放進 repo。repo 裡放的是卡通化的公開替代圖，`make check-oddex` 和基準截圖都用公開版。`tools/oddex/build_private.sh [ref]` 會在 `~/oddex-private/build-tree`（獨立的 worktree）把私人素材蓋上去再編譯，輸出 `~/oddex-private/oddex-private.gba`。文件、TOML、commit 訊息都不要寫這三人的真名。
+
 ## 無頭測試（`tools/headless/`）
 
 `runner.c` 是用 libmgba 寫的無頭執行器，不限速，RTC 固定在 2026-01-01 12:00 UTC，所以同一個 ROM 加同一支腳本，結果逐像素相同。腳本指令：`wait`、`press KEYS [hold] [after]`、`hold`、`repeat N <cmd>`、`shot`、`save`/`load`、`include other.txt`。
