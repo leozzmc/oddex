@@ -174,6 +174,24 @@ python3 tools/oddex/check_species_refs.py --json > refs.json
 - **4b 完成時**，把早期路線寫進 `game/oddex.mk` 的 `ODDEX_STRICT_MAPS ?=` 預設值（`LittlerootTown,Route101,OldaleTown,Route103,Route102,PetalburgCity`），之後每遷移一段就往上加。
 - **回歸腳本必須能獨立執行**：`check_oddex.sh` 會讓每份腳本在自己全新的目錄裡、從開機開始跑，不能 `load` 其他腳本留下的 savestate。所以 `to_petalburg` 要從開機一路跑到 Petalburg（`littleroot_npcs` 目前依賴 `to_littleroot` 的存檔，因此沒放進回歸清單）。如果重複的開頭段落太多，可以請 David 在 runner 加一個 `include <script>` 指令。
 
+### 5.2.1 4a：`tools/oddex/apply_replacements.py`（已完成，尚未套用）
+
+```bash
+python3 tools/oddex/apply_replacements.py --maps Route101,Route102 --kinds land_mons --dry-run   # 先看會改什麼
+python3 tools/oddex/apply_replacements.py --maps Route101,Route102 --kinds land_mons             # 就地改寫
+python3 tools/oddex/test_apply_replacements.py                                                    # 10 個單元測試，約 2 秒
+```
+
+- 替換表：`content/replacements.toml`（還沒建立，等 Mark 定案角色名字）。`[replace]` 的 key 是原版名稱（每個進化階段一行），value 是 `content/species/*.toml` 的 `id`；頂層可以寫 `stage_mismatch_ok = [...]`。
+- 改寫規則：party 只改每隻寶可夢第一行裡的 species 那一段（暱稱、性別、持有物保留），原創角色寫成 trainerproc 會轉回 `SPECIES_<ID>` 的名字（`FOO_BAR` → `Foo Bar`）；原本是 `SPECIES_X` 寫法的就維持常數寫法。json 只替換 `"species"` 的值，不重新排版。已經是原創角色（含 `SPECIES_ODDEX_*` 代號）的不會再動，所以重複執行結果不變。
+- 範圍：`--maps` 的規則跟 `check_species_refs.py` 一樣（訓練家看被哪張地圖的腳本引用；野生看遭遇表的地圖）；`--kinds` 只改指定的遭遇表（例如 `land_mons`）；Kanto（FRLG）的表一律跳過。
+- 失敗條件（什麼都不寫入）：表的 key 不是原版角色、value 不是現有的 id、進化階段不一致（除非列在 `stage_mismatch_ok`）、範圍內有表沒涵蓋的原版角色（全部列出；可以用 `--fallback ID` 先填佔位）。
+- 測試（全部在暫存副本上跑，不會動到 repo 的檔案）：只改範圍內的 species 字樣且行數不變、重複執行沒有變化、缺漏時全部列出且不寫入、`--fallback`、範圍外不變、`--dry-run`、進化階段不一致、未知的 key／value、party 的各種寫法、名稱經 trainerproc 規則可以轉回 `SPECIES_<ID>`。另外手動確認過：改寫後的副本經過 `cpp` + `trainerproc`，產生的是 `SPECIES_SHADEPUP` 這類常數。
+
+用 Mark 目前的 12 隻當暫時替換表做 dry run，觀察到兩件 4b 要決定的事：
+1. **只改陸地遭遇**：`--maps Route101,Route102,Route103` 不加 `--kinds` 的話，水上和釣魚的 Marill、Goldeen、Corphish、Magikarp、Tentacool、Wailmer、Pelipper、Sharpedo 都會被列為缺漏。這些要等拿到釣竿或衝浪才遇得到，4b 用 `--kinds land_mons` 就好。
+2. **Route 103 的地圖範圍包含中期的訓練家**：Daisy、Amy & Liv、Andrew、Miguel、Rhett、Marcos、Isabelle、Pete（§2.2，早期都遇不到）會被列為缺漏（Roselia、Plusle、Minun、Skitty、Voltorb、Makuhita…）。4b 可以 (a) 用 `--fallback`，(b) 把這些角色也加進表，或 (c) 改寫時先排除這幾名訓練家。另外 `PetalburgCity` 這個前綴也會包含 `PetalburgCity_Gym`（Norman 和道館訓練家是第 5 個徽章），4b 的 `--maps` 要寫 `PetalburgCity` 以外的明確清單，或接受這些也被列出。
+
 ### 5.3 第二階段實作順序
 
 | 步 | 內容 | 負責 | 依賴 | 驗證 |
