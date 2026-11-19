@@ -8,7 +8,7 @@ PlayersHouse_1F_EventScript_EnterHouseMovingIn::
 	waitmovement 0
 	call_if_eq VAR_0x8005, MALE, PlayersHouse_1F_EventScript_MomFacePlayerMovingInMale
 	call_if_eq VAR_0x8005, FEMALE, PlayersHouse_1F_EventScript_MomFacePlayerMovingInFemale
-	msgbox PlayersHouse_1F_Text_MoversPokemonGoSetClock, MSGBOX_DEFAULT
+	msgbox PlayersHouse_1F_Text_MoversGoSetClock, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_LITTLEROOT_INTRO_STATE, 4
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerWalkIn
@@ -365,23 +365,19 @@ PlayersHouse_1F_EventScript_DidYouMeetProfBirch::
 	release
 	end
 
-PlayersHouse_1F_EventScript_Vigoroth1::
+@ Human movers (oddex): the Vigoroth crew became people, so no cry. The flags keep their
+@ FLAG_HIDE_..._VIGOROTH_* names because flag ids live in save data.
+PlayersHouse_1F_EventScript_Mover1::
 	lock
 	faceplayer
-	waitse
-	playmoncry SPECIES_VIGOROTH, CRY_MODE_NORMAL
-	msgbox PlayersHouse_1F_Text_Vigoroth1, MSGBOX_DEFAULT
-	waitmoncry
+	msgbox PlayersHouse_1F_Text_Mover1, MSGBOX_DEFAULT
 	release
 	end
 
-PlayersHouse_1F_EventScript_Vigoroth2::
+PlayersHouse_1F_EventScript_Mover2::
 	lock
 	faceplayer
-	waitse
-	playmoncry SPECIES_VIGOROTH, CRY_MODE_NORMAL
-	msgbox PlayersHouse_1F_Text_Vigoroth2, MSGBOX_DEFAULT
-	waitmoncry
+	msgbox PlayersHouse_1F_Text_Mover2, MSGBOX_DEFAULT
 	release
 	end
 

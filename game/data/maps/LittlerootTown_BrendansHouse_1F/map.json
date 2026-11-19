@@ -30,7 +30,7 @@
       "flag": "FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_VIGOROTH_CARRYING_BOX",
+      "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 1,
       "y": 3,
       "elevation": 3,
@@ -39,11 +39,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PlayersHouse_1F_EventScript_Vigoroth2",
+      "script": "PlayersHouse_1F_EventScript_Mover2",
       "flag": "FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_VIGOROTH_FACING_AWAY",
+      "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 4,
       "y": 5,
       "elevation": 3,
@@ -52,7 +52,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PlayersHouse_1F_EventScript_Vigoroth1",
+      "script": "PlayersHouse_1F_EventScript_Mover1",
       "flag": "FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1"
     },
     {

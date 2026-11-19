@@ -39,6 +39,8 @@ wait 120
 repeat 45 press A 2 50
 repeat 8 press A 2 50
 wait 30
+# Moving in: the two human movers (formerly Vigoroth) on 1F.
+shot out/04b_movers.png
 # 1F -> stairs -> 2F
 hold UP 120
 wait 120
