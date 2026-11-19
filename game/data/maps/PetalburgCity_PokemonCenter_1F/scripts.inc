@@ -33,10 +33,9 @@ PetalburgCity_PokemonCenter_1F_EventScript_Woman::
 	release
 	end
 
-@ The type texts below are written for the current STARTER_* roles (Okinoir grass/ground,
-@ Shishiblaze fire/fighting, Kamorai water/electric). When content/roles.toml points the starters
-@ at other species (planned: the three friend characters, new second types), rewrite these
-@ texts to match and rerecord the to_petalburg baselines.
+@ The type texts below are written for the current STARTER_* roles (Grinpack grass/dark,
+@ Trekkeye fire/steel, Ridgecap water/flying). If content/roles.toml points the starters at other
+@ species, rewrite these texts to match and rerecord the to_petalburg baselines.
 PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
 	call_if_eq VAR_STARTER_MON, 0, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterGrassType
 	call_if_eq VAR_STARTER_MON, 1, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterFireType
@@ -78,25 +77,28 @@ PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
 
 PetalburgCity_PokemonCenter_1F_Text_StarterGrassTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a GRASS and GROUND type.\p"
+	.string "is a GRASS and DARK type.\p"
 	.string "It's strong against WATER, ROCK,\n"
-	.string "ELECTRIC and STEEL types.\p"
-	.string "ELECTRIC moves don't even touch it!\p"
-	.string "But, it's weak against ICE, FIRE,\n"
-	.string "FLYING and BUG-type POKéMON.$"
+	.string "GROUND, PSYCHIC and GHOST types.\p"
+	.string "PSYCHIC moves don't even touch it!\p"
+	.string "But, BUG moves hit it very hard,\n"
+	.string "and FIRE, ICE, FLYING, POISON,\l"
+	.string "FIGHTING and FAIRY moves hurt, too.$"
 
 PetalburgCity_PokemonCenter_1F_Text_StarterFireTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a FIRE and FIGHTING type.\p"
+	.string "is a FIRE and STEEL type.\p"
 	.string "It's strong against GRASS, ICE,\n"
-	.string "STEEL and NORMAL types.\p"
-	.string "But, it's weak against WATER,\n"
-	.string "GROUND, FLYING and PSYCHIC types.$"
+	.string "BUG, STEEL, ROCK and FAIRY types.\p"
+	.string "POISON moves don't even touch it!\p"
+	.string "But, GROUND moves hit it very hard,\n"
+	.string "and WATER and FIGHTING moves hurt.$"
 
 PetalburgCity_PokemonCenter_1F_Text_StarterWaterTypeInfo:
 	.string "For example, your {STR_VAR_1}\n"
-	.string "is a WATER and ELECTRIC type.\p"
+	.string "is a WATER and FLYING type.\p"
 	.string "It's strong against FIRE, ROCK,\n"
-	.string "WATER and FLYING types.\p"
-	.string "But, it's weak against GRASS-\n"
-	.string "and GROUND-type POKéMON.$"
+	.string "GROUND, BUG, GRASS and FIGHTING.\p"
+	.string "GROUND moves don't even touch it!\p"
+	.string "But, it's very weak to ELECTRIC,\n"
+	.string "and ROCK moves hurt it, too.$"
