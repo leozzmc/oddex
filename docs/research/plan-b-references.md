@@ -603,3 +603,108 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 - **道館和隱藏物件**：Lavaridge 道館的洞和間歇泉是單向的 warp（只有一邊的地塊有 warp 行為），還有只能往下跳的崖，用 warp／崖的 BFS 一步一步走，遇到戰鬥就交給 autopilot。Route 112 纜車附近被藏起來的 Magma 手下，靜態地圖仍然會擋路，所以改用執行中的地圖規劃。這兩種走法現在都在 `tools/headless/authoring/stepwalk.py`（§6.4）：預設模式處理道館，`--live` 處理纜車附近。
 
 只有在遊戲裡看過的手改：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound。Verdanturf、Route 117 育幼屋、Fallarbor Mart、Lavaridge 民宅和 Route 114 的手改，都不在這條路線上，只有 `check_maps` 和 `check_species_refs` 驗證過。Lavaridge 的蛋（`EGG_GIFT`）在畫面上看不出物種，只靠資料檢查。
+
+
+## 10. 第 6 步第五段：Flannery 之後 → Norman（第 5 個徽章）
+
+`[norman]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+
+### 10.1 可達性
+
+- 用 `stage_reach.py --rock-smash --cut --strength` 判斷，從 Lavaridge 和 Dewford（Briney 的船是腳本，所以分開跑）各跑一次。這一段 Cut 和 Strength 都能用了（Cut 從 Rustboro 拿到，Strength 有 Flannery 的徽章就能用）。Surf 要打完 Norman 才由 Wally 的爸爸給，所以水上還是不算。Go-Goggles 讓 Route 111 的沙漠可以進去。
+  - `stage_reach.py` 為此新增了 `--cut`、`--strength` 參數。shortcut：`--strength` 把所有大石頭都當成可以通過，石頭被推進死路的情況沒有模擬，石頭謎題要人工確認。
+- 人工判斷、留在範圍外的劇情鎖：
+  - Magma Hideout：要 Magma Emblem，之後才拿到。
+  - Desert Ruins：點字封印，破關後才開。
+  - Desert Underpass、Terra Cave：都是破關後才有。
+- 留在範圍外的設施：Trainer Hill、各個 Battle Tent。
+- 重戰（EDWIN_2 等）照舊不列入：它們的隊伍屬於觸發重戰時的徽章數。
+- Trick House：謎題 2 要 3 個徽章，謎題 3 要 4 個（Flannery），謎題 4 要 Norman 的徽章，所以 1–3 在範圍內。謎題是腳本 warp 進去的，謎題 2 的門靠開關打開，BFS 看不到，所以謎題 2、3 的訓練家是人工判斷加入的。
+- 新增 34 名訓練家：
+  - 沙漠 8 名。
+  - 要 Cut 才走得到的 12 名：Route 116 北側 4 名、Route 103 東側 6 名（從 Route 110 過去）、Trick House 謎題 1 剩下的 2 名。
+  - Trick House 謎題 2、3 各 3 名。
+  - Petalburg 道館 7 名和 Norman。
+  - 以前提過 Route 116 的 Janice 這幾位要 Cut；現在都納入了。仍然要衝浪的有：Route 103 的 Isabelle、Pete，Route 106、107、109、115、118 的水上訓練家。
+- 野生表：
+  - Route 111 的 land：沙漠，要 Go-Goggles。
+  - Mirage Tower 1F–4F 的 land。
+  - Altering Cave 的 land：表 2–9（Mareep、Pineco 等 8 種）只會因為 Mystery Event（`VAR_ALTERING_CAVE_WILD_SET`）而切換，正常遊戲用不到，所以用 `exclude_refs` 排除，只保留表 1（Zubat）。
+  - Petalburg、Route 102、103 的 fishing：從 Dewford 拿到 Old Rod 起就能釣，之前的範圍漏掉了。
+- Devon 的化石復原：用 Mirage Tower 的 Root／Claw Fossil 復原。之前在 `[rustboro]` 用 `exclude_refs` 排除，現在走得到了，所以 `RustboroCity_DevonCorp_2F` 列進這個範圍的 `maps`。
+
+工具修正：
+- `exclude_refs` 以前只有 `check_species_refs` 在 script／text／gfx 時讀，`apply_replacements` 完全不讀。現在兩個工具在所有類別都會讀，排除的條目在套用時也會跳過。測試在 `test_apply_replacements.py`。
+
+### 10.2 範圍內的原版角色
+
+`check_species_refs.py --scope norman`：171 筆、47 種。各類別的筆數：
+
+| wild | party | script |
+|---|---|---|
+| 102 | 59 | 10 |
+
+其中 5 種還沒有對照。下表依進化線排列：
+
+| 進化線 | 物種 | 階段 | wild | party | script | 出現 | 目前對照 |
+|---|---|---|---|---|---|---|---|
+| Anorith | Anorith | 1 |  |  | 5 | RustboroCity_DevonCorp_2F | **無** |
+| Azurill | Marill | 2 |  | 4 |  | trainer | Magatide |
+| Baltoy | Baltoy | 1 | 3 | 3 |  | Route111, trainer | Gachirinza |
+| Budew | Roselia | 2 |  | 1 |  | trainer | Higanmen |
+| Cacnea | Cacnea | 1 | 3 |  |  | Route111 | **無** |
+| Carvanha | Sharpedo | 2 | 1 |  |  | Route103 | Raijuoh |
+| Corphish | Corphish | 1 | 12 |  |  | PetalburgCity, Route102 | Namazura |
+| Geodude | Geodude | 1 |  | 1 |  | trainer | Komarock |
+| Geodude | Graveler | 2 |  | 1 |  | trainer | Mandaring |
+| Goldeen | Goldeen | 1 | 4 |  |  | PetalburgCity, Route102 | Kamorai |
+| Igglybuff | Wigglytuff | 3 |  | 1 |  | trainer | **無** |
+| Kecleon | Kecleon | 1 |  | 1 |  | trainer | Kyozosu |
+| Lileep | Lileep | 1 |  |  | 5 | RustboroCity_DevonCorp_2F | **無** |
+| Lotad | Lotad | 1 |  | 1 |  | trainer | Shojobob |
+| Lotad | Lombre | 2 |  | 1 |  | trainer | Shojomai |
+| Magikarp | Magikarp | 1 | 6 | 2 |  | PetalburgCity, Route102, Route103, trainer | Magatide |
+| Makuhita | Makuhita | 1 |  | 1 |  | trainer | Shishiblaze |
+| Minun | Minun | 1 |  | 1 |  | trainer | Tomoeden |
+| Nosepass | Nosepass | 1 |  | 1 |  | trainer | Iwadawn |
+| Numel | Numel | 1 |  | 1 |  | trainer | Hifukko |
+| Oddish | Oddish | 1 |  | 1 |  | trainer | Okinoir |
+| Plusle | Plusle | 1 |  | 1 |  | trainer | Tomoeden |
+| Poochyena | Poochyena | 1 |  | 1 |  | trainer | Shachound |
+| Ralts | Ralts | 1 |  | 2 |  | trainer | Omotelle |
+| Sandshrew | Sandshrew | 1 | 27 | 5 |  | MirageTower_1F, MirageTower_2F, MirageTower_3F, MirageTower_4F, Route111, trainer | Yamambrr |
+| Sandshrew | Sandslash | 2 |  | 2 |  | trainer | **無** |
+| Seedot | Nuzleaf | 2 |  | 1 |  | trainer | Karabeki |
+| Shroomish | Shroomish | 1 |  | 3 |  | trainer | Yamambrr |
+| Skitty | Skitty | 1 |  | 3 |  | trainer | Mandalumb |
+| Skitty | Delcatty | 2 |  | 1 |  | trainer | Mandaring |
+| Slakoth | Slakoth | 1 |  | 1 |  | trainer | Mandalumb |
+| Slakoth | Vigoroth | 2 |  | 2 |  | trainer | Mandaring |
+| Slakoth | Slaking | 3 |  | 1 |  | trainer | Mandaloka |
+| Spinda | Spinda | 1 |  | 2 |  | trainer | Mandalumb |
+| Swablu | Swablu | 1 |  | 1 |  | trainer | Utoghast |
+| Taillow | Taillow | 1 |  | 1 |  | trainer | Shawabolt |
+| Taillow | Swellow | 2 |  | 1 |  | trainer | Utomaw |
+| Tentacool | Tentacool | 1 | 2 | 1 |  | Route103, trainer | Shojobob |
+| Trapinch | Trapinch | 1 | 27 |  |  | MirageTower_1F, MirageTower_2F, MirageTower_3F, MirageTower_4F, Route111 | Mandalumb |
+| Voltorb | Voltorb | 1 |  | 1 |  | trainer | Suzurai |
+| Wailmer | Wailmer | 1 | 5 |  |  | Route103 | Kamorai |
+| Wingull | Wingull | 1 |  | 1 |  | trainer | Utoghast |
+| Wurmple | Beautifly | 3 |  | 1 |  | trainer | Yokozunat |
+| Zangoose | Zangoose | 1 |  | 1 |  | trainer | Kyozosu |
+| Zigzagoon | Zigzagoon | 1 |  | 4 |  | trainer | Kyokon |
+| Zigzagoon | Linoone | 2 |  | 1 |  | trainer | Kyozosu |
+| Zubat | Zubat | 1 | 12 |  |  | AlteringCave | Komorimen |
+
+- 化石：Lileep、Anorith（`givemon`、`bufferspeciesname`，共 10 筆）是劇情送的角色，建議跟 `EGG_GIFT` 一樣做成代號（例如 `FOSSIL_ROOT`、`FOSSIL_CLAW`），也需要對應的原創角色。
+- 還沒有對照的另外 3 種：Cacnea（沙漠野生 3 欄）、Sandslash（Sandshrew 線第 2 階段，party 2：Bryan、Dusty；Sandshrew 已經對到 Yamambrr）、Wigglytuff（Igglybuff 線第 3 階段，Alexia 的 party 1）。
+
+### 10.3 回歸腳本 `to_norman` 的預估
+
+- 路線（最短）：
+  1. 在 Lavaridge 從勁敵拿到 Go-Goggles。
+  2. Route 112 → Route 111 → Mauville → Route 117 → Verdanturf → Rusturf Tunnel → Rustboro → Route 104 → Petalburg Woods → Petalburg 道館。
+  3. 道館裡依序打開門、打訓練家 → Norman。
+  4. 如果要截圖化石：加走沙漠／Mirage Tower 拿化石，再到 Rustboro 的 Devon 2F 復原。
+- 長度：`to_lavaridge` 自己的部分約 15 萬格（約 60 秒），`to_norman` 自己的部分估計 15–25 萬格。加上化石的繞路，再多約 10 萬格。所以從開機跑 `to_norman` 約 650–690 秒，加化石約 730 秒，會超過約 600 秒的指引（§9.3 的方向 3 可以解決這個問題）。
+- Norman 前的隊伍：只有 Grinarbor（`to_lavaridge` 打 Flannery 時，在 Lv36 進化）。再打路上和道館的訓練家，估計到 Norman 時約 Lv37–38。招式：Rock Smash（格鬥，打一般系 2 倍，但威力只有 40）、Seed Bomb、Giga Drain、Crunch。如果路線去復原化石，隊伍會多一隻 Lv20 的化石角色。Norman 原版的隊伍是 Spinda、Vigoroth、Linoone、Slaking（Lv31，Truant），換成對照之後的平衡計算交給 Mark。

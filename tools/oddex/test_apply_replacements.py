@@ -226,6 +226,26 @@ class ApplyReplacementsTest(unittest.TestCase):
         vanilla, _, aliases = refs.load_species(game)
         self.assertIn(aliases["SPECIES_ODDEX_EGG_GIFT"], vanilla)
 
+    def test_exclude_refs_also_hold_back_apply_replacements(self):
+        # Altering Cave's tables 2-9 only switch in by a Mystery Event: exclude_refs keeps their species
+        # out, so a table that maps Zubat (table 1) is enough.
+        others = ["MAREEP", "PINECO", "HOUNDOUR", "TEDDIURSA", "AIPOM", "SHUCKLE", "STANTLER", "SMEARGLE"]
+        body = '[s]\nwild_maps = ["AlteringCave"]\n'
+        r = self.run_tool("--scope", "s", "--scope-file", self.table(body, "s.toml"), table='[replace]\nZUBAT = "KOMORIMEN"\n')
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("MAREEP", r.stdout)
+        excl = ", ".join(f'"src/data/wild_encounters.json:SPECIES_{s}"' for s in others)
+        r = self.run_tool("--scope", "s", "--scope-file", self.table(body + f"exclude_refs = [{excl}]\n", "s.toml"),
+                          table='[replace]\nZUBAT = "KOMORIMEN"\n')
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn("wild: 12 slots", r.stdout)
+        self.assertIn("SPECIES_MAREEP", read(self.wild))
+        # check_species_refs reads exclude_refs the same way, for wild and party findings too.
+        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
+               "--scope-file", self.table(body + f"exclude_refs = [{excl}]\n", "s.toml")]
+        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        self.assertFalse({f["species"] for f in found} & {f"SPECIES_{s}" for s in others})
+
     def test_wild_maps_map_kind_takes_one_table(self):
         # "Route119:fishing_mons" takes Route 119's fishing table only, whatever wild_kinds says;
         # Route 120 follows wild_kinds and has no rock smash table.

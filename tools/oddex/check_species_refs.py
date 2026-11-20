@@ -201,6 +201,8 @@ def trainer_maps(game):
 def in_scope(f, scope):
     """Whether a finding belongs to a content/migration_scope.toml scope (see that file's comments)."""
     cat, ctx = f["category"], f["context"]
+    if scope.excludes(f["file"], f["species"]):
+        return False
     if cat == "unknown":
         cat = "party" if f["file"].endswith(".party") else "wild"
     if cat == "party":
@@ -210,8 +212,6 @@ def in_scope(f, scope):
         return scope.has_wild(map_name, kind)
     if cat in ("script", "text", "gfx"):
         map_name = ctx.split(" ")[0] if map_of(f["file"]) else ""
-        if scope.excludes(f["file"], f["species"]):
-            return False
         if map_name:
             return scope.has_map(map_name)
         return scope.has_script_file(f["file"])  # shared scripts under data/scripts/

@@ -61,7 +61,8 @@ def in_scope(name, prefixes):
 
 
 class Replacer:
-    def __init__(self, table_path, fallback):
+    def __init__(self, table_path, fallback, excludes=lambda path, species: False):
+        self.excludes = excludes  # the scope's exclude_refs ("file:SPECIES"), as check_species_refs reads them
         with open(table_path, "rb") as fp:
             table = tomllib.load(fp)
         self.replace = {k.upper(): v.upper() for k, v in table.get("replace", {}).items()}
@@ -96,10 +97,10 @@ class Replacer:
             self.errors.append(f"--fallback {self.fallback} is not an id in content/species/*.toml"
                                f"{old_name_hint(self.fallback, self.renamed)}")
 
-    def target(self, const, where):
+    def target(self, const, where, path):
         """Original species id for a vanilla SPECIES_ constant, or None to leave it unchanged."""
         resolved = self.aliases.get(const, const)
-        if resolved not in self.vanilla:
+        if resolved not in self.vanilla or self.excludes(path, const):
             return None
         name = const[len("SPECIES_"):]
         new = self.replace.get(name) or self.replace.get(resolved[len("SPECIES_"):])
@@ -128,7 +129,7 @@ class Replacer:
                     a, b = species_span(line)
                     old = line[a:b]
                     const = old if old.startswith("SPECIES_") else refs.party_species_token(old)
-                    new = self.target(const, f"{trainer} (trainers.party:{i + 1})")
+                    new = self.target(const, f"{trainer} (trainers.party:{i + 1})", "src/data/trainers.party")
                     if new:
                         lines[i] = line[:a] + ("SPECIES_" + new if old.startswith("SPECIES_") else display_name(new)) + line[b:]
                         self.changed["party"] += 1
@@ -154,7 +155,7 @@ class Replacer:
             sys.exit("wild_encounters.json: species values are not in document order; refusing to edit")
         out, last = [], 0
         for m, (selected, where, const) in zip(matches, slots):
-            new = self.target(const, where) if selected else None
+            new = self.target(const, where, "src/data/wild_encounters.json") if selected else None
             if new:
                 out.append(text[last:m.start(2)] + "SPECIES_" + new)
                 last = m.end(2)
@@ -181,6 +182,7 @@ def main():
         scope = migration_scope.get(GAME, [args.scope], args.scope_file)[0]
         select_trainer = scope.trainers.__contains__
         select_table = scope.has_wild
+        excludes = scope.excludes
     else:
         prefixes = [p for p in (args.maps or "").split(",") if p]
         kinds = {k for k in (args.kinds or "").split(",") if k}
@@ -192,7 +194,10 @@ def main():
         def select_table(where, kind):
             return in_scope(where, prefixes) and (not kinds or kind in kinds)
 
-    r = Replacer(args.table, args.fallback)
+        def excludes(path, species):
+            return False
+
+    r = Replacer(args.table, args.fallback, excludes)
     if r.errors:
         print("\n".join(r.errors))
         sys.exit(1)

@@ -12,7 +12,8 @@
 #   maps          map names for scripts, text and Pokemon-shaped map objects; shell-style
 #                 wildcards allowed ("LittlerootTown*" includes the town's interiors)
 #   exclude_maps  map names/wildcards removed from `maps`
-#   exclude_refs  "<file relative to game/>:SPECIES_X" pairs that stay out of scope
+#   exclude_refs  "<file relative to game/>:SPECIES_X" pairs that stay out of scope (both tools skip
+#                 them; for src/data/wild_encounters.json that is every slot of the species in scope)
 #   c_files       C sources (relative to game/) whose species references must all be migrated
 #   script_files  shared event scripts (game/data/scripts/*.inc) used by this stretch; their script
 #                 and text references count as in scope (map scripts are covered by `maps`)
@@ -188,3 +189,49 @@ maps = ["Route117*", "VerdanturfTown*", "Route111*", "Route112*", "FieryPath", "
         "Route114*", "MeteorFalls_1F_1R", "MtChimney*", "JaggedPass", "LavaridgeTown*"]
 # Battle Tents are facilities; the rest of Meteor Falls needs Surf and Waterfall.
 exclude_maps = ["VerdanturfTown_BattleTent*", "FallarborTown_BattleTent*"]
+
+[norman]
+description = "After Flannery: the Go-Goggles desert and Mirage Tower, the fossil, Cut and Strength areas, back to Petalburg and Norman"
+strict = false
+# Reachability: stage_reach.py --rock-smash --cut --strength from Lavaridge and from Dewford
+# (Briney's boat is scripted). Cut (HM01, Rustboro) and Strength (HM04, usable with Flannery's
+# badge) are usable now; Surf comes from Wally's father after Norman, so water stays out. The
+# Go-Goggles (Lavaridge, after Flannery) open Route 111's desert.
+# Story locks judged by hand (left out): Magma Hideout (needs the Magma Emblem, later), Desert Ruins
+# (Braille seal, post-game), Desert Underpass (post-game), Terra Cave (post-game weather event).
+# Facilities left out: Trainer Hill, the Battle Tents. Rematch battles (EDWIN_2 ...) stay out: their
+# parties belong to the badge counts that trigger them.
+wild_maps = ["MirageTower_1F", "MirageTower_2F", "MirageTower_3F", "MirageTower_4F", "AlteringCave",
+             "Route111:land_mons",
+             # Fishing reached on foot with the Old Rod (Dewford) but missed by the earlier scopes.
+             "PetalburgCity:fishing_mons", "Route102:fishing_mons", "Route103:fishing_mons"]
+wild_kinds = ["land_mons"]
+trainers = [
+    # Route 111's desert (Go-Goggles).
+    "TRAINER_BEAU", "TRAINER_BECKY", "TRAINER_BRANDEN", "TRAINER_BRYAN", "TRAINER_CELIA", "TRAINER_DREW",
+    "TRAINER_DUSTY_1", "TRAINER_HEIDI",
+    # Behind cuttable trees: Route 116's north side, Route 103's east side (reached from Route 110),
+    # and Trick House puzzle 1's last two.
+    "TRAINER_DAWSON", "TRAINER_JANICE", "TRAINER_JERRY_1", "TRAINER_SARAH",
+    "TRAINER_AMY_AND_LIV_1", "TRAINER_ANDREW", "TRAINER_DAISY", "TRAINER_MARCOS", "TRAINER_MIGUEL_1", "TRAINER_RHETT",
+    "TRAINER_EDDIE", "TRAINER_ROBIN",
+    # Trick House puzzles 2 (badge 3, Cut) and 3 (badge 4, Rock Smash); puzzle 4 needs Norman's badge.
+    # The puzzles are entered by a scripted warp, and puzzle 2's doors open by switches, so these were
+    # judged by hand (all on the puzzle's way through).
+    "TRAINER_GEORGIA", "TRAINER_PAUL", "TRAINER_TED", "TRAINER_ALAN", "TRAINER_JUSTIN", "TRAINER_MARTHA",
+    # Petalburg Gym and Norman (scripted).
+    "TRAINER_ALEXIA", "TRAINER_BERKE", "TRAINER_GEORGE", "TRAINER_JODY", "TRAINER_MARY", "TRAINER_PARKER",
+    "TRAINER_RANDALL", "TRAINER_NORMAN_1",
+]
+# Altering Cave: only table 1 (Zubat) is used in play; tables 2-9 switch in only by a Mystery Event
+# (VAR_ALTERING_CAVE_WILD_SET), so their species stay out.
+exclude_refs = [
+    "src/data/wild_encounters.json:SPECIES_MAREEP", "src/data/wild_encounters.json:SPECIES_PINECO",
+    "src/data/wild_encounters.json:SPECIES_HOUNDOUR", "src/data/wild_encounters.json:SPECIES_TEDDIURSA",
+    "src/data/wild_encounters.json:SPECIES_AIPOM", "src/data/wild_encounters.json:SPECIES_SHUCKLE",
+    "src/data/wild_encounters.json:SPECIES_STANTLER", "src/data/wild_encounters.json:SPECIES_SMEARGLE",
+]
+# Devon's fossil revival (Route 111's Root/Claw Fossil from Mirage Tower) was excluded from [rustboro];
+# it is reachable now.
+maps = ["MirageTower*", "AlteringCave", "RustboroCity_DevonCorp_2F", "PetalburgCity_Gym",
+        "Route110_TrickHousePuzzle2", "Route110_TrickHousePuzzle3"]
