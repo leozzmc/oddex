@@ -425,6 +425,10 @@ def compress(cmds):
 
 def units(start, goal, facing, stopped):
     """First executable unit of the planned route: (cmds, expected_end, new_facing, stopped_after)."""
+    m = load(start[0])
+    if not (0 <= start[1] < m["W"] and 0 <= start[2] < m["H"]):
+        # Mid-crossing of a map connection the position is a tile past the map's edge: let it finish.
+        return ["wait 10"], None, facing, stopped
     steps = plan(start, goal, True, bool(os.environ.get("AVOID_SIGHT")), want_steps=True)
     if not steps:
         return None

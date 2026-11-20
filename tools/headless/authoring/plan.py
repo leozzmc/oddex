@@ -73,7 +73,8 @@ def sight(m):
 
 
 def step(name, x, y, d):
-    """Return (name, x, y) after moving one tile, crossing connections; None if leaving with no connection."""
+    """Return (name, x, y) after moving one tile, crossing connections; None if leaving with no
+    connection, or past the end of a narrower neighbor."""
     m = load(name)
     dx, dy = DIRS[d]
     nx, ny = x + dx, y + dy
@@ -86,13 +87,9 @@ def step(name, x, y, d):
     other = ID2NAME[c["map"]]
     o = load(other)
     off = int(c["offset"])
-    if d == "UP":
-        return other, nx - off, o["H"] - 1
-    if d == "DOWN":
-        return other, nx - off, 0
-    if d == "LEFT":
-        return other, o["W"] - 1, ny - off
-    return other, 0, ny - off
+    ox, oy = {"UP": (nx - off, o["H"] - 1), "DOWN": (nx - off, 0),
+              "LEFT": (o["W"] - 1, ny - off), "RIGHT": (0, ny - off)}[d]
+    return (other, ox, oy) if 0 <= ox < o["W"] and 0 <= oy < o["H"] else None
 
 
 # (map, x, y) tiles found blocked at authoring time, e.g. a trainer who walked over after a battle.
