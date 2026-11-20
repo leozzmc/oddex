@@ -197,20 +197,20 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertIn("wild           12 refs", r.stdout)
 
     def test_script_files_bring_shared_scripts_into_scope(self):
-        # kecleon.inc (data/scripts/) has a playmoncry and a text reference to KECLEON; no map's
-        # `maps` entry covers it, so it is in scope only through script_files.
+        # cave_of_origin.inc (data/scripts/) has a playmoncry SPECIES_KYOGRE (and GROUDON in a comment);
+        # no map's `maps` entry covers it, so it is in scope only through script_files.
+        # shortcut: needs a still-vanilla shared script (Kyogre is endgame), use a fixture game tree once it is migrated
         def refs(body):
             scope = self.table(body, "scope.toml")
             cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
                    "--scope-file", scope]
             return json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
         self.assertEqual(refs('[s]\nmaps = ["Route101"]\n'), [])  # migrated map, no shared script
-        found = refs('[s]\nscript_files = ["data/scripts/kecleon.inc"]\n')
-        self.assertTrue(found)
-        self.assertEqual({f["file"] for f in found}, {"data/scripts/kecleon.inc"})
-        self.assertEqual({f["species"] for f in found}, {"SPECIES_KECLEON"})
-        excluded = refs('[s]\nscript_files = ["data/scripts/kecleon.inc"]\n'
-                        'exclude_refs = ["data/scripts/kecleon.inc:SPECIES_KECLEON"]\n')
+        found = refs('[s]\nscript_files = ["data/scripts/cave_of_origin.inc"]\n')
+        self.assertEqual({f["file"] for f in found}, {"data/scripts/cave_of_origin.inc"})
+        self.assertIn("SPECIES_KYOGRE", {f["species"] for f in found})
+        excl = ", ".join(sorted({f'"data/scripts/cave_of_origin.inc:{f["species"]}"' for f in found}))
+        excluded = refs(f'[s]\nscript_files = ["data/scripts/cave_of_origin.inc"]\nexclude_refs = [{excl}]\n')
         self.assertEqual(excluded, [])
 
     def test_roles_pointing_at_vanilla_resolve_to_it(self):
@@ -247,15 +247,15 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertFalse({f["species"] for f in found} & {f"SPECIES_{s}" for s in others})
 
     def test_wild_maps_map_kind_takes_one_table(self):
-        # "Route119:fishing_mons" takes Route 119's fishing table only, whatever wild_kinds says;
-        # Route 120 follows wild_kinds and has no rock smash table.
-        # shortcut: needs still-vanilla maps, use a FIXTURE_REF game tree once Routes 119-120 are migrated
-        scope = self.table('[s]\nwild_maps = ["Route119:fishing_mons", "Route120"]\nwild_kinds = ["rock_smash_mons"]\n',
+        # "VictoryRoad_B1F:rock_smash_mons" takes that one table, whatever wild_kinds says;
+        # Sky Pillar follows wild_kinds and has no fishing table.
+        # shortcut: needs still-vanilla maps (Victory Road is endgame), use a fixture game tree once they are migrated
+        scope = self.table('[s]\nwild_maps = ["VictoryRoad_B1F:rock_smash_mons", "SkyPillar_1F"]\nwild_kinds = ["fishing_mons"]\n',
                            "scope.toml")
         cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
                "--scope-file", scope]
         found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
-        self.assertEqual({f["context"] for f in found}, {"Route119:fishing_mons"})
+        self.assertEqual({f["context"] for f in found}, {"VictoryRoad_B1F:rock_smash_mons"})
         bad = self.table('[s]\nwild_maps = ["Route111:sand_mons"]\n', "bad.toml")
         r = self.run_tool("--scope", "s", "--scope-file", bad, "--dry-run")
         self.assertIn("Route111:sand_mons: unknown kind sand_mons", r.stdout + r.stderr)
