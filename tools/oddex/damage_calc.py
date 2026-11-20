@@ -347,9 +347,9 @@ def main():
     for s in args.learn:
         sid, lv, mv = s.split(':')
         extra.setdefault(sid, []).append((int(lv), mv))
-    species = {s['id']: s for s in load_species()}
+    # Vanilla species fill in for parties not migrated yet (the next segment); originals win.
+    species = {**load_vanilla_species(), **{s['id']: s for s in load_species()}}
     if args.vanilla:
-        species = {**load_vanilla_species(), **species}
         starters = tuple(args.starters.split(',')) if args.starters else ('TREECKO', 'TORCHIC', 'MUDKIP')
         rows = run(args.trainer, range(a, b + 1), overrides, set(args.drop), extra, load_moves(), species,
                    starters, args.vanilla)
