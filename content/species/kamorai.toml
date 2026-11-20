@@ -23,10 +23,10 @@ evolutions = []   # [{ method, param, into }]
 height = 6
 weight = 76
 text = """
-A thunder god's mask that drifted down
-a river. Its gilded eyes never blink.
-On stormy nights the drums around it
-beat by themselves along the riverbank."""
+A thunder mask that drifted so long in
+the river that its gold eyes popped out
+like a goldfish's. On stormy nights it
+leaps from the water, roaring."""
 scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
 
 [learnset]
@@ -40,7 +40,7 @@ egg = []
 
 
 [graphics]
-dir = "graphics/pokemon/oddex/kamorai"   # rendered by tools/oddex/blender/make_art.py
+dir = "graphics/pokemon/oddex/kamorai"   # drawn in pixels by tools/oddex/pixel/kamorai.py (art pilot)
 front_anim = "V_SQUISH_AND_BOUNCE"
 front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
 back_anim = "CONCAVE_ARC_LARGE"
