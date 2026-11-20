@@ -1,12 +1,12 @@
 """Which trainers the player can meet at a story stage, for content/migration_scope.toml.
 
-usage: stage_reach.py START_MAP X Y "MapPattern,MapPattern*,..."
+usage: stage_reach.py START_MAP X Y "MapPattern,MapPattern*,..." [--rock-smash]
 
 Land-only BFS from a start tile across connections and warps, limited to maps matching the
-patterns, without Surf, Cut, Rock Smash or Strength: water is impassable and cuttable trees,
-breakable rocks and boulders block. A trainer counts as reachable when a tile next to it or in
-its sight line is reachable. (check_maps.py's reachability is different: it assumes every field
-move and only asks whether an event can ever be reached.)
+patterns, without Surf, Cut or Strength (and without Rock Smash unless --rock-smash): water is
+impassable and cuttable trees, boulders and breakable rocks block. A trainer counts as reachable
+when a tile next to it or in its sight line is reachable. (check_maps.py's reachability is
+different: it assumes every field move and only asks whether an event can ever be reached.)
 """
 import fnmatch, json, os, sys
 from collections import deque
@@ -24,7 +24,7 @@ for f in __import__("glob").glob(f"{G}/data/maps/*/map.json"):
     IDS[j["id"]] = j["name"]
 names = set(IDS.values())
 allowed = {n for n in names if any(fnmatch.fnmatchcase(n, p) for p in patterns)}
-FIELD = ("CUTTABLE_TREE", "BREAKABLE_ROCK", "PUSHABLE_BOULDER")
+FIELD = ("CUTTABLE_TREE", "PUSHABLE_BOULDER") + (() if "--rock-smash" in ARGS else ("BREAKABLE_ROCK",))
 
 
 def blocked_objs(m):

@@ -211,6 +211,19 @@ class ApplyReplacementsTest(unittest.TestCase):
                         'exclude_refs = ["data/scripts/kecleon.inc:SPECIES_KECLEON"]\n')
         self.assertEqual(excluded, [])
 
+    def test_wild_maps_map_kind_takes_one_table(self):
+        # "Route111:fishing_mons" takes Route 111's fishing table only, whatever wild_kinds says
+        # (its land table is the Go-Goggles desert); Route 113 follows wild_kinds and has no rock smash table.
+        scope = self.table('[s]\nwild_maps = ["Route111:fishing_mons", "Route113"]\nwild_kinds = ["rock_smash_mons"]\n',
+                           "scope.toml")
+        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
+               "--scope-file", scope]
+        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        self.assertEqual({f["context"] for f in found}, {"Route111:fishing_mons"})
+        bad = self.table('[s]\nwild_maps = ["Route111:sand_mons"]\n', "bad.toml")
+        r = self.run_tool("--scope", "s", "--scope-file", bad, "--dry-run")
+        self.assertIn("Route111:sand_mons: unknown kind sand_mons", r.stdout + r.stderr)
+
     def test_script_files_must_be_shared_scripts(self):
         scope = self.table('[bad]\nscript_files = ["data/scripts/nope.inc", "data/maps/Route101/scripts.inc"]\n',
                            "scope.toml")

@@ -442,3 +442,128 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
     - Lv28（已學 Seed Bomb）：打倒 Suzurai 和 Kagurai。Kagurai 是鋼／電，只有 Crunch 有效，Crunch 只有 15 PP。之後只剩 19 HP，輸給 Raijuoh（電／惡，抵抗 Crunch），Raijumen 還沒出場。
     
     `damage_calc.py` 不算道具和異常狀態，所以會高估勝率。正式錄製時 Grinvine 在 Route 110 練到 Lv33 才打（Route 110 的野生只有 Lv12–13，經驗值又依等級差縮放，每場約 60–75 點），贏的時候還剩 77/92 HP。
+
+
+## 9. 第 6 步第四段：Wattson 之後 → Flannery（第 4 個徽章）
+
+`[lavaridge]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+
+### 9.1 可達性
+
+- 用 `stage_reach.py --rock-smash` 從 Mauville 出發判斷。拿到 Dynamo Badge 後，可以從 Mauville 的房子拿到 Rock Smash。Surf、Cut、Strength 都還不能用（Strength 要 Flannery 的徽章）。
+- 另外從 Mt. Chimney 的纜車站跑一次：纜車是腳本 warp，BFS 看不到；Jagged Pass 往下走到 Lavaridge。
+- **Route 111 的沙漠**要 Go-Goggles，在 Lavaridge 打完 Flannery 才拿到。沙漠入口是 `ViciousSandstorm` 的觸發格，把這些格子當成擋住再跑一次。
+  - 沙漠裡的 8 名訓練家不列入：Heidi、Drew、Dusty、Beau、Becky、Bryan、Celia、Branden。
+  - Route 111 的 land 野生全部在沙漠的沙地上（`MB_DEEP_SAND`），所以只列 fishing（路邊的池塘）和 rock smash。
+- 劇情鎖：Route 112 的 Magma 手下和纜車要在 Meteor Falls 之後才放行，但這些都還在這一段裡。
+- 野生表只列有格子走得到的種類（用 BFS 的結果數 land 格、岸邊、可碎的岩石）：
+  - land：Route 112、113、114、117、Fiery Path、Jagged Pass、Meteor Falls 1F_1R。
+  - fishing：Route 111（池塘）、114、115、117、118、Meteor Falls 1F_1R。
+  - rock smash：Route 111、114、Granite Cave B2F（從 Dewford 起就走得到，有了 Rock Smash 就能碎岩）。
+  - water_mons 要衝浪，不列入。
+- 前面的範圍漏掉的訓練家，一起放在這裡：
+  - Route 118 西岸的 4 名：從 Mauville 往東就走得到。
+  - Route 115 南邊沙灘的 4 名：從 Rustboro 往北就走得到，現在也能從 Route 114 過去。
+  - Rusturf Tunnel 東側的 Mike：用 Rock Smash 把隧道打通之後走得到。
+- Flannery、Maxie、Winstrate 一家是腳本裡的戰鬥，不是地圖上的訓練家物件，所以手動加進清單。
+
+為了這一段，工具做了三個修改：
+- `stage_reach.py` 加上 `--rock-smash` 參數。
+- `plan.py` 的 `load()`/`step()` 支援同一邊有好幾個 connection。例如 Route 111 的左邊是 Route 113（offset 0）和 Route 112（offset 20），以前後者會蓋掉前者，所以一直走不到 Route 113。這也影響 autopilot 的路線規劃。測試在 `tools/oddex/test_plan_step.py`。
+- `migration_scope.toml` 的 `wild_maps` 可以寫成 `"Map:kind"`，只取那張地圖的某一種表，不受 `wild_kinds` 影響。例如 Route 111 只要 fishing，不要沙漠的 land。測試在 `test_apply_replacements.py`。
+
+### 9.2 範圍內的原版角色
+
+`check_species_refs.py --scope lavaridge`：340 筆、62 種。各類別的筆數：
+
+| wild | party | script | text | gfx |
+|---|---|---|---|---|
+| 159 | 149 | 6 | 7 | 19 |
+
+其中 27 種在 `replacements.toml` 還沒有對照。下表依進化線排列，「階段」是原版的進化階段，「目前對照」是 `replacements.toml` 現在的值：
+
+| 進化線 | 物種 | 階段 | wild | party | script | text | gfx | 目前對照 |
+|---|---|---|---|---|---|---|---|---|
+| Aron | Aron | 1 |  | 6 |  |  |  | Bekurama |
+| Azurill | Azurill | 1 |  |  | 1 | 2 | 1 | Shojobob |
+| Azurill | Marill | 2 | 4 | 7 |  |  |  | Magatide |
+| Azurill | Azumarill | 3 |  |  |  |  | 1 | **無** |
+| Baltoy | Baltoy | 1 |  | 2 |  |  |  | **無** |
+| Barboach | Barboach | 1 | 18 | 3 |  |  |  | **無** |
+| Budew | Roselia | 2 |  | 8 |  |  |  | **無** |
+| Carvanha | Carvanha | 1 | 5 |  |  |  |  | Kamorai |
+| Carvanha | Sharpedo | 2 | 1 |  |  |  |  | **無** |
+| Corphish | Corphish | 1 | 6 |  |  |  |  | **無** |
+| Doduo | Doduo | 1 |  | 3 |  |  |  | **無** |
+| Electrike | Electrike | 1 |  | 2 |  |  |  | Raijumen |
+| Geodude | Geodude | 1 | 14 | 9 |  |  |  | Komarock |
+| Geodude | Graveler | 2 |  | 1 |  |  |  | **無** |
+| Goldeen | Goldeen | 1 | 8 | 2 |  |  |  | Kamorai |
+| Grimer | Grimer | 1 | 2 |  |  |  |  | **無** |
+| Illumise | Illumise | 1 | 4 |  |  |  |  | Torobi |
+| Kecleon | Kecleon | 1 |  | 1 |  |  | 1 | **無** |
+| Koffing | Koffing | 1 | 2 | 4 |  |  |  | **無** |
+| Lotad | Lotad | 1 | 2 |  |  |  |  | Shojobob |
+| Lotad | Lombre | 2 | 3 | 4 |  |  |  | Shojomai |
+| Machop | Machop | 1 | 5 | 5 |  |  |  | Karuvajra |
+| Magikarp | Magikarp | 1 | 12 | 1 |  |  |  | Magatide |
+| Magnemite | Magnemite | 1 |  | 2 |  |  |  | Suzurai |
+| Makuhita | Makuhita | 1 |  | 5 |  |  |  | Shishiblaze |
+| Meditite | Meditite | 1 |  | 6 |  |  |  | Gachirinza |
+| Nincada | Ninjask | 2 |  | 1 |  |  |  | **無** |
+| Nosepass | Nosepass | 1 | 1 |  |  |  |  | Iwadawn |
+| Numel | Numel | 1 | 16 | 15 |  |  |  | **無** |
+| Numel | Camerupt | 2 |  | 2 |  |  |  | **無** |
+| Oddish | Oddish | 1 | 3 | 1 |  |  |  | Okinoir |
+| Pichu | Pikachu | 2 |  |  | 1 | 1 | 2 | Inarizuma |
+| Poochyena | Poochyena | 1 | 2 | 2 | 1 |  | 11 | Shachound |
+| Poochyena | Mightyena | 2 |  | 1 |  |  |  | Shachowl |
+| Ralts | Ralts | 1 |  | 1 |  | 1 |  | Omotelle |
+| Sandshrew | Sandshrew | 1 |  | 4 |  |  |  | **無** |
+| Seedot | Seedot | 1 | 1 |  |  |  |  | Bekurama |
+| Seedot | Nuzleaf | 2 | 1 | 3 |  |  |  | Karabeki |
+| Seviper | Seviper | 1 | 3 | 1 |  |  |  | **無** |
+| Shroomish | Shroomish | 1 |  | 9 |  |  |  | Yamambrr |
+| Skarmory | Skarmory | 1 | 2 | 1 |  |  |  | **無** |
+| Skitty | Skitty | 1 |  | 1 | 1 | 2 | 1 | Mandalumb |
+| Slugma | Slugma | 1 | 4 | 7 |  |  |  | Shishiblaze |
+| Solrock | Solrock | 1 | 3 |  |  |  |  | **無** |
+| Spinda | Spinda | 1 | 7 | 2 |  |  |  | **無** |
+| Spoink | Spoink | 1 | 4 | 1 |  |  |  | **無** |
+| Swablu | Swablu | 1 | 3 | 1 |  |  |  | **無** |
+| Taillow | Taillow | 1 |  | 4 |  |  |  | Shawabolt |
+| Taillow | Swellow | 2 |  | 1 |  |  |  | **無** |
+| Tentacool | Tentacool | 1 | 4 | 1 |  |  |  | Shojobob |
+| Torkoal | Torkoal | 1 | 3 | 1 |  |  |  | Shishiblaze |
+| Trapinch | Trapinch | 1 |  | 1 |  |  |  | **無** |
+| Volbeat | Volbeat | 1 | 1 |  |  |  |  | Torobi |
+| Wailmer | Wailmer | 1 | 6 | 1 |  |  |  | Kamorai |
+| Whismur | Whismur | 1 |  | 2 |  |  |  | Mandalumb |
+| Wingull | Wingull | 1 |  | 3 |  |  |  | Utoghast |
+| Wurmple | Dustox | 3 |  | 1 |  |  |  | **無** |
+| Wurmple | Beautifly | 3 |  | 1 |  |  |  | **無** |
+| Wynaut | Wynaut | 1 |  |  | 1 |  |  | **無** |
+| Zangoose | Zangoose | 1 |  | 1 |  |  |  | **無** |
+| Zigzagoon | Zigzagoon | 1 |  | 5 | 1 | 1 | 2 | Kyokon |
+| Zubat | Zubat | 1 | 9 | 3 |  |  |  | Komorimen |
+
+script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理的：
+- Mt. Chimney：10 個 Poochyena 物件（Aqua 和 Magma 兩邊手下的寵物，依 hide flag 分組）。
+- Route 117 育幼屋院子裡的寵物：Azumarill、Kecleon、Pikachu、Zigzagoon。
+- Verdanturf：Friendship Rater 的 Pikachu。
+- Fallarbor：Azurill（造型、叫聲、2 句文字）；Mart 的 Skitty。
+- Route 114：Poochyena。
+- Lavaridge：民宅的 Zigzagoon；老婆婆送的 Wynaut 蛋（`giveegg`）。蛋是劇情送的角色，應該跟 `TUTORIAL_CATCH` 一樣用代號。
+- Wanda 家的一句台詞提到 Ralts（Wally），改用 `TUTORIAL_CATCH` 代號。
+
+### 9.3 回歸腳本的長度
+
+`to_lavaridge` 要從開機接在 `to_mauville` 後面，而 `to_mauville` 單獨就約 530 秒。
+- 以影格算，`to_mauville` 自己的部分約 72 萬格，其中 Route 110 練等（Lv24 → 33）就占了約 62 萬格（86%）。所以時間主要不是花在路線長度，而是花在單隻御三家為了打贏道館館主要大量練等。
+- 把範圍在 Fallarbor 切成兩段，並不能讓任何一支腳本變短：每支都從開機跑，`to_lavaridge` 照樣包含前面所有的路。所以建議維持一個 `[lavaridge]` 範圍。
+- 要控制時間，得處理練等，這三個方向要由使用者決定：
+  1. Wattson／Flannery 的平衡（Mark 的分析）。草系的 Grinvine 打火系的 Flannery，練等只會比 Wattson 更多。
+  2. 讓回歸路線抓第 2 隻角色當隊友（例如打 Flannery 用的水系）。
+  3. 允許下一段的腳本從上一段在同一次檢查裡產生的 savestate 接著跑。這需要改 CLAUDE.md 的規則。
+- 粗估：不練等的話 `to_lavaridge` 約 180 萬格（約 680 秒）；再加上打 Flannery 的練等，約 900 秒以上。
+- 錄製要等 Mark 的新角色合併之後再做（角色數一改，長路線的 RNG 就會位移），之後一次重錄所有基準截圖。

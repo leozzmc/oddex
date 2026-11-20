@@ -5,7 +5,8 @@
 # migration progress table: flip `strict` to true once a scope is migrated.
 #
 # Fields (all optional):
-#   wild_maps     map names (map.json "name") whose wild encounter tables are in scope
+#   wild_maps     map names (map.json "name") whose wild encounter tables are in scope;
+#                 "Map:kind" takes just that table, whatever wild_kinds says
 #   wild_kinds    encounter tables to include, e.g. ["land_mons"] (default: all kinds)
 #   trainers      explicit TRAINER_* constants; trainers are never inferred from maps
 #   maps          map names for scripts, text and Pokemon-shaped map objects; shell-style
@@ -130,3 +131,60 @@ maps = ["Route109*", "SlateportCity*", "Route110*", "MauvilleCity*"]
 exclude_maps = ["SlateportCity_BattleTent*", "Route110_TrickHousePuzzle[2-8]", "Route110_TrickHouseEnd",
                 "Route110_TrickHouseCorridor"]
 c_files = []
+
+[lavaridge]
+description = "After Wattson: Route 117/Verdanturf, Route 111-114, Fallarbor, Meteor Falls, Mt. Chimney, Jagged Pass, Lavaridge, up to Flannery"
+strict = false
+# Reachability: stage_reach.py --rock-smash from Mauville (Rock Smash comes from the Mauville house
+# with the Dynamo Badge; no Surf, Cut or Strength, whose HM is usable only with Flannery's badge),
+# plus a second run from the Mt. Chimney cable car station (the cable car is a scripted warp the BFS
+# cannot see; Jagged Pass leads down to Lavaridge). Route 111's desert needs the Go-Goggles (given in
+# Lavaridge after Flannery): its entrances are the ViciousSandstorm triggers, so the reach was
+# checked with those tiles blocked. Story locks judged by hand: the Route 112 Magma grunts and the
+# cable car open after Meteor Falls, which is still this segment.
+#
+# Wild tables: only kinds with a reachable tile. Route 111's land encounters are all on the desert
+# sand, so it is in for fishing (a pond by the path) and Rock Smash only; Route 115 and Route 118 are
+# reached on foot at the shore only (fishing). water_mons needs Surf. Granite Cave B2F's Rock Smash
+# rocks are reachable since Dewford once Rock Smash is usable.
+wild_maps = ["Route112", "Route113", "Route114", "Route117", "FieryPath", "JaggedPass", "MeteorFalls_1F_1R",
+             "Route111:fishing_mons", "Route111:rock_smash_mons", "Route115:fishing_mons", "Route118:fishing_mons",
+             "GraniteCave_B2F:rock_smash_mons"]
+wild_kinds = ["land_mons", "fishing_mons", "rock_smash_mons"]
+trainers = [
+    # Route 117 (Anna & Meg are one double battle).
+    "TRAINER_AISHA", "TRAINER_ANNA_AND_MEG_1", "TRAINER_BRANDI", "TRAINER_DEREK", "TRAINER_DYLAN_1", "TRAINER_ISAAC_1",
+    "TRAINER_LYDIA_1", "TRAINER_MARIA_1", "TRAINER_MELINA",
+    # Route 111 outside the desert, and the Winstrate family's run (scripted, south end). Heidi, Drew,
+    # Dusty, Beau, Becky, Bryan, Celia and Branden are in the desert (Go-Goggles).
+    "TRAINER_BIANCA", "TRAINER_BROOKE_1", "TRAINER_CELINA", "TRAINER_DAISUKE", "TRAINER_HAYDEN", "TRAINER_IRENE",
+    "TRAINER_TRAVIS", "TRAINER_TYRON", "TRAINER_WILTON_1",
+    "TRAINER_VICTOR", "TRAINER_VICTORIA", "TRAINER_VIVI", "TRAINER_VICKY",
+    # Route 112.
+    "TRAINER_BRICE", "TRAINER_BRYANT", "TRAINER_CAROL", "TRAINER_LARRY", "TRAINER_SHAYLA", "TRAINER_TRENT_1",
+    # Route 113 (Tori & Tia: double).
+    "TRAINER_COBY", "TRAINER_DILLON", "TRAINER_JAYLEN", "TRAINER_LAO_1", "TRAINER_LAWRENCE", "TRAINER_LUNG",
+    "TRAINER_MADELINE_1", "TRAINER_SOPHIE", "TRAINER_TORI_AND_TIA", "TRAINER_WYATT",
+    # Route 114 (Tyra & Ivy: double).
+    "TRAINER_ANGELINA", "TRAINER_BERNIE_1", "TRAINER_CHARLOTTE", "TRAINER_CLAUDE", "TRAINER_KAI", "TRAINER_LENNY",
+    "TRAINER_LUCAS_1", "TRAINER_NANCY", "TRAINER_NOLAN", "TRAINER_SHANE", "TRAINER_STEVE_1", "TRAINER_TYRA_AND_IVY",
+    # Mt. Chimney: Tabitha, the grunts and Maxie (scripted), and the climbers.
+    "TRAINER_TABITHA_MT_CHIMNEY", "TRAINER_GRUNT_MT_CHIMNEY_1", "TRAINER_GRUNT_MT_CHIMNEY_2", "TRAINER_MAXIE_MT_CHIMNEY",
+    "TRAINER_MELISSA", "TRAINER_SAWYER_1", "TRAINER_SHEILA", "TRAINER_SHELBY_1", "TRAINER_SHIRLEY",
+    # Jagged Pass.
+    "TRAINER_AUTUMN", "TRAINER_DIANA_1", "TRAINER_ERIC", "TRAINER_ETHAN_1", "TRAINER_JULIO",
+    # Lavaridge Gym (trainerbattle_lavaridge) and Flannery.
+    "TRAINER_AXLE", "TRAINER_COLE", "TRAINER_DANIELLE", "TRAINER_ELI", "TRAINER_GERALD", "TRAINER_JACE", "TRAINER_JEFF",
+    "TRAINER_KEEGAN", "TRAINER_FLANNERY_1",
+    # Reachable on foot before this segment but in no earlier scope: Route 118's west bank (from
+    # Mauville) and Route 115's south beach (from Rustboro, and from Route 114 now). Their other
+    # trainers need Surf or Cut.
+    "TRAINER_ROSE_1", "TRAINER_WADE", "TRAINER_DALTON_1", "TRAINER_DEANDRE",
+    "TRAINER_CYNDY_1", "TRAINER_HECTOR", "TRAINER_MARLENE", "TRAINER_NOB_1",
+    # Rusturf Tunnel's east side, joined to the west by Rock Smash.
+    "TRAINER_MIKE_2",
+]
+maps = ["Route117*", "VerdanturfTown*", "Route111*", "Route112*", "FieryPath", "Route113*", "FallarborTown*",
+        "Route114*", "MeteorFalls_1F_1R", "MtChimney*", "JaggedPass", "LavaridgeTown*"]
+# Battle Tents are facilities; the rest of Meteor Falls needs Surf and Waterfall.
+exclude_maps = ["VerdanturfTown_BattleTent*", "FallarborTown_BattleTent*"]

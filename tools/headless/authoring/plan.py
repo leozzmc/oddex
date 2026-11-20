@@ -41,7 +41,7 @@ def load(name):
         "blk": open(f"{G}/" + lay["blockdata_filepath"], "rb").read(),
         "pa": ts_attr(lay["primary_tileset"], True), "sa": ts_attr(lay["secondary_tileset"], False),
         "objs": {(o["x"], o["y"]): o for o in mj.get("object_events", [])},
-        "conn": {c["direction"]: c for c in (mj.get("connections") or [])},
+        "conn": mj.get("connections") or [],  # a side can have several (Route 111's left: 113 and 112)
     }
     _cache[name] = m
     return m
@@ -80,16 +80,17 @@ def step(name, x, y, d):
     nx, ny = x + dx, y + dy
     if 0 <= nx < m["W"] and 0 <= ny < m["H"]:
         return name, nx, ny
-    cd = {"UP": "up", "DOWN": "down", "LEFT": "left", "RIGHT": "right"}[d]
-    c = m["conn"].get(cd)
-    if not c:
-        return None
-    other = ID2NAME[c["map"]]
-    o = load(other)
-    off = int(c["offset"])
-    ox, oy = {"UP": (nx - off, o["H"] - 1), "DOWN": (nx - off, 0),
-              "LEFT": (o["W"] - 1, ny - off), "RIGHT": (0, ny - off)}[d]
-    return (other, ox, oy) if 0 <= ox < o["W"] and 0 <= oy < o["H"] else None
+    for c in m["conn"]:
+        if c["direction"] != d.lower():
+            continue
+        other = ID2NAME[c["map"]]
+        o = load(other)
+        off = int(c["offset"])
+        ox, oy = {"UP": (nx - off, o["H"] - 1), "DOWN": (nx - off, 0),
+                  "LEFT": (o["W"] - 1, ny - off), "RIGHT": (0, ny - off)}[d]
+        if 0 <= ox < o["W"] and 0 <= oy < o["H"]:
+            return other, ox, oy
+    return None
 
 
 # (map, x, y) tiles found blocked at authoring time, e.g. a trainer who walked over after a battle.

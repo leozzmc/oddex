@@ -8,6 +8,7 @@ import tomllib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCOPE_FILE = os.path.join(ROOT, "content", "migration_scope.toml")
+WILD_KINDS = {"land_mons", "water_mons", "rock_smash_mons", "fishing_mons"}
 FIELDS = {"description", "strict", "wild_maps", "wild_kinds", "trainers", "maps", "exclude_maps", "exclude_refs", "c_files", "script_files"}
 
 
@@ -31,8 +32,12 @@ class Scope:
         for path in glob.glob(os.path.join(game, "data/maps/*/map.json")):
             with open(path, encoding="utf-8") as f:
                 names.add(json.load(f)["name"])
-        for m in self.wild_maps - names:
-            errors.append(f"wild_maps: no map named {m}")
+        for m in self.wild_maps:
+            name, _, kind = m.partition(":")
+            if name not in names:
+                errors.append(f"wild_maps: no map named {name}")
+            if kind and kind not in WILD_KINDS:
+                errors.append(f"wild_maps: {m}: unknown kind {kind}")
         for pattern in self.maps + self.exclude_maps:
             if not fnmatch.filter(names, pattern):
                 errors.append(f"maps: {pattern} matches no map")
@@ -59,7 +64,9 @@ class Scope:
         return any(fnmatch.fnmatchcase(name, p) for p in self.maps) and not any(fnmatch.fnmatchcase(name, p) for p in self.exclude_maps)
 
     def has_wild(self, map_name, kind):
-        return map_name in self.wild_maps and (not self.wild_kinds or kind in self.wild_kinds)
+        # "Map:kind" takes one table of a map regardless of wild_kinds (Route 111's fishing, not its desert)
+        return (map_name in self.wild_maps and (not self.wild_kinds or kind in self.wild_kinds)) \
+            or f"{map_name}:{kind}" in self.wild_maps
 
     def has_script_file(self, path):
         return path in self.script_files
