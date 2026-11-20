@@ -1828,3 +1828,77 @@ static const struct SpriteFrameImage sPicTable_Yokozunat[] = {
     overworld_ascending_frames(gObjectEventPic_Yokozunat, 4, 4),
 };
 #endif
+
+// Dogoggle
+static const struct LevelUpMove sDogoggleLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_FURY_CUTTER),
+    LEVEL_UP_MOVE( 1, MOVE_HARDEN),
+    LEVEL_UP_MOVE( 4, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 8, MOVE_SMACK_DOWN),
+    LEVEL_UP_MOVE(12, MOVE_METAL_CLAW),
+    LEVEL_UP_MOVE(16, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE(20, MOVE_BUG_BITE),
+    LEVEL_UP_MOVE(24, MOVE_BRINE),
+    LEVEL_UP_MOVE(28, MOVE_SLASH),
+    LEVEL_UP_MOVE(32, MOVE_CRUSH_CLAW),
+    LEVEL_UP_MOVE(36, MOVE_ROCK_BLAST),
+    LEVEL_UP_MOVE(41, MOVE_PROTECT),
+    LEVEL_UP_MOVE(44, MOVE_X_SCISSOR),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Dogoggle[] = INCGFX_U32("graphics/pokemon/oddex/dogoggle/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Dogoggle[] = INCGFX_U32("graphics/pokemon/oddex/dogoggle/back.png", ".4bpp.smol");
+const u16 gMonPalette_Dogoggle[] = INCGFX_U16("graphics/pokemon/oddex/dogoggle/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Dogoggle[] = INCGFX_U16("graphics/pokemon/oddex/dogoggle/shiny.pal", ".gbapal");
+const u8 gMonIcon_Dogoggle[] = INCGFX_U8("graphics/pokemon/oddex/dogoggle/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Dogoggle[] = INCGFX_U8("graphics/pokemon/oddex/dogoggle/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Dogoggle[] = INCGFX_COMP("graphics/pokemon/oddex/dogoggle/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Dogoggle[] = INCGFX_U16("graphics/pokemon/oddex/dogoggle/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Dogoggle[] = INCGFX_U16("graphics/pokemon/oddex/dogoggle/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Dogoggle[] = {
+    overworld_ascending_frames(gObjectEventPic_Dogoggle, 4, 4),
+};
+#endif
+
+// Haniwort
+static const struct LevelUpMove sHaniwortLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_WRAP),
+    LEVEL_UP_MOVE( 1, MOVE_ASTONISH),
+    LEVEL_UP_MOVE( 4, MOVE_ACID),
+    LEVEL_UP_MOVE( 8, MOVE_CONFUSE_RAY),
+    LEVEL_UP_MOVE(12, MOVE_INGRAIN),
+    LEVEL_UP_MOVE(16, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE(20, MOVE_MEGA_DRAIN),
+    LEVEL_UP_MOVE(24, MOVE_BRINE),
+    LEVEL_UP_MOVE(28, MOVE_AMNESIA),
+    LEVEL_UP_MOVE(32, MOVE_GASTRO_ACID),
+    LEVEL_UP_MOVE(36, MOVE_GIGA_DRAIN),
+    LEVEL_UP_MOVE(41, MOVE_STOCKPILE),
+    LEVEL_UP_MOVE(41, MOVE_SPIT_UP),
+    LEVEL_UP_MOVE(41, MOVE_SWALLOW),
+    LEVEL_UP_MOVE(44, MOVE_ENERGY_BALL),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Haniwort[] = INCGFX_U32("graphics/pokemon/oddex/haniwort/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Haniwort[] = INCGFX_U32("graphics/pokemon/oddex/haniwort/back.png", ".4bpp.smol");
+const u16 gMonPalette_Haniwort[] = INCGFX_U16("graphics/pokemon/oddex/haniwort/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Haniwort[] = INCGFX_U16("graphics/pokemon/oddex/haniwort/shiny.pal", ".gbapal");
+const u8 gMonIcon_Haniwort[] = INCGFX_U8("graphics/pokemon/oddex/haniwort/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Haniwort[] = INCGFX_U8("graphics/pokemon/oddex/haniwort/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Haniwort[] = INCGFX_COMP("graphics/pokemon/oddex/haniwort/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Haniwort[] = INCGFX_U16("graphics/pokemon/oddex/haniwort/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Haniwort[] = INCGFX_U16("graphics/pokemon/oddex/haniwort/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Haniwort[] = {
+    overworld_ascending_frames(gObjectEventPic_Haniwort, 4, 4),
+};
+#endif

@@ -1,0 +1,54 @@
+# Norman segment (docs/research/mask-designs.md, "Norman 段"): replaces Anorith (the Claw Fossil, revived at Devon; role FOSSIL_CLAW).
+# Stats follow the vanilla species it replaces; single-stage for now (vanilla evolves at Lv40).
+
+id = "DOGOGGLE"
+name = "Dogoggle"
+category = "Clay Figure"
+
+types = ["ROCK", "BUG"]
+abilities = ["BATTLE_ARMOR", "NONE", "SWIFT_SWIM"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 45, atk = 95, def = 50, spa = 40, spd = 50, spe = 75 }   # total 355
+ev_yield = { atk = 1 }
+catch_rate = 45
+exp_yield = 71
+gender = 12.5
+egg_cycles = 30
+egg_groups = ["WATER_3"]
+growth_rate = "ERRATIC"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 7
+weight = 125
+text = """
+A goggle-eyed clay figure of the Jomon
+age. Revived, it turned out to be an
+ancient creature: the goggles are its
+eyes, and it grew claws and a tail."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "FURY_CUTTER"], [1, "HARDEN"], [4, "WATER_GUN"], [8, "SMACK_DOWN"], [12, "METAL_CLAW"], [16, "ANCIENT_POWER"], [20, "BUG_BITE"], [24, "BRINE"], [28, "SLASH"], [32, "CRUSH_CLAW"], [36, "ROCK_BLAST"], [41, "PROTECT"], [44, "X_SCISSOR"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "CUT", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/dogoggle"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["fossil"]
+level_band = [20, 20]
+family = ["DOGOGGLE"]

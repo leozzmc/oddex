@@ -38,3 +38,7 @@ RUSTBORO_PET = "INARIZUMA"
 
 # Lavaridge: the old lady's EGG (giveegg; Wynaut in vanilla): Gachirinza, the moon sitter meditating by the hot spring.
 EGG_GIFT = "GACHIRINZA"             # Wynaut
+
+# The fossils revived at Devon in Rustboro (Root / Claw Fossil from the Route 111 Mirage Tower).
+FOSSIL_ROOT = "HANIWORT"        # Lileep
+FOSSIL_CLAW = "DOGOGGLE"        # Anorith

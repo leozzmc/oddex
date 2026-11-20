@@ -486,7 +486,7 @@
 
 見 `docs/research/balance.md` 的「Flannery 戰的選項」。
 
-## Norman 段:Flannery 之後 → Norman(第 5 個徽章),新角色 2 隻(2026-11-21,Mark;**待使用者審查**,還沒建模)
+## Norman 段:Flannery 之後 → Norman(第 5 個徽章),新角色 2 隻(2026-11-21,Mark;使用者核准,已建模)
 
 需求來自 Sonia 的盤點(`check_species_refs --scope norman`,`plan-b-references.md` §10.2):171 筆、47 種,只有 5 種還沒有對照。Altering Cave 的表 2–9 只有 Mystery Event 會切換,已經用 `exclude_refs` 排除。原則和前兩段一樣:屬性對得上、種族值差在 15% 以內就用現有角色;只有屬性或角色真的對不上才新做。美術維持 Blender 立體版,每隻新角色先寫 Brief。新角色的 HM 照它取代的原版角色(`gen_species` 會檢查)。
 

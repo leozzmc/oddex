@@ -22,6 +22,8 @@ stage_mismatch_ok = [
     "KECLEON",   # single-stage (440): onto stage-2 Kyozosu, the fox in disguise for the camouflager
     "SKARMORY",  # single-stage, strong (465): onto stage-3 Daibeki (480), the steel great tengu
     "AZUMARILL", # stage 3, graphics only (Route 117 day care yard); Magatide as for Marill
+    # Norman segment:
+    "WIGGLYTUFF",  # stage 3 onto stage-2 Kyozosu; Igglybuff and Jigglypuff never appear in the segment
 ]
 
 [replace]
@@ -146,3 +148,9 @@ ZANGOOSE = "KYOZOSU"
 KECLEON = "KYOZOSU"
 SKARMORY = "DAIBEKI"
 AZUMARILL = "MAGATIDE"
+# Norman segment (after Flannery -> Norman; mask-designs.md "Norman 段").
+CACNEA = "OKINOIR"       # grass, 335 -> 310 (-7%); grass/ground in the Route 111 desert
+SANDSLASH = "MANDARING"  # stage 2, ground, 450 -> 400 (-11%); Yamambrr (Sandshrew) has no stage 2
+WIGGLYTUFF = "KYOZOSU"   # normal, 435 -> 420; Alexia in the Petalburg gym only
+LILEEP = "HANIWORT"      # the revived fossils (roles FOSSIL_ROOT / FOSSIL_CLAW)
+ANORITH = "DOGOGGLE"

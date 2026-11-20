@@ -1747,6 +1747,8 @@ enum __attribute__((packed)) Species
     SPECIES_KAMADORO,
     SPECIES_NAMAZURA,
     SPECIES_YOKOZUNAT,
+    SPECIES_DOGOGGLE,
+    SPECIES_HANIWORT,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 
