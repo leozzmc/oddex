@@ -304,4 +304,10 @@ maps = ["Route105", "Route108", "Route115*", "Route118*", "Route119*", "Route120
         "AbandonedShip*"]
 # Route 119's Feebas spots: gWildFeebas is the file's only species (role FISHING_SPOT).
 c_files = ["src/wild_encounter.c"]
+# The invisible Kecleon on Routes 119 and 120 share this script (Devon Scope, the wild battle): role
+# HIDDEN_BLOCKER.
+script_files = ["data/scripts/kecleon.inc"]
+# The bridge's reflection keeps its vanilla graphics id; Mark redrew its images as a Kyozosu
+# silhouette (the HIDDEN_BLOCKER), so only the name is vanilla.
+exclude_refs = ["data/maps/Route120/map.json:SPECIES_KECLEON"]
 exclude_maps = ["AbandonedShip_HiddenFloor*", "AbandonedShip_Underwater*"]
