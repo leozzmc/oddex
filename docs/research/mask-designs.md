@@ -533,7 +533,7 @@
 
 見 `docs/research/balance.md` 的「Norman 戰」。
 
-## 64 px 審查(2026-11-21,Mark;只是審查,sprite 都還沒改)
+## 64 px 審查(2026-11-21,Mark;使用者核准全部 9 隻的修法,**等下一段的角色批次一起套用**)
 
 使用者說過「大多角色都很醜」。Hifukko、Namazura、Higanmen 的重做證明有效的做法是:維持 Blender 立體風格,只修 64 px 下的輪廓和關鍵特徵。這次把既有角色(不含照片合成的三人組 9 隻,以及剛核准的 Lavaridge／Norman 9 隻)共 39 隻,用 1× 的畫廊截圖(正面、背面、icon、普通色和異色)逐隻看過,挑出最弱的 9 隻(7 個問題;Mandalumb 和 Mandaring 是同一個問題)。
 
@@ -549,7 +549,8 @@
 | Magatide | 勾玉的「逗號」形狀看不出來,像一顆豆子 | 尾巴捲得更長、更緊(curl 1.0 → 1.35),眼睛放大 |
 
 - 對照圖(放大 2 倍,左邊修改前、右邊修改後,各有正面、異色正面、背面):`~/oddex-shots/mark/audit/before_after_2x.png`。這是在暫時的 build 裡渲染的,**沒有提交任何 sprite**(Sonia 正在重錄長路線,換 sprite 會讓 RNG 位移)。
-- 修改的模型檔存成 patch:`~/oddex-shots/mark/audit/model_fixes.patch`(`git apply` 確認可以直接套用)。使用者核准的部分,會放進下一段的角色批次,讓長路線只需要重錄一次。
+- 修改的模型檔存成 patch:`~/oddex-shots/mark/audit/model_fixes.patch`(`git apply` 確認可以直接套用)。
+- **待辦(使用者 2026-11-21 核准全部 9 隻)**:在下一段的角色批次裡套用這個 patch,用 `make_art.py` 重新產生這 9 隻的 sprite,在 1× 的畫廊和戰鬥裡看過,再更新 `oddex_gallery`/`oddex_dex` 的基準截圖。和新角色放在同一批,長路線只需要重錄一次。
 - 其他 30 隻在 1× 下輪廓都看得出來,這次不改。比較接近邊緣的是 Gachirinza(坐在月輪裡的人形比較小)、Iwadawn、Kagurai,之後如果還有餘力再看。
 
 ## 還沒用到的候選
