@@ -211,8 +211,8 @@ def best(attacker, defender, move_list, moves):
     return top
 
 
-# Abilities that make the holder immune to a type. Only the starters' slot-1 ability is applied
-# (the player's starter); the trainers' abilities are still not modelled.
+# Abilities that make the holder immune to a type, applied from the starters' slot-1 ability.
+# shortcut: trainers' abilities are not modelled, add them if a gym ace relies on one.
 IMMUNE_ABILITIES = {'LIGHTNING_ROD': 'ELECTRIC', 'VOLT_ABSORB': 'ELECTRIC', 'MOTOR_DRIVE': 'ELECTRIC',
                     'WATER_ABSORB': 'WATER', 'STORM_DRAIN': 'WATER', 'DRY_SKIN': 'WATER', 'FLASH_FIRE': 'FIRE',
                     'LEVITATE': 'GROUND', 'SAP_SIPPER': 'GRASS'}
