@@ -878,7 +878,7 @@ script／text／gfx 的手改（不是 `apply_replacements` 會處理的）：
 
 ### 11.4 `to_winona` 的事前調查（還沒錄）
 
-- 錄製要等 Mark 的對照和 Winona 那一批合併（角色數一改，長路線的 RNG 就會位移）。Mark 也在用同一個比例重新產生所有角色的走路圖，這不影響亂數，但所有拍到走路圖的截圖都要更新基準。
+- 錄製要等 Mark 的對照和 Winona 那一批合併（角色數一改，長路線的 RNG 就會位移）。Mark 也用同一個比例重新產生了所有角色的走路圖。這也會讓長路線的亂數位移：`main.c` 每個 VBlank 都呼叫 `AdvanceRandom()`，走路圖載入的時間一變，到處走的 NPC 就會走到別的位置。所以等整批合併後，`to_dewford` 到 `to_norman` 再加上 `to_winona` 一次重錄。
 - 路線：Wally 家拿到 Surf → Route 118 東側（要衝浪過河）→ Route 119（北邊 (25,31)、(26,31) 的勁敵觸發格）→ Weather Institute（Shelly 和手下，送 Castform）→ Fortree → Route 120 橋上的 Steven（Devon Scope，跟隱形 Kecleon 戰鬥）→ 回 Fortree 道館 → Winona。
 - 工具上要先補的：
   - autopilot／plan／stepwalk 目前都把水當成牆。衝浪要面向水按 A、選 YES，所以要加「上水」的單位，水上再用一般的移動。
