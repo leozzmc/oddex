@@ -22,6 +22,10 @@ stage_mismatch_ok = [
 TREECKO = "GRINPACK"
 TORCHIC = "TREKKEYE"
 MUDKIP = "RIDGECAP"
+# The starters' second stages (rival teams from Route 110 on).
+GROVYLE = "GRINVINE"
+COMBUSKEN = "TREKWHEEL"
+MARSHTOMP = "RIDGEFIN"
 # Early wild (Routes 101-103) and Route 102 trainers.
 POOCHYENA = "SHACHOUND"
 ZIGZAGOON = "KYOKON"

@@ -16,4 +16,6 @@ order = [
     "MANDARING", "MANDALOKA",
     # Mauville batch.
     "SUZURAI", "KAGURAI", "RAIJUMEN", "RAIJUOH", "TOROBI", "TOMOEDEN", "SHOJOMAI",
+    # Starter line stage 2.
+    "GRINVINE", "TREKWHEEL", "RIDGEFIN",
 ]

@@ -1730,6 +1730,9 @@ enum __attribute__((packed)) Species
     SPECIES_SUZURAI,
     SPECIES_TOMOEDEN,
     SPECIES_TOROBI,
+    SPECIES_GRINVINE,
+    SPECIES_RIDGEFIN,
+    SPECIES_TREKWHEEL,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

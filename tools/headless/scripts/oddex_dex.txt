@@ -171,3 +171,15 @@ press A 2 150
 shot dex/251_shojomai.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/252_grinvine.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/253_trekwheel.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/254_ridgefin.png
+press B 2 90
+press DOWN 2 20

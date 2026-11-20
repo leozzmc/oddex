@@ -1,0 +1,54 @@
+# Starter line, stage 2 (docs/research/friends-designs.md; pending review): replaces Marshtomp. The
+# sprites are likenesses built by tools/oddex/likeness/compose.py (sources stay outside the repo).
+
+id = "RIDGEFIN"
+name = "Ridgefin"
+category = "Flying Head"
+
+types = ["WATER", "FLYING"]
+abilities = ["TORRENT", "NONE", "RAIN_DISH"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 62, def = 78, spa = 70, spd = 70, spe = 55 }   # total 405
+ev_yield = { def = 2 }
+catch_rate = 45
+exp_yield = 142
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 380
+text = """
+A second pair of finned ears carries it
+higher, and a stream of water trails
+from its chin like a neck. On misty
+nights it is seen over the peaks."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "AQUA_TAIL"], [1, "TACKLE"], [1, "TAIL_WHIP"], [3, "WATER_GUN"], [6, "GUST"], [9, "AQUA_JET"], [12, "WING_ATTACK"], [15, "BUBBLE_BEAM"], [18, "AIR_CUTTER"], [21, "WATER_PULSE"], [24, "AIR_SLASH"], [27, "SURF"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BLIZZARD", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/ridgefin"   # built by tools/oddex/likeness/compose.py
+front_anim = "V_STRETCH"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [16, 36]
+family = ["RIDGECAP", "RIDGEFIN"]

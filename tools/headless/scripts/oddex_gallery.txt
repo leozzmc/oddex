@@ -292,3 +292,32 @@ shot gallery/1609_torobi.png
 press START 2 120
 shot gallery/1609_torobi_shiny.png
 press START 2 120
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press LEFT 2 10
+press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+wait 120
+shot gallery/1610_grinvine.png
+press START 2 120
+shot gallery/1610_grinvine_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1611_ridgefin.png
+press START 2 120
+shot gallery/1611_ridgefin_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1612_trekwheel.png
+press START 2 120
+shot gallery/1612_trekwheel_shiny.png
+press START 2 120

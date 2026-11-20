@@ -1053,6 +1053,7 @@
         .levelUpLearnset = sGrinpackLevelUpLearnset,
         .teachableLearnset = sGrinpackTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_GRINVINE}),
     },
 
     [SPECIES_RIDGECAP] =
@@ -1123,6 +1124,7 @@
         .levelUpLearnset = sRidgecapLevelUpLearnset,
         .teachableLearnset = sRidgecapTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_RIDGEFIN}),
     },
 
     [SPECIES_TREKKEYE] =
@@ -1193,6 +1195,7 @@
         .levelUpLearnset = sTrekkeyeLevelUpLearnset,
         .teachableLearnset = sTrekkeyeTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_TREKWHEEL}),
     },
 
     [SPECIES_INARIZUMA] =
@@ -2596,5 +2599,215 @@
         )
         .levelUpLearnset = sTorobiLevelUpLearnset,
         .teachableLearnset = sTorobiTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_GRINVINE] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 75,
+        .baseDefense   = 65,
+        .baseSpeed     = 65,
+        .baseSpAttack  = 65,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_DARK),
+        .catchRate = 45,
+        .expYield = 142,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_PICKPOCKET },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Grinvine"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_GRINVINE,
+        .categoryName = _("Drop Head"),
+        .height = 10,
+        .weight = 520,
+        .description = COMPOUND_STRING(
+            "Its bough now bears gourds that grin like\n"
+            "it does. When it drops onto a traveller\n"
+            "the gourds laugh along, and nobody can\n"
+            "tell which of them is the real head."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Grinvine,
+        .frontPicSize = MON_COORDS_SIZE(56, 48),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Grinvine,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Grinvine,
+        .shinyPalette = gMonShinyPalette_Grinvine,
+        .iconSprite = gMonIcon_Grinvine,
+        .iconPalIndex = 5,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Grinvine)
+        OVERWORLD(
+            sPicTable_Grinvine,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Grinvine,
+            gShinyOverworldPalette_Grinvine
+        )
+        .levelUpLearnset = sGrinvineLevelUpLearnset,
+        .teachableLearnset = sGrinvineTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_RIDGEFIN] =
+    {
+        .baseHP        = 70,
+        .baseAttack    = 62,
+        .baseDefense   = 78,
+        .baseSpeed     = 55,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_WATER, TYPE_FLYING),
+        .catchRate = 45,
+        .expYield = 142,
+        .evYield_Defense = 2,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_RAIN_DISH },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Ridgefin"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_RIDGEFIN,
+        .categoryName = _("Flying Head"),
+        .height = 10,
+        .weight = 380,
+        .description = COMPOUND_STRING(
+            "A second pair of finned ears carries it\n"
+            "higher, and a stream of water trails\n"
+            "from its chin like a neck. On misty\n"
+            "nights it is seen over the peaks."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Ridgefin,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPic = gMonBackPic_Ridgefin,
+        .backPicSize = MON_COORDS_SIZE(48, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Ridgefin,
+        .shinyPalette = gMonShinyPalette_Ridgefin,
+        .iconSprite = gMonIcon_Ridgefin,
+        .iconPalIndex = 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Ridgefin)
+        OVERWORLD(
+            sPicTable_Ridgefin,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Ridgefin,
+            gShinyOverworldPalette_Ridgefin
+        )
+        .levelUpLearnset = sRidgefinLevelUpLearnset,
+        .teachableLearnset = sRidgefinTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_TREKWHEEL] =
+    {
+        .baseHP        = 60,
+        .baseAttack    = 78,
+        .baseDefense   = 60,
+        .baseSpeed     = 65,
+        .baseSpAttack  = 82,
+        .baseSpDefense = 60,
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
+        .catchRate = 45,
+        .expYield = 142,
+        .evYield_SpAttack = 2,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_FLASH_FIRE },
+        .bodyColor = BODY_COLOR_BLACK,
+        .speciesName = _("Trekwheel"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_TREKWHEEL,
+        .categoryName = _("Cart Head"),
+        .height = 9,
+        .weight = 640,
+        .description = COMPOUND_STRING(
+            "Its head now rides between two burning\n"
+            "wheels as well as the one behind. The\n"
+            "chain it drags rings on the stones, so\n"
+            "travellers hear it long before the glow."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Trekwheel,
+        .frontPicSize = MON_COORDS_SIZE(64, 40),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_H_JUMPS,
+        .backPic = gMonBackPic_Trekwheel,
+        .backPicSize = MON_COORDS_SIZE(56, 40),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Trekwheel,
+        .shinyPalette = gMonShinyPalette_Trekwheel,
+        .iconSprite = gMonIcon_Trekwheel,
+        .iconPalIndex = 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Trekwheel)
+        OVERWORLD(
+            sPicTable_Trekwheel,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Trekwheel,
+            gShinyOverworldPalette_Trekwheel
+        )
+        .levelUpLearnset = sTrekwheelLevelUpLearnset,
+        .teachableLearnset = sTrekwheelTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },
