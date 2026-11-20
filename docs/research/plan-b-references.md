@@ -859,3 +859,11 @@ script／text／gfx 的手改（不是 `apply_replacements` 會處理的）：
 - 欄位 11 是 Seedot（1%，Lv25）：Seedot 在別的地方很常見，在這裡只是陪襯，所以換成 `SPECIES_ICHIMAI`。
 - 時機：`SPECIES_ICHIMAI` 要等 Mark 那一批合併後才存在，在那之前寫進去會編不過。到時候直接改這一格（不經過 `replacements.toml`），`apply_replacements` 看到原創角色會跳過，重複執行結果也不變。
 
+
+### 11.4 `to_winona` 的事前調查（還沒錄）
+
+- 錄製要等 Mark 的對照和 Winona 那一批合併（角色數一改，長路線的 RNG 就會位移）。Mark 也在用同一個比例重新產生所有角色的走路圖，這不影響亂數，但所有拍到走路圖的截圖都要更新基準。
+- 路線：Wally 家拿到 Surf → Route 118 東側（要衝浪過河）→ Route 119（北邊 (25,31)、(26,31) 的勁敵觸發格）→ Weather Institute（Shelly 和手下，送 Castform）→ Fortree → Route 120 橋上的 Steven（Devon Scope，跟隱形 Kecleon 戰鬥）→ 回 Fortree 道館 → Winona。
+- 工具上要先補的：
+  - autopilot／plan／stepwalk 目前都把水當成牆。衝浪要面向水按 A、選 YES，所以要加「上水」的單位，水上再用一般的移動。
+  - Fortree 道館的旋轉門（`src/rotating_gate.c` 的 `sRotatingGate_FortreePuzzleConfig`，8 個門）不是物件，也不在碰撞資料裡，靜態規劃和 `--live` 都看不到。要寫一個模擬旋轉門狀態的小 BFS，或照原版的解法手寫路線。
