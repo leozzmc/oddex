@@ -41,7 +41,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 - `tools/oddex/gen_species.py`（共用載入器：`species_data.py`）會改寫 `game/` 裡用 `oddex:` 標記包起來的區段（例如 `include/constants/species.h` 的 `// oddex:species-ids begin/end`），並產生 `oddex_data.h`、`oddex_families.h`、`oddex_species.h`。產生的檔案有提交進 git；`game/oddex.mk`（被 `game/Makefile` include）會在來源改變時自動重跑。
 - species ID 只能往後追加，因為 ID 會存進存檔；刪除角色時產生器會警告。改名會連帶改到 `SPECIES_*` 常數，必須保留原本的編號：在 TOML 加 `previous_ids = ["<舊 ID>"]`，產生器會把舊編號給新 ID。進化只能指向 `content/species/` 裡的原創角色（產生器會擋）。
 - **代號（roles）**：劇情用到的角色一律寫成 `SPECIES_ODDEX_<ROLE>`，例如 `STARTER_GRASS`、`RESCUE_WILD`、`TUTORIAL_CATCH`。C、腳本、`trainers.party`（寫成 `Oddex Starter Grass`）、`wild_encounters.json` 都引用代號，所以換角色只要改 `roles.toml`。
-- 美術：`tools/oddex/blender/`（headless Blender 建模渲染；面具風格見 `docs/research/mask-designs.md`）→ `tools/oddex/import_art.py`（量化成 15 色，產生異色、icon、overworld、足跡）。`placeholder_art.py` 是舊的幾何佔位圖產生器。
+- 美術：**先讀 `docs/ART_GUIDELINES.md`**（先設計再畫像素、8–12 色、真正的像素構圖、一定要在遊戲裡看；SpriteCook 的費用規則）。舊流程是 `tools/oddex/blender/`（headless Blender 建模渲染；面具風格見 `docs/research/mask-designs.md`）→ `tools/oddex/import_art.py`（量化成 15 色，產生異色、icon、overworld、足跡）。`placeholder_art.py` 是舊的幾何佔位圖產生器。
 
 **方案 B（把原版角色換掉）**
 - 整體計畫和步驟在 `docs/research/plan-b-references.md` §5 和 `docs/research/species-plan-b.md`。
