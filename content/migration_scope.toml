@@ -188,7 +188,7 @@ exclude_maps = ["VerdanturfTown_BattleTent*", "FallarborTown_BattleTent*"]
 
 [norman]
 description = "After Flannery: the Go-Goggles desert and Mirage Tower, the fossil, Cut and Strength areas, back to Petalburg and Norman"
-strict = false
+strict = true
 # Reachability: stage_reach.py --rock-smash --cut --strength from Lavaridge and from Dewford
 # (Briney's boat is scripted). Cut (HM01, Rustboro) and Strength (HM04, usable with Flannery's
 # badge) are usable now; Surf comes from Wally's father after Norman, so water stays out. The

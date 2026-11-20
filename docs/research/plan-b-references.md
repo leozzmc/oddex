@@ -304,10 +304,12 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
   - `plan.step()` 跨過 connection 後，如果落在比較窄的鄰接地圖範圍外，就回傳 None。以前跳過崖時不會檢查，例如從 Route 110 往 Mauville 規劃時，就讀到地圖外而當掉。
   - 正在跨過 connection 的那幾格，玩家座標會在地圖邊界外一格，這時 `units()` 先 `wait 10`，等換完地圖再規劃。
 - **`stepwalk.py`**：autopilot 的靜態規劃走不通時使用。它每走一段就重新規劃，戰鬥和對話交給 autopilot 處理，輸出格式跟 autopilot 一樣。
-  - 預設：用地圖資料做 BFS，會跨 warp 和崖，例如 Lavaridge 道館的洞和間歇泉。只有地塊有 warp 行為的那一邊才能用，所以單向的 warp 也算得對。
+  - 預設：用地圖資料做 BFS，會跨 warp 和崖，例如 Lavaridge 道館的洞和間歇泉。只有地塊有 warp 行為（warp、門、梯子、洞）的那一邊才能用，所以單向的 warp 也算得對。門的地塊本身有碰撞，走進去才會開，所以不當成牆。出口的地墊（箭頭 warp）要先站上去，再往箭頭方向按一次才會傳送。走的範圍是起點和終點所屬的區域（地圖名稱第一個 `_` 之前相同的地圖，例如 `LavaridgeTown`、它的民宅和道館），不跨 connection，跨地圖的路先用 autopilot 走到區域裡。
+    - 修正（`to_norman` 錄製時）：以前把「踩上出口地墊」當成已經傳送，於是在地墊和上面那格之間來回，直到步數上限，什麼都不輸出（David 從 Lavaridge 道館出來時遇到）。以前也只認名稱裡有 `WARP` 的行為，門和梯子都走不過去；範圍只有終點的同一層，城鎮和建築之間走不通。測試在 `tools/oddex/test_autopilot.py`。
   - `--live`：用執行中的地圖（`gBackupMapLayout`）和物件目前的位置規劃，例如已經藏起來的物件、`setmetatile` 改過的電閘、打完之後走過來擋路的訓練家。不想踩的格子（例如道館的開關）用 `--avoid x,y;...` 避開。
   - 用法：`stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--avoid ...]`。
 - **防止空轉**：總共執行超過 `AP_MAX_STEPS` 個單位（預設 20000），或在戰鬥外同一位置連續 100 次送出同一個指令，就印出原因、已執行的指令和最後的狀態，以 exit 3 結束（`AP_PARTIAL=1` 也一樣會失敗）。起因是 Mauville 練等時，練等格上跳出 Match Call 的訊息，`grind` 在練等格上遇到操作被鎖住只會 `wait 30`，而 B 只在「走一步沒動」時才按，結果空轉了 32 萬步（約 5 小時 40 分）都沒停；那時攻擊招式還剩 Aerial Ace 的 19 PP，高於暫停門檻 10，所以也沒有因為 PP 不足而暫停。現在練等格上連續 3 次操作被鎖住就按 B。
+- **反彈招式**：`best_move` 看對手的招式，對手有 Counter 時物理招式的分數乘 0.25，有 Mirror Coat 時特殊招式也一樣。Norman 的 Mandaloka 用 Counter 把 Seed Bomb 加倍反彈，一擊打倒 Grinarbor；改成用 Giga Drain 之後就贏了。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
 
@@ -602,12 +604,12 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 - **autopilot 的忘招**：進化時學招（Horn Leech）的提示會選到 HM 招式 Rock Smash，遊戲拒絕忘掉 HM 後又重問，變成無限迴圈。現在 `slot_to_forget` 不會選 HM 招式（從 `tms_hms.h` 的 `FOREACH_HM` 解析）。測試在 `tools/oddex/test_autopilot.py`。
 - **道館和隱藏物件**：Lavaridge 道館的洞和間歇泉是單向的 warp（只有一邊的地塊有 warp 行為），還有只能往下跳的崖，用 warp／崖的 BFS 一步一步走，遇到戰鬥就交給 autopilot。Route 112 纜車附近被藏起來的 Magma 手下，靜態地圖仍然會擋路，所以改用執行中的地圖規劃。這兩種走法現在都在 `tools/headless/authoring/stepwalk.py`（§6.4）：預設模式處理道館，`--live` 處理纜車附近。
 
-只有在遊戲裡看過的手改：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound。Verdanturf、Route 117 育幼屋、Fallarbor Mart、Lavaridge 民宅和 Route 114 的手改，都不在這條路線上，只有 `check_maps` 和 `check_species_refs` 驗證過。Lavaridge 的蛋（`EGG_GIFT`）在畫面上看不出物種，只靠資料檢查。
+只有在遊戲裡看過的手改：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound。Verdanturf、Route 117 育幼屋和 Lavaridge 民宅的手改後來在 `to_norman` 裡看到了（§10.4）；Fallarbor Mart 和 Route 114 的仍然沒有。Lavaridge 的蛋（`EGG_GIFT`）在畫面上看不出物種，只靠資料檢查。
 
 
 ## 10. 第 6 步第五段：Flannery 之後 → Norman（第 5 個徽章）
 
-`[norman]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+`[norman]`（`strict = true`）：對照（Mark 的 Norman 批：Haniwort、Dogoggle、Sphinmen）已經套用，回歸腳本是 `to_norman`（§10.4）。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
 
 ### 10.1 可達性
 
@@ -708,3 +710,32 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
   4. 如果要截圖化石：加走沙漠／Mirage Tower 拿化石，再到 Rustboro 的 Devon 2F 復原。
 - 長度：`to_lavaridge` 自己的部分約 15 萬格（約 60 秒），`to_norman` 自己的部分估計 15–25 萬格。加上化石的繞路，再多約 10 萬格。所以從開機跑 `to_norman` 約 650–690 秒，加化石約 730 秒，會超過約 600 秒的指引（§9.3 的方向 3 可以解決這個問題）。
 - Norman 前的隊伍：只有 Grinarbor（`to_lavaridge` 打 Flannery 時，在 Lv36 進化）。再打路上和道館的訓練家，估計到 Norman 時約 Lv37–38。招式：Rock Smash（格鬥，打一般系 2 倍，但威力只有 40）、Seed Bomb、Giga Drain、Crunch。如果路線去復原化石，隊伍會多一隻 Lv20 的化石角色。Norman 原版的隊伍是 Spinda、Vigoroth、Linoone、Slaking（Lv31，Truant），換成對照之後的平衡計算交給 Mark。
+
+### 10.4 `to_norman`
+
+接在 `to_lavaridge` 後面，從開機約 640 秒（同時跑兩次的時間）。路線：
+1. 出道館，勁敵給 Go-Goggles → Lavaridge 民宅（截圖 n01：Kyokon 的造型和台詞）→ 回血 → Route 112 → Route 111（岩石進地圖就會復原，要再敲一次）→ Mauville：Rydel 給 Mach Bike，從背包登記到 SELECT。
+2. Route 111 的沙漠 → Mirage Tower。塔是否出現，每次進 Route 111 都隨機決定（`SetMirageTowerVisibility`，50%），這次錄製剛好出現；前面的路線一改，就要重新確認。
+   - 2F 的裂地板要騎 Mach Bike 全速通過：連續騎第 3 格才是全速，轉彎不會減速，停在裂地板上就會掉下去。騎車的段落是逐格依玩家所在的地塊決定方向錄的。3F 右邊的裂地板是死路，要走左邊敲岩石。
+   - 3F、4F 要 Rock Smash（騎在車上也能用）。拿 Root Fossil 之後塔會崩塌，回到 Route 111。
+3. 南下 Mauville → Route 117（截圖 n02：育幼屋院子的 Kyokon、Kyozosu）→ Verdanturf Friendship Rater 的家（截圖 n03：Inarizuma）→ 回血 → Rusturf Tunnel（敲岩石，接著是 Wanda 的劇情）→ Route 116 → Rustboro → Devon 2F。
+   - 交出 Root Fossil 後跟另一位研究員說話，復原就完成了，拿到 Haniwort（`FOSSIL_ROOT` 代號，Lv20），截圖 n04 是它的能力畫面。
+4. 回血 → Route 104 → Petalburg Woods → Petalburg 道館。
+   - 道館的門是告示牌：面向門按 A，再選 YES。
+   - 走 Speed room（Randall）→ Confusion room（Parker）→ Strength room（Jody）→ Norman（截圖 n05 戰鬥、n06 王牌 Mandaloka、n07 徽章）。
+   - 之後 Wally 爸爸的劇情一路按 B 到 Wally 家，拿到 HM03 Surf。Grinarbor 在 Lv37 剩 110/113 HP 贏了。
+
+錄製時發現、已處理的問題：
+- Friendship Rater 的 Inarizuma 台詞還是「Pika pika!」，改成同樣長度的「Kokon-zap!」。長度相同，ROM 的版面就不會變，之前存的 savestate 仍然能用。
+- autopilot 會被 Counter 打敗（見 §6.4）。
+- stepwalk 的出口地墊、門、梯子和範圍（見 §6.4）。
+- 剛停下時，3 格的轉向輕按會被吃掉。敲岩石之前改用 `hold DIR 16`：前面是岩石，所以只會轉向。
+
+給 Mark 確認：Kyokon 的走路圖朝下的影格是白色、比較大的角色，朝左右時是棕色的狐狸，像是別的角色的影格混了進來（Lavaridge 民宅、Route 117 都看得到）。
+
+仍然只靠資料檢查、沒在遊戲裡看過：
+- Route 117 育幼屋院子的 Magatide (42,2) 和 Inarizuma (51,1)，截圖裡辨認不出來（Inarizuma 在育幼屋後面）。
+- Fallarbor Mart 的 Mandalumb、Route 114 的 Shachound。
+- Lavaridge 的蛋（`EGG_GIFT`，看不出物種）。
+- Claw Fossil 那條（`FOSSIL_CLAW` = Dogoggle）：路線選了 Root Fossil。
+
