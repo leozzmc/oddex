@@ -289,3 +289,31 @@
   - **練等的影響**:Sonia 的 `to_mauville` 打 Wattson 前已經把 Grinpack 線練到 Lv33(Route 110,Lv24 → 33)。所以 (F) 之下,打 Flannery **不用再額外練等**,這是 `to_lavaridge` 能不能控制在合理長度的關鍵(`plan-b-references.md` §9.3)。
   - 要改 `trainers.party`(Sonia 的範圍),在她套用對照時一起改;我這邊不用改任何角色資料。
 - **不推薦**:把王牌換成更強的 Mandaloka 或 Kamadoro(b、c),或只給 Grinvine 加覆蓋招式。
+
+## Norman 戰(2026-11-21,Mark;只是分析,數值和隊伍都還沒改)
+
+### 怎麼算的
+- 方法和前面幾段一樣:一對一,我方取最低亂數、對手取最高亂數,用 `tools/oddex/damage_calc.py`。
+- Norman 的隊伍已經都有對照,所以用 `--set X:species=` 換成原創角色來算:Spinda → Mandalumb Lv27、Vigoroth → Mandaring Lv27、Linoone → Kyozosu Lv29、Slaking → Mandaloka Lv31(帶 Sitrus Berry)。
+- **沒有算到的**:Slaking 的 Truant(每兩回合才能行動一次)、Sitrus Berry、Encore、Belly Drum、Yawn、Counter(固定反彈傷害,計算器不算)、2 個 Hyper Potion、Mandaloka 的特性。Truant 對我方非常有利,所以實際打起來比表上容易。
+- Sonia 的 `to_norman` 路線到 Norman 時只有 Grinarbor 一隻,約 Lv37–38,招式是 Rock Smash(TM,用 `--learn` 加上)、Seed Bomb、Giga Drain、Crunch。
+
+### 結果:打得過的最低等級
+
+| 選項 | 草 | 火 | 水 | 說明 |
+|---|---|---|---|---|
+| 原版基準(Sceptile/Blaziken/Swampert 打原版 Norman) | Lv40 | Lv40 | Lv38 | 第 2 階段的原版御三家在 Lv44 以內都打不過 Slaking |
+| (a) 照現有的對照,第 3 階段(Grinarbor/Trekcart/Ridgeloom) | Lv30 | Lv31 | Lv27 | 比原版容易約 8–10 級 |
+| (a) 第 2 階段(Grinvine/Trekwheel/Ridgefin) | Lv37 | Lv37 | Lv30 | |
+| (b) 王牌 Mandaloka 升到 Lv35 | Lv33 | Lv36 | Lv27 | |
+| (c) (b) 再把其他三隻各升 2–4 級 | Lv33 | Lv36 | Lv29 | 門檻還是王牌 |
+
+- Grinarbor Lv37 對每一隻都是我方先攻;前三隻一擊倒,王牌 Mandaloka 要 3 下(Crunch 37–44%),對方打我方每下只有 15–18%。
+- Mandaloka 是地面/火,所以水系的 Ridgeloom 很輕鬆(水打它 4 倍),草系 Seed Bomb 打它只是普通傷害(地面弱草、火抗草)。
+
+### 建議
+- **推薦 (a),不用改**:
+  - 原版 Norman 的難度主要來自 Slaking 的高數值,但 Truant 讓它只能隔回合行動,本來就是「看起來很強、實際不難」的館主。
+  - (a) 讓 Sonia 的 Grinarbor 在 Lv37–38 就能輕鬆過關,`to_norman` 不需要額外練等。這對回歸路線的長度有利(§9.3 的問題)。
+- **(b) 是可選的**:如果使用者希望 Norman 有原版那樣的壓迫感,把王牌升到 Lv35,草系和火系的門檻會接近 Flannery 之後的等級(33–36)。這要改 `trainers.party`(Sonia 的範圍)。
+- 另外提醒:Norman 是一般系道館,但 Slaking 的對照 Mandaloka 是地面/火(Mandalumb 線第 3 階段)。如果使用者在意道館主題,可以之後再討論;目前沒有一般系的第 3 階段角色。
