@@ -233,3 +233,57 @@ exclude_refs = [
 # it is reachable now.
 maps = ["MirageTower*", "AlteringCave", "RustboroCity_DevonCorp_2F", "PetalburgCity_Gym",
         "Route110_TrickHousePuzzle2", "Route110_TrickHousePuzzle3"]
+
+[winona]
+description = "After Norman: Surf, Route 118 to 120 with the Weather Institute and Fortree, Winona; the Surf backlog of earlier routes"
+strict = false
+# Reachability: stage_reach.py --rock-smash --cut --strength --surf from Petalburg, limited to the maps
+# this stage can reach by story (Surf is HM03 from Wally's father after Norman; Waterfall and Dive come
+# later, so waterfalls, underwater maps and Abandoned Ship's hidden floor stay out). Story locks judged
+# by hand (left out): Route 121 onward, Lilycove, Mt. Pyre, Aqua Hideout, the eastern sea (all past
+# Fortree in the story; the Route 120 bridge opens with the Devon Scope before Winona, but the next
+# segment covers what lies past it), New Mauville (Basement Key), Island Cave and the Ancient Tomb
+# (Braille seals, post-game), Shoal Cave, Pacifidlog.
+# Backlog: water tables and swimmers of routes the earlier scopes walked without Surf, and land tables
+# the earlier scopes missed (Route 115, Route 118's west side), like [norman]'s Cut backlog.
+wild_maps = ["Route102:water_mons", "Route103:water_mons", "Route104:water_mons", "Route105:water_mons",
+             "Route105:fishing_mons", "Route106:water_mons", "Route107:water_mons", "Route108:water_mons",
+             "Route108:fishing_mons", "Route109:water_mons", "Route110:water_mons", "Route111:water_mons",
+             "Route114:water_mons", "Route115:land_mons", "Route115:water_mons", "Route117:water_mons",
+             "Route118:land_mons", "Route118:water_mons", "Route119:land_mons", "Route119:water_mons",
+             "Route119:fishing_mons", "Route120:land_mons", "Route120:water_mons", "Route120:fishing_mons",
+             "AbandonedShip_Rooms_B1F:water_mons", "AbandonedShip_Rooms_B1F:fishing_mons",
+             "MeteorFalls_1F_1R:water_mons", "DewfordTown:water_mons", "SlateportCity:water_mons",
+             "PetalburgCity:water_mons"]
+trainers = [
+    # Surf backlog: swimmers and island trainers of Routes 103, 105-109, 115 and Abandoned Ship.
+    "TRAINER_ISABELLE", "TRAINER_PETE",
+    "TRAINER_LUIS", "TRAINER_DOMINIK", "TRAINER_BEVERLY", "TRAINER_IMANI", "TRAINER_FOSTER", "TRAINER_JOSUE",
+    "TRAINER_ANDRES_1", "TRAINER_DOUGLAS", "TRAINER_KYLA",
+    "TRAINER_DARRIN", "TRAINER_TONY_1", "TRAINER_DENISE", "TRAINER_BETH", "TRAINER_LISA_AND_RAY", "TRAINER_CAMRON",
+    "TRAINER_JEROME", "TRAINER_TARA", "TRAINER_MATTHEW", "TRAINER_MISSY", "TRAINER_CAROLINA", "TRAINER_CORY_1",
+    "TRAINER_DAVID", "TRAINER_ALICE", "TRAINER_GWEN", "TRAINER_AUSTINA", "TRAINER_CARTER", "TRAINER_MEL_AND_PAUL",
+    "TRAINER_ELIJAH",
+    "TRAINER_TIMOTHY_1", "TRAINER_KOICHI", "TRAINER_KYRA", "TRAINER_JAIDEN", "TRAINER_HELENE", "TRAINER_ALIX",
+    "TRAINER_CHARLIE", "TRAINER_DUNCAN", "TRAINER_KIRA_AND_DAN_1", "TRAINER_GARRISON", "TRAINER_JANI",
+    "TRAINER_THALIA_1", "TRAINER_DEMETRIUS",
+    # Route 118's east side, Route 119, the Weather Institute (Shelly and her grunts), Route 120.
+    "TRAINER_PERRY", "TRAINER_CHESTER", "TRAINER_BARNY",
+    "TRAINER_GREG", "TRAINER_TAYLOR", "TRAINER_DONALD", "TRAINER_JACKSON_1", "TRAINER_BRENT", "TRAINER_CATHERINE_1",
+    "TRAINER_DOUG", "TRAINER_KENT", "TRAINER_YASU", "TRAINER_TAKASHI", "TRAINER_HUGH", "TRAINER_PHIL", "TRAINER_HIDEO",
+    "TRAINER_CHRIS", "TRAINER_RACHEL", "TRAINER_DAYTON", "TRAINER_FABIAN",
+    "TRAINER_GRUNT_WEATHER_INST_1", "TRAINER_GRUNT_WEATHER_INST_2", "TRAINER_GRUNT_WEATHER_INST_3",
+    "TRAINER_GRUNT_WEATHER_INST_4", "TRAINER_GRUNT_WEATHER_INST_5", "TRAINER_SHELLY_WEATHER_INSTITUTE",
+    "TRAINER_COLIN", "TRAINER_ROBERT_1", "TRAINER_LORENZO", "TRAINER_JENNA", "TRAINER_JEFFREY_1", "TRAINER_JENNIFER",
+    "TRAINER_CHIP", "TRAINER_CLARISSA", "TRAINER_ANGELICA", "TRAINER_KEIGO", "TRAINER_RILEY", "TRAINER_CALLIE",
+    "TRAINER_LEONEL",
+    # The rival on Route 119 (scripted; one per starter and gender).
+    "TRAINER_BRENDAN_ROUTE_119_MUDKIP", "TRAINER_BRENDAN_ROUTE_119_TORCHIC", "TRAINER_BRENDAN_ROUTE_119_TREECKO",
+    "TRAINER_MAY_ROUTE_119_MUDKIP", "TRAINER_MAY_ROUTE_119_TORCHIC", "TRAINER_MAY_ROUTE_119_TREECKO",
+    # Fortree Gym and Winona (scripted).
+    "TRAINER_JARED", "TRAINER_FLINT", "TRAINER_ASHLEY", "TRAINER_EDWARDO", "TRAINER_HUMBERTO", "TRAINER_DARIUS",
+    "TRAINER_WINONA_1",
+]
+maps = ["Route105", "Route108", "Route115*", "Route118*", "Route119*", "Route120", "FortreeCity*", "ScorchedSlab",
+        "AbandonedShip*"]
+exclude_maps = ["AbandonedShip_HiddenFloor*", "AbandonedShip_Underwater*"]

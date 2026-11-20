@@ -739,3 +739,131 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 - Lavaridge 的蛋（`EGG_GIFT`，看不出物種）。
 - Claw Fossil 那條（`FOSSIL_CLAW` = Dogoggle）：路線選了 Root Fossil。
 
+## 11. 第 6 步第六段：Norman 之後 → Winona（第 6 個徽章）
+
+`[winona]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+
+### 11.1 可達性
+
+- 用 `stage_reach.py --rock-smash --cut --strength --surf` 從 Petalburg 跑。`--surf` 是這一段新增的：水面可以走，瀑布不行（Waterfall 之後才拿到）。Surf 是打完 Norman 後由 Wally 的爸爸給的 HM03。
+- 有了 Surf，整片海都連起來了，所以故事上還到不了的地方用地圖名單排除，再跑一次 BFS：
+  - Route 121 以後、Lilycove、Mt. Pyre、Aqua Hideout、東邊的海、Pacifidlog、Shoal Cave：在故事上都在 Fortree 之後。Route 120 的橋要用 Devon Scope 打開，Devon Scope 在 Winona 之前就拿得到，但橋後面的地方交給下一段。
+  - New Mauville：要 Basement Key。
+  - Island Cave、Ancient Tomb：點字封印，破關後才開。
+  - Abandoned Ship 的隱藏樓層和水下：要 Dive。
+- 跟沒有 Surf 的結果相比，新增 88 名訓練家，再加上 Route 119 的勁敵（腳本，6 種組合）和 Winona：
+  - Surf 補漏：Route 103 東側的 Isabelle、Pete；Route 105–109、115 的游泳選手和島上的訓練家；Abandoned Ship 的 7 名。
+  - 新區域：Route 118 東側、Route 119、Weather Institute（Shelly 和 5 名手下）、Route 120、Fortree 道館的 6 名。
+- 野生表 30 個：
+  - 以前的路線的 `water_mons`（Route 102–111、114、115、117，Dewford、Slateport、Petalburg，Meteor Falls 1F）。
+  - 以前漏掉的 `land_mons`：Route 115、Route 118 西側。
+  - 新區域：Route 118–120 的 land／water／fishing、Route 105 和 108 的 fishing、Abandoned Ship B1F。
+
+### 11.2 範圍內的原版角色
+
+`check_species_refs.py --scope winona`：422 筆、74 種。各類別的筆數：
+
+| wild | party | script | text | gfx |
+|---|---|---|---|---|
+| 203 | 181 | 10 | 9 | 19 |
+
+其中 20 種還沒有對照。下表依進化線排列：
+
+| 進化線 | 物種 | 階段 | wild | party | script/text/gfx | 出現 | 目前對照 |
+|---|---|---|---|---|---|---|---|
+| Abra | Kadabra | 2 |  | 1 |  | trainer | **無** |
+| Absol | Absol | 1 | 2 |  |  | Route120 | **無** |
+| Azurill | Marill | 2 | 27 | 7 |  | PetalburgCity, Route102, Route111, Route114, Route117, Route120, trainer | Magatide |
+| Baltoy | Baltoy | 1 |  | 1 |  | trainer | Sphinmen |
+| Barboach | Barboach | 1 | 6 |  |  | Route120 | Namazura |
+| Budew | Roselia | 2 |  | 2 |  | trainer | Higanmen |
+| Carvanha | Carvanha | 1 | 6 | 10 |  | Route119, trainer | Kamorai |
+| Castform | Castform | 1 |  | 1 |  | trainer | **無** |
+| Castform_Normal | Castform_Normal | 1 |  |  | 3 | Route119_WeatherInstitute_2F | **無** |
+| Doduo | Doduo | 1 |  | 3 |  | trainer | Karuvajra |
+| Doduo | Dodrio | 2 |  | 1 |  | trainer | **無** |
+| Electrike | Electrike | 1 | 2 | 1 |  | Route118, trainer | Raijumen |
+| Electrike | Manectric | 2 | 1 | 4 |  | Route118, trainer | Raijuoh |
+| Feebas | Feebas | 1 |  | 1 |  | trainer | **無** |
+| Goldeen | Goldeen | 1 | 7 | 7 |  | Route102, Route111, Route114, Route117, Route120, trainer | Kamorai |
+| Gulpin | Gulpin | 1 |  | 1 |  | trainer | Kumozuka |
+| Horsea | Horsea | 1 |  | 2 |  | trainer | **無** |
+| Igglybuff | Jigglypuff | 2 | 2 |  |  | Route115 | **無** |
+| Illumise | Illumise | 1 |  | 2 |  | trainer | Torobi |
+| Kecleon | Kecleon | 1 | 3 |  | 13 | FortreeCity, Route118, Route119, Route120 | Kyozosu |
+| Koffing | Koffing | 1 |  | 5 |  | trainer | Kumozuka |
+| Lotad | Lotad | 1 |  | 1 |  | trainer | Shojobob |
+| Lotad | Lombre | 2 |  | 7 |  | trainer | Shojomai |
+| Machop | Machop | 1 |  | 2 |  | trainer | Karuvajra |
+| Machop | Machoke | 2 |  | 2 |  | trainer | **無** |
+| Magikarp | Magikarp | 1 | 10 | 1 |  | AbandonedShip_Rooms_B1F, Route105, Route108, Route119, Route120, trainer | Magatide |
+| Makuhita | Makuhita | 1 |  | 2 |  | trainer | Shishiblaze |
+| Makuhita | Hariyama | 2 |  | 1 |  | trainer | **無** |
+| Meditite | Meditite | 1 |  | 2 |  | trainer | Gachirinza |
+| Mudkip | Marshtomp | 2 |  | 2 |  | trainer | Ridgefin |
+| Natu | Natu | 1 |  | 1 |  | trainer | **無** |
+| Natu | Xatu | 2 |  | 1 |  | trainer | **無** |
+| Nincada | Nincada | 1 |  | 2 |  | trainer | Kumozuka |
+| Nincada | Ninjask | 2 |  | 6 |  | trainer | Torobi |
+| Numel | Numel | 1 |  | 1 |  | trainer | Hifukko |
+| Oddish | Oddish | 1 | 7 |  |  | Route119, Route120 | Okinoir |
+| Oddish | Gloom | 2 |  | 1 |  | trainer | **無** |
+| Plusle | Plusle | 1 |  |  | 1 | FortreeCity_House1 | Tomoeden |
+| Poochyena | Poochyena | 1 | 1 | 4 |  | Route120, trainer | Shachound |
+| Poochyena | Mightyena | 2 | 2 | 1 |  | Route120, trainer | Shachowl |
+| Ralts | Kirlia | 2 |  | 1 |  | trainer | Deigloom |
+| Sableye | Sableye | 1 |  | 1 |  | trainer | Kyokon |
+| Sandshrew | Sandshrew | 1 |  | 4 |  | trainer | Yamambrr |
+| Sandshrew | Sandslash | 2 |  | 3 |  | trainer | Mandaring |
+| Seedot | Seedot | 1 | 1 | 1 |  | Route120, trainer | Bekurama |
+| Seedot | Nuzleaf | 2 |  | 2 |  | trainer | Karabeki |
+| Shroomish | Breloom | 2 |  | 1 |  | trainer | **無** |
+| Skarmory | Skarmory | 1 |  | 5 |  | trainer | Daibeki |
+| Slugma | Slugma | 1 |  | 5 |  | trainer | Shishiblaze |
+| Solrock | Solrock | 1 | 3 |  |  | MeteorFalls_1F_1R | Iwadawn |
+| Spheal | Spheal | 1 |  | 1 |  | trainer | **無** |
+| Staryu | Staryu | 1 |  | 1 |  | trainer | **無** |
+| Surskit | Surskit | 1 |  | 4 |  | trainer | **無** |
+| Swablu | Swablu | 1 | 2 | 5 |  | Route115, trainer | Utoghast |
+| Swablu | Altaria | 2 |  | 1 |  | trainer | **無** |
+| Taillow | Taillow | 1 | 3 | 2 |  | Route115, trainer | Shawabolt |
+| Taillow | Swellow | 2 | 1 | 4 |  | Route115, trainer | Utomaw |
+| Tentacool | Tentacool | 1 | 27 | 11 |  | AbandonedShip_Rooms_B1F, DewfordTown, Route103, Route105, Route106, Route107, Route108, Route109, Route110, Route115, Route118, Route119, SlateportCity, trainer | Shojobob |
+| Tentacool | Tentacruel | 2 | 4 | 2 |  | AbandonedShip_Rooms_B1F, trainer | **無** |
+| Torchic | Combusken | 2 |  | 2 |  | trainer | Trekwheel |
+| Treecko | Grovyle | 2 |  | 2 |  | trainer | Grinvine |
+| Tropius | Tropius | 1 | 3 | 4 |  | Route119, trainer | **無** |
+| Volbeat | Volbeat | 1 |  | 2 | 1 | FortreeCity_House1, trainer | Torobi |
+| Wailmer | Wailmer | 1 | 12 | 5 |  | Route105, Route108, trainer | Kamorai |
+| Wingull | Wingull | 1 | 36 | 9 | 14 | DewfordTown, FortreeCity_House4, Route103, Route104, Route105, Route106, Route107, Route108, Route109, Route110, Route115, Route118, Route119, Route119_House, SlateportCity, trainer | Utoghast |
+| Wingull | Pelipper | 2 | 26 | 5 |  | DewfordTown, Route103, Route104, Route105, Route106, Route107, Route108, Route109, Route110, Route115, Route118, Route119, SlateportCity, trainer | Utomaw |
+| Wurmple | Wurmple | 1 |  | 2 |  | trainer | Usobuzz |
+| Wurmple | Cascoon | 2 |  | 1 |  | trainer | Tsunacoon |
+| Wurmple | Silcoon | 2 |  | 1 |  | trainer | Tsunacoon |
+| Wurmple | Beautifly | 3 |  | 2 |  | trainer | Yokozunat |
+| Wurmple | Dustox | 3 |  | 2 |  | trainer | Yokozunat |
+| Zigzagoon | Zigzagoon | 1 | 4 | 1 | 6 | FortreeCity_House1, FortreeCity_House5, Route118, Route119, trainer | Kyokon |
+| Zigzagoon | Linoone | 2 | 3 |  |  | Route118, Route119 | Kyozosu |
+| Zubat | Zubat | 1 | 2 | 3 |  | MeteorFalls_1F_1R, trainer | Komorimen |
+
+script／text／gfx 的手改（不是 `apply_replacements` 會處理的）：
+- Weather Institute 送的 Castform（`givemon`、`setvar`、`bufferspeciesname`）：劇情送的角色，建議做成代號（例如 `WEATHER_GIFT`）。Castform 會隨天氣變形，原創角色要不要有形態由 Mark 決定。
+- Route 120 和 Fortree 的隱形 Kecleon：Steven 的戰鬥（`setwildbattle`、叫聲）、Fortree 道館前和 Route 119、120 的 Kecleon 物件，包括橋上的影子圖（`OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW`）。Kecleon 目前對照到 Kyozosu；劇情用到的這幾處建議做成代號（例如 `HIDDEN_BLOCKER`），Devon Scope 的台詞也要對得上。
+- 寵物和文字：Fortree 民宅的 Zigzagoon（House1、House5）、House1 文字裡的 Volbeat 和 Plusle、House4 和 Route 119 民宅的 Wingull。
+- 不在範圍裡、要另外處理：Route 119 的 Feebas 是寫在 `src/wild_encounter.c` 的特殊釣魚格（不在 `wild_encounters.json`），party 裡另有 1 隻 Feebas。
+
+### 11.3 Ichimai：Route 120 的稀有野生角色
+
+使用者決定把 Ichimai（Okiku，幽靈／水，Mark 在做）放在 Route 120 當稀有的野生角色。方案：換掉 Route 120 `land_mons` 機率 1% 的欄位之一。
+- 欄位 10 是 Kecleon（1%）：Route 120 的隱形 Kecleon 是這條路的特色，保留。
+- 欄位 11 是 Seedot（1%，Lv25）：Seedot 在別的地方很常見，在這裡只是陪襯，所以換成 `SPECIES_ICHIMAI`。
+- 時機：`SPECIES_ICHIMAI` 要等 Mark 那一批合併後才存在，在那之前寫進去會編不過。到時候直接改這一格（不經過 `replacements.toml`），`apply_replacements` 看到原創角色會跳過，重複執行結果也不變。
+
+
+### 11.4 `to_winona` 的事前調查（還沒錄）
+
+- 錄製要等 Mark 的對照和 Winona 那一批合併（角色數一改，長路線的 RNG 就會位移）。Mark 也在用同一個比例重新產生所有角色的走路圖，這不影響亂數，但所有拍到走路圖的截圖都要更新基準。
+- 路線：Wally 家拿到 Surf → Route 118 東側（要衝浪過河）→ Route 119（北邊 (25,31)、(26,31) 的勁敵觸發格）→ Weather Institute（Shelly 和手下，送 Castform）→ Fortree → Route 120 橋上的 Steven（Devon Scope，跟隱形 Kecleon 戰鬥）→ 回 Fortree 道館 → Winona。
+- 工具上要先補的：
+  - autopilot／plan／stepwalk 目前都把水當成牆。衝浪要面向水按 A、選 YES，所以要加「上水」的單位，水上再用一般的移動。
+  - Fortree 道館的旋轉門（`src/rotating_gate.c` 的 `sRotatingGate_FortreePuzzleConfig`，8 個門）不是物件，也不在碰撞資料裡，靜態規劃和 `--live` 都看不到。要寫一個模擬旋轉門狀態的小 BFS，或照原版的解法手寫路線。
