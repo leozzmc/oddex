@@ -1,0 +1,1353 @@
+# to_mauville, then Rock Smash (HM06 from the Mauville house), Route 111's rocks, Route 112, Fiery Path,
+# Route 113, Fallarbor, Route 114, the Meteor Falls scene, the Route 112 cable car, Mt. Chimney (Tabitha,
+# grunts, Maxie), Jagged Pass, Lavaridge and Flannery's HEAT BADGE. Regression script for the [lavaridge]
+# migration scope (content/migration_scope.toml, strict): Fallarbor's Shojobob (sprite, cry, text), the
+# Mt. Chimney Shachound objects, Maxie's team, Flannery's team (option F: Kamadoro Lv24 with Flame Wheel).
+# Generated closed-loop with tools/headless/authoring/autopilot.py, plus live-grid walks where hidden
+# objects or runtime metatiles fool the static planner (Route 112's cable car area, Mt. Chimney) and a
+# warp/ledge BFS for the Lavaridge Gym. Regenerate if anything before a step changes. Run by
+# make check-oddex-full.
+include to_mauville.txt
+
+# Out of the gym, heal, HM06 Rock Smash from the scientist in Mauville House1; teach it from the bag
+# (Night Slash goes: Crunch keeps dark covered).
+wait 20
+hold DOWN 96
+hold LEFT 16
+hold DOWN 176
+press DOWN 16 90
+press DOWN 16 30
+hold DOWN 16
+hold RIGHT 32
+hold UP 32
+hold RIGHT 144
+hold DOWN 16
+hold RIGHT 48
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press B 2 30
+hold DOWN 80
+hold RIGHT 64
+hold DOWN 64
+hold RIGHT 96
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 32
+hold RIGHT 16
+wait 20
+press UP 3 20
+press A 2 60
+repeat 28 press B 2 30
+wait 10
+press START 2 40
+press DOWN 2 20
+press A 2 90
+press RIGHT 2 40
+press RIGHT 2 40
+repeat 4 press DOWN 2 20
+press A 2 40
+press A 2 90
+press A 2 60
+press A 2 60
+press A 2 60
+repeat 7 press A 2 60
+repeat 15 press B 2 30
+
+# Route 111: smash the rock at (19,100) (a wild battle comes out of it); Route 112 to Fiery Path, through
+# it to Route 112's north part, Route 113 west to Fallarbor.
+press DOWN 3 20
+hold DOWN 16
+wait 10
+press DOWN 3 20
+hold DOWN 16
+wait 120
+press LEFT 3 20
+hold LEFT 96
+hold UP 64
+hold LEFT 96
+hold UP 80
+hold LEFT 16
+hold UP 256
+hold RIGHT 16
+hold UP 16
+hold RIGHT 16
+hold UP 320
+hold LEFT 32
+hold UP 112
+wait 10
+press UP 16 30
+repeat 3 press A 2 60
+repeat 6 press B 2 30
+repeat 16 press A 2 30
+press DOWN 2 20
+repeat 43 press A 2 30
+press B 2 30
+press UP 16 30
+press LEFT 3 20
+hold LEFT 16
+hold UP 16
+hold LEFT 32
+hold UP 16
+hold LEFT 16
+hold UP 32
+hold LEFT 48
+hold UP 16
+hold LEFT 32
+hold UP 160
+hold LEFT 16
+hold UP 208
+hold UP 160
+repeat 15 press B 2 30
+repeat 7 press A 2 30
+press RIGHT 2 20
+repeat 54 press A 2 30
+hold UP 160
+hold UP 16
+hold LEFT 16
+hold UP 16
+hold LEFT 448
+hold LEFT 144
+repeat 15 press B 2 30
+repeat 6 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 20 press A 2 30
+hold LEFT 144
+hold LEFT 16
+hold UP 176
+hold LEFT 64
+hold LEFT 32
+repeat 15 press B 2 30
+repeat 12 press A 2 30
+press DOWN 2 20
+repeat 158 press A 2 30
+hold LEFT 32
+press UP 3 20
+hold UP 16
+repeat 15 press B 2 30
+hold UP 16
+hold LEFT 112
+hold UP 32
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+press LEFT 3 20
+hold LEFT 16
+hold UP 176
+hold LEFT 16
+hold UP 48
+repeat 15 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 5 press A 2 30
+hold UP 48
+hold UP 16
+hold LEFT 64
+hold UP 288
+hold RIGHT 96
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+press DOWN 16 30
+press DOWN 16 120
+hold DOWN 16
+hold RIGHT 48
+hold UP 16
+hold RIGHT 32
+hold UP 16
+hold RIGHT 64
+hold DOWN 16
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press RIGHT 2 20
+repeat 47 press A 2 30
+hold DOWN 16
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+hold DOWN 16
+hold RIGHT 128
+hold UP 32
+hold RIGHT 32
+hold UP 16
+hold RIGHT 80
+hold UP 48
+hold RIGHT 64
+hold UP 48
+hold RIGHT 48
+hold UP 16
+hold RIGHT 32
+hold UP 48
+hold RIGHT 80
+hold UP 96
+hold LEFT 144
+hold UP 16
+hold LEFT 448
+hold LEFT 432
+repeat 15 press B 2 30
+repeat 9 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 25 press A 2 30
+press UP 2 20
+repeat 22 press A 2 30
+press DOWN 2 20
+repeat 23 press A 2 30
+hold LEFT 432
+wait 2
+press UP 3 20
+hold UP 16
+repeat 15 press B 2 30
+hold UP 16
+hold LEFT 432
+hold DOWN 16
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 17 press A 2 30
+wait 2
+press DOWN 3 20
+hold DOWN 16
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 16 press A 2 30
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 17 press A 2 30
+wait 2
+press DOWN 3 20
+hold DOWN 16
+wait 40
+hold DOWN 16
+hold LEFT 176
+hold UP 32
+hold LEFT 16
+hold UP 32
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press RIGHT 2 20
+repeat 24 press A 2 30
+hold UP 32
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 2
+press LEFT 3 20
+hold LEFT 16
+hold UP 32
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 96
+hold LEFT 80
+repeat 15 press B 2 30
+repeat 9 press A 2 30
+press RIGHT 2 20
+repeat 22 press A 2 30
+hold LEFT 80
+wait 2
+press DOWN 3 20
+hold DOWN 16
+repeat 15 press B 2 30
+hold DOWN 16
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+wait 2
+press DOWN 3 20
+hold DOWN 16
+wait 40
+hold DOWN 16
+hold LEFT 16
+hold DOWN 16
+hold LEFT 48
+hold UP 16
+hold LEFT 48
+hold UP 48
+hold LEFT 32
+hold UP 16
+repeat 2 hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+wait 2
+press DOWN 3 20
+hold DOWN 16
+hold LEFT 16
+hold DOWN 16
+hold LEFT 112
+hold UP 32
+hold LEFT 48
+hold LEFT 32
+repeat 15 press B 2 30
+repeat 9 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 65 press A 2 30
+hold LEFT 32
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+hold RIGHT 16
+hold UP 32
+hold LEFT 144
+hold LEFT 16
+hold DOWN 32
+hold DOWN 16
+wait 40
+wait 2
+press LEFT 3 20
+hold LEFT 16
+hold DOWN 16
+wait 40
+hold DOWN 16
+hold LEFT 480
+hold LEFT 16
+hold DOWN 48
+hold LEFT 16
+
+# Fallarbor: the pet SHOJOBOB (Azurill's slot: sprite, cry, text).
+wait 10
+press UP 3 20
+press A 2 60
+shot shots/v01_fallarbor_shojobob.png
+press B 2 30
+
+# Heal, Route 114 to Meteor Falls (the trainers who walked over after their battles are passed by hand),
+# the Magma/Aqua scene, back to Fallarbor.
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+hold UP 80
+hold RIGHT 80
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press B 2 30
+wait 2
+press LEFT 3 20
+hold LEFT 112
+hold DOWN 16
+hold LEFT 304
+hold DOWN 16
+hold LEFT 128
+hold DOWN 272
+hold LEFT 16
+hold DOWN 112
+hold LEFT 48
+hold DOWN 144
+hold DOWN 16
+hold RIGHT 16
+wait 40
+wait 2
+press DOWN 3 20
+hold DOWN 16
+wait 40
+hold DOWN 16
+wait 40
+hold DOWN 32
+hold DOWN 16
+wait 40
+wait 2
+press LEFT 3 20
+hold LEFT 16
+wait 40
+wait 2
+press DOWN 3 20
+hold DOWN 16
+wait 40
+wait 2
+press LEFT 3 20
+hold LEFT 16
+wait 40
+hold LEFT 16
+wait 40
+wait 2
+press UP 3 20
+hold UP 16
+hold LEFT 16
+hold UP 16
+hold LEFT 32
+hold DOWN 112
+hold RIGHT 32
+hold DOWN 48
+hold RIGHT 176
+hold UP 32
+hold RIGHT 48
+hold DOWN 256
+hold DOWN 224
+repeat 15 press B 2 30
+repeat 7 press A 2 30
+press RIGHT 2 20
+repeat 31 press A 2 30
+press DOWN 2 20
+repeat 28 press A 2 30
+hold DOWN 224
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+wait 2
+press DOWN 3 20
+hold DOWN 256
+hold LEFT 16
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press DOWN 2 20
+repeat 50 press A 2 30
+press RIGHT 2 20
+press UP 2 20
+repeat 21 press A 2 30
+hold LEFT 16
+wait 2
+press DOWN 3 20
+hold DOWN 16
+repeat 15 press B 2 30
+repeat 10 press A 2 30
+press RIGHT 2 20
+repeat 46 press A 2 30
+hold DOWN 16
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+wait 2
+press DOWN 3 20
+hold DOWN 32
+hold LEFT 48
+hold UP 128
+hold LEFT 144
+hold LEFT 80
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press DOWN 2 20
+repeat 83 press A 2 30
+hold LEFT 80
+wait 2
+press UP 3 20
+hold UP 16
+wait 2
+press LEFT 3 20
+hold LEFT 96
+hold DOWN 16
+hold LEFT 32
+hold DOWN 96
+hold LEFT 80
+hold UP 96
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+wait 2
+press LEFT 3 20
+hold LEFT 192
+wait 10
+press LEFT 3 20
+hold LEFT 16
+wait 60
+repeat 63 press B 2 30
+wait 2
+press RIGHT 3 20
+hold RIGHT 224
+wait 2
+press LEFT 3 20
+hold LEFT 16
+wait 10
+press DOWN 3 20
+hold DOWN 16
+wait 120
+hold DOWN 96
+hold RIGHT 80
+hold UP 64
+hold RIGHT 48
+hold UP 16
+hold RIGHT 144
+hold DOWN 128
+hold RIGHT 32
+hold UP 16
+hold RIGHT 16
+hold UP 256
+hold LEFT 48
+hold DOWN 32
+hold LEFT 176
+hold UP 48
+hold LEFT 32
+hold UP 112
+hold RIGHT 32
+hold DOWN 16
+hold RIGHT 16
+hold DOWN 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 21 press A 2 30
+hold RIGHT 16
+wait 40
+wait 2
+press UP 3 20
+hold UP 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+wait 2
+press UP 3 20
+hold UP 32
+hold RIGHT 32
+repeat 2 hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+wait 2
+press UP 3 20
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 416
+hold UP 352
+repeat 15 press B 2 30
+repeat 7 press A 2 30
+press RIGHT 2 20
+repeat 45 press A 2 30
+hold UP 352
+hold UP 16
+hold RIGHT 304
+hold UP 64
+hold RIGHT 112
+hold UP 16
+hold RIGHT 112
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press B 2 30
+
+# Back through Fiery Path (Route 112's north part does not reach the cable car) and the cable car.
+hold DOWN 64
+hold RIGHT 224
+hold RIGHT 16
+hold DOWN 16
+hold RIGHT 144
+hold DOWN 16
+hold RIGHT 128
+hold RIGHT 64
+repeat 15 press B 2 30
+repeat 9 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 22 press A 2 30
+hold RIGHT 64
+repeat 2 hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 32
+hold UP 48
+hold RIGHT 32
+hold UP 32
+hold RIGHT 32
+hold UP 16
+hold RIGHT 16
+hold UP 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 17 press A 2 30
+hold RIGHT 32
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 48
+hold RIGHT 48
+hold DOWN 16
+hold RIGHT 80
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+repeat 2 hold RIGHT 16
+hold UP 16
+hold RIGHT 32
+hold UP 32
+hold RIGHT 16
+hold UP 16
+hold RIGHT 16
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+hold UP 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+hold RIGHT 48
+hold RIGHT 16
+hold DOWN 16
+hold RIGHT 160
+hold RIGHT 16
+wait 40
+wait 2
+press DOWN 3 20
+hold DOWN 16
+wait 40
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+hold RIGHT 16
+wait 40
+repeat 15 press A 2 30
+press RIGHT 2 20
+repeat 17 press A 2 30
+hold RIGHT 16
+hold DOWN 16
+hold RIGHT 240
+wait 10
+wait 2
+press DOWN 3 20
+hold DOWN 32
+hold RIGHT 96
+hold DOWN 16
+hold RIGHT 32
+hold DOWN 16
+hold RIGHT 96
+repeat 2 hold DOWN 16
+hold RIGHT 16
+hold DOWN 16
+hold RIGHT 16
+hold DOWN 64
+hold DOWN 16
+hold LEFT 32
+hold DOWN 16
+hold LEFT 64
+hold DOWN 16
+hold LEFT 16
+repeat 2 hold DOWN 16
+hold LEFT 32
+hold DOWN 16
+hold LEFT 16
+repeat 2 hold DOWN 16
+hold LEFT 64
+repeat 15 press B 2 30
+repeat 10 press A 2 30
+press RIGHT 2 20
+repeat 72 press A 2 30
+hold LEFT 64
+wait 2
+press DOWN 3 20
+hold DOWN 16
+repeat 15 press B 2 30
+hold DOWN 16
+hold LEFT 144
+hold DOWN 16
+hold LEFT 32
+hold DOWN 16
+hold LEFT 64
+hold UP 16
+repeat 15 press B 2 30
+repeat 13 press A 2 30
+press RIGHT 2 20
+repeat 24 press A 2 30
+press DOWN 2 20
+repeat 23 press A 2 30
+hold UP 16
+wait 2
+press LEFT 3 20
+hold LEFT 16
+wait 40
+wait 2
+press UP 3 20
+hold UP 16
+hold LEFT 48
+hold DOWN 16
+hold LEFT 32
+hold DOWN 16
+hold LEFT 48
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+wait 2
+press LEFT 3 20
+hold LEFT 96
+hold DOWN 288
+hold RIGHT 64
+hold DOWN 48
+hold RIGHT 16
+hold DOWN 160
+hold RIGHT 16
+wait 10
+press DOWN 3 20
+hold DOWN 16
+wait 30
+press DOWN 16 120
+press B 2 30
+wait 2
+hold RIGHT 64
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 32
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 48
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 32
+wait 4
+repeat 7 press B 2 30
+repeat 20 press A 2 30
+press RIGHT 2 20
+repeat 22 press A 2 30
+press LEFT 2 20
+press DOWN 2 20
+repeat 26 press A 2 30
+press B 2 30
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold UP 32
+wait 4
+wait 2
+hold RIGHT 48
+wait 4
+wait 2
+hold UP 48
+wait 4
+wait 2
+hold RIGHT 32
+wait 4
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+hold UP 64
+wait 10
+press UP 3 20
+press A 2 60
+repeat 2 press A 2 60
+repeat 14 press B 2 60
+
+# Mt. Chimney: the Aqua and Magma SHACHOUND by the station, Tabitha and the grunts, Maxie.
+wait 10
+press DOWN 3 20
+hold DOWN 64
+wait 150
+shot shots/v02_mt_chimney_shachound.png
+wait 2
+hold RIGHT 48
+wait 4
+wait 2
+hold UP 64
+wait 4
+wait 2
+hold RIGHT 96
+wait 4
+wait 2
+hold UP 128
+wait 4
+wait 2
+hold LEFT 96
+wait 4
+wait 2
+hold UP 32
+wait 4
+wait 2
+hold RIGHT 80
+wait 4
+wait 2
+hold UP 112
+wait 4
+wait 2
+hold LEFT 224
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold LEFT 32
+wait 4
+wait 2
+hold UP 16
+wait 4
+repeat 10 press B 2 30
+repeat 24 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 22 press A 2 30
+repeat 8 press B 2 30
+repeat 24 press A 2 30
+press RIGHT 2 20
+repeat 22 press A 2 30
+press B 2 30
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold LEFT 32
+wait 4
+wait 2
+hold UP 160
+wait 4
+repeat 9 press B 2 30
+repeat 24 press A 2 30
+press RIGHT 2 20
+repeat 24 press A 2 30
+press DOWN 2 20
+repeat 22 press A 2 30
+press UP 2 20
+repeat 45 press A 2 30
+press B 2 30
+wait 2
+hold UP 64
+wait 4
+wait 2
+hold RIGHT 48
+wait 4
+wait 20
+press UP 2 30
+press A 2 60
+repeat 62 press B 2 30
+wait 20
+shot shots/v03_maxie_battle.png
+press A 2 30
+press RIGHT 2 20
+repeat 72 press A 2 30
+press DOWN 2 20
+repeat 69 press A 2 30
+repeat 29 press B 2 30
+
+# Jagged Pass down to Route 112, Lavaridge (heal), the gym (holes, geysers, ledges), Flannery.
+wait 2
+hold LEFT 48
+wait 4
+wait 2
+hold DOWN 160
+wait 4
+wait 2
+hold RIGHT 32
+wait 4
+wait 2
+hold DOWN 32
+wait 4
+wait 2
+hold RIGHT 32
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold RIGHT 160
+wait 4
+wait 2
+hold DOWN 32
+wait 4
+wait 2
+hold LEFT 80
+wait 4
+wait 2
+hold DOWN 48
+wait 4
+wait 2
+hold RIGHT 96
+wait 4
+wait 2
+hold DOWN 192
+wait 4
+wait 2
+hold LEFT 64
+wait 4
+wait 2
+hold DOWN 32
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 10
+press DOWN 3 20
+press DOWN 16 120
+hold DOWN 208
+hold DOWN 160
+repeat 15 press B 2 30
+repeat 10 press A 2 30
+press DOWN 2 20
+repeat 53 press A 2 30
+press RIGHT 2 20
+repeat 21 press A 2 30
+hold DOWN 160
+hold DOWN 80
+hold RIGHT 16
+repeat 2 hold DOWN 16
+hold RIGHT 16
+hold DOWN 32
+hold DOWN 16
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press DOWN 2 20
+repeat 28 press A 2 30
+hold DOWN 16
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+repeat 11 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 22 press A 2 30
+hold RIGHT 16
+wait 2
+press UP 3 20
+hold UP 16
+hold RIGHT 32
+hold DOWN 32
+hold DOWN 16
+hold LEFT 48
+hold DOWN 160
+hold DOWN 80
+repeat 15 press B 2 30
+repeat 8 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 32 press A 2 30
+press LEFT 2 20
+repeat 31 press A 2 30
+hold DOWN 80
+wait 2
+press RIGHT 3 20
+hold RIGHT 16
+repeat 15 press B 2 30
+hold RIGHT 16
+wait 10
+press DOWN 3 20
+press DOWN 16 120
+wait 2
+hold DOWN 48
+wait 4
+wait 10
+press DOWN 3 20
+press DOWN 16 120
+hold DOWN 16
+hold LEFT 16
+hold DOWN 32
+hold LEFT 256
+hold UP 48
+wait 30
+press UP 3 20
+hold UP 32
+wait 120
+hold UP 64
+wait 30
+press UP 3 20
+press A 2 40
+repeat 20 press A 2 30
+repeat 6 press B 2 30
+hold DOWN 64
+hold DOWN 32
+wait 120
+press B 2 30
+hold DOWN 16
+hold LEFT 16
+hold DOWN 128
+hold LEFT 16
+hold DOWN 16
+hold LEFT 32
+hold UP 16
+wait 10
+press UP 3 20
+hold UP 16
+wait 120
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold LEFT 16
+wait 120
+press B 2 30
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+repeat 6 press B 2 30
+repeat 26 press A 2 30
+press RIGHT 2 20
+repeat 23 press A 2 30
+press LEFT 2 20
+press DOWN 2 20
+repeat 24 press A 2 30
+repeat 7 press B 2 30
+repeat 25 press A 2 30
+press RIGHT 2 20
+repeat 22 press A 2 30
+press B 2 30
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 120
+repeat 6 press B 2 30
+repeat 26 press A 2 30
+press RIGHT 2 20
+repeat 21 press A 2 30
+repeat 6 press B 2 30
+repeat 26 press A 2 30
+press RIGHT 2 20
+press DOWN 2 20
+repeat 25 press A 2 30
+press B 2 30
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+repeat 7 press B 2 30
+repeat 26 press A 2 30
+press RIGHT 2 20
+repeat 21 press A 2 30
+press B 2 30
+wait 2
+hold LEFT 16
+wait 4
+wait 2
+hold LEFT 16
+wait 120
+press B 2 30
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 120
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 120
+press B 2 30
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 120
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 120
+press B 2 30
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold DOWN 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 4
+wait 2
+hold RIGHT 16
+wait 120
+wait 2
+hold UP 16
+wait 4
+wait 2
+hold UP 16
+wait 4
+wait 20
+press UP 2 30
+press A 2 60
+repeat 41 press B 2 30
+wait 20
+shot shots/v04_flannery_battle.png
+press A 2 30
+press RIGHT 2 20
+repeat 174 press A 2 30
+shot shots/v05_flannery_kamadoro.png
+repeat 90 press A 2 30
+press B 2 30
+repeat 3 press A 2 30
+repeat 2 press B 2 30
+shot shots/v06_heat_badge.png
+repeat 46 press B 2 30

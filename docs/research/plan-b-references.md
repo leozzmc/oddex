@@ -446,7 +446,7 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 
 ## 9. 第 6 步第四段：Wattson 之後 → Flannery（第 4 個徽章）
 
-`[lavaridge]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+`[lavaridge]` 的對照、方案 F 和手改都已經套用，回歸腳本是 `to_lavaridge`（§9.5）。等使用者核准新角色的美術後，再設成 `strict = true`。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
 
 ### 9.1 可達性
 
@@ -581,3 +581,21 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 - Lavaridge 老婆婆送的蛋：`giveegg` 改用新代號 `EGG_GIFT`（名稱照 Mark 的提案），暫時指向 Wynaut。使用者核准的對照是 Gachirinza，Mark 那一批只要改 `roles.toml` 的值。
   - 為了不讓這個暫時的代號藏住原版角色，`check_species_refs.py` 現在也會解析 `oddex_species.h` 的代號：指向原版角色的代號，會被當成原版的引用回報。
 - 還沒做：Route 117 育幼屋院子裡的 Kecleon，對照表沒有，要等 Mark。
+
+### 9.5 `to_lavaridge`
+
+接在 `to_mauville` 後面，單獨執行約 594 秒（方案 F 不用再練等）。路線：
+1. 從 Mauville 的房子拿到 HM06，用背包教 Rock Smash（忘掉 Night Slash，Crunch 還在，惡系沒有少）。
+2. 敲碎 Route 111 (19,100) 的岩石，經 Route 112 進 Fiery Path，從北邊出口到 Route 112 北段，再到 Route 113 → Fallarbor（截圖 Shojobob）→ Route 114 → Meteor Falls 的劇情 → 回 Fallarbor 回血。
+3. 走回 Fiery Path（Route 112 北段到不了纜車）→ 搭纜車 → Mt. Chimney（截圖 Shachound）→ Tabitha、手下 → Maxie。
+4. Jagged Pass → Lavaridge → 道館 → Flannery → HEAT BADGE。
+
+截圖 v01–v06：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound、Maxie 的戰鬥（Shachowl）、Flannery 的戰鬥（Hifukko）、Kamadoro（方案 F，Lv24）、徽章。打 Flannery 時 Grinvine 在戰鬥中升到 Lv36，進化成 Grinarbor，最後剩 24/110 HP 贏了。
+
+錄製時發現、已修正的問題：
+- **HM 相容性**：Grinvine 原本學不了 Rock Smash，選草系或水系御三家的玩家會卡在 Mauville。David 決定每隻原創角色繼承它取代的原版角色的 HM 相容性；Mark 已經修好，並在 `gen_species` 加了檢查，任何一個 HM 沒有角色能學就會報錯。
+- **autopilot 的轉向**：上一次 hold 剛結束就按另一個方向，遊戲會繼續走，所以原本只想轉向的輕按會多走一格（Route 113、Route 110 的來回衝過頭）。現在轉向前先放開 2 格影格。
+- **autopilot 的忘招**：進化時學招（Horn Leech）的提示會選到 HM 招式 Rock Smash，遊戲拒絕忘掉 HM 後又重問，變成無限迴圈。現在 `slot_to_forget` 不會選 HM 招式（從 `tms_hms.h` 的 `FOREACH_HM` 解析）。測試在 `tools/oddex/test_autopilot.py`。
+- **道館和隱藏物件**：Lavaridge 道館的洞和間歇泉是單向的 warp（只有一邊的地塊有 warp 行為），還有只能往下跳的崖，用 warp／崖的 BFS 一步一步走，遇到戰鬥就交給 autopilot。Route 112 纜車附近被藏起來的 Magma 手下，靜態地圖仍然會擋路，所以改用執行中的地圖規劃。這兩個都是錄製用的暫時腳本，沒有放進 repo。
+
+只有在遊戲裡看過的手改：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound。Verdanturf、Route 117 育幼屋、Fallarbor Mart、Lavaridge 民宅和 Route 114 的手改，都不在這條路線上，只有 `check_maps` 和 `check_species_refs` 驗證過。Lavaridge 的蛋（`EGG_GIFT`）在畫面上看不出物種，只靠資料檢查。

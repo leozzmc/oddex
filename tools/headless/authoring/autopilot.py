@@ -66,6 +66,16 @@ def where(ss):
 
 
 @lru_cache(None)
+def hm_moves():
+    """Move ids of the HMs (FOREACH_HM in tms_hms.h): the game will not let them be forgotten."""
+    import re as _re
+    with open(os.path.join(os.path.dirname(ROM), "include/constants/tms_hms.h"), encoding="utf-8") as f:
+        body = f.read().split("#define FOREACH_HM(F)", 1)[1].split("#define", 1)[0]
+    ids = {k: v for v, k in W["move_names"]().items()}
+    return {ids[n] for n in _re.findall(r"F\((\w+)\)", body)}
+
+
+@lru_cache(None)
 def move_info():
     """{move id: (base power, type id, is special)}; conditional powers take the updated (post-'?')
     value."""
@@ -267,6 +277,8 @@ def slot_to_forget(st):
         return worth(moves[i], [m for j, m in enumerate(moves) if j != i])
     order = sorted(range(4), key=lambda i: (kept_worth(i), -i))
     for slot in order:
+        if moves[slot] in hm_moves():
+            continue  # "HM moves can't be forgotten": answering with one loops forever
         k = kind(moves[slot])
         if k is not None and k != kind(new) and sum(kind(m) == k for m in moves) == 1:
             continue  # last move of its category
@@ -435,7 +447,9 @@ def units(start, goal, facing, stopped):
     d, grassy = steps[0]
     cmds = []
     if stopped and d != facing:
-        cmds.append(f"press {d} 3 20")
+        # A frame with no input first: a new direction pressed right after the last hold keeps the
+        # walk going, so the "turn" tap would walk a tile (seen as 2-tile overshoots, Route 113).
+        cmds += ["wait 2", f"press {d} 3 20"]
     if grassy:
         n = 1
     else:
