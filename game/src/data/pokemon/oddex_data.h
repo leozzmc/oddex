@@ -1199,7 +1199,7 @@ static const struct SpriteFrameImage sPicTable_Torobi[] = {
 
 // Grinvine
 static const struct LevelUpMove sGrinvineLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_NIGHT_SLASH),
+    LEVEL_UP_MOVE( 0, MOVE_NIGHT_SLASH),
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 1, MOVE_GROWL),
     LEVEL_UP_MOVE( 3, MOVE_LEAFAGE),
@@ -1235,7 +1235,7 @@ static const struct SpriteFrameImage sPicTable_Grinvine[] = {
 
 // Ridgefin
 static const struct LevelUpMove sRidgefinLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_AQUA_TAIL),
+    LEVEL_UP_MOVE( 0, MOVE_AQUA_TAIL),
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE( 3, MOVE_WATER_GUN),
@@ -1270,7 +1270,7 @@ static const struct SpriteFrameImage sPicTable_Ridgefin[] = {
 
 // Trekwheel
 static const struct LevelUpMove sTrekwheelLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_FIRE_FANG),
+    LEVEL_UP_MOVE( 0, MOVE_FIRE_FANG),
     LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
     LEVEL_UP_MOVE( 1, MOVE_GROWL),
     LEVEL_UP_MOVE( 3, MOVE_EMBER),

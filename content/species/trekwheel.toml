@@ -31,7 +31,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 
 [learnset]
 level = [
-    [1, "FIRE_FANG"], [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "METAL_CLAW"], [9, "FLAME_CHARGE"], [12, "IRON_DEFENSE"], [15, "FLAME_WHEEL"], [15, "AERIAL_ACE"], [18, "IRON_HEAD"], [21, "FLAMETHROWER"], [24, "FLASH_CANNON"], [27, "OVERHEAT"],
+    [0, "FIRE_FANG"], [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "METAL_CLAW"], [9, "FLAME_CHARGE"], [12, "IRON_DEFENSE"], [15, "FLAME_WHEEL"], [15, "AERIAL_ACE"], [18, "IRON_HEAD"], [21, "FLAMETHROWER"], [24, "FLASH_CANNON"], [27, "OVERHEAT"],
 ]
 teachable = [
     "ATTRACT", "BRICK_BREAK", "DIG", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "IRON_TAIL", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",

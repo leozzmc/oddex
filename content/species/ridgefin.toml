@@ -31,7 +31,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 
 [learnset]
 level = [
-    [1, "AQUA_TAIL"], [1, "TACKLE"], [1, "TAIL_WHIP"], [3, "WATER_GUN"], [6, "GUST"], [9, "AQUA_JET"], [12, "WING_ATTACK"], [15, "BUBBLE_BEAM"], [18, "MUD_SHOT"], [21, "WATER_PULSE"], [24, "AIR_SLASH"], [27, "SURF"],
+    [0, "AQUA_TAIL"], [1, "TACKLE"], [1, "TAIL_WHIP"], [3, "WATER_GUN"], [6, "GUST"], [9, "AQUA_JET"], [12, "WING_ATTACK"], [15, "BUBBLE_BEAM"], [18, "MUD_SHOT"], [21, "WATER_PULSE"], [24, "AIR_SLASH"], [27, "SURF"],
 ]
 teachable = [
     "AERIAL_ACE", "ATTRACT", "BLIZZARD", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATER_PULSE",
