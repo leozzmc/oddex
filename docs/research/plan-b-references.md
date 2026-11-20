@@ -309,6 +309,14 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
   - `--live`：用執行中的地圖（`gBackupMapLayout`）和物件目前的位置規劃，例如已經藏起來的物件、`setmetatile` 改過的電閘、打完之後走過來擋路的訓練家。不想踩的格子（例如道館的開關）用 `--avoid x,y;...` 避開。
   - 用法：`stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--avoid ...]`。
 - **防止空轉**：總共執行超過 `AP_MAX_STEPS` 個單位（預設 20000），或在戰鬥外同一位置連續 100 次送出同一個指令，就印出原因、已執行的指令和最後的狀態，以 exit 3 結束（`AP_PARTIAL=1` 也一樣會失敗）。起因是 Mauville 練等時，練等格上跳出 Match Call 的訊息，`grind` 在練等格上遇到操作被鎖住只會 `wait 30`，而 B 只在「走一步沒動」時才按，結果空轉了 32 萬步（約 5 小時 40 分）都沒停；那時攻擊招式還剩 Aerial Ace 的 19 PP，高於暫停門檻 10，所以也沒有因為 PP 不足而暫停。現在練等格上連續 3 次操作被鎖住就按 B。
+- **`resync.py`**：ROM 一改（角色數、美術、版面）讓長路線的亂數位移時，用來重新同步回歸腳本。
+  - 用法：`resync.py prepare OLD_GAME WORK SCRIPT` → `run WORK` → `shots WORK K NAME...` → `assemble WORK`。`OLD_GAME` 是錄製時那個 commit 編好的 `game/`，例如用 `git worktree` 另外編一份。
+  - 腳本先切成段落：在註解、檔案邊界、每 40 個指令的地方切開。新舊 ROM 各跑一次，每段結束時存 savestate。
+  - 從第一個不一樣的段落開始，依序嘗試：照舊指令重播 → 補完戰鬥和訊息 → autopilot／stepwalk → 走到門口再進去 → 跟著舊 ROM 逐指令的軌跡走。
+  - 接受一段的條件：位置相同、等級不低於舊的，而且**打敗的訓練家數不能少**。只比位置的話，曾經繞過 Flannery 沒打。
+  - 截圖用 `shots` 放回最接近基準截圖的那一格。長時間練等改成手動用 autopilot `grind:`。
+  - 第一次用在 Winona 批的美術上，見 §11.5。
+  - 測試在 `tools/oddex/test_resync.py`（只測切段、接受條件、重組）。`prepare` 拿同一個 ROM 跑過，結果是沒有差異。`run` 用的是錄製時在暫存區的原型，正式版還沒完整跑過一次。
 - **反彈招式**：`best_move` 看對手的招式，對手有 Counter 時物理招式的分數乘 0.25，有 Mirror Coat 時特殊招式也一樣。Norman 的 Mandaloka 用 Counter 把 Seed Bomb 加倍反彈，一擊打倒 Grinarbor；改成用 Giga Drain 之後就贏了。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
@@ -883,3 +891,11 @@ script／text／gfx 的手改（不是 `apply_replacements` 會處理的）：
 - 工具上要先補的：
   - autopilot／plan／stepwalk 目前都把水當成牆。衝浪要面向水按 A、選 YES，所以要加「上水」的單位，水上再用一般的移動。
   - Fortree 道館的旋轉門（`src/rotating_gate.c` 的 `sRotatingGate_FortreePuzzleConfig`，8 個門）不是物件，也不在碰撞資料裡，靜態規劃和 `--live` 都看不到。要寫一個模擬旋轉門狀態的小 BFS，或照原版的解法手寫路線。
+
+### 11.5 Winona 批之後的重錄
+
+Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport 開始位移，所以 `to_mauville`、`to_lavaridge`、`to_norman` 都重新同步了（`resync.py` 的原型）。
+- Route 110 的練等（Lv24 → 33）改成手動用 autopilot `grind:` 重做。
+- Fan Club 的寵物截圖（m02）那一段是用走路補的；為了不讓後面全部位移，沒有再加對話，所以只拍到寵物，台詞只靠資料檢查。
+- Route 110 有 1 名訓練家在新路線上被繞過，只影響經驗值。
+
