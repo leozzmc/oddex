@@ -37,6 +37,16 @@ class Formula(unittest.TestCase):
         self.assertEqual(dc.damage(a, d, 'SEISMIC_TOSS', MOVES), (0, 0))
         self.assertEqual(dc.damage(a, mon(16, ['NORMAL']), 'SEISMIC_TOSS', MOVES), (16, 16))
 
+    def test_sonic_boom_and_ability_immunity(self):
+        moves = {**MOVES, 'SONIC_BOOM': {'power': 1, 'type': 'NORMAL', 'category': 'SPECIAL', 'effect': 'FIXED_HP_DAMAGE'},
+                 'SPARK': {'power': 65, 'type': 'ELECTRIC', 'category': 'PHYSICAL', 'effect': 'HIT'}}
+        a = mon(20, ['ELECTRIC'])
+        self.assertEqual(dc.damage(a, mon(20, ['WATER']), 'SONIC_BOOM', moves), (20, 20))
+        self.assertEqual(dc.damage(a, mon(20, ['GHOST']), 'SONIC_BOOM', moves), (0, 0))
+        volt = {**mon(20, ['WATER', 'FLYING']), 'immune': ['ELECTRIC']}
+        self.assertEqual(dc.damage(a, volt, 'SPARK', moves), (0, 0))
+        self.assertGreater(dc.damage(a, mon(20, ['WATER', 'FLYING']), 'SPARK', moves)[0], 0)
+
     def test_skipped_moves(self):
         a, d = mon(16, ['FIGHTING']), mon(16, ['NORMAL'])
         self.assertIsNone(dc.damage(a, d, 'GROWL', MOVES))

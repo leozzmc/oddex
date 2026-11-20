@@ -167,6 +167,11 @@ def damage(attacker, defender, move, moves):
     if not mv:
         return None
     eff = mv['effect']
+    if mv['type'] in defender.get('immune', ()):   # an ability like Volt Absorb or Levitate
+        return None if mv['category'] == 'STATUS' else (0, 0)
+    if eff == 'FIXED_HP_DAMAGE':   # Sonic Boom: 20 (its argument), type immunity still applies
+        e = effectiveness(mv['type'], defender['types'])
+        return (20, 20) if e else (0, 0)
     if eff in ('LEVEL_DAMAGE',):
         e = effectiveness(mv['type'], defender['types'])
         d = attacker['level'] if e else 0
@@ -207,7 +212,8 @@ def best(attacker, defender, move_list, moves):
 def mon(species, sid, level, iv, overrides):
     sp = species[sid]
     m = {'id': sid, 'level': overrides.get(sid, {}).get('level', level),
-         'types': overrides.get(sid, {}).get('types', sp['types']), 'weight': sp['dex']['weight']}
+         'types': overrides.get(sid, {}).get('types', sp['types']), 'weight': sp['dex']['weight'],
+         'immune': overrides.get(sid, {}).get('immune', [])}
     m['stats'] = stats(sp, m['level'], iv)
     return m
 
@@ -229,7 +235,8 @@ def run(trainer, levels, overrides, drops, extra, moves, species, starters=START
     rows = []
     for sid in starters:
         for lv in levels:
-            me = mon(species, sid, lv, 15, {})
+            # A starter's level is the loop variable, but types and immune overrides apply to it too.
+            me = mon(species, sid, lv, 15, {sid: {k: v for k, v in overrides.get(sid, {}).items() if k in ('types', 'immune')}})
             my_moves = learned(species[sid], lv, extra)
             for p in party:
                 foe = mon(species, p['species'], p['level'], p['iv'], overrides)
@@ -304,19 +311,22 @@ def main():
                     help='per starter, the lowest level that wins every one-on-one (worst-case rolls)')
     ap.add_argument('trainer', help='trainer id, with or without TRAINER_ (e.g. BRAWLY_1)')
     ap.add_argument('--levels', default='14-18')
-    ap.add_argument('--set', action='append', default=[], help='SPECIES:types=A,B, SPECIES:level=N, SPECIES:moves=A,B,C,D or SPECIES:species=OTHER (swap; later keys use the new species)')
+    ap.add_argument('--set', action='append', default=[], help='SPECIES:types=A,B, SPECIES:level=N, SPECIES:moves=A,B,C,D, SPECIES:immune=TYPE (an ability like Volt Absorb) or SPECIES:species=OTHER (swap; later keys use the new species)')
     ap.add_argument('--drop', action='append', default=[])
     ap.add_argument('--learn', action='append', default=[], help='SPECIES:LEVEL:MOVE (extra level-up move)')
     ap.add_argument('--markdown', action='store_true')
+    ap.add_argument('--starters', help='comma-separated species to test instead of the trio '
+                    '(e.g. GRINVINE,TREKWHEEL,RIDGEFIN, or GROVYLE,COMBUSKEN,MARSHTOMP with --vanilla)')
     ap.add_argument('--vanilla', metavar='REF', help='calibrate: vanilla starters against the party at this git ref '
                     '(e.g. 421e141a, the upstream import)')
     args = ap.parse_args()
-    a, b = (int(x) for x in args.levels.split('-'))
+    lv = args.levels.split('-')   # '24' or '18-36'
+    a, b = int(lv[0]), int(lv[-1])
     overrides = {}
     for s in args.set:
         sid, kv = s.split(':', 1)
         k, v = kv.split('=')
-        overrides.setdefault(sid, {})[k] = v.split(',') if k in ('types', 'moves') else v if k == 'species' else int(v)
+        overrides.setdefault(sid, {})[k] = v.split(',') if k in ('types', 'moves', 'immune') else v if k == 'species' else int(v)
     extra = {}
     for s in args.learn:
         sid, lv, mv = s.split(':')
@@ -324,10 +334,12 @@ def main():
     species = {s['id']: s for s in load_species()}
     if args.vanilla:
         species = {**load_vanilla_species(), **species}
+        starters = tuple(args.starters.split(',')) if args.starters else ('TREECKO', 'TORCHIC', 'MUDKIP')
         rows = run(args.trainer, range(a, b + 1), overrides, set(args.drop), extra, load_moves(), species,
-                   ('TREECKO', 'TORCHIC', 'MUDKIP'), args.vanilla)
+                   starters, args.vanilla)
     else:
-        rows = run(args.trainer, range(a, b + 1), overrides, set(args.drop), extra, load_moves(), species)
+        starters = tuple(args.starters.split(',')) if args.starters else STARTERS
+        rows = run(args.trainer, range(a, b + 1), overrides, set(args.drop), extra, load_moves(), species, starters)
     if args.summary:
         for sid, lv, cell in summary(rows):
             print(f'{sid.title()}: {"Lv" + str(lv) if lv else "✗ (no level in range)"}  [{cell}]')

@@ -181,3 +181,69 @@
 - **打得過的最低等級**:Grinpack Lv15、Trekkeye Lv13、Ridgecap Lv15,**都在 Lv14–17 以內**。
 - 原版對照:Treecko Lv16、Mudkip Lv15,Torchic 在 Lv20 以內打不過。
 - 結論:Roxanne 不需要調整。Sonia 之前量到的 Lv22,是因為 autopilot 固定用 Leafage(物理招)去打防禦 135 的 Iwadawn。改用 Mega Drain(特殊招,2 倍)就打得過,autopilot 已經改成依照攻防選招了。
+
+## Wattson 戰的選項(2026-11-20,Mark;用數據比較,只是分析,數值都還沒改)
+
+### 怎麼算的
+- 方法和 Brawly 那段一樣:一對一、我方最低亂數、對手最高亂數,用 `tools/oddex/damage_calc.py`。
+- 御三家用第 2 階段(Grinvine、Trekwheel、Ridgefin)和它們的 learnset,範圍 Lv18–36。
+- Sonic Boom 算固定 20 點傷害。
+- **沒有算到的東西**:Thunder Wave(麻痺)、Supersonic(混亂)、Raijuoh 帶的 Sitrus Berry、Wattson 的 2 個 Super Potion、特性。這些都對 Wattson 有利,所以實際打起來會比表上難。
+  - Sonia 用 Grinpack 在 Lv25、Lv28 輸掉,主要是麻痺、混亂和回復造成的,而且那時還沒有進化。
+- **基準**:用同樣的標準算原版,Grovyle、Combusken、Marshtomp 打原版 Wattson,分別要 **Lv22、Lv27、Lv20**(`--vanilla 421e141a --starters GROVYLE,COMBUSKEN,MARSHTOMP`)。
+
+### 現況:三人組 Lv24 對 Wattson(Suzurai Lv20、Raijumen Lv20、Kagurai Lv22、Raijuoh Lv24)
+| 御三家 | Lv | 對手 | 我方最佳招式 | 打對手 | 幾下擊倒 | 對手最佳招式 | 打我方 | 幾下擊倒 | 速度 |
+|---|---|---|---|---|---|---|---|---|---|
+| Grinvine | 24 | Suzurai Lv20 | Crunch | 63–75% | 2 | Self Destruct | 30–36% | 3–4 | 我方先 |
+| Grinvine | 24 | Raijumen Lv20 | Giga Drain | 68–80% | 2 | Shock Wave | 10–13% | 8–10 | 我方先 |
+| Grinvine | 24 | Kagurai Lv22 | Crunch | 33–40% | 3 | Sonic Boom | 29–29% | 4 | 對手先 |
+| Grinvine | 24 | Raijuoh Lv24 | Giga Drain | 28–33% | 3–4 | Shock Wave | 19–22% | 5–6 | 對手先 |
+| Trekwheel | 24 | Suzurai Lv20 | Flamethrower | 184–218% | 1 | Shock Wave | 31–37% | 3–4 | 我方先 |
+| Trekwheel | 24 | Raijumen Lv20 | Flamethrower | 98–116% | 1–2 | Shock Wave | 24–28% | 4–5 | 我方先 |
+| Trekwheel | 24 | Kagurai Lv22 | Flamethrower | 103–122% | 1 | Shock Wave | 42–50% | 2–3 | 對手先 |
+| Trekwheel | 24 | Raijuoh Lv24 | Flamethrower | 40–48% | 3 | Shock Wave | 45–54% | 2–3 | 對手先 |
+| Ridgefin | 24 | Suzurai Lv20 | Aqua Tail | 63–75% | 2 | Shock Wave | 107–126% | 1 | 我方先 |
+| Ridgefin | 24 | Raijumen Lv20 | Aqua Tail | 80–96% | 2 | Shock Wave | 85–101% | 1–2 | 同速 |
+| Ridgefin | 24 | Kagurai Lv22 | Aqua Tail | 33–40% | 3 | Shock Wave | 143–169% | 1 | 對手先 |
+| Ridgefin | 24 | Raijuoh Lv24 | Aqua Tail | 33–40% | 3 | Shock Wave | 150–177% | 1 | 對手先 |
+
+- **打得過的最低等級**:Grinvine Lv24、Trekwheel Lv27,和原版(Lv22、Lv27)差不多。**Ridgefin 在 Lv36 以內打不過 Raijuoh**,打 Kagurai 也要 Lv33。
+- **問題的核心**:水/飛行對電是 4 倍弱點,Wattson 四隻都會 Shock Wave,所以 Ridgefin 幾乎每一隻都被一招打倒。
+  - 原版的 Marshtomp 是水/地面,地面對電免疫,所以 Lv20 就夠。
+  - Brawly 戰正好相反:飛行抵抗格鬥,Ridgecap 最輕鬆。同一個第二屬性造成兩個道館一個太簡單、一個打不過。
+- Ridgefin 自己的招式也打不太動:Kagurai 和 Raijuoh 都要 3 下,因為它沒有地面招(地面打鋼/電是 4 倍,打電/惡是 2 倍)。
+
+### 各選項打得過的最低等級(Lv18–36 的範圍內;✗ 表示這個範圍內打不過)
+
+| 選項 | Grinvine | Trekwheel | Ridgefin | 說明 |
+|---|---|---|---|---|
+| 原版基準(Grovyle/Combusken/Marshtomp) | Lv22 | Lv27 | Lv20 | 目標 |
+| 現況 | Lv24 | Lv27 | ✗ | Ridgefin 被 Shock Wave 一招打倒 |
+| (a) Ridgefin 在 Lv18 學會 Mud Shot | Lv24 | Lv27 | ✗ | 打得動 Suzurai(Lv20),但還是先被打倒 |
+| (b) Wattson 全隊降 2 級(18/18/20/22) | Lv23 | Lv25 | ✗ | 等級不是問題 |
+| (c) (a),再把 Raijuoh 的 Shock Wave 換成 Bite | Lv24 | Lv27 | Lv30 | Kagurai 的 Shock Wave 還在 |
+| (c),再把 Raijuoh 降到 Lv22、Kagurai 降到 Lv20,Grinvine 在 Lv20 學會 Bulldoze | Lv20 | Lv25 | Lv28 | Wattson 變弱很多,Ridgefin 還是最難 |
+| (d) Ridgefin 改成水/幽靈 | Lv24 | Lv27 | Lv35 | 電還是 2 倍,幫助不大 |
+| (d),再加 Mud Shot | Lv24 | Lv27 | Lv35 | 打得動 Kagurai 了,但 Raijuoh 的 Shock Wave 還是 2 倍 |
+| (e) Ridgefin 改成水/地面 | Lv24 | Lv27 | Lv24 | 等於回到 Marshtomp,失去飛頭蠻的「飛」 |
+| (e),再加 Mud Shot | Lv24 | Lv27 | Lv19 | |
+| (f) Ridgefin 的特性改成對電免疫(Volt Absorb 或 Lightning Rod) | Lv24 | Lv27 | Lv24 | 屬性維持水/飛行 |
+| **(F) (f),再在 Lv18 學會 Mud Shot** | **Lv24** | **Lv27** | **Lv20** | **三隻都和原版一致** |
+
+(f) 用 `--set RIDGEFIN:immune=ELECTRIC` 模擬:電屬性招式(包含 Thunder Wave)對它無效。
+
+### 建議
+- **推薦 (F)**:
+  - Ridgefin(和之後的第 3 階段)的特性第 1 格,從 Torrent 換成對電免疫的特性。Ridgecap 保留 Torrent;進化時特性跟著格子換,玩家拿到的 Ridgecap 進化後一定是新特性。
+    - Volt Absorb:被電打中時回復 HP。
+    - Lightning Rod:被電打中時特攻上升;雙打時會把對手的電招吸過來。
+    - 設定上可以說成「飛在雷雲裡的頭,把雷吸進水流裡」。
+  - Ridgefin 在 Lv18 學會 Mud Shot(把 Air Cutter 移到別的等級,或兩個都留)。這也讓它之後打鋼系有招可用。
+  - 這樣三隻需要的等級(24/27/20)和原版(22/27/20)幾乎一樣,而且不用改 Wattson 的隊伍,也不用改屬性。
+  - 這是我的範圍(TOML),不用動 `trainers.party`。
+- **要使用者決定的地方**:
+  - 御三家的特性換掉 Torrent 是設計上的改變(Torrent 是御三家的固定特性),要使用者同意。
+  - 第 3 階段的「改成水/幽靈」版本:算出來對 Wattson 沒有幫助(Lv35),而且多了怕惡的弱點。如果選這個版本,(F) 的特性還是需要。
+- **不推薦**:只降等級(b),或只改 Wattson 的招式(c)。算出來 Ridgefin 還是太難,而且 Wattson 會整個變弱,Grinvine 會太輕鬆。
+- **連帶影響**:(F) 的特性會讓 Ridgefin 之後碰到電系的訓練家和野生(例如 New Mauville)都很輕鬆。這和原版 Marshtomp 的情況一樣,可以接受。
