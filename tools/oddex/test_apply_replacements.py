@@ -211,6 +211,19 @@ class ApplyReplacementsTest(unittest.TestCase):
                         'exclude_refs = ["data/scripts/kecleon.inc:SPECIES_KECLEON"]\n')
         self.assertEqual(excluded, [])
 
+    def test_roles_pointing_at_vanilla_resolve_to_it(self):
+        # A role left on a vanilla species (e.g. EGG_GIFT before its original exists) must be
+        # reported like the vanilla species itself, not hidden behind SPECIES_ODDEX_*.
+        game = os.path.join(self.dir, "game")
+        for rel, text in (("src/data/pokemon/species_info/gen_3_families.h", "    [SPECIES_WYNAUT] =\n"),
+                          ("include/constants/species.h", "    SPECIES_WYNAUT = 360,\n"),
+                          ("include/constants/oddex_species.h", "#define SPECIES_ODDEX_EGG_GIFT    SPECIES_WYNAUT\n")):
+            os.makedirs(os.path.dirname(os.path.join(game, rel)), exist_ok=True)
+            with open(os.path.join(game, rel), "w", encoding="utf-8") as f:
+                f.write(text)
+        vanilla, _, aliases = refs.load_species(game)
+        self.assertIn(aliases["SPECIES_ODDEX_EGG_GIFT"], vanilla)
+
     def test_wild_maps_map_kind_takes_one_table(self):
         # "Route111:fishing_mons" takes Route 111's fishing table only, whatever wild_kinds says
         # (its land table is the Go-Goggles desert); Route 113 follows wild_kinds and has no rock smash table.

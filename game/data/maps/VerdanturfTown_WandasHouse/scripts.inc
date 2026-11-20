@@ -5,6 +5,7 @@ VerdanturfTown_WandasHouse_EventScript_Wally::
 	lock
 	faceplayer
 	goto_if_set FLAG_WALLY_SPEECH, VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech
+	bufferspeciesname STR_VAR_1, SPECIES_ODDEX_TUTORIAL_CATCH
 	msgbox VerdanturfTown_WandasHouse_Text_StrongerSpeech, MSGBOX_DEFAULT
 	setflag FLAG_WALLY_SPEECH
 	release
@@ -86,7 +87,7 @@ VerdanturfTown_WandasHouse_Text_StrongerSpeech:
 	.string "WALLY: I lost to you, {PLAYER}, but I'm\n"
 	.string "not feeling down anymore.\p"
 	.string "Because I have a new purpose in life.\n"
-	.string "Together with my RALTS, I'm going\l"
+	.string "Together with my {STR_VAR_1}, I'm going\l"
 	.string "to challenge POKéMON GYMS and become\l"
 	.string "a great TRAINER.\p"
 	.string "Please watch me, {PLAYER}.\n"

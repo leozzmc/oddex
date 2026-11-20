@@ -567,3 +567,17 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
   3. 允許下一段的腳本從上一段在同一次檢查裡產生的 savestate 接著跑。這需要改 CLAUDE.md 的規則。
 - 粗估：不練等的話 `to_lavaridge` 約 180 萬格（約 680 秒）；再加上打 Flannery 的練等，約 900 秒以上。
 - 錄製要等 Mark 的新角色合併之後再做（角色數一改，長路線的 RNG 就會位移），之後一次重錄所有基準截圖。
+
+### 9.4 不需要新角色、已經先做的手改
+
+用 `replacements.toml` 現有的對照，跟 Rustboro、Dewford 那幾段一樣，改造型、叫聲和文字：
+- Mt. Chimney 的 10 個 Poochyena 物件，以及 Route 114 的 Poochyena（造型、叫聲）→ Shachound。
+- Fallarbor 的 Azurill（造型、叫聲、2 句文字）→ Shojobob。
+- Fallarbor Mart 的 Skitty → Mandalumb。原本那句「用月之石讓 SKITTY 進化」改寫成「MANDALUMB 快到進化的等級了」，因為 Mandalumb 是 Lv20 升級進化。
+- Lavaridge 民宅的 Zigzagoon，和 Route 117 育幼屋院子裡的 Zigzagoon → Kyokon。
+- Verdanturf Friendship Rater 的 Pikachu，和 Route 117 育幼屋院子裡的 Pikachu → Inarizuma。
+- Route 117 育幼屋院子裡的 Azumarill → Magatide（沿用 Mauville 段 Fan Club 的做法）。
+- Wanda 家 Wally 的台詞：「my RALTS」改用 `bufferspeciesname` 加 `TUTORIAL_CATCH` 代號。
+- Lavaridge 老婆婆送的蛋：`giveegg` 改用新代號 `EGG_GIFT`（名稱照 Mark 的提案），暫時指向 Wynaut。使用者核准的對照是 Gachirinza，Mark 那一批只要改 `roles.toml` 的值。
+  - 為了不讓這個暫時的代號藏住原版角色，`check_species_refs.py` 現在也會解析 `oddex_species.h` 的代號：指向原版角色的代號，會被當成原版的引用回報。
+- 還沒做：Route 117 育幼屋院子裡的 Kecleon，對照表沒有，要等 Mark。

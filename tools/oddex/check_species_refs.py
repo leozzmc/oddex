@@ -71,6 +71,10 @@ def load_species(game):
             vanilla.update(keys)
     header = read_text(os.path.join(game, "include/constants/species.h"))
     aliases = dict(re.findall(r"\b(SPECIES_[A-Z0-9_]+)\s*=\s*(SPECIES_[A-Z0-9_]+)\s*,", header))
+    # Roles (content/roles.toml): a role still pointing at a vanilla species is a vanilla reference.
+    roles = os.path.join(game, "include/constants/oddex_species.h")
+    if os.path.exists(roles):
+        aliases.update(re.findall(r"^#define (SPECIES_ODDEX_\w+)\s+(SPECIES_\w+)", read_text(roles), re.M))
     known.update(re.findall(r"^\s*(SPECIES_[A-Z0-9_]+)\b", header, re.M))
     return vanilla, known, aliases
 
