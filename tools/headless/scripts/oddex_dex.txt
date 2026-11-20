@@ -255,3 +255,15 @@ press A 2 150
 shot dex/272_ichimai.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/273_yatsufu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/274_kumoryu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/275_terubozu.png
+press B 2 90
+press DOWN 2 20

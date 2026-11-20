@@ -1,0 +1,57 @@
+# Winona segment (docs/research/mask-designs.md, "Kumoryu 的 Brief", option B; provisional, David
+# 2026-11-21): a dragon riding a big cumulus cloud, a black-bearded dragon mask (kurohige, imagery
+# only, not a deity) at its centre, gold horns, cloud puffs bulging out like wings, a scaled tail
+# curling out behind. Replaces Altaria (Winona's ace). Stats and abilities follow Altaria.
+
+id = "KUMORYU"
+name = "Kumoryu"
+category = "Cloud Dragon"
+
+types = ["DRAGON", "FLYING"]
+abilities = ["NATURAL_CURE", "NONE", "CLOUD_NINE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 75, atk = 70, def = 90, spa = 70, spd = 105, spe = 80 }   # total 490
+ev_yield = { spd = 2 }
+catch_rate = 45
+exp_yield = 172
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FLYING", "DRAGON"]
+growth_rate = "ERRATIC"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 11
+weight = 206
+text = """
+It sleeps inside a thundercloud and
+drifts wherever the wind takes it.
+When its bearded face glares down from
+the sky, a storm follows within the hour."""
+scale = { pokemon = 327, pokemon_offset = 0, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "PECK"], [1, "GROWL"], [1, "MIST"], [1, "TWISTER"], [8, "DISARMING_VOICE"], [12, "FURY_ATTACK"], [16, "SAFEGUARD"], [20, "DRAGON_BREATH"], [24, "SING"], [28, "AIR_CUTTER"], [32, "COTTON_GUARD"], [35, "DRAGON_PULSE"], [38, "TAKE_DOWN"], [44, "DRAGON_DANCE"], [50, "PERISH_SONG"], [56, "SKY_ATTACK"],
+]
+# HMs follow Altaria, the vanilla species it replaces: Fly and Rock Smash.
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "DAZZLING_GLEAM", "DOUBLE_TEAM", "DRAGON_CLAW", "DRAGON_PULSE", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FLY", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "IRON_TAIL", "OUTRAGE", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROAR", "ROCK_SMASH", "SAFEGUARD", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kumoryu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["FortreeGym"]
+level_band = [30, 45]
+family = ["KUMORYU"]

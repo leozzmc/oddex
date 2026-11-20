@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "WRAP"], [1, "SWAGGER"], [4, "BITE"], [6, "LICK"], [9, "POISON_TAIL"], [11, "FEINT"], [14, "SCREECH"], [19, "GLARE"], [21, "POISON_FANG"], [24, "VENOSHOCK"], [29, "GASTRO_ACID"], [31, "POISON_JAB"], [34, "HAZE"], [39, "CRUNCH"], [41, "BELCH"], [44, "COIL"], [46, "SLUDGE_BOMB"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml): Tentacruel adds CUT, SURF, WATERFALL and DIVE (the Dojoji serpent swam the Hidaka river).
 teachable = [
-    "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "IRON_TAIL", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC",
+    "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "CUT", "DIG", "DIVE", "EARTHQUAKE", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "IRON_TAIL", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC", "WATERFALL"
 ]
 egg = []
 

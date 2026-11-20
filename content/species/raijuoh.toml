@@ -35,7 +35,7 @@ level = [
 ]
 # HMs follow the vanilla species it replaces (content/replacements.toml), except: no DIVE, SURF, WATERFALL (Sharpedo maps here only as a placeholder for an unreachable Super Rod slot; a thunder beast does not swim).
 teachable = [
-    "ATTRACT", "CRUNCH", "DARK_PULSE", "DIG", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
+    "ATTRACT", "CRUNCH", "CUT", "DARK_PULSE", "DIG", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC"
 ]
 egg = []
 

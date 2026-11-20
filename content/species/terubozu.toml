@@ -1,0 +1,57 @@
+# Winona segment (docs/research/mask-designs.md, "Terubozu 的 Brief", option A; provisional, David
+# 2026-11-21): a teru teru bozu, the folk charm hung up to ask for fine weather (not a deity), with
+# an ink face that the rain has made run. The Weather Institute's gift (role WEATHER_GIFT), replacing
+# Castform; one form only (Forecast is hard-wired to Castform's species). Stats follow Castform.
+
+id = "TERUBOZU"
+name = "Terubozu"
+category = "Weather Doll"
+
+types = ["NORMAL"]
+abilities = ["FOREWARN", "NONE", "CLOUD_NINE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 70, def = 70, spa = 70, spd = 70, spe = 70 }   # total 420
+ev_yield = { hp = 1 }
+catch_rate = 45
+exp_yield = 147
+gender = 50.0
+egg_cycles = 25
+egg_groups = ["FAIRY", "AMORPHOUS"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 3
+weight = 8
+text = """
+Children hang it under the eaves the
+night before a festival. If the rain
+comes anyway, the ink runs down its
+face, and by morning it has moved."""
+scale = { pokemon = 435, pokemon_offset = 15, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "ASTONISH"], [10, "WATER_GUN"], [10, "EMBER"], [10, "POWDER_SNOW"], [15, "HEADBUTT"], [20, "RAIN_DANCE"], [20, "SUNNY_DAY"], [20, "HAIL"], [25, "WEATHER_BALL"], [30, "HEX"], [35, "HYDRO_PUMP"], [35, "FIRE_BLAST"], [35, "BLIZZARD"], [45, "HURRICANE"],
+]
+# HMs follow Castform, the vanilla species it replaces: Flash only.
+teachable = [
+    "ATTRACT", "BLIZZARD", "BODY_SLAM", "DOUBLE_TEAM", "ENDURE", "ENERGY_BALL", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/terubozu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "S" }
+overworld = { size = "32x32", shadow = "S", tracks = "NONE" }
+
+[design]
+habitat = ["Route119_WeatherInstitute_2F"]
+level_band = [25, 25]
+family = ["TERUBOZU"]

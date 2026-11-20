@@ -52,3 +52,11 @@ TRADE_RUSTBORO = "BEKURAMA"         # Seedot (Rustboro House1)
 TRADE_RUSTBORO_WANT = "OMOTELLE"    # Ralts
 TRADE_FORTREE = "TOMOEDEN"          # Plusle (Fortree House1)
 TRADE_FORTREE_WANT = "TOROBI"       # Volbeat
+
+# Winona segment.
+# The Weather Institute's gift on Route 119 (givemon; Castform in vanilla, one form here).
+WEATHER_GIFT = "TERUBOZU"       # Castform
+# The invisible blocker on Routes 119/120 and in front of the Fortree gym that the Devon Scope
+# reveals (objects, Steven's setwildbattle and cry, the bridge shadow; Kecleon in vanilla): the old
+# fox disguised as a priest, whose illusion the scope breaks.
+HIDDEN_BLOCKER = "KYOZOSU"      # Kecleon

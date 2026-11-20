@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "ASTONISH"], [1, "POWDER_SNOW"], [5, "MUD_SLAP"], [9, "ICE_SHARD"], [13, "BULLDOZE"], [17, "ICY_WIND"], [21, "DIG"], [25, "AVALANCHE"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF, WATERFALL, DIVE (Spheal brings them; a mountain hag does not swim).
 teachable = [
-    "ATTRACT", "BLIZZARD", "CUT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "TOXIC",
+    "ATTRACT", "BLIZZARD", "CUT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "TOXIC"
 ]
 egg = []
 

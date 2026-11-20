@@ -1751,6 +1751,9 @@ enum __attribute__((packed)) Species
     SPECIES_HANIWORT,
     SPECIES_SPHINMEN,
     SPECIES_ICHIMAI,
+    SPECIES_KUMORYU,
+    SPECIES_TERUBOZU,
+    SPECIES_YATSUFU,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

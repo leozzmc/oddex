@@ -1,0 +1,57 @@
+# Winona segment (docs/research/mask-designs.md, "Yatsufu 的 Brief", option A; provisional, David
+# 2026-11-21): a long-necked grass beast with two huge yatsude leaves on its back (the tengu's
+# feather fan), a shimenawa round its neck and dried persimmons hanging under its chin. Replaces
+# Tropius (Route 119 wild, Winona's team). Stats and abilities follow Tropius.
+
+id = "YATSUFU"
+name = "Yatsufu"
+category = "Leaf Fan"
+
+types = ["GRASS", "FLYING"]
+abilities = ["CHLOROPHYLL", "SOLAR_POWER", "HARVEST"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 99, atk = 68, def = 83, spa = 72, spd = 87, spe = 51 }   # total 460
+ev_yield = { hp = 2 }
+catch_rate = 200
+exp_yield = 161
+gender = 50.0
+egg_cycles = 25
+egg_groups = ["MONSTER", "GRASS"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 20
+weight = 1000
+text = """
+It fans its two great leaves once and
+rides the wind up over the treetops.
+The persimmons drying under its chin
+are sweetest after the first frost."""
+scale = { pokemon = 256, pokemon_offset = 0, trainer = 344, trainer_offset = 7 }
+
+[learnset]
+level = [
+    [1, "GUST"], [1, "LEER"], [1, "GROWTH"], [1, "RAZOR_LEAF"], [6, "SWEET_SCENT"], [10, "STOMP"], [16, "MAGICAL_LEAF"], [21, "WHIRLWIND"], [26, "AIR_CUTTER"], [30, "LEAF_TORNADO"], [36, "AIR_SLASH"], [41, "BODY_SLAM"], [46, "LEAF_BLADE"], [50, "SYNTHESIS"], [56, "SOLAR_BEAM"],
+]
+# HMs follow Tropius, the vanilla species it replaces: Cut, Fly, Strength, Flash, Rock Smash.
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "BULLET_SEED", "CALM_MIND", "CUT", "DOUBLE_TEAM", "EARTHQUAKE", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH", "FLY", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROAR", "ROCK_SMASH", "SAFEGUARD", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STEEL_WING", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/yatsufu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route119", "FortreeGym"]
+level_band = [25, 35]
+family = ["YATSUFU"]

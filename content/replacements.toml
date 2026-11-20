@@ -24,6 +24,17 @@ stage_mismatch_ok = [
     "AZUMARILL", # stage 3, graphics only (Route 117 day care yard); Magatide as for Marill
     # Norman segment:
     "WIGGLYTUFF",  # stage 3 onto stage-2 Kyozosu; Igglybuff and Jigglypuff never appear in the segment
+    # Winona segment (mask-designs.md "Winona 段"): the closest creature by type and total wins over
+    # the stage, since these lines have no matching stage among the originals.
+    "KADABRA",     # stage 2 onto single-stage Tsukuyume, Abra's creature (the Abra line stays one creature)
+    "MACHOKE",     # stage 2 onto stage-3 Yokozunat (395 vs 405); Karuvajra (Machop) has no stage 2
+    "HARIYAMA",    # stage 2 onto stage-3 Yokozunat, the sumo champion
+    "GLOOM",       # stage 2 onto single-stage Higanmen (400 vs 395), Roselia's creature
+    "BRELOOM",     # stage 2 onto stage-3 Daibeki (480 vs 460); Yamambrr (Shroomish) has no stage 2
+    "TENTACRUEL",  # stage 2 onto single-stage Jatai (458 vs 515); Shojomai (340) is too weak for its trainers
+    "JIGGLYPUFF",  # stage 2 onto stage-1 Kyokon; Igglybuff never appears, Wigglytuff is Kyozosu
+    "ABSOL",       # single-stage (465) onto stage-2 Raijuoh (475), the dark beast
+    "ALTARIA",     # stage 2 onto single-stage Kumoryu: Winona's ace gets its own creature; Swablu stays Utoghast
 ]
 
 [replace]
@@ -157,3 +168,24 @@ ANORITH = "DOGOGGLE"
 # (user's foreign-myth theme, 2026-11-21): ground/psychic like Baltoy, in the same desert and Mirage
 # Tower. Parties and tables already rewritten to Gachirinza for Baltoy are changed by hand.
 BALTOY = "SPHINMEN"
+# Winona segment (Norman -> Winona; mask-designs.md "Winona 段", provisional, David 2026-11-21).
+KADABRA = "TSUKUYUME"    # psychic slot, 400 -> 310; Abra's creature
+DODRIO = "UTOMAW"        # stage 2, flying, 470 -> 440
+MACHOKE = "YOKOZUNAT"    # fighting, 405 -> 395; the sumo champion
+HARIYAMA = "YOKOZUNAT"   # fighting, 474 -> 395; the sumo champion
+GLOOM = "HIGANMEN"       # grass/poison, 395 -> 400 (Roselia's creature)
+BRELOOM = "DAIBEKI"      # grass, 460 -> 480
+TENTACRUEL = "JATAI"     # poison, 515 -> 458 (Shojomai at 340 is too weak for its trainers)
+JIGGLYPUFF = "KYOKON"    # normal; Wigglytuff is Kyozosu, Kyokon's evolution
+NATU = "SHACHOUND"       # psychic
+XATU = "SHACHOWL"        # stage 2, psychic
+HORSEA = "MAGATIDE"      # water/dragon like Kingdra
+FEEBAS = "NAMAZURA"      # water; the same creature as Route 119's Feebas spots (role FISHING_SPOT)
+SPHEAL = "YAMAMBRR"      # ice
+STARYU = "KAMORAI"       # water
+SURSKIT = "KUMOZUKA"     # bug
+ABSOL = "RAIJUOH"        # dark beast, 465 -> 475
+# Winona's own team must not repeat a creature, so her Tropius and Altaria get new ones.
+TROPIUS = "YATSUFU"      # grass/flying, Route 119's wild identity
+ALTARIA = "KUMORYU"      # dragon/flying, Winona's ace
+CASTFORM = "TERUBOZU"    # the Weather Institute gift (role WEATHER_GIFT)

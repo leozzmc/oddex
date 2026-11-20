@@ -317,3 +317,28 @@
   - (a) 讓 Sonia 的 Grinarbor 在 Lv37–38 就能輕鬆過關,`to_norman` 不需要額外練等。這對回歸路線的長度有利(§9.3 的問題)。
 - **(b) 是可選的**:如果使用者希望 Norman 有原版那樣的壓迫感,把王牌升到 Lv35,草系和火系的門檻會接近 Flannery 之後的等級(33–36)。這要改 `trainers.party`(Sonia 的範圍)。
 - 另外提醒:Norman 是一般系道館,但 Slaking 的對照 Mandaloka 是地面/火(Mandalumb 線第 3 階段)。如果使用者在意道館主題,可以之後再討論;目前沒有一般系的第 3 階段角色。
+
+## Winona 戰(2026-11-21,Mark;只是分析,數值和隊伍都還沒改)
+
+### 怎麼算的
+- 方法和前面幾段一樣:一對一,我方取最低亂數、對手取最高亂數,用 `tools/oddex/damage_calc.py WINONA_1 --summary --levels 25-50`。
+- Winona 的隊伍用 `--set X:species=` 換成這一批的對照:Swablu → Utoghast Lv29、Tropius → Yatsufu Lv29、Pelipper → Utomaw Lv30、Skarmory → Daibeki Lv31、Altaria → Kumoryu Lv33(帶 Oran Berry)。招式照原版(Kumoryu:Earthquake、Dragon Breath、Dragon Dance、Aerial Ace)。
+- **沒有算到的**:Dragon Dance 的能力提升、Sunny Day 之後 Solar Beam 一回合發動、Perish Song、Synthesis、Protect、Oran Berry、2 個 Hyper Potion、特性。Dragon Dance 對 Winona 有利,所以王牌的門檻實際上會再高一點。
+- Sonia 的路線到 Winona 時是 Grinarbor 一隻,約 Lv38–40。
+
+### 結果:打得過的最低等級
+
+| 選項 | 草 | 火 | 水 | 說明 |
+|---|---|---|---|---|
+| 原版基準,第 3 階段(Sceptile/Blaziken/Swampert 打原版 Winona) | Lv50 | Lv40 | Lv40 | Sceptile 被 Skarmory 擋住 |
+| 原版基準,第 2 階段(Grovyle/Combusken/Marshtomp) | ✗ | ✗ | Lv50 | Lv50 以內打不過 Altaria |
+| 照這一批的對照,第 3 階段(Grinarbor/Trekcart/Ridgeloom) | Lv36 | Lv42 | Lv33 | |
+| 照這一批的對照,第 2 階段(Grinvine/Trekwheel/Ridgefin) | Lv45 | Lv48 | Lv39 | |
+
+- 草/惡怕飛行,但 Grinarbor 反而比 Sceptile 容易 14 級:原版擋住 Sceptile 的是 Skarmory(Lv50),Grinarbor 對它的對照 Daibeki 是 Lv31,因為 Grinarbor 有惡系的 Crunch 可以用(草招打草/鋼的 Daibeki 是雙重抵抗)。門檻是王牌 Kumoryu(Lv36)。
+- 火系 Trekcart 是唯一比原版難的(Lv42 對 Lv40,差 2 級):火/鋼被 Kumoryu 的 Earthquake 打 4 倍。在 3 級的範圍內。
+- 水系 Ridgeloom 最輕鬆(Lv33)。
+
+### 建議
+- **不用改**。三條線都在原版門檻的 +3 級以內,草系還容易很多,Sonia 的 Grinarbor 在 Lv36 就能過關,`to_winona` 不需要額外練等。
+- 如果使用者希望 Winona 對草系有原版那樣的壓力:最小的改法是把 Kumoryu 升到 Lv35(要改 `trainers.party`,Sonia 的範圍)。這一版沒有算這個選項,要的話再算。

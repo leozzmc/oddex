@@ -440,13 +440,32 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 wait 120
 shot gallery/1630_ichimai.png
 press START 2 120
 shot gallery/1630_ichimai_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1631_kumoryu.png
+press START 2 120
+shot gallery/1631_kumoryu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1632_terubozu.png
+press START 2 120
+shot gallery/1632_terubozu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1633_yatsufu.png
+press START 2 120
+shot gallery/1633_yatsufu_shiny.png
 press START 2 120

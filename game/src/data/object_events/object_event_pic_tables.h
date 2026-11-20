@@ -1251,6 +1251,18 @@ static const struct SpriteFrameImage sPicTable_KecleonOld[] = {
     overworld_frame(gObjectEventPic_KecleonOld, 2, 2, 2),
 };
 
+static const struct SpriteFrameImage sPicTable_KyozosuShadow[] = {
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 0),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 1),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 2),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 0),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 0),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 1),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 1),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 2),
+    overworld_frame(gObjectEventPic_KyozosuShadow, 2, 2, 2),
+};
+
 static const struct SpriteFrameImage sPicTable_WingullOld[] = {
     overworld_frame(gObjectEventPic_WingullOld, 2, 2, 0),
     overworld_frame(gObjectEventPic_WingullOld, 2, 2, 2),

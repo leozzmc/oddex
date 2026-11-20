@@ -367,6 +367,9 @@ const u32 gObjectEventPic_DusclopsOld[] = INCGFX_U32("graphics/object_events/pic
 const u32 gObjectEventPic_KirliaOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/kirlia.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u32 gObjectEventPic_AzurillOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/azurill.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_KecleonOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/kecleon.png", ".4bpp", "-mwidth 2 -mheight 2");
+// oddex: the Route 120 bridge shadow of the hidden blocker (role HIDDEN_BLOCKER, Kyozosu); drawn only
+// through the one-colour bridge reflection palette, so its shape is what matters.
+const u32 gObjectEventPic_KyozosuShadow[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/kyozosu_shadow.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_WingullOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/wingull.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_AzumarillOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/azumarill.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_PikachuOld[] = INCGFX_U32("graphics/object_events/pics/pokemon_old/pikachu.png", ".4bpp", "-mwidth 2 -mheight 2");
