@@ -12,6 +12,7 @@
 | 2026-11-19 | **角色設計方向：把使用者的朋友設計成屬性不同、又怪異的寶可夢** | 使用者 | 之後統一設計角色時再展開。因為 repo 是公開的，要先取得朋友同意，也不要放真實姓名以外的個人資訊 |
 | 2026-11-19 | **早期角色改為面具造型**：立體的大面具，或戴著面具的四腳獸；以日本能面為主，不足的參考不丹 Cham（金剛舞）面具 | 使用者 | 取代早期 12 隻的幾何佔位圖。Cham 面具優先選動物和侍從類，避開核心神祇 |
 | 2026-11-19 | **面具風格定案：傳統日式恐怖**（金眼加黑瞳、大嘴，牙齒、牙齦和獠牙清楚可見，漆面斑駁；靜態的面具用慘白、無表情來表現不安） | 使用者 | 依 mask-review-2 的 Kamorai／Shishiblaze 定案；戰鬥中我方的背面維持用面具內側 |
+| 2026-11-20 | 三人組第 2 階段核准：Grinvine、Ridgefin 照現版；**Trekwheel 要加強**（跟第 1 階段差異要一眼可見） | 使用者 | 第 3 階段方向：片輪車、人面樹、大首；屬性待選 |
 | 2026-11-20 | Mauville 段 7 隻核准（Suzurai/Kagurai、Raijumen/Raijuoh、Torobi、Tomoeden、Shojomai）；**三人組御三家做 3 階段進化線**；**早期角色要做第 2 階段**（Nuzleaf、Pelipper 等位置） | 使用者 | 三人組的第 2、3 階段一樣是寫實的頭，妖怪部位越來越多；新造型先交 3 張審查截圖 |
 | 2026-11-20 | Brawly 平衡採方案 F：王牌改成 Komarock Lv17（Arm Thrust、Vital Throw、Rock Tomb、Bulk Up），Karuvajra 和 Gachirinza 降到 Lv14；Grinpack 和 Trekkeye 在 Lv15 學 Aerial Ace。預估打贏的等級：Grinpack Lv19、Trekkeye Lv21、Ridgecap Lv16（原版 Lv19–21） | David（使用者 2026-11-20 確認保留） | 依據 `docs/research/balance.md` 的傷害計算（tools/oddex/damage_calc.py）。Roxanne 不需要調整 |
 | 2026-11-20 | Dewford 段（第 6 步第二段）新增 2 隻：Meditite 位置（Brawly 道館的第二主題）、Zubat 位置（Granite Cave 最常遇到的角色）；其餘位置用現有角色填（Aron、Sableye 等）。Peeko 新增代號 `PEEKO`，Briney 家和 Rusturf 共用 | David（暫定，待使用者確認） | 使用者授權自主推進時所做的決定；設計照融合面具＋神道／藏密東密元素的方向 |
