@@ -104,15 +104,33 @@ def type_chart():
     return [[raw[a * n + d] / 4096 for d in range(n)] for a in range(n)]
 
 
-SPECIES_INFO = 0x108  # sizeof(struct SpeciesInfo), measured in the ROM (pokemon.h's /*0xC4*/ is stale); types (u8 x2) at +6
+@lru_cache(None)
+def species_info_size():
+    """sizeof(struct SpeciesInfo) in this build (pokemon.h's /*0xC4*/ comment is stale).
+    SPECIES_BULBASAUR is 1, so its entry starts that many bytes into gSpeciesInfo: find its base
+    stats (from gen_1_families.h) there, and check the size divides the table's size (nm -S)."""
+    import re as _re
+    src = open(os.path.join(os.path.dirname(ROM), "src/data/pokemon/species_info/gen_1_families.h")).read()
+    block = src[src.index("[SPECIES_BULBASAUR]"):]
+    stats = bytes(int(_re.search(r"\.%s\s*=\s*(\d+)" % k, block).group(1)) for k in
+                  ("baseHP", "baseAttack", "baseDefense", "baseSpeed", "baseSpAttack", "baseSpDefense"))
+    with open(ROM, "rb") as f:
+        f.seek(SYMS["gSpeciesInfo"] - 0x08000000)
+        head = f.read(0x400)
+    hits = [s for s in range(4, len(head) - 6, 4) if head[s:s + 6] == stats]
+    nm = subprocess.run([W["NM"], "-S", os.path.join(os.path.dirname(ROM), "pokeemerald.elf")],
+                        capture_output=True, text=True).stdout
+    total = int(_re.search(r"^\w+ (\w+) \w gSpeciesInfo$", nm, _re.M).group(1), 16)
+    assert len(hits) == 1 and total % hits[0] == 0, f"sizeof(struct SpeciesInfo) not found: {hits}, {total:#x}"
+    return hits[0]
 
 
 def species_types(species):
-    """A species' types from gSpeciesInfo in the built ROM."""
+    """A species' types from gSpeciesInfo in the built ROM (types, u8 x2, at +6)."""
     with open(ROM, "rb") as f:
-        f.seek(SYMS["gSpeciesInfo"] - 0x08000000 + species * SPECIES_INFO + 6)
+        f.seek(SYMS["gSpeciesInfo"] - 0x08000000 + species * species_info_size() + 6)
         types = set(f.read(2))
-    assert 0 not in types, f"species {species}: TYPE_NONE, is sizeof(struct SpeciesInfo) still {SPECIES_INFO:#x}?"
+    assert 0 not in types, f"species {species}: TYPE_NONE in gSpeciesInfo"
     return types
 
 
