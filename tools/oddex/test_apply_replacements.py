@@ -185,8 +185,10 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertEqual(sum(by_cat.values()), 0, found[:3])
 
     def test_strict_scope_with_vanilla_left_fails(self):
-        # Reads the real game: Route 113 is late-game and stays vanilla until its own scope is migrated.
-        scope = self.table('[early]\nstrict = true\nwild_maps = ["Route113"]\nwild_kinds = ["land_mons"]\n', "scope.toml")
+        # Reads the real game: Victory Road stays vanilla until its own scope is migrated.
+        # shortcut: needs a still-vanilla map, use a FIXTURE_REF game tree once Victory Road is migrated
+        scope = self.table('[early]\nstrict = true\nwild_maps = ["VictoryRoad_1F"]\nwild_kinds = ["land_mons"]\n',
+                           "scope.toml")
         cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--strict-scopes", "--summary",
                "--scope-file", scope]
         r = subprocess.run(cmd, capture_output=True, text=True)
@@ -225,14 +227,15 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertIn(aliases["SPECIES_ODDEX_EGG_GIFT"], vanilla)
 
     def test_wild_maps_map_kind_takes_one_table(self):
-        # "Route111:fishing_mons" takes Route 111's fishing table only, whatever wild_kinds says
-        # (its land table is the Go-Goggles desert); Route 113 follows wild_kinds and has no rock smash table.
-        scope = self.table('[s]\nwild_maps = ["Route111:fishing_mons", "Route113"]\nwild_kinds = ["rock_smash_mons"]\n',
+        # "Route119:fishing_mons" takes Route 119's fishing table only, whatever wild_kinds says;
+        # Route 120 follows wild_kinds and has no rock smash table.
+        # shortcut: needs still-vanilla maps, use a FIXTURE_REF game tree once Routes 119-120 are migrated
+        scope = self.table('[s]\nwild_maps = ["Route119:fishing_mons", "Route120"]\nwild_kinds = ["rock_smash_mons"]\n',
                            "scope.toml")
         cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
                "--scope-file", scope]
         found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
-        self.assertEqual({f["context"] for f in found}, {"Route111:fishing_mons"})
+        self.assertEqual({f["context"] for f in found}, {"Route119:fishing_mons"})
         bad = self.table('[s]\nwild_maps = ["Route111:sand_mons"]\n', "bad.toml")
         r = self.run_tool("--scope", "s", "--scope-file", bad, "--dry-run")
         self.assertIn("Route111:sand_mons: unknown kind sand_mons", r.stdout + r.stderr)
