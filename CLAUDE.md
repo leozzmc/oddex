@@ -64,6 +64,8 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 - 標題畫面不要按 SELECT（那是 Quickstart，會跳過 Birch 開場）。推進對話用 B，避免 A 又跟 NPC 講話或在 YES/NO 選到 YES。
 - 腳本的確定性來自固定的 RTC；ROM 或角色一改，經過戰鬥和草叢的路線就要重新產生。用 `tools/headless/authoring/autopilot.py` 閉環產生（每段之後讀 RAM 判斷位置、戰鬥、HP、招式；`where.py` 讀 savestate、`plan.py` 規劃少踩草的路線），組好後從開機連跑一次確認和分段結果相同，再連跑兩次確認逐像素一致。autopilot 的靜態規劃走不通時（隱藏物件、執行中才改變的地塊、單向 warp），改用 `tools/headless/authoring/stepwalk.py START.ss OUT_PREFIX MAP X Y [--live]`。
 - 原創角色可學的 HM，等於它在 `content/replacements.toml` 取代的原版角色能學的 HM（例外寫在 TOML 裡）；`gen_species` 會擋下沒有任何原創角色能學的 HM。
+- ROM 一改（角色數、美術、版面）讓長路線的亂數位移時，用 `tools/headless/authoring/resync.py prepare OLD_GAME WORK SCRIPT` → `run` → `shots` → `assemble` 重新同步（OLD_GAME 是錄製時那個 commit 編好的 game/，例如 git worktree）；驗收要位置、等級和打倒的訓練家數都一致。細節見 `docs/research/plan-b-references.md` §6.4。
+- 回報 check 結果前，要在**最後一個 commit** 上重跑，並對整份 log grep `FAIL|Error|CRASH|RESET|differs`，不要只看結尾。
 
 ## 分析編譯產物
 
