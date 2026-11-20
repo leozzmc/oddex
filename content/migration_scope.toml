@@ -225,6 +225,8 @@ trainers = [
 ]
 # Altering Cave: only table 1 (Zubat) is used in play; tables 2-9 switch in only by a Mystery Event
 # (VAR_ALTERING_CAVE_WILD_SET), so their species stay out.
+# shortcut: a wild_encounters.json entry skips the species in every in-scope table, not just Altering
+# Cave 2-9; fine while these 8 appear nowhere else in scope, revisit if one turns up in another table.
 exclude_refs = [
     "src/data/wild_encounters.json:SPECIES_MAREEP", "src/data/wild_encounters.json:SPECIES_PINECO",
     "src/data/wild_encounters.json:SPECIES_HOUNDOUR", "src/data/wild_encounters.json:SPECIES_TEDDIURSA",
