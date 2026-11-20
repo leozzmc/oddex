@@ -169,6 +169,8 @@ def best_move(st):
     ratio = {False: battle_stat(st, 0, 2, 1) / max(1, battle_stat(st, 1, 4, 2)),
              True: battle_stat(st, 0, 8, 4) / max(1, battle_stat(st, 1, 10, 5))}
     info, chart = move_info(), type_chart()
+    names = W["move_names"]()
+    foe_moves = {names.get(m) for m in W["read"](st, base + BATTLE_MON + 12, "<4H")}
     scored = []
     for i, (m, p) in enumerate(zip(moves, pp)):
         power, t, special = info.get(m, (0, 0, False))
@@ -176,8 +178,15 @@ def best_move(st):
             eff = 1.0
             for d in foe:
                 eff *= chart[t][d]
-            scored.append((power * eff * (1.5 if t in own else 1.0) * ratio[special], power, -i, i))
+            scored.append((power * eff * (1.5 if t in own else 1.0) * ratio[special] * reflect_factor(special, foe_moves),
+                           power, -i, i))
     return max(scored)[3] if scored else None
+
+
+def reflect_factor(special, foe_moves):
+    """Avoid the category the foe can send back double (Counter, Mirror Coat): Norman's Mandaloka
+    Counters a physical hit for more than the lead's HP."""
+    return 0.25 if ("MIRROR_COAT" if special else "COUNTER") in foe_moves else 1.0
 
 
 BATTLE_TYPE_TRAINER = 1 << 3  # include/constants/battle.h

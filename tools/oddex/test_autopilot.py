@@ -44,11 +44,26 @@ class StepwalkTest(unittest.TestCase):
                         S["warp_neighbors"]({"LavaridgeTown", "LavaridgeTown_Gym_1F"}))
         self.assertEqual(path, ["DOWN", "DOWN|", "DOWN"])
 
+    def test_ladders_and_doors_are_warps(self):
+        tower = {"MirageTower_1F", "MirageTower_2F", "Route111"}
+        path = S["bfs"](("MirageTower_1F", 10, 13), ("MirageTower_2F", 15, 3), S["warp_neighbors"](tower))
+        self.assertIsNotNone(path)
+        self.assertTrue(path[-2].endswith("|"))
+        # A building door has collision; walking into it opens it.
+        house = {"VerdanturfTown", "VerdanturfTown_FriendshipRatersHouse"}
+        path = S["bfs"](("VerdanturfTown", 1, 15), ("VerdanturfTown_FriendshipRatersHouse", 4, 5), S["warp_neighbors"](house))
+        self.assertEqual(path[0], "UP|")
+
 
 class AutopilotTest(unittest.TestCase):
     def test_hm_moves_are_the_eight_hms(self):
         names = {G["W"]["move_names"]()[m] for m in G["hm_moves"]()}
         self.assertEqual(names, {"CUT", "FLY", "SURF", "STRENGTH", "FLASH", "ROCK_SMASH", "WATERFALL", "DIVE"})
+
+    def test_counter_users_get_special_moves(self):
+        self.assertLess(G["reflect_factor"](False, {"COUNTER", "YAWN"}), 1)
+        self.assertEqual(G["reflect_factor"](True, {"COUNTER", "YAWN"}), 1)
+        self.assertLess(G["reflect_factor"](True, {"MIRROR_COAT"}), 1)
 
     def test_turning_releases_the_pad_first(self):
         # Facing UP after a hold, the next leg goes LEFT: a release frame comes before the turn tap,

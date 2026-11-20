@@ -3,9 +3,9 @@
 usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--avoid x,y;x,y...]
 
 default  BFS on map data across warps and ledges: a warp is taken only where its tile has a warp
-         behavior (the Lavaridge Gym's holes and geysers are one-way), ledges only downhill. Walks
-         the start map and the goal's floors (maps named like it up to the last "_", e.g.
-         LavaridgeTown_Gym_1F and _B1F). An exit mat (arrow warp) is stepped on, then pushed again.
+         behavior (doors, ladders, holes; the Lavaridge Gym's holes and geysers are one-way), ledges
+         only downhill. Walks the maps of the start's and the goal's areas (named alike up to the
+         first "_": LavaridgeTown, its houses, LavaridgeTown_Gym_1F and _B1F); no map connections. An exit mat (arrow warp) is stepped on, then pushed again.
          One step per unit (trainers interrupt).
 --live   BFS on the running game's collision grid of the current map (gBackupMapLayout) with the
          objects where they stand now: hidden objects that map.json still lists, setmetatile
@@ -47,11 +47,16 @@ def bfs(start, goal, neighbors):
     return out[::-1]
 
 
+def is_warp(beh):
+    """Tiles that warp when stepped on or pushed, like field_control_avatar.c's IsWarpMetatileBehavior."""
+    return any(k in beh for k in ("WARP", "DOOR", "LADDER", "ESCALATOR", "HOLE"))
+
+
 def warp_neighbors(maps):
     """Steps on map data: collision, map.json objects, ledges, warps into `maps` (marked '|')."""
     def warps(mp):
         m = G["load"](mp)
-        return {(w["x"], w["y"]): w for w in m["json"]["warp_events"] if "WARP" in G["cell"](m, w["x"], w["y"])[2]}
+        return {(w["x"], w["y"]): w for w in m["json"]["warp_events"] if is_warp(G["cell"](m, w["x"], w["y"])[2])}
 
     def through(mp, w, d):
         dest = G["ID2NAME"][w["dest_map"]]
@@ -77,7 +82,7 @@ def warp_neighbors(maps):
                 nx, ny = nx + dx, ny + dy
                 if (nx, ny) in m["objs"]:
                     continue
-            if G["cell"](m, nx, ny)[0]:
+            if G["cell"](m, nx, ny)[0] and "DOOR" not in G["cell"](m, nx, ny)[2]:  # doors collide, then open
                 continue
             w = warps(mp).get((nx, ny))
             if not w or "ARROW" in G["cell"](m, nx, ny)[2]:
@@ -125,8 +130,9 @@ def main():
         if not free:
             c = [G["battle_press"](ss) if cb != "CB2_Overworld" else "press B 2 30"]
         else:
-            floors = {n for n in G["ID2NAME"].values() if n.rsplit("_", 1)[0] == goal[0].rsplit("_", 1)[0]}
-            nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors | {goal[0], mp})
+            area = {goal[0].split("_")[0], mp.split("_")[0]}
+            floors = {n for n in G["ID2NAME"].values() if n.split("_")[0] in area}
+            nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors)
             dirs = bfs((mp, x, y), goal, nb)
             if not dirs:
                 raise SystemExit(f"no path {(mp, x, y)} -> {goal}")
