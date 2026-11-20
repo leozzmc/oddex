@@ -21,7 +21,7 @@ def build(k, c):
     horn = k.toon('horn', c['horn'], two_tone=True)
     k.set_light((-0.7, -0.6, 0.25))
 
-    head = k.magatama((0, 0, 0.1), 0.95, jade, curl=1.0)
+    head = k.magatama((0, 0, 0.1), 0.95, jade, curl=1.35)
     hr = (0.59, 0.475, 0.59)
 
     def front(x, z, lift=0.0):
@@ -31,8 +31,8 @@ def build(k, c):
     k.torus(front(0.2, 0.18, 0.0), 0.11, 0.025, shine, rot=(math.pi / 2, 0, 0))
     for side, sx in ((-1, -0.22), (1, 0.2)):
         e = front(sx, 0.18, 0.03)
-        k.ellipsoid(e, (0.085, 0.05, 0.085), eye_m)
-        k.ellipsoid((e.x, e.y - 0.05, e.z), (0.04, 0.02, 0.045), pupil)
+        k.ellipsoid(e, (0.12, 0.06, 0.12), eye_m)
+        k.ellipsoid((e.x, e.y - 0.06, e.z), (0.055, 0.02, 0.06), pupil)
     # Pursed fish lips.
     m = front(0, -0.12, 0.05)
     k.ellipsoid(m, (0.12, 0.1, 0.09), lip)

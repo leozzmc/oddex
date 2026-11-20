@@ -27,6 +27,9 @@ def build(k, c):
     e = k.Euler((math.radians(TILT), 0, 0))
     center, normal = k.mandala_disc((0, 0, 0.5), 1.15, [sand, green, red, white, blue, green], yellow,
                                     [blue, white, red, yellow], tilt=TILT)
+    # The back of the disc: concentric coloured rings, so the back view is not a plain oval.
+    for rr, m in ((1.15 * 0.92, red), (1.15 * 0.7, blue), (1.15 * 0.48, yellow), (1.15 * 0.26, white)):
+        k.torus(center - normal * 0.06, rr, 0.05 * 1.15, m, rot=(math.radians(TILT), 0, 0))
     for i in range(16):
         a = 2 * math.pi * i / 16 + math.pi / 16
         v = k.Vector((0.68 * math.cos(a), 0.68 * math.sin(a), 0))

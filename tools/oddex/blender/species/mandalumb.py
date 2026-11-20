@@ -27,6 +27,9 @@ def build(k, c):
 
     center, normal = k.mandala_disc((0, 0, 0.35), 1.0, [sand, red, white, blue, green], yellow,
                                     [blue, white, red, yellow], tilt=62, spin=0)
+    # The back of the disc: concentric coloured rings, so the back view is not a plain oval.
+    for rr, m in ((1.0 * 0.92, red), (1.0 * 0.7, blue), (1.0 * 0.48, yellow), (1.0 * 0.26, white)):
+        k.torus(center - normal * 0.06, rr, 0.05 * 1.0, m, rot=(math.radians(62), 0, 0))
     # Small drums on the petal ring (Kamorai's drum ring).
     for i in range(8):
         a = 2 * math.pi * i / 8 + math.pi / 8

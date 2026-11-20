@@ -30,17 +30,20 @@ def build(k, c):
     # A laughing face painted on the drumhead.
     for side in (-1, 1):
         x0 = side * 0.18
-        k.rod((x0 - 0.08, -0.22, 0.1), (x0, -0.22, 0.16), 0.022, line)
-        k.rod((x0, -0.22, 0.16), (x0 + 0.08, -0.22, 0.1), 0.022, line)
-        k.ellipsoid((side * 0.33, -0.22, -0.05), (0.07, 0.01, 0.04), commas[0])
-    k.ellipsoid((0, -0.23, -0.17), (0.16, 0.01, 0.07), line)
+        k.rod((x0 - 0.1, -0.22, 0.1), (x0, -0.22, 0.18), 0.04, line)
+        k.rod((x0, -0.22, 0.18), (x0 + 0.1, -0.22, 0.1), 0.04, line)
+        k.ellipsoid((side * 0.35, -0.22, -0.05), (0.1, 0.01, 0.06), commas[0])
+    k.ellipsoid((0, -0.23, -0.19), (0.22, 0.01, 0.11), line)
     k.ellipsoid((0, -0.235, -0.13), (0.12, 0.01, 0.025), commas[0])
     # Three commas chasing round the drum (the mitsudomoe).
     for i, m in enumerate(commas):
         a = math.radians(90 + 120 * i)
         cx, cz = 0.98 * math.cos(a), 0.98 * math.sin(a)
-        hc = k.magatama((cx, -0.05, cz), 0.32, m, rot_z=120 * i + 40)
+        hc = k.magatama((cx, -0.05, cz), 0.4, m, rot_z=120 * i + 40)
         k.ellipsoid((hc.x - 0.05, hc.y - 0.17, hc.z + 0.05), (0.05, 0.02, 0.05), spark)
+    # The drum's back: a gold three-comma crest, so the back view is not a plain disc.
+    for i in range(3):
+        k.magatama((0.25 * math.cos(math.radians(90 + 120 * i)), 0.4, 0.25 * math.sin(math.radians(90 + 120 * i))), 0.22, gold, rot_z=120 * i)
     for x, z in ((-0.4, 1.25), (1.2, -0.4), (-1.15, -0.55)):
         p = k.Vector((x, -0.1, z))
         k.rod(p, p + k.Vector((0.08, 0, 0.16)), 0.022, spark)

@@ -258,7 +258,7 @@
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
         .backPic = gMonBackPic_Omotelle,
-        .backPicSize = MON_COORDS_SIZE(32, 48),
+        .backPicSize = MON_COORDS_SIZE(32, 56),
         .backPicYOffset = 8,
         .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
         .palette = gMonPalette_Omotelle,
@@ -529,7 +529,7 @@
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Shojobob,
-        .frontPicSize = MON_COORDS_SIZE(48, 40),
+        .frontPicSize = MON_COORDS_SIZE(56, 48),
         .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
@@ -540,13 +540,13 @@
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
         .backPic = gMonBackPic_Shojobob,
-        .backPicSize = MON_COORDS_SIZE(40, 24),
+        .backPicSize = MON_COORDS_SIZE(48, 40),
         .backPicYOffset = 8,
         .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
         .palette = gMonPalette_Shojobob,
         .shinyPalette = gMonShinyPalette_Shojobob,
         .iconSprite = gMonIcon_Shojobob,
-        .iconPalIndex = 3,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Shojobob)
@@ -883,7 +883,7 @@
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Deigloom,
-        .frontPicSize = MON_COORDS_SIZE(40, 56),
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
         .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
@@ -2431,7 +2431,7 @@
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Suzurai,
-        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
         .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
@@ -2519,7 +2519,7 @@
         .palette = gMonPalette_Tomoeden,
         .shinyPalette = gMonShinyPalette_Tomoeden,
         .iconSprite = gMonIcon_Tomoeden,
-        .iconPalIndex = 4,
+        .iconPalIndex = 3,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Tomoeden)
@@ -4011,5 +4011,75 @@
         )
         .levelUpLearnset = sSphinmenLevelUpLearnset,
         .teachableLearnset = sSphinmenTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_ICHIMAI] =
+    {
+        .baseHP        = 60,
+        .baseAttack    = 55,
+        .baseDefense   = 55,
+        .baseSpeed     = 60,
+        .baseSpAttack  = 95,
+        .baseSpDefense = 75,
+        .types = MON_TYPES(TYPE_GHOST, TYPE_WATER),
+        .catchRate = 45,
+        .expYield = 140,
+        .evYield_SpAttack = 2,
+        .genderRatio = PERCENT_FEMALE(100.0),
+        .eggCycles = 25,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
+        .abilities = { ABILITY_CURSED_BODY, ABILITY_NONE, ABILITY_FRISK },
+        .bodyColor = BODY_COLOR_WHITE,
+        .speciesName = _("Ichimai"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_ICHIMAI,
+        .categoryName = _("Plate Ghost"),
+        .height = 15,
+        .weight = 300,
+        .description = COMPOUND_STRING(
+            "It climbs out of an old well at night and\n"
+            "counts its plates: one, two... At nine it\n"
+            "breaks into sobs, for one is always lost.\n"
+            "Never answer it with the number ten."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Ichimai,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Ichimai,
+        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Ichimai,
+        .shinyPalette = gMonShinyPalette_Ichimai,
+        .iconSprite = gMonIcon_Ichimai,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Ichimai)
+        OVERWORLD(
+            sPicTable_Ichimai,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_NONE,
+            sAnimTable_Following,
+            gOverworldPalette_Ichimai,
+            gShinyOverworldPalette_Ichimai
+        )
+        .levelUpLearnset = sIchimaiLevelUpLearnset,
+        .teachableLearnset = sIchimaiTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },

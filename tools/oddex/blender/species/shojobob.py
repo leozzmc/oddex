@@ -44,11 +44,11 @@ def build(k, c):
     k.cord_holes(face, lacquer)
     mask_parts = k.since(before)
     # Tip the mask back so it floats face-up, then lay the sea around it.
-    k.transform(mask_parts, offset=(0, 0, 0.45), rot_x=-38)
+    k.transform(mask_parts, offset=(0, 0, 0.6), rot_x=-22, scale=1.3)
     k.torus((0, 0, 0.05), 1.05, 0.09, water, rot=(0, 0, 0))
     k.torus((0, 0, 0.05), 1.35, 0.06, foam, rot=(0, 0, 0))
     k.ellipsoid((0, 0, 0.0), (1.2, 1.2, 0.06), water)
     # A small sake jar bobbing on the water.
     k.ellipsoid((1.05, -0.55, 0.28), (0.17, 0.17, 0.22), jar)
     k.cylinder((1.05, -0.55, 0.52), 0.07, 0.12, jar)
-    return {'kind': 'mask', 'size': 0.86, 'front_az': -25, 'front_el': 30, 'squash': (1.06, 1.06, 0.92)}
+    return {'kind': 'mask', 'size': 0.86, 'front_az': -20, 'front_el': 16, 'squash': (1.06, 1.06, 0.92)}

@@ -24,4 +24,6 @@ order = [
     "HIFUKKO", "KAMADORO", "NAMAZURA", "JATAI", "HIGANMEN",
     # Norman segment: the revived fossils.
     "HANIWORT", "DOGOGGLE", "SPHINMEN",
+    # Winona segment.
+    "ICHIMAI",
 ]

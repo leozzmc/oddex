@@ -4,7 +4,7 @@ barely-there bumps on the brow where horns will come. Mask body; psychic/dragon.
 
 NORMAL = {'face': (0.96, 0.95, 0.92), 'lacquer': (0.16, 0.06, 0.05), 'hollow': (0.02, 0.02, 0.03),
           'ink': (0.06, 0.05, 0.06), 'lip': (0.72, 0.08, 0.12), 'hair': (0.05, 0.05, 0.07)}
-SHINY = {**NORMAL, 'face': (0.88, 0.92, 0.98), 'hair': (0.80, 0.80, 0.84), 'lip': (0.40, 0.20, 0.55)}
+SHINY = {**NORMAL, 'face': (0.98, 0.86, 0.90), 'hair': (0.80, 0.80, 0.84), 'lip': (0.40, 0.20, 0.55)}
 
 
 def build(k, c):
@@ -18,20 +18,20 @@ def build(k, c):
 
     face = k.mask_shell(face_m, lacquer, width=0.66, depth=0.42, height=0.92)
     for x in (-0.24, 0.24):
-        k.hole(face, x, 0.12, (0.1, 0.04), backing=hollow)
+        k.hole(face, x, 0.12, (0.13, 0.055), backing=hollow)
         p = k.on_face(face, x, 0.5, lift=0.005)
         k.front_only(k.ellipsoid(p, (0.07, 0.02, 0.045), ink))
     k.bump(face, 0, -0.08, (0.07, 0.07, 0.16), face_m, lift=0.01)
     # A faint closed smile parted on blackened teeth.
-    k.hole(face, 0, -0.45, (0.13, 0.035), backing=ink)
+    k.hole(face, 0, -0.45, (0.17, 0.05), backing=ink)
     for z, sx in ((-0.42, 0.15), (-0.48, 0.13)):
         p = k.on_face(face, 0, z, lift=0.0)
         k.front_only(k.ellipsoid((p.x, p.y - 0.01, p.z), (sx, 0.03, 0.02), lip))
     for x in (-0.18, 0.18):
         k.bump(face, x, 0.72, (0.05, 0.05, 0.05), face_m, lift=0.0)
     # Black hair parted at the top and falling behind.
-    k.ellipsoid((0, -0.15, 0.82), (0.6, 0.32, 0.16), hair)
+    k.ellipsoid((0, -0.12, 0.84), (0.7, 0.36, 0.22), hair)
     for x in (-0.55, 0.55):
-        k.ellipsoid((x, 0.1, -0.1), (0.14, 0.1, 0.85), hair)
+        k.ellipsoid((x * 1.15, 0.0, -0.15), (0.2, 0.14, 0.95), hair)   # framing the face
     k.cord_holes(face, lacquer)
     return {'kind': 'mask', 'size': 0.8, 'front_az': -12}

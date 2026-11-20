@@ -1750,6 +1750,7 @@ enum __attribute__((packed)) Species
     SPECIES_DOGOGGLE,
     SPECIES_HANIWORT,
     SPECIES_SPHINMEN,
+    SPECIES_ICHIMAI,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

@@ -26,17 +26,17 @@ def build(k, c):
     k.torus((0, 0, 0.0), 0.71, 0.04, bronze, rot=(0, 0, 0))   # the bell's waist band
     # The slit of the bell is the mouth; small staring eyes above it.
     m = k.head_point(hc, hr, 0, -0.3, 0.0)
-    k.ellipsoid(m, (0.42, 0.05, 0.06), dark)
+    k.ellipsoid(m, (0.5, 0.06, 0.09), dark)
     k.ellipsoid(k.head_point(hc, hr, 0, -0.55, 0.0), (0.12, 0.05, 0.12), dark)
     for side in (-1, 1):
         e = k.head_point(hc, hr, side * 0.24, 0.18, 0.02)
-        k.ellipsoid(e, (0.13, 0.06, 0.11), eye)
-        k.ellipsoid((e.x, e.y - 0.05, e.z), (0.045, 0.02, 0.06), pupil)
+        k.ellipsoid(e, (0.18, 0.07, 0.15), eye)
+        k.ellipsoid((e.x, e.y - 0.06, e.z), (0.06, 0.02, 0.08), pupil)
         k.ellipsoid(k.head_point(hc, hr, side * 0.24, 0.34, 0.02), (0.15, 0.04, 0.035), dark,
-                    rot=(0, math.radians(side * 22), 0))
+                    rot=(0, math.radians(side * 22), 0))   # brows
     # Top loop, the bell rope (red and white twist) and streamers.
     k.torus((0, 0, 0.78), 0.12, 0.04, bronze, rot=(math.pi / 2, 0, 0))
-    k.rope([(0, 0, 0.88), (0.02, 0, 1.6)], 0.09, red, white)
+    k.rope([(0, 0, 0.88), (0.02, 0, 1.45)], 0.11, red, white)
     for side in (-1, 1):
         k.shide((side * 0.14 - (0.12 if side < 0 else 0), -0.05, 1.45), 0.42, 0.11, paper, side=side)
     # Static crackling round it.
@@ -45,4 +45,4 @@ def build(k, c):
         q = p + k.Vector((0.12 * math.cos(math.radians(a)), 0, 0.2))
         k.rod(p, q, 0.025, spark)
         k.rod(q, q + k.Vector((-0.1, 0, 0.12)), 0.025, spark)
-    return {'kind': 'mask', 'size': 0.84, 'front_az': -14}
+    return {'kind': 'mask', 'size': 0.9, 'front_az': -14}

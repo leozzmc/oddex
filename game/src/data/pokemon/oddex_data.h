@@ -1942,3 +1942,38 @@ static const struct SpriteFrameImage sPicTable_Sphinmen[] = {
     overworld_ascending_frames(gObjectEventPic_Sphinmen, 4, 4),
 };
 #endif
+
+// Ichimai
+static const struct LevelUpMove sIchimaiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_ASTONISH),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 6, MOVE_FAKE_TEARS),
+    LEVEL_UP_MOVE(10, MOVE_NIGHT_SHADE),
+    LEVEL_UP_MOVE(14, MOVE_SPITE),
+    LEVEL_UP_MOVE(19, MOVE_HEX),
+    LEVEL_UP_MOVE(23, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE(28, MOVE_CURSE),
+    LEVEL_UP_MOVE(32, MOVE_SHADOW_BALL),
+    LEVEL_UP_MOVE(37, MOVE_GRUDGE),
+    LEVEL_UP_MOVE(41, MOVE_MUDDY_WATER),
+    LEVEL_UP_MOVE(46, MOVE_PERISH_SONG),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Ichimai[] = INCGFX_U32("graphics/pokemon/oddex/ichimai/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Ichimai[] = INCGFX_U32("graphics/pokemon/oddex/ichimai/back.png", ".4bpp.smol");
+const u16 gMonPalette_Ichimai[] = INCGFX_U16("graphics/pokemon/oddex/ichimai/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Ichimai[] = INCGFX_U16("graphics/pokemon/oddex/ichimai/shiny.pal", ".gbapal");
+const u8 gMonIcon_Ichimai[] = INCGFX_U8("graphics/pokemon/oddex/ichimai/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Ichimai[] = INCGFX_U8("graphics/pokemon/oddex/ichimai/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Ichimai[] = INCGFX_COMP("graphics/pokemon/oddex/ichimai/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Ichimai[] = INCGFX_U16("graphics/pokemon/oddex/ichimai/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Ichimai[] = INCGFX_U16("graphics/pokemon/oddex/ichimai/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Ichimai[] = {
+    overworld_ascending_frames(gObjectEventPic_Ichimai, 4, 4),
+};
+#endif
