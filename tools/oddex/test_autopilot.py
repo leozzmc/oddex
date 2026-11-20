@@ -38,6 +38,12 @@ class StepwalkTest(unittest.TestCase):
         up = S["bfs"](("LavaridgeTown_Gym_1F", 13, 14), ("LavaridgeTown_Gym_1F", 13, 12), S["warp_neighbors"](gym))
         self.assertNotEqual(up, ["UP", "UP"])
 
+    def test_exit_mat_is_pushed_again(self):
+        # The gym's door mat (13,18) warps only when DOWN is pushed while standing on it.
+        path = S["bfs"](("LavaridgeTown_Gym_1F", 13, 17), ("LavaridgeTown", 5, 16),
+                        S["warp_neighbors"]({"LavaridgeTown", "LavaridgeTown_Gym_1F"}))
+        self.assertEqual(path, ["DOWN", "DOWN|", "DOWN"])
+
 
 class AutopilotTest(unittest.TestCase):
     def test_hm_moves_are_the_eight_hms(self):

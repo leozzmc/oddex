@@ -5,7 +5,8 @@ usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--avoid x,y;x,y...]
 default  BFS on map data across warps and ledges: a warp is taken only where its tile has a warp
          behavior (the Lavaridge Gym's holes and geysers are one-way), ledges only downhill. Walks
          the start map and the goal's floors (maps named like it up to the last "_", e.g.
-         LavaridgeTown_Gym_1F and _B1F). One step per unit (trainers interrupt).
+         LavaridgeTown_Gym_1F and _B1F). An exit mat (arrow warp) is stepped on, then pushed again.
+         One step per unit (trainers interrupt).
 --live   BFS on the running game's collision grid of the current map (gBackupMapLayout) with the
          objects where they stand now: hidden objects that map.json still lists, setmetatile
          barriers (the Mauville Gym) and trainers who walked over after a battle are all right.
@@ -23,6 +24,7 @@ with open(sys.argv[0]) as f:
     exec(compile(f.read().replace("\nmain()\n", "\n"), sys.argv[0], "exec"), G)
 W, SYMS, DIRS = G["W"], G["SYMS"], G["DIRS"]
 OFF = 7  # gBackupMapLayout's border around the map
+ARROW = {"EAST": "RIGHT", "WEST": "LEFT", "NORTH": "UP", "SOUTH": "DOWN"}
 
 
 def bfs(start, goal, neighbors):
@@ -51,9 +53,19 @@ def warp_neighbors(maps):
         m = G["load"](mp)
         return {(w["x"], w["y"]): w for w in m["json"]["warp_events"] if "WARP" in G["cell"](m, w["x"], w["y"])[2]}
 
+    def through(mp, w, d):
+        dest = G["ID2NAME"][w["dest_map"]]
+        dw = G["load"](dest)["json"]["warp_events"][int(w["dest_warp_id"])]
+        return d + "|", (dest, dw["x"], dw["y"])
+
     def neighbors(cur):
         mp, x, y = cur
         m = G["load"](mp)
+        w = warps(mp).get((x, y))
+        beh = G["cell"](m, x, y)[2]
+        if w and "ARROW" in beh and G["ID2NAME"].get(w["dest_map"]) in maps:
+            # An exit mat warps only when pushed again while standing on it.
+            yield through(mp, w, ARROW[beh.split("_")[-3]])
         for d, (dx, dy) in DIRS.items():
             nx, ny = x + dx, y + dy
             if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"]:
@@ -68,12 +80,10 @@ def warp_neighbors(maps):
             if G["cell"](m, nx, ny)[0]:
                 continue
             w = warps(mp).get((nx, ny))
-            if not w:
+            if not w or "ARROW" in G["cell"](m, nx, ny)[2]:
                 yield d, (mp, nx, ny)
             elif G["ID2NAME"].get(w["dest_map"]) in maps:
-                dest = G["ID2NAME"][w["dest_map"]]
-                dw = G["load"](dest)["json"]["warp_events"][int(w["dest_warp_id"])]
-                yield d + "|", (dest, dw["x"], dw["y"])
+                yield through(mp, w, d)
     return neighbors
 
 
