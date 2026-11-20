@@ -1902,3 +1902,43 @@ static const struct SpriteFrameImage sPicTable_Haniwort[] = {
     overworld_ascending_frames(gObjectEventPic_Haniwort, 4, 4),
 };
 #endif
+
+// Sphinmen
+static const struct LevelUpMove sSphinmenLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_HARDEN),
+    LEVEL_UP_MOVE( 1, MOVE_MUD_SLAP),
+    LEVEL_UP_MOVE( 3, MOVE_RAPID_SPIN),
+    LEVEL_UP_MOVE( 6, MOVE_CONFUSION),
+    LEVEL_UP_MOVE( 9, MOVE_ROCK_TOMB),
+    LEVEL_UP_MOVE(12, MOVE_POWER_TRICK),
+    LEVEL_UP_MOVE(15, MOVE_PSYBEAM),
+    LEVEL_UP_MOVE(18, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE(21, MOVE_IMPRISON),
+    LEVEL_UP_MOVE(24, MOVE_COSMIC_POWER),
+    LEVEL_UP_MOVE(27, MOVE_EXTRASENSORY),
+    LEVEL_UP_MOVE(30, MOVE_EARTH_POWER),
+    LEVEL_UP_MOVE(33, MOVE_SELF_DESTRUCT),
+    LEVEL_UP_MOVE(36, MOVE_GUARD_SPLIT),
+    LEVEL_UP_MOVE(36, MOVE_POWER_SPLIT),
+    LEVEL_UP_MOVE(39, MOVE_SANDSTORM),
+    LEVEL_UP_MOVE(42, MOVE_EXPLOSION),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Sphinmen[] = INCGFX_U32("graphics/pokemon/oddex/sphinmen/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Sphinmen[] = INCGFX_U32("graphics/pokemon/oddex/sphinmen/back.png", ".4bpp.smol");
+const u16 gMonPalette_Sphinmen[] = INCGFX_U16("graphics/pokemon/oddex/sphinmen/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Sphinmen[] = INCGFX_U16("graphics/pokemon/oddex/sphinmen/shiny.pal", ".gbapal");
+const u8 gMonIcon_Sphinmen[] = INCGFX_U8("graphics/pokemon/oddex/sphinmen/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Sphinmen[] = INCGFX_U8("graphics/pokemon/oddex/sphinmen/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Sphinmen[] = INCGFX_COMP("graphics/pokemon/oddex/sphinmen/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Sphinmen[] = INCGFX_U16("graphics/pokemon/oddex/sphinmen/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Sphinmen[] = INCGFX_U16("graphics/pokemon/oddex/sphinmen/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Sphinmen[] = {
+    overworld_ascending_frames(gObjectEventPic_Sphinmen, 4, 4),
+};
+#endif

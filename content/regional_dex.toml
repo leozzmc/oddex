@@ -23,5 +23,5 @@ order = [
     # Lavaridge segment.
     "HIFUKKO", "KAMADORO", "NAMAZURA", "JATAI", "HIGANMEN",
     # Norman segment: the revived fossils.
-    "HANIWORT", "DOGOGGLE",
+    "HANIWORT", "DOGOGGLE", "SPHINMEN",
 ]

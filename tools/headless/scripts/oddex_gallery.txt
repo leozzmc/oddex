@@ -218,10 +218,10 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
 press DOWN 2 20
 press RIGHT 2 10
 press DOWN 2 20
@@ -363,10 +363,10 @@ shot gallery/1619_utomaw.png
 press START 2 120
 shot gallery/1619_utomaw_shiny.png
 press START 2 120
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
@@ -427,4 +427,10 @@ wait 120
 shot gallery/1628_haniwort.png
 press START 2 120
 shot gallery/1628_haniwort_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1629_sphinmen.png
+press START 2 120
+shot gallery/1629_sphinmen_shiny.png
 press START 2 120

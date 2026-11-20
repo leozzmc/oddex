@@ -3943,3 +3943,73 @@
         .teachableLearnset = sHaniwortTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },
+
+    [SPECIES_SPHINMEN] =
+    {
+        .baseHP        = 40,
+        .baseAttack    = 40,
+        .baseDefense   = 55,
+        .baseSpeed     = 55,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_PSYCHIC),
+        .catchRate = 255,
+        .expYield = 60,
+        .evYield_SpDefense = 1,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MINERAL),
+        .abilities = { ABILITY_LEVITATE, ABILITY_NONE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Sphinmen"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_SPHINMEN,
+        .categoryName = _("Riddle Mask"),
+        .height = 9,
+        .weight = 215,
+        .description = COMPOUND_STRING(
+            "A lion of the desert sand wearing a huge\n"
+            "striped mask. It asks travellers a riddle\n"
+            "in a voice like grinding stone, and smiles\n"
+            "the same thin smile whatever they answer."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Sphinmen,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Sphinmen,
+        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Sphinmen,
+        .shinyPalette = gMonShinyPalette_Sphinmen,
+        .iconSprite = gMonIcon_Sphinmen,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Sphinmen)
+        OVERWORLD(
+            sPicTable_Sphinmen,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Sphinmen,
+            gShinyOverworldPalette_Sphinmen
+        )
+        .levelUpLearnset = sSphinmenLevelUpLearnset,
+        .teachableLearnset = sSphinmenTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },

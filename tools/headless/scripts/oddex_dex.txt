@@ -247,3 +247,7 @@ press A 2 150
 shot dex/270_dogoggle.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/271_sphinmen.png
+press B 2 90
+press DOWN 2 20

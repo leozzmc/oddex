@@ -135,7 +135,6 @@ SANDSHREW = "YAMAMBRR"   # ground
 SWABLU = "UTOGHAST"      # flying
 DODUO = "KARUVAJRA"      # flying
 SPOINK = "GACHIRINZA"    # psychic
-BALTOY = "GACHIRINZA"    # psychic
 WYNAUT = "GACHIRINZA"    # psychic; the Lavaridge egg is role EGG_GIFT
 SOLROCK = "IWADAWN"      # rock, 460 -> 375 (-18%); the sun disc of the rock door
 GRIMER = "KUMOZUKA"      # poison, 325 -> 266 (-18%)
@@ -154,3 +153,7 @@ SANDSLASH = "MANDARING"  # stage 2, ground, 450 -> 400 (-11%); Yamambrr (Sandshr
 WIGGLYTUFF = "KYOZOSU"   # normal, 435 -> 420; Alexia in the Petalburg gym only
 LILEEP = "HANIWORT"      # the revived fossils (roles FOSSIL_ROOT / FOSSIL_CLAW)
 ANORITH = "DOGOGGLE"
+# Baltoy was Gachirinza (psychic) until the Norman batch; it now has its own creature, the sphinx
+# (user's foreign-myth theme, 2026-11-21): ground/psychic like Baltoy, in the same desert and Mirage
+# Tower. Parties and tables already rewritten to Gachirinza for Baltoy are changed by hand.
+BALTOY = "SPHINMEN"

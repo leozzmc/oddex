@@ -1,0 +1,55 @@
+# Norman segment (docs/research/mask-designs.md, "Norman 段"): replaces Baltoy (Route 111 desert and
+# the Mirage Tower). A sphinx: the user's first idea of a masked beast, after the foreign-myth theme
+# was added (DECISIONS.md, 2026-11-21). Stats follow Baltoy; single-stage for now (Claydol later).
+
+id = "SPHINMEN"
+name = "Sphinmen"
+category = "Riddle Mask"
+
+types = ["GROUND", "PSYCHIC"]
+abilities = ["LEVITATE", "NONE", "NONE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 40, atk = 40, def = 55, spa = 40, spd = 70, spe = 55 }   # total 300
+ev_yield = { spd = 1 }
+catch_rate = 255
+exp_yield = 60
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["MINERAL"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 9
+weight = 215
+text = """
+A lion of the desert sand wearing a huge
+striped mask. It asks travellers a riddle
+in a voice like grinding stone, and smiles
+the same thin smile whatever they answer."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "HARDEN"], [1, "MUD_SLAP"], [3, "RAPID_SPIN"], [6, "CONFUSION"], [9, "ROCK_TOMB"], [12, "POWER_TRICK"], [15, "PSYBEAM"], [18, "ANCIENT_POWER"], [21, "IMPRISON"], [24, "COSMIC_POWER"], [27, "EXTRASENSORY"], [30, "EARTH_POWER"], [33, "SELF_DESTRUCT"], [36, "GUARD_SPLIT"], [36, "POWER_SPLIT"], [39, "SANDSTORM"], [42, "EXPLOSION"],
+]
+teachable = [
+    "CALM_MIND", "DIG", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REFLECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/sphinmen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route111", "MirageTower"]
+level_band = [18, 25]
+family = ["SPHINMEN"]
