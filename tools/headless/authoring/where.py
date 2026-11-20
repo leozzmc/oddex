@@ -50,8 +50,18 @@ def map_names():
     return names
 
 
+SUBSTRUCT_SLOT_0 = [0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 2, 3, 1, 1, 2, 3, 2, 3, 1, 1, 2, 3, 2, 3]  # sSubstructOffsets[0]
 SUBSTRUCT_SLOT_1 = [1, 1, 2, 3, 2, 3, 0, 0, 0, 0, 0, 0, 2, 3, 1, 1, 3, 2, 2, 3, 1, 1, 3, 2]  # sSubstructOffsets[1]
 SUBSTRUCT_BYTES = 12
+
+
+def lead_species(st, syms):
+    """Decrypt the lead party Pokemon's species (growth substruct, species in the low 11 bits)."""
+    base = syms["gParties"]
+    personality, ot_id = read(st, base, "<II")
+    raw = [w ^ personality ^ ot_id for w in read(st, base + 32, "<12I")]
+    sub = struct.pack("<12I", *raw)[SUBSTRUCT_BYTES * SUBSTRUCT_SLOT_0[personality % 24]:]
+    return struct.unpack_from("<H", sub)[0] & 0x7FF
 
 
 def lead_moves(st, syms):

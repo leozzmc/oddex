@@ -104,6 +104,18 @@ def type_chart():
     return [[raw[a * n + d] / 4096 for d in range(n)] for a in range(n)]
 
 
+SPECIES_INFO = 0x108  # sizeof(struct SpeciesInfo), measured in the ROM (pokemon.h's /*0xC4*/ is stale); types (u8 x2) at +6
+
+
+def species_types(species):
+    """A species' types from gSpeciesInfo in the built ROM."""
+    with open(ROM, "rb") as f:
+        f.seek(SYMS["gSpeciesInfo"] - 0x08000000 + species * SPECIES_INFO + 6)
+        types = set(f.read(2))
+    assert 0 not in types, f"species {species}: TYPE_NONE, is sizeof(struct SpeciesInfo) still {SPECIES_INFO:#x}?"
+    return types
+
+
 BATTLE_MON = 0x8C  # sizeof(struct BattlePokemon); moves at +12 (u16 x4), types at +34 (u8 x3), pp at +37
 # struct BattlePokemon: attack +2, defense +4, spAttack +8, spDefense +10 (u16); statStages +24
 # (s8 x8, STAT_HP/ATK/DEF/SPEED/SPATK/SPDEF/ACC/EVASION, 6 = no change).
@@ -212,6 +224,12 @@ def slot_to_forget(st):
     base = SYMS["gBattleMons"]
     types = set(W["read"](st, base + 34, "<3B")) - {0}
     stats = (W["read"](st, base + 2, "<H")[0], W["read"](st, base + 8, "<H")[0])
+    if not any(stats):
+        # Out of battle (the evolution scene) gBattleMons is cleared: use the party lead instead
+        # (struct Pokemon: attack +90, spAttack +96).
+        party = SYMS["gParties"]
+        stats = (W["read"](st, party + 90, "<H")[0], W["read"](st, party + 96, "<H")[0])
+        types = species_types(W["lead_species"](st, SYMS))
     moves, _ = W["lead_moves"](st, SYMS)
     info = move_info()
 
