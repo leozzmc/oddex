@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-21 | Winona 段：照 Mark 草稿的對照（Kadabra→Tsukuyume、Machoke／Hariyama→Yokozunat、Tentacruel→Jatai、Absol→Raijuoh 等，不為 Surskit／Staryu／Absol 另做角色）；**新做 3 隻**：Tropius 位置（草/飛行）、Altaria 位置（龍/飛行，Winona 的王牌）、Castform 位置（晴天娃娃，代號 WEATHER_GIFT，單一型態）；Kecleon 的劇情代號 HIDDEN_BLOCKER＝Kyozosu（〈釣狐〉）；overworld 三個方向改用同一個縮放 | David（**暫定，待使用者確認**） | 避免 Winona 的隊伍出現重複角色；設計和平衡見 mask-designs.md、balance.md |
 | 2026-11-21 | **寫死在 C 裡、玩家碰得到的原版角色在所屬的段落就改，不留到第 5 步**：Route 119 的 Feebas（`src/wild_encounter.c`）改成代號 `FISHING_SPOT`，暫定 Namazura；遊戲內交換 Rustboro House1（Ralts↔Seedot → Omotelle↔Bekurama）和 Fortree House1（Volbeat↔Plusle → Torobi↔Tomoeden）改成 `TRADE_*` 代號，交換信件改用一般單字（原創角色沒有 easy chat 單字） | David（Sonia 建議；暫定，待使用者確認） | 原版角色停用後，debug build 會 assert，release build 會給出 `SPECIES_NONE`。Rustboro 的交換在 `[rustboro]` 時漏掉了，現在 `trade.h` 放進它的 `c_files`；其他交換（Pacifidlog、Battle Frontier、FRLG）用 `exclude_refs` 等各自的段落。理由見 plan-b-references §11.2 |
 | 2026-11-21 | Ichimai 造型（方案 A：從石井探出上半身、黑髮遮臉、捧藍邊盤子；背面只有一片黑髮從井裡長出）和數值（種族值 400，HM 只有 Surf、Dive） | David（**暫定，待使用者確認**） | 審查截圖 ~/oddex-shots/mark/winona/；feat/winona-batch cb03a2cf，跟 9 隻 64 px 修正同一批 |
 | 2026-11-21 | **Ichimai（阿菊，幽靈/水）放進下一段（Winona）的角色批次，在 Route 120 當稀有野生**；使用者睡覺期間授權團隊自主推進到 token 用完：需要使用者決定的設計（新角色造型、平衡）由 David 先暫定，寫進這份紀錄並標「暫定，待使用者確認」，美術截圖留給使用者早上看 | 使用者 | Route 120 是 Mt. Pyre 前的霧中道路；原本最早的幽靈系位置在 Route 121 |
