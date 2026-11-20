@@ -15,6 +15,10 @@ WAYPOINT = Map:x:y, or grind:Map:x1:y1:x2:y2:LEVEL to walk between two grass til
 reaches LEVEL (stops early when its HP drops below GRIND_MIN_HP percent, default 35, or its
 damaging moves have fewer than 10 PP left, so the caller can heal). Wild battles against an
 opponent whose types hit the lead super-effectively, with no super-effective move back, are fled.
+
+Runaway guards (exit status 3, even with AP_PARTIAL, after printing the reason, the commands so
+far and the last state): more than AP_MAX_STEPS units in total (default 20000), or the same
+command at the same position NO_PROGRESS times in a row outside battle.
 """
 import os, subprocess, sys, tempfile
 from functools import lru_cache
@@ -33,6 +37,13 @@ LOW_PP = 5         # swap slot 1 out before a battle once its PP drops below thi
 MAX_BATTLE_PRESSES = 600  # a battle longer than this is stuck (e.g. slot 1 out of PP mid-battle)
 DIALOG_B = 15      # B presses when a move went nowhere outside battle
 GRIND_MIN_HP = int(os.environ.get("GRIND_MIN_HP", "35"))  # grind pauses below this HP percent
+MAX_STEPS = int(os.environ.get("AP_MAX_STEPS", "20000"))  # units per run; a real route needs far fewer
+NO_PROGRESS = 100  # same command at the same position this many times in a row outside battle
+LOCKED_WAITS = 3   # waits on a grind tile with controls locked before B clears the message
+
+
+class Runaway(SystemExit):
+    """A guard stopped a run that was making no progress."""
 
 
 def run(ss_in, cmds, ss_out):
@@ -283,11 +294,48 @@ def fix_lead(ss, prefix, k, slot=None):
     return cmds, out
 
 
+@lru_cache(None)
+def evo_states():
+    """(EVOSTATE_REPLACE_MOVE, MVSTATE_HANDLE_YES_NO) from evolution_scene.c's state enums."""
+    import re as _re
+    src = open(os.path.join(os.path.dirname(ROM), "src", "evolution_scene.c"), encoding="utf-8").read()
+
+    def index(name):
+        body = _re.search(r"enum\s*\{([^}]*\b" + name + r"\b[^}]*)\}", src).group(1)
+        names = _re.findall(r"^\s*(\w+)\s*,", body, _re.M)
+        return names.index(name)
+    return index("EVOSTATE_REPLACE_MOVE"), index("MVSTATE_HANDLE_YES_NO")
+
+
+TASK_SIZE, NUM_TASKS = 40, 16  # struct Task: func, isActive, prev, next, priority, s16 data[16]
+
+
+def evo_at_learn_prompt(st):
+    """True while the evolution scene shows "delete a move to make room for ...?" with YES/NO."""
+    replace, yes_no = evo_states()
+    for i in range(NUM_TASKS):
+        t = SYMS["gTasks"] + TASK_SIZE * i
+        func, active = W["read"](st, t, "<IB")
+        if active and func & ~1 == SYMS["Task_EvolutionScene"]:
+            state, learn = W["read"](st, t + 8, "<h")[0], W["read"](st, t + 8 + 2 * 6, "<h")[0]
+            return state == replace and learn == yes_no  # tState is data[0], tLearnMoveState data[6]
+    return False
+
+
 def battle_press(ss):
     """Next single input in battle: B at "delete a move?"; in the move menu, move the cursor to the
     best move against the opponent's types (best_move); otherwise A."""
     st = W["state"](ss)
     cb2 = W["read"](st, SYMS["gMain"] + 4, "<I")[0] & ~1
+    lo, hi = text_range("evolution_scene.o")
+    if lo <= cb2 < hi:
+        # Evolution scene. A advances its text; B would stop the evolution, so it is only used
+        # to answer NO at "delete a move to make room?" (P_ASK_MOVE_CONFIRMATION is FALSE, so NO
+        # gives up the move at once). The battle script check below must not run here: after a
+        # battle, gBattlescriptCurrInstr can still point into the learn-move script.
+        if evo_at_learn_prompt(st) and slot_to_forget(st) is None:
+            return "press B 2 30"
+        return "press A 2 30"
     lo, hi = text_range("pokemon_summary_screen.o")
     if lo <= cb2 < hi:
         # "Forget which move?" summary screen: move the cursor to the slot to forget, then A.
@@ -376,17 +424,22 @@ def main():
         else:
             goals.append((parts[0], int(parts[1]), int(parts[2])))
     out = []
+    runaway = False
     try:
         walk(goals, ss, prefix, facing, out)
     except SystemExit as e:
-        if not os.environ.get("AP_PARTIAL") or not isinstance(e.code, str):
+        runaway = isinstance(e, Runaway)
+        if not (os.environ.get("AP_PARTIAL") or runaway) or not isinstance(e.code, str):
             raise
         # AP_PARTIAL=1: report what was executed up to the failure, so the caller can continue
-        # from the last state by hand (the commands reproduce it exactly).
+        # from the last state by hand (the commands reproduce it exactly). Runaway guards report
+        # the same way but always fail.
         print(f"# stopped: {e.code}", file=sys.stderr)
     ss, facing = PROGRESS["ss"], PROGRESS["facing"]
     print("\n".join(compress(out)))
     print(f"# end {where(ss)} facing {facing} state {ss}", file=sys.stderr)
+    if runaway:
+        sys.exit(3)
 
 
 PROGRESS = {}
@@ -395,6 +448,7 @@ PROGRESS = {}
 def walk(goals, ss, prefix, facing, out):
     k, stopped, stuck, presses, cooldown = 0, True, False, 0, 0
     blocked_once = {}
+    locked_waits, last_unit, repeats = 0, None, 0
     PROGRESS.update(ss=ss, facing=facing)
     for spec in goals:
         tries = 0
@@ -403,6 +457,7 @@ def walk(goals, ss, prefix, facing, out):
         while True:
             name, x, y, cb = where(ss)
             if grind and cb == "CB2_Overworld" and not stuck and controls_free(ss):
+                locked_waits = 0
                 st = W["state"](ss)
                 lvl = W["read"](st, SYMS["gParties"] + 84, "<B")[0]
                 hp, mhp = W["read"](st, SYMS["gParties"] + 86, "<HH")
@@ -443,11 +498,23 @@ def walk(goals, ss, prefix, facing, out):
                 continue
             elif (name, x, y) == goal and not grind:
                 break
+            elif (name, x, y) == goal and locked_waits >= LOCKED_WAITS:
+                # Grinding, and controls stayed locked: a message (e.g. a Match Call) is open,
+                # which waiting never closes. B advances it and answers NO to prompts.
+                cmds, exp, stopped, locked_waits = [f"repeat {DIALOG_B} press B 2 30"], None, True, 0
             elif (name, x, y) == goal:
                 cmds, exp = ["wait 30"], None  # grinding: wait until controls are free to toggle
+                locked_waits += 1
             else:
                 u = units((name, x, y), goal, facing, stopped)
                 cmds, exp, facing, stopped = u
+            if k >= MAX_STEPS:
+                raise Runaway(f"step limit AP_MAX_STEPS={MAX_STEPS} reached at {where(ss)} ({ss})")
+            unit = ((name, x, y, cb), tuple(cmds))
+            repeats = repeats + 1 if unit == last_unit and cb == "CB2_Overworld" else 0
+            last_unit = unit
+            if repeats >= NO_PROGRESS:
+                raise Runaway(f"no progress: {cmds} repeated {NO_PROGRESS} times at {where(ss)} ({ss})")
             cooldown = max(0, cooldown - 1)
             nxt = f"{prefix}_{k:04d}.ss"
             run(ss, cmds, nxt)

@@ -297,6 +297,10 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - 同一步走不動兩次（已經按 B 排除對話框的可能）時，把那一格當成障礙並重新規劃。例如道館裡打完戰鬥、走過來擋在一格寬通道上的訓練家。
 - `grind:Map:x1:y1:x2:y2:LV`：在兩格草叢之間來回走到指定等級；HP 低於 `GRIND_MIN_HP`%（預設 35，`to_rustboro` 用 60）或攻擊招式的 PP 總和低於 10 時暫停，讓呼叫者去回血。
 - 戰鬥中按超過 600 次就直接報錯（避免像 PP 用完那次，無限產生存檔）。
+- **進化畫面**（`gMain.callback2` 落在 `evolution_scene.o` 的範圍內）：一律按 A，因為 B 會中斷進化。只有在「Delete a move to make room for ...?」的 YES/NO 時，才依學招規則決定：`slot_to_forget` 找不到可以忘的招式就按 B。從 `gTasks` 找出 `Task_EvolutionScene`，讀 `tState`（data[0]）是不是 `EVOSTATE_REPLACE_MOVE`、`tLearnMoveState`（data[6]）是不是 `MVSTATE_HANDLE_YES_NO`，這兩個 enum 值從 `evolution_scene.c` 解析。`P_ASK_MOVE_CONFIRMATION` 是 FALSE，所以 NO 會直接放棄學招。這個判斷要放在戰鬥腳本的學招判斷之前：戰鬥結束後 `gBattlescriptCurrInstr` 可能還停在學招腳本裡，那時按 B 會中斷進化。
+  - 驗證方式：用 Mark 在 trio-evo 建好的 ROM 重播 `to_rustboro` 到 Route 116，再練到 Lv17。Grinpack 在 Lv16 進化成 Grinvine，畫面依序是「What? Grinpack is evolving!」到「evolved into Grinvine!」，`tState` 從 1 走到 15（`EVOSTATE_TRY_LEARN_MOVE`）。
+  - 尚未驗證：Grinvine 沒有進化時學的招式，所以進化畫面裡的學招 YES/NO 這次沒有出現，還沒有實測。
+- **防止空轉**：總共執行超過 `AP_MAX_STEPS` 個單位（預設 20000），或在戰鬥外同一位置連續 100 次送出同一個指令，就印出原因、已執行的指令和最後的狀態，以 exit 3 結束（`AP_PARTIAL=1` 也一樣會失敗）。起因是 Mauville 練等時，練等格上跳出 Match Call 的訊息，`grind` 在練等格上遇到操作被鎖住只會 `wait 30`，而 B 只在「走一步沒動」時才按，結果空轉了 32 萬步（約 5 小時 40 分）都沒停；那時攻擊招式還剩 Aerial Ace 的 19 PP，高於暫停門檻 10，所以也沒有因為 PP 不足而暫停。現在練等格上連續 3 次操作被鎖住就按 B。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
 
@@ -416,5 +420,12 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - **留在範圍外**：
   - Route 110 勁敵 6 組和 Edwin（含重戰），共 28 筆：Grovyle、Combusken、Marshtomp、Lombre、Nuzleaf、Shiftry、Ludicolo、Slugma、Wingull。要等使用者決定御三家和 Bekurama 的進化線；對照表一有缺漏，`apply_replacements` 就整個範圍都不寫。
   - 要衝浪才遇得到的水上野生，共 15 筆，含 Pelipper 6 筆。
-- **可達性**：`stage_reach.py` 從 Route 109 碼頭只走得到海灘、Slateport 和 Route 110 南段，因為它過不了自行車道下方的橋。其餘的 Route 110 和 Mauville 都在劇情路線上，而 Mauville 拿到的自行車在 Wattson 之前就能騎上自行車道。
-- **`to_mauville`**：路線要先打贏 Brawly，所以等使用者對 Brawly 的平衡做出決定之後再錄。到時把範圍設成 strict。
+- **可達性**：`stage_reach.py` 從 Route 109 碼頭走得到海灘、Slateport、整條 Route 110（經過自行車道下方的木橋）和 Trick House 謎題 1 的第一個房間。之前的版本把木橋（`MB_BRIDGE_OVER_OCEAN`，名字裡有 OCEAN）當成水，誤判成只走得到 Route 110 南段；`plan.py` 和 `stage_reach.py` 現在共用 `is_water()`。修正後走得到的訓練家和原本的明確清單相同（Edwin 照舊留在範圍外）。
+- **`to_mauville`**：試錄到 Wattson 為止，最終錄製等 trio-evo（三人組第 2 階段）合併後，和 `to_rustboro`、`to_dewford` 一起重新產生；Grinpack 在 Lv16 進化會讓這三支腳本全部錯開。到時也把 Route 110 勁敵移進範圍（對照表已經補上 Grovyle、Combusken、Marshtomp），再把範圍設成 strict。
+  - 試錄路線：Briney 開船到 Route 109 → Fan Club → Stern 的船廠 → Museum 2F 打兩個 Aqua 手下 → 出 Museum 時 Scott 的劇情 → Route 110 南段 Birch 的劇情 → Kaleb、Isabel、Timmy、Alyssa、Edward → 勁敵 → Mauville 跟 Wally 對戰（截圖確認「combine forces with Omotelle」）→ 道館。
+  - 道館的電閘由 `setmetatile` 在執行時改變，而且 `FLAG_MAUVILLE_GYM_BARRIERS_STATE` 每次進地圖都會清掉，所以 `plan.py` 讀的靜態地圖不準。踩開關的路線要用執行中的地圖（`gBackupMapLayout`）規劃，也要避開不想踩的開關：已經按過的那個開關再踩沒有作用，踩到其他開關就會切換電閘。
+  - **平衡觀察（給使用者參考，未改動）**：隊伍只有御三家一隻時，Wattson 很難打。他有 Super Potion ×2，王牌帶 Sitrus Berry，還會用 Thunder Wave 和 Supersonic 讓我方空過回合。Grinpack 的情況：
+    - Lv25：打倒第 1、2 隻後輸掉。
+    - Lv28（已學 Seed Bomb）：打倒 Suzurai 和 Kagurai。Kagurai 是鋼／電，只有 Crunch 有效，Crunch 只有 15 PP。之後只剩 19 HP，輸給 Raijuoh（電／惡，抵抗 Crunch），Raijumen 還沒出場。
+    
+    `damage_calc.py` 不算道具和異常狀態，所以會高估勝率。重新錄製時預計要在 Route 110 練到約 Lv33：Route 110 的野生只有 Lv12–13，經驗值又依等級差縮放（`B_SCALED_EXP`），每場約 60–75 點。

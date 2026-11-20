@@ -94,16 +94,16 @@ c_files = []
 
 [mauville]
 description = "Briney to Route 109 -> Slateport -> Route 110 -> Mauville, up to Wattson"
-# strict stays false: the Route 110 rival and Edwin are left out below until their evolution lines
-# exist, and to_mauville is recorded once Brawly's balance is decided (the route has to pass him).
+# strict stays false until to_mauville is recorded, which waits for the starters' stage 2 (trio-evo):
+# Grinpack evolving at Lv16 shifts to_rustboro, to_dewford and to_mauville alike. The Route 110
+# rival and Edwin are left out below until their evolution lines are in replacements.toml.
 strict = false
 # Route 109 and Slateport have only water and fishing tables; fishing is in scope since the Old Rod
 # (Dewford). Water tables need Surf. Mauville has no wild table.
 wild_maps = ["Route109", "SlateportCity", "Route110"]
 wild_kinds = ["land_mons", "fishing_mons"]
-# stage_reach.py from the Route 109 dock reaches Route 109's beach, Slateport and southern
-# Route 110 only: it cannot cross the bridges under the Cycling Road. The rest of Route 110 and
-# Mauville are on the story path, and the bike from Mauville (before Wattson) opens the Cycling Road.
+# stage_reach.py from the Route 109 dock reaches Route 109's beach, Slateport, all of Route 110
+# (over the wooden bridges under the Cycling Road) and Trick House puzzle 1's first room.
 trainers = [
     # Route 109 beach and the Seashore House (David, Alice, Gwen, Austina, Carter, Mel & Paul and
     # Elijah are swimmers: Surf).
