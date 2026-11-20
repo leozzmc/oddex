@@ -591,17 +591,17 @@
         .height = 6,
         .weight = 76,
         .description = COMPOUND_STRING(
-            "A thunder god's mask that drifted down\n"
-            "a river. Its gilded eyes never blink.\n"
-            "On stormy nights the drums around it\n"
-            "beat by themselves along the riverbank."),
+            "A thunder mask that drifted so long in\n"
+            "the river that its gold eyes popped out\n"
+            "like a goldfish's. On stormy nights it\n"
+            "leaps from the water, roaring."),
         .pokemonScale = 541,
         .pokemonOffset = 19,
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Kamorai,
-        .frontPicSize = MON_COORDS_SIZE(56, 56),
-        .frontPicYOffset = 8,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 2,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
             ANIMCMD_FRAME(1, 15),
@@ -611,13 +611,13 @@
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
         .backPic = gMonBackPic_Kamorai,
-        .backPicSize = MON_COORDS_SIZE(48, 56),
-        .backPicYOffset = 8,
+        .backPicSize = MON_COORDS_SIZE(56, 64),
+        .backPicYOffset = 0,
         .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
         .palette = gMonPalette_Kamorai,
         .shinyPalette = gMonShinyPalette_Kamorai,
         .iconSprite = gMonIcon_Kamorai,
-        .iconPalIndex = 4,
+        .iconPalIndex = 3,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Kamorai)
