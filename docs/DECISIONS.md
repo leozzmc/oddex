@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-21 | **寫死在 C 裡、玩家碰得到的原版角色在所屬的段落就改，不留到第 5 步**：Route 119 的 Feebas（`src/wild_encounter.c`）改成代號 `FISHING_SPOT`，暫定 Namazura；遊戲內交換 Rustboro House1（Ralts↔Seedot → Omotelle↔Bekurama）和 Fortree House1（Volbeat↔Plusle → Torobi↔Tomoeden）改成 `TRADE_*` 代號，交換信件改用一般單字（原創角色沒有 easy chat 單字） | David（Sonia 建議；暫定，待使用者確認） | 原版角色停用後，debug build 會 assert，release build 會給出 `SPECIES_NONE`。Rustboro 的交換在 `[rustboro]` 時漏掉了，現在 `trade.h` 放進它的 `c_files`；其他交換（Pacifidlog、Battle Frontier、FRLG）用 `exclude_refs` 等各自的段落。理由見 plan-b-references §11.2 |
 | 2026-11-21 | Ichimai 造型（方案 A：從石井探出上半身、黑髮遮臉、捧藍邊盤子；背面只有一片黑髮從井裡長出）和數值（種族值 400，HM 只有 Surf、Dive） | David（**暫定，待使用者確認**） | 審查截圖 ~/oddex-shots/mark/winona/；feat/winona-batch cb03a2cf，跟 9 隻 64 px 修正同一批 |
 | 2026-11-21 | **Ichimai（阿菊，幽靈/水）放進下一段（Winona）的角色批次，在 Route 120 當稀有野生**；使用者睡覺期間授權團隊自主推進到 token 用完：需要使用者決定的設計（新角色造型、平衡）由 David 先暫定，寫進這份紀錄並標「暫定，待使用者確認」，美術截圖留給使用者早上看 | 使用者 | Route 120 是 Mt. Pyre 前的霧中道路；原本最早的幽靈系位置在 Route 121 |
 | 2026-11-21 | **角色題材放寬**：除了能面／Cham 和神道、密教意象，也可以加入恐怖電影類的怨靈和外國神話生物（使用者舉例：貞子、人面獅身）。有版權的角色（貞子、伽椰子等）只取原型，改用公有領域的民間故事（貞子的原型改用〈番町皿屋敷〉的阿菊：井、長黑髮、白衣、數盤子）；外國神話照樣融合面具風格（人面獅身＝戴面具的四腳獸） | 使用者（版權處理：David） | repo 和 ROM 都公開，不能用電影的角色名稱、造型。人面獅身放進 Norman 段的沙漠（同一批，長路線只重錄一次）；阿菊等到有幽靈系位置的那一段 |

@@ -42,3 +42,13 @@ EGG_GIFT = "GACHIRINZA"             # Wynaut
 # The fossils revived at Devon in Rustboro (Root / Claw Fossil from the Route 111 Mirage Tower).
 FOSSIL_ROOT = "HANIWORT"        # Lileep
 FOSSIL_CLAW = "DOGOGGLE"        # Anorith
+
+# Route 119's Feebas spots (src/wild_encounter.c gWildFeebas): a rare fish caught only in a few
+# fishing spots. Provisional (David, 2026-11-21): Namazura until Mark's batch picks one.
+FISHING_SPOT = "NAMAZURA"       # Feebas
+
+# In-game trades (src/data/trade.h): what the NPC gives and what they ask for.
+TRADE_RUSTBORO = "BEKURAMA"         # Seedot (Rustboro House1)
+TRADE_RUSTBORO_WANT = "OMOTELLE"    # Ralts
+TRADE_FORTREE = "TOMOEDEN"          # Plusle (Fortree House1)
+TRADE_FORTREE_WANT = "TOROBI"       # Volbeat

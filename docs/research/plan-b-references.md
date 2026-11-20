@@ -855,15 +855,18 @@ script／text／gfx 的手改（不是 `apply_replacements` 會處理的）：
   - Route 119 的 Feebas：`src/wild_encounter.c` 的 `gWildFeebas`，這個檔案裡只有這一筆 species。
   - 遊戲內交換（`src/data/trade.h`）：Fortree House1 用 Volbeat 換 Plusle。它的對話文字也提到兩者的名字。Rustboro House1 的交換（用 Ralts 換 Seedot）在 `[rustboro]` 時也漏掉了。
 
-**建議：Feebas 和遊戲內交換都在這一段就改，不要留到第 5 步的 C 清理。**
+**已改（David 核准，見 DECISIONS.md）：Feebas 和遊戲內交換都在這一段就改，不留到第 5 步的 C 清理。**
 - 理由：這兩個不是看不到的資料，玩家碰得到。原版角色已經停用，所以 debug build 會 assert（`check-oddex` 會當成 crash），release build 會變成 `SPECIES_NONE` 的戰鬥或交換。
   - Feebas 從 Dewford 拿到 Old Rod 起就釣得到，Route 119 的 Feebas 格在這一段就走得到。
   - Rustboro 的交換從第 2 段起就是壞的。
   - 用 `exclude_refs` 擋著，等於把一個玩得到的錯誤藏起來，而且 `check_species_refs` 再也不會提醒。
-- 做法：
-  - Feebas：`[winona]` 的 `c_files = ["src/wild_encounter.c"]`，把 `gWildFeebas` 改成代號 `SPECIES_ODDEX_FISHING_SPOT`。要用哪個角色由 Mark 和使用者決定；決定前代號可以先指向現有的水系角色，不能指向原版角色，否則 `check_species_refs` 會把它當成原版的引用。改動只有一行，加上一個代號。
-  - 交換：`trade.h` 裡也有 FRLG、Battle Frontier、Pacifidlog 的交換。整個檔案放進 `c_files` 的話，那些要用 `exclude_refs` 排除，等到各自的段落再處理。這一段只改 Rustboro 和 Fortree 兩筆：`species`、`requestedSpecies`、暱稱、交換信件的 `EC_POKEMON(...)`，以及 Fortree House1 的那句台詞。原創角色有沒有 easy chat 的單字還要確認，沒有的話，信件改用一般的單字。
-- 這需要 David 決定（動到 C，而且第 5 步原本把 `trade.h` 排在「中期到破關後」）。決定之前，`[winona]` 先不把 C 放進範圍，Fortree House1 的 Volbeat／Plusle 文字也先不改，讓交換的資料和文字一起改。
+- Feebas：`gWildFeebas` 改成代號 `SPECIES_ODDEX_FISHING_SPOT`，暫定 Namazura（只在幾個釣點出現的稀有魚，Mark 那一批可以改）。`[winona]` 的 `c_files = ["src/wild_encounter.c"]`，這個檔案裡只有這一筆 species。
+- 交換：用 `TRADE_RUSTBORO`／`_WANT`（Bekurama／Omotelle，取代 Seedot／Ralts）、`TRADE_FORTREE`／`_WANT`（Tomoeden／Torobi，取代 Plusle／Volbeat）四個代號，照 `replacements.toml` 的對照。
+  - 暱稱 DOTS → KURAMA（鞍馬的天狗）、PLUSES → TOMOE。
+  - Fortree 的交換信件，原本的 `EC_POKEMON(PLUSLE)`、`EC_POKEMON(VOLBEAT)` 改成一般單字（BE NICE TO IT! YOU WILL BE FANTASTIC），因為原創角色沒有 easy chat 單字。
+  - Fortree House1 交換後的台詞也一起改了。
+  - `trade.h` 放進 `[rustboro]` 的 `c_files`，strict 會擋下漏改的交換。檔案裡其他的交換（Pacifidlog、Battle Frontier、FRLG）用 `exclude_refs` 排除，等各自的段落再改。
+- 只靠資料檢查：兩個交換都要玩家先有對方要的角色，現有的路線都沒有，所以沒有在遊戲裡交換過。`to_rustboro` 會經過 Rustboro，但在那裡多加截圖，後面所有的長路線都要重錄，所以不划算。`to_winona` 錄製時，可以順路跟 Fortree House1 的人說話，拍他開出交換條件的台詞（台詞用 `STR_VAR` 填入兩個名字），代價只是一小段路。
 
 ### 11.3 Ichimai：Route 120 的稀有野生角色
 

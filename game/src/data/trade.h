@@ -970,8 +970,8 @@ static const struct InGameTrade sIngameTrades[] =
 {
     [INGAME_TRADE_SEEDOT] =
     {
-        .nickname = _("DOTS"),
-        .species = SPECIES_SEEDOT,
+        .nickname = _("KURAMA"),
+        .species = SPECIES_ODDEX_TRADE_RUSTBORO,
         .ivs = {5, 4, 5, 4, 4, 4},
         .abilityNum = 1,
         .otId = 38726,
@@ -982,12 +982,12 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("KOBE"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_RALTS
+        .requestedSpecies = SPECIES_ODDEX_TRADE_RUSTBORO_WANT
     },
     [INGAME_TRADE_PLUSLE] =
     {
-        .nickname = _("PLUSES"),
-        .species = SPECIES_PLUSLE,
+        .nickname = _("TOMOE"),
+        .species = SPECIES_ODDEX_TRADE_FORTREE,
         .ivs = {4, 4, 4, 5, 5, 4},
         .abilityNum = 0,
         .otId = 73996,
@@ -998,7 +998,7 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("ROMAN"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_VOLBEAT
+        .requestedSpecies = SPECIES_ODDEX_TRADE_FORTREE_WANT
     },
     [INGAME_TRADE_HORSEA] =
     {
@@ -1220,9 +1220,9 @@ static const u16 sIngameTradeMail[][MAIL_WORDS_COUNT + 1] =
         EC_WORD_BE,
         EC_WORD_NICE,
         EC_WORD_TO,
-        EC_POKEMON(PLUSLE),
+        EC_WORD_IT,
         EC_WORD_EXCL,
-        EC_POKEMON(VOLBEAT),
+        EC_WORD_YOU,
         EC_WORD_WILL,
         EC_WORD_BE,
         EC_WORD_FANTASTIC

@@ -64,7 +64,7 @@ EWRAM_DATA u8 gChainFishingDexNavStreak = 0;
 
 #include "data/wild_encounters.h"
 
-const struct WildPokemon gWildFeebas = {20, 25, SPECIES_FEEBAS};
+const struct WildPokemon gWildFeebas = {20, 25, SPECIES_ODDEX_FISHING_SPOT};
 
 static const u16 sRoute119WaterTileData[] =
 {
