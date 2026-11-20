@@ -12,9 +12,9 @@ NORMAL = {'face': (0.97, 0.95, 0.92), 'lacquer': (0.14, 0.06, 0.05), 'hollow': (
           'crack': (0.10, 0.06, 0.08), 'hair': (0.06, 0.06, 0.08), 'robe': (0.86, 0.87, 0.88),
           'plate': (0.98, 0.98, 0.96), 'pattern': (0.20, 0.36, 0.78), 'stone': (0.52, 0.52, 0.50),
           'stonedark': (0.30, 0.30, 0.30), 'well': (0.04, 0.05, 0.08), 'moss': (0.34, 0.48, 0.28)}
-# Shiny: a drowned blue-grey robe, a deep green-black well, gold-rimmed plates.
-SHINY = {**NORMAL, 'robe': (0.55, 0.66, 0.86), 'pattern': (0.85, 0.65, 0.20), 'stone': (0.36, 0.46, 0.40),
-         'stonedark': (0.18, 0.26, 0.22), 'moss': (0.70, 0.52, 0.20)}
+# Shiny: a drowned blue robe, a sea-green well, gold-rimmed plates (clearly apart from the grey well).
+SHINY = {**NORMAL, 'robe': (0.40, 0.56, 0.92), 'pattern': (0.85, 0.65, 0.20), 'stone': (0.24, 0.50, 0.46),
+         'stonedark': (0.10, 0.28, 0.28), 'moss': (0.80, 0.58, 0.18)}
 
 
 def build(k, c):
