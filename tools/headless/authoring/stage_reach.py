@@ -67,7 +67,7 @@ while q:
             c2, e2, b2 = cell(mm, nx, ny)
         elif not (el == e2 or el in (0, 15) or e2 in (0, 15)):
             continue
-        if (c2 and not is_warp) or any(w in b2 for w in WATER):
+        if (c2 and not is_warp) or is_water(b2):
             continue
         if (nn, nx, ny) not in seen:
             seen.add((nn, nx, ny)); q.append((nn, nx, ny))

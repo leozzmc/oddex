@@ -15,6 +15,10 @@ WAYPOINT = Map:x:y, or grind:Map:x1:y1:x2:y2:LEVEL to walk between two grass til
 reaches LEVEL (stops early when its HP drops below GRIND_MIN_HP percent, default 35, or its
 damaging moves have fewer than 10 PP left, so the caller can heal). Wild battles against an
 opponent whose types hit the lead super-effectively, with no super-effective move back, are fled.
+
+Runaway guards (exit status 3, even with AP_PARTIAL, after printing the reason, the commands so
+far and the last state): more than AP_MAX_STEPS units in total (default 20000), or the same
+command at the same position NO_PROGRESS times in a row outside battle.
 """
 import os, subprocess, sys, tempfile
 from functools import lru_cache
@@ -33,6 +37,13 @@ LOW_PP = 5         # swap slot 1 out before a battle once its PP drops below thi
 MAX_BATTLE_PRESSES = 600  # a battle longer than this is stuck (e.g. slot 1 out of PP mid-battle)
 DIALOG_B = 15      # B presses when a move went nowhere outside battle
 GRIND_MIN_HP = int(os.environ.get("GRIND_MIN_HP", "35"))  # grind pauses below this HP percent
+MAX_STEPS = int(os.environ.get("AP_MAX_STEPS", "20000"))  # units per run; a real route needs far fewer
+NO_PROGRESS = 100  # same command at the same position this many times in a row outside battle
+LOCKED_WAITS = 3   # waits on a grind tile with controls locked before B clears the message
+
+
+class Runaway(SystemExit):
+    """A guard stopped a run that was making no progress."""
 
 
 def run(ss_in, cmds, ss_out):
@@ -376,17 +387,22 @@ def main():
         else:
             goals.append((parts[0], int(parts[1]), int(parts[2])))
     out = []
+    runaway = False
     try:
         walk(goals, ss, prefix, facing, out)
     except SystemExit as e:
-        if not os.environ.get("AP_PARTIAL") or not isinstance(e.code, str):
+        runaway = isinstance(e, Runaway)
+        if not (os.environ.get("AP_PARTIAL") or runaway) or not isinstance(e.code, str):
             raise
         # AP_PARTIAL=1: report what was executed up to the failure, so the caller can continue
-        # from the last state by hand (the commands reproduce it exactly).
+        # from the last state by hand (the commands reproduce it exactly). Runaway guards report
+        # the same way but always fail.
         print(f"# stopped: {e.code}", file=sys.stderr)
     ss, facing = PROGRESS["ss"], PROGRESS["facing"]
     print("\n".join(compress(out)))
     print(f"# end {where(ss)} facing {facing} state {ss}", file=sys.stderr)
+    if runaway:
+        sys.exit(3)
 
 
 PROGRESS = {}
@@ -395,6 +411,7 @@ PROGRESS = {}
 def walk(goals, ss, prefix, facing, out):
     k, stopped, stuck, presses, cooldown = 0, True, False, 0, 0
     blocked_once = {}
+    locked_waits, last_unit, repeats = 0, None, 0
     PROGRESS.update(ss=ss, facing=facing)
     for spec in goals:
         tries = 0
@@ -403,6 +420,7 @@ def walk(goals, ss, prefix, facing, out):
         while True:
             name, x, y, cb = where(ss)
             if grind and cb == "CB2_Overworld" and not stuck and controls_free(ss):
+                locked_waits = 0
                 st = W["state"](ss)
                 lvl = W["read"](st, SYMS["gParties"] + 84, "<B")[0]
                 hp, mhp = W["read"](st, SYMS["gParties"] + 86, "<HH")
@@ -443,11 +461,23 @@ def walk(goals, ss, prefix, facing, out):
                 continue
             elif (name, x, y) == goal and not grind:
                 break
+            elif (name, x, y) == goal and locked_waits >= LOCKED_WAITS:
+                # Grinding, and controls stayed locked: a message (e.g. a Match Call) is open,
+                # which waiting never closes. B advances it and answers NO to prompts.
+                cmds, exp, stopped, locked_waits = [f"repeat {DIALOG_B} press B 2 30"], None, True, 0
             elif (name, x, y) == goal:
                 cmds, exp = ["wait 30"], None  # grinding: wait until controls are free to toggle
+                locked_waits += 1
             else:
                 u = units((name, x, y), goal, facing, stopped)
                 cmds, exp, facing, stopped = u
+            if k >= MAX_STEPS:
+                raise Runaway(f"step limit AP_MAX_STEPS={MAX_STEPS} reached at {where(ss)} ({ss})")
+            unit = ((name, x, y, cb), tuple(cmds))
+            repeats = repeats + 1 if unit == last_unit and cb == "CB2_Overworld" else 0
+            last_unit = unit
+            if repeats >= NO_PROGRESS:
+                raise Runaway(f"no progress: {cmds} repeated {NO_PROGRESS} times at {where(ss)} ({ss})")
             cooldown = max(0, cooldown - 1)
             nxt = f"{prefix}_{k:04d}.ss"
             run(ss, cmds, nxt)

@@ -21,6 +21,11 @@ WATER = ("WATER", "OCEAN", "WATERFALL", "CURRENT")
 _cache = {}
 
 
+def is_water(beh):
+    """Needs Surf. MB_BRIDGE_OVER_OCEAN (Route 110's wooden bridges) is walkable despite its name."""
+    return any(w in beh for w in WATER) and "BRIDGE" not in beh
+
+
 def ts_attr(sym, primary):
     name = re.sub(r"(?<!^)(?=[A-Z])", "_", sym.replace("gTileset_", "")).lower()
     return open(f"{G}/data/tilesets/{'primary' if primary else 'secondary'}/{name}/metatile_attributes.bin", "rb").read()
@@ -127,7 +132,7 @@ def plan(start, goal, grass=False, avoid_sight=False, want_steps=False):
                 col, nel, beh = cell(m, nx, ny)
             elif not (el == nel or el in (0, 15) or nel in (0, 15)):
                 continue
-            if col or any(w in beh for w in WATER):
+            if col or is_water(beh):
                 continue
             c = 1
             if "GRASS" in beh:
