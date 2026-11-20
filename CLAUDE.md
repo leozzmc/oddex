@@ -67,6 +67,15 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 
 問「實際編進 ROM 的是什麼」時用 REA CLI（先 `. tools/env.sh`，否則 `xcrun` 失敗會讓 Ghidra 啟動失敗）；MCP 版 `mcp__rea__*` 拿不到 `DEVELOPER_DIR`，目前不能用。只想看幾個函式時，用 `tools/oddex/ghidra_decompile.sh <函式...>`（約 10 秒）。資料表（`gSpeciesInfo`、文字）要用符號位址去讀 `.gba`。原始碼層面的問題直接讀原始碼。
 
+## 寫程式的原則（ponytail）
+
+使用者要求寫程式時善用 ponytail skill（已裝成使用者層級的外掛 `ponytail@ponytail`；新 session 會自動載入，也可以用 `/ponytail` 叫出）。重點：
+- 先讀任務和它碰到的程式碼，列出改動必須碰到的所有地方（callers、測試、fixtures、設定）。
+- 照順序取第一個能完整解決的選項：這需要存在嗎 → repo 裡已經有的（例如 `species_data.py`、`migration_scope.py`、`png_reader.py`、`maskkit.py`）→ 標準函式庫 → 已安裝的相依套件 → 一行能寫完 → 最後才寫最少的程式碼。
+- 對解法偷懶，對改動本身不偷懶：callers、測試、基準截圖都要一起改完。新的非簡單邏輯要留一個小測試（放在 `tools/oddex/test_*.py`，`check-oddex` 會自動跑）。
+- 知道限制的捷徑要註解成 `shortcut: <限制>, <何時要升級>`。
+- 回報結尾用一兩行寫出「沒做或沒驗證的部分」和使用者需要知道的風險。
+
 ## 團隊與分支
 
 - David：Tech Lead，負責工具鏈、整合、驗收；只有 David 會合併進 `develop`。Mark：角色、圖像、戰鬥（`feat/species`，worktree `~/oddex-wt/mark`）。Sonia：地圖、事件、腳本（`feat/events`，worktree `~/oddex-wt/sonia`）。
