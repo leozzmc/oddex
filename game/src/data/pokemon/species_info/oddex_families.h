@@ -2670,6 +2670,7 @@
         .levelUpLearnset = sGrinvineLevelUpLearnset,
         .teachableLearnset = sGrinvineTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_GRINARBOR}),
     },
 
     [SPECIES_RIDGEFIN] =
@@ -2689,7 +2690,7 @@
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
-        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_RAIN_DISH },
+        .abilities = { ABILITY_LIGHTNING_ROD, ABILITY_NONE, ABILITY_RAIN_DISH },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Ridgefin"),
         .cryId = CRY_NONE,
@@ -2740,6 +2741,7 @@
         .levelUpLearnset = sRidgefinLevelUpLearnset,
         .teachableLearnset = sRidgefinTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_RIDGELOOM}),
     },
 
     [SPECIES_TREKWHEEL] =
@@ -2809,5 +2811,216 @@
         )
         .levelUpLearnset = sTrekwheelLevelUpLearnset,
         .teachableLearnset = sTrekwheelTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_TREKCART}),
+    },
+
+    [SPECIES_GRINARBOR] =
+    {
+        .baseHP        = 80,
+        .baseAttack    = 105,
+        .baseDefense   = 80,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 90,
+        .baseSpDefense = 85,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_DARK),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_PICKPOCKET },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Grinarbor"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_GRINARBOR,
+        .categoryName = _("Face Tree"),
+        .height = 19,
+        .weight = 820,
+        .description = COMPOUND_STRING(
+            "It has grown into a tree whose fruit\n"
+            "are grinning faces. If a traveller\n"
+            "laughs back, the fruit laugh until they\n"
+            "drop from the boughs."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Grinarbor,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Grinarbor,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Grinarbor,
+        .shinyPalette = gMonShinyPalette_Grinarbor,
+        .iconSprite = gMonIcon_Grinarbor,
+        .iconPalIndex = 1,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Grinarbor)
+        OVERWORLD(
+            sPicTable_Grinarbor,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Grinarbor,
+            gShinyOverworldPalette_Grinarbor
+        )
+        .levelUpLearnset = sGrinarborLevelUpLearnset,
+        .teachableLearnset = sGrinarborTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_RIDGELOOM] =
+    {
+        .baseHP        = 90,
+        .baseAttack    = 75,
+        .baseDefense   = 95,
+        .baseSpeed     = 75,
+        .baseSpAttack  = 100,
+        .baseSpDefense = 95,
+        .types = MON_TYPES(TYPE_WATER, TYPE_FLYING),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_SpAttack = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_LIGHTNING_ROD, ABILITY_NONE, ABILITY_RAIN_DISH },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Ridgeloom"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_RIDGELOOM,
+        .categoryName = _("Looming Head"),
+        .height = 21,
+        .weight = 560,
+        .description = COMPOUND_STRING(
+            "A huge head that looms out of storm\n"
+            "clouds over the peaks, its long watery\n"
+            "neck coiled through the rain. Climbers\n"
+            "who meet its eyes lose their way."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Ridgeloom,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPic = gMonBackPic_Ridgeloom,
+        .backPicSize = MON_COORDS_SIZE(48, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Ridgeloom,
+        .shinyPalette = gMonShinyPalette_Ridgeloom,
+        .iconSprite = gMonIcon_Ridgeloom,
+        .iconPalIndex = 4,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Ridgeloom)
+        OVERWORLD(
+            sPicTable_Ridgeloom,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Ridgeloom,
+            gShinyOverworldPalette_Ridgeloom
+        )
+        .levelUpLearnset = sRidgeloomLevelUpLearnset,
+        .teachableLearnset = sRidgeloomTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_TREKCART] =
+    {
+        .baseHP        = 78,
+        .baseAttack    = 105,
+        .baseDefense   = 75,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 72,
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_SpAttack = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_HUMAN_LIKE),
+        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_FLASH_FIRE },
+        .bodyColor = BODY_COLOR_BLACK,
+        .speciesName = _("Trekcart"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_TREKCART,
+        .categoryName = _("Burning Cart"),
+        .height = 16,
+        .weight = 1450,
+        .description = COMPOUND_STRING(
+            "A whole ox-cart now burns around its\n"
+            "head. On moonless nights it rolls down\n"
+            "mountain roads, and anyone who peeks\n"
+            "out at it finds their own house afire."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Trekcart,
+        .frontPicSize = MON_COORDS_SIZE(64, 48),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_H_JUMPS,
+        .backPic = gMonBackPic_Trekcart,
+        .backPicSize = MON_COORDS_SIZE(64, 48),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Trekcart,
+        .shinyPalette = gMonShinyPalette_Trekcart,
+        .iconSprite = gMonIcon_Trekcart,
+        .iconPalIndex = 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Trekcart)
+        OVERWORLD(
+            sPicTable_Trekcart,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Trekcart,
+            gShinyOverworldPalette_Trekcart
+        )
+        .levelUpLearnset = sTrekcartLevelUpLearnset,
+        .teachableLearnset = sTrekcartTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },

@@ -1733,6 +1733,9 @@ enum __attribute__((packed)) Species
     SPECIES_GRINVINE,
     SPECIES_RIDGEFIN,
     SPECIES_TREKWHEEL,
+    SPECIES_GRINARBOR,
+    SPECIES_RIDGELOOM,
+    SPECIES_TREKCART,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

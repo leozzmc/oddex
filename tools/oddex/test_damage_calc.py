@@ -47,6 +47,11 @@ class Formula(unittest.TestCase):
         self.assertEqual(dc.damage(a, volt, 'SPARK', moves), (0, 0))
         self.assertGreater(dc.damage(a, mon(20, ['WATER', 'FLYING']), 'SPARK', moves)[0], 0)
 
+    def test_starter_immunity_ability(self):
+        self.assertEqual(dc.starter_immune({'abilities': ['LIGHTNING_ROD', 'NONE', 'RAIN_DISH']}), ['ELECTRIC'])
+        self.assertEqual(dc.starter_immune({'abilities': ['TORRENT', 'NONE', 'RAIN_DISH']}), [])
+        self.assertEqual(dc.starter_immune({}), [])
+
     def test_skipped_moves(self):
         a, d = mon(16, ['FIGHTING']), mon(16, ['NORMAL'])
         self.assertIsNone(dc.damage(a, d, 'GROWL', MOVES))

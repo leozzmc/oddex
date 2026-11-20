@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["starter"]
 level_band = [2, 8]
-family = ["RIDGECAP", "RIDGEFIN"]
+family = ["RIDGECAP", "RIDGEFIN", "RIDGELOOM"]

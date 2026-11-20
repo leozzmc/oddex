@@ -18,4 +18,6 @@ order = [
     "SUZURAI", "KAGURAI", "RAIJUMEN", "RAIJUOH", "TOROBI", "TOMOEDEN", "SHOJOMAI",
     # Starter line stage 2.
     "GRINVINE", "TREKWHEEL", "RIDGEFIN",
+    # Starter line stage 3.
+    "GRINARBOR", "TREKCART", "RIDGELOOM",
 ]

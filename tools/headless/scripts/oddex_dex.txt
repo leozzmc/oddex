@@ -183,3 +183,15 @@ press A 2 150
 shot dex/254_ridgefin.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/255_grinarbor.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/256_trekcart.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/257_ridgeloom.png
+press B 2 90
+press DOWN 2 20

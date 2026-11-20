@@ -17,7 +17,7 @@ egg_groups = ["HUMAN_LIKE"]
 growth_rate = "MEDIUM_SLOW"
 body_color = "GREEN"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 36, into = "GRINARBOR" }]   # [{ method, param, into }]
 
 [dex]
 height = 10
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["evolution"]
 level_band = [16, 36]
-family = ["GRINPACK", "GRINVINE"]
+family = ["GRINPACK", "GRINVINE", "GRINARBOR"]

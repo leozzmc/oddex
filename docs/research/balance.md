@@ -41,6 +41,12 @@
 | Torobi | Bug/Electric | 1 | 400 | MauvilleGym Lv18–22 | Illumise 430 (-7%); Volbeat 430 (-7%) |
 | Tomoeden | Electric/Psychic | 1 | 405 | Route110 Lv12–16 | Plusle 405 (+0%); Minun 405 (+0%) |
 | Shojomai | Water/Fairy | 2 | 340 | Route110, evolution Lv14–30 | Lombre 340 (+0%) |
+| Grinvine | Grass/Dark | 2 | 405 | evolution Lv16–36 | Grovyle 405 (+0%) |
+| Trekwheel | Fire/Steel | 2 | 405 | evolution Lv16–36 | Combusken 405 (+0%) |
+| Ridgefin | Water/Flying | 2 | 405 | evolution Lv16–36 | Marshtomp 405 (+0%) |
+| Grinarbor | Grass/Dark | 3 | 530 | evolution Lv36–100 | Sceptile 530 (+0%) |
+| Trekcart | Fire/Steel | 3 | 530 | evolution Lv36–100 | Blaziken 530 (+0%) |
+| Ridgeloom | Water/Flying | 3 | 530 | evolution Lv36–100 | Swampert 535 (-1%) |
 
 ## 被標記的角色(8 隻)
 
@@ -182,7 +188,9 @@
 - 原版對照:Treecko Lv16、Mudkip Lv15,Torchic 在 Lv20 以內打不過。
 - 結論:Roxanne 不需要調整。Sonia 之前量到的 Lv22,是因為 autopilot 固定用 Leafage(物理招)去打防禦 135 的 Iwadawn。改用 Mega Drain(特殊招,2 倍)就打得過,autopilot 已經改成依照攻防選招了。
 
-## Wattson 戰的選項(2026-11-20,Mark;用數據比較,只是分析,數值都還沒改)
+## Wattson 戰的選項(2026-11-20,Mark)
+
+**決定(2026-11-20,使用者)**:採用 (F),特性用 Lightning Rod(Ridgefin 和 Ridgeloom;Ridgecap 保留 Torrent),Ridgefin 在 Lv18 學 Mud Shot(取代 Air Cutter)。`damage_calc.py` 現在會讀御三家第 1 格的免疫特性,不用 `--set` 直接重算:Grinvine Lv24、Trekwheel Lv27、Ridgefin Lv20。第 3 階段維持水/飛行。
 
 ### 怎麼算的
 - 方法和 Brawly 那段一樣:一對一、我方最低亂數、對手最高亂數,用 `tools/oddex/damage_calc.py`。

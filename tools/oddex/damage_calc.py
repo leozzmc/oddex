@@ -8,7 +8,7 @@ Usage (repository root):
 Reads the trainer's party (game/src/data/trainers.party), species stats, types, weight and
 level-up learnsets (content/species/*.toml), and move power/type/category/effect
 (game/src/data/moves_info.h; `UPDATED >= GEN_n ? new : old` counts as the new value). Damage is
-the Gen 5+ formula without critical hits, abilities, items, weather or stat stages:
+the Gen 5+ formula without critical hits, abilities (except a starter's type-immunity ability), items, weather or stat stages:
   floor(floor(floor(2L/5 + 2) * P * A / D) / 50) + 2, then x random 0.85..1.00, STAB 1.5, type.
 Stats use neutral natures and no EVs; the player's IVs are 15, the trainer's come from the party.
 Special effects handled: fixed level damage (Seismic Toss), Low Kick (target weight), multi-hit
@@ -111,11 +111,13 @@ def load_vanilla_species():
                 v = newer(defines.get(v, v))
                 st[k] = int(v) if v.isdigit() else None
             ty = re.search(r'\.types\s*=\s*MON_TYPES\(([^)]*)\)', body)
+            ab = re.search(r'\.abilities\s*=\s*\{([^}]*)\}', body)
             wt = re.search(r'\.weight\s*=\s*(\d+)', body)
             ls = re.search(r'\.levelUpLearnset\s*=\s*s(\w+)LevelUpLearnset', body)
             if None in st.values() or not ty:
                 continue
             out[name] = {'id': name, 'base_stats': st, 'types': [x.strip().replace('TYPE_', '') for x in ty.group(1).split(',')],
+                         'abilities': [x.strip().replace('ABILITY_', '') for x in ab.group(1).split(',')] if ab else [],
                          'dex': {'weight': int(wt.group(1)) if wt else 100},
                          'learnset': {'level': learn.get(ls.group(1), []) if ls else []}}
     return out
@@ -209,6 +211,18 @@ def best(attacker, defender, move_list, moves):
     return top
 
 
+# Abilities that make the holder immune to a type. Only the starters' slot-1 ability is applied
+# (the player's starter); the trainers' abilities are still not modelled.
+IMMUNE_ABILITIES = {'LIGHTNING_ROD': 'ELECTRIC', 'VOLT_ABSORB': 'ELECTRIC', 'MOTOR_DRIVE': 'ELECTRIC',
+                    'WATER_ABSORB': 'WATER', 'STORM_DRAIN': 'WATER', 'DRY_SKIN': 'WATER', 'FLASH_FIRE': 'FIRE',
+                    'LEVITATE': 'GROUND', 'SAP_SIPPER': 'GRASS'}
+
+
+def starter_immune(sp):
+    ab = (sp.get('abilities') or ['NONE'])[0]
+    return [IMMUNE_ABILITIES[ab]] if ab in IMMUNE_ABILITIES else []
+
+
 def mon(species, sid, level, iv, overrides):
     sp = species[sid]
     m = {'id': sid, 'level': overrides.get(sid, {}).get('level', level),
@@ -236,7 +250,9 @@ def run(trainer, levels, overrides, drops, extra, moves, species, starters=START
     for sid in starters:
         for lv in levels:
             # A starter's level is the loop variable, but types and immune overrides apply to it too.
-            me = mon(species, sid, lv, 15, {sid: {k: v for k, v in overrides.get(sid, {}).items() if k in ('types', 'immune')}})
+            own = {'immune': starter_immune(species[sid])}
+            own.update({k: v for k, v in overrides.get(sid, {}).items() if k in ('types', 'immune')})
+            me = mon(species, sid, lv, 15, {sid: own})
             my_moves = learned(species[sid], lv, extra)
             for p in party:
                 foe = mon(species, p['species'], p['level'], p['iv'], overrides)

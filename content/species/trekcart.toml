@@ -1,0 +1,54 @@
+# Starter line, stage 3 (docs/research/friends-designs.md): replaces Blaziken.
+# The sprites are likenesses built by tools/oddex/likeness/compose.py (sources stay outside the repo).
+
+id = "TREKCART"
+name = "Trekcart"
+category = "Burning Cart"
+
+types = ["FIRE", "STEEL"]
+abilities = ["BLAZE", "NONE", "FLASH_FIRE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 78, atk = 105, def = 75, spa = 110, spd = 72, spe = 90 }   # total 530
+ev_yield = { spa = 3 }
+catch_rate = 45
+exp_yield = 265
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "BLACK"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 16
+weight = 1450
+text = """
+A whole ox-cart now burns around its
+head. On moonless nights it rolls down
+mountain roads, and anyone who peeks
+out at it finds their own house afire."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "FIRE_LASH"], [1, "FIRE_FANG"], [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "METAL_CLAW"], [9, "FLAME_CHARGE"], [12, "IRON_DEFENSE"], [15, "FLAME_WHEEL"], [15, "AERIAL_ACE"], [18, "IRON_HEAD"], [21, "FLAMETHROWER"], [24, "FLASH_CANNON"], [27, "OVERHEAT"], [30, "HEAVY_SLAM"], [36, "FLARE_BLITZ"], [42, "SHIFT_GEAR"],
+]
+teachable = [
+    "ATTRACT", "BRICK_BREAK", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "IRON_TAIL", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/trekcart"   # built by tools/oddex/likeness/compose.py
+front_anim = "H_JUMPS"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [36, 100]
+family = ["TREKKEYE", "TREKWHEEL", "TREKCART"]
