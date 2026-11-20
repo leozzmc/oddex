@@ -235,6 +235,33 @@ def validate(all_species, roles, regional, idents, existing=None):
         raise SpeciesError('\n'.join(errors))
 
 
+def warnings(all_species, regional):
+    """Data that builds but is probably a mistake. Returns messages; main() prints them."""
+    out = []
+    by_id = {s['id']: s for s in all_species}
+    parent = {e['into']: s['id'] for s in all_species for e in s.get('evolutions', []) if e['into'] in by_id}
+    for sid, pid in parent.items():
+        s = by_id[sid]
+        levels = s['learnset']['level']
+        if any(lv == 0 for lv, _ in levels):
+            continue
+        # Level 1 moves are only taught on evolution with P_EVOLUTION_LEVEL_1_LEARN (Gen 8+, off
+        # here), so a level 1 move the previous stage never learns is reachable only by relearning.
+        known = {m for _, m in by_id[pid]['learnset']['level']}
+        new = [m for lv, m in levels if lv == 1 and m not in known]
+        if new:
+            out.append(f'{s["_file"]}: evolves from {pid} but its new level 1 moves ({", ".join(new)}) '
+                       'are not taught on evolution; write the evolution move as level 0')
+    # Each evolution line together and in stage order in the regional Pokedex.
+    rel = REGIONAL_DEX.relative_to(ROOT)
+    for sid, pid in parent.items():
+        if sid in regional and pid in regional and regional.index(sid) != regional.index(pid) + 1:
+            siblings = [e['into'] for e in by_id[pid].get('evolutions', [])]
+            if len(siblings) == 1:   # branched lines (two evolutions) cannot all follow their parent
+                out.append(f'{rel}: {sid} should come right after {pid}, its previous stage')
+    return out
+
+
 def fill_region(text, name, body):
     """Replace the lines between '// oddex:<name> begin' and '// oddex:<name> end'."""
     pattern = re.compile(rf'(^[ \t]*// oddex:{name} begin[^\n]*\n)(.*?)(^[ \t]*// oddex:{name} end)', re.M | re.S)
@@ -540,6 +567,8 @@ def main():
         validate(all_species, roles, regional, known_identifiers())
     except SpeciesError as e:
         sys.exit(f'gen_species: invalid species data:\n{e}')
+    for w in warnings(all_species, regional):
+        print(f'gen_species: warning: {w}', file=sys.stderr)
 
     learnables = GAME / 'src/data/pokemon/all_learnables.json'
     species_h = GAME / 'include/constants/species.h'
