@@ -1,0 +1,53 @@
+# Stage 2 of Shachound (docs/research/mask-designs.md): replaces Mightyena.
+
+id = "SHACHOWL"
+name = "Shachowl"
+category = "Hound Mask"
+
+types = ["DARK", "PSYCHIC"]
+abilities = ["RUN_AWAY", "QUICK_FEET", "STRONG_JAW"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 90, def = 60, spa = 70, spd = 60, spe = 70 }   # total 420
+ev_yield = { atk = 2 }
+catch_rate = 127
+exp_yield = 147
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "BLACK"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 370
+text = """
+A third eye opened on its mask when a
+song calmed it. It still runs down its
+quarry, but stops to listen whenever
+the prayer flags on its back flutter."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "PSYCHO_CUT"], [1, "TACKLE"], [4, "HOWL"], [7, "SAND_ATTACK"], [10, "BITE"], [13, "CONFUSION"], [16, "SNARL"], [19, "PSYBEAM"], [22, "CRUNCH"], [26, "ZEN_HEADBUTT"], [30, "SUCKER_PUNCH"], [34, "PSYCHIC_FANGS"],
+]
+teachable = [
+    "ATTRACT", "CALM_MIND", "CRUNCH", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNARL", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shachowl"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "FAST"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [18, 35]
+family = ["SHACHOUND", "SHACHOWL"]

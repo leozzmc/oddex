@@ -1,0 +1,53 @@
+# Stage 2 of Kyokon (docs/research/mask-designs.md): replaces Linoone.
+
+id = "KYOZOSU"
+name = "Kyozosu"
+category = "Fox Priest"
+
+types = ["NORMAL", "GHOST"]
+abilities = ["PICKUP", "NONE", "FRISK"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 78, atk = 60, def = 61, spa = 60, spd = 61, spe = 100 }   # total 420
+ev_yield = { spe = 2 }
+catch_rate = 90
+exp_yield = 147
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 5
+weight = 325
+text = """
+An old fox that goes about dressed as a
+priest, preaching against traps. Its
+second tail always slips out from under
+the robe when it smells bait."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "SLASH"], [1, "TACKLE"], [1, "GROWL"], [3, "ASTONISH"], [6, "TAIL_WHIP"], [9, "QUICK_ATTACK"], [12, "LICK"], [15, "FEINT_ATTACK"], [18, "SHADOW_SNEAK"], [21, "DOUBLE_EDGE"], [25, "SHADOW_CLAW"], [29, "FAKE_TEARS"], [33, "HEX"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "CALM_MIND", "DIG", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kyozosu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NORMAL"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [20, 35]
+family = ["KYOKON", "KYOZOSU"]

@@ -1,0 +1,53 @@
+# Stage 3 of Bekurama (docs/research/mask-designs.md): replaces Shiftry. Evolves from Karabeki with a Leaf Stone.
+
+id = "DAIBEKI"
+name = "Daibeki"
+category = "Great Tengu"
+
+types = ["GRASS", "STEEL"]
+abilities = ["CHLOROPHYLL", "EARLY_BIRD", "HEAVY_METAL"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 90, atk = 100, def = 70, spa = 80, spd = 60, spe = 80 }   # total 480
+ev_yield = { atk = 3 }
+catch_rate = 45
+exp_yield = 240
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD", "GRASS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 13
+weight = 596
+text = """
+A great tengu of the cedar peaks. One
+sweep of its feathered fan raises a gale,
+and it still teaches swordplay to those
+brave enough to climb up to it."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "AIR_SLASH"], [1, "RAZOR_LEAF"], [1, "TACKLE"], [1, "HARDEN"], [3, "ABSORB"], [7, "GROWTH"], [11, "METAL_CLAW"], [15, "MAGICAL_LEAF"], [19, "IRON_DEFENSE"], [23, "FLASH_CANNON"], [27, "LEAF_BLADE"], [31, "IRON_HEAD"], [35, "SWORDS_DANCE"], [40, "LEAF_STORM"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH_CANNON", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/daibeki"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [30, 100]
+family = ["BEKURAMA", "KARABEKI", "DAIBEKI"]

@@ -17,7 +17,7 @@ egg_groups = ["FIELD"]
 growth_rate = "MEDIUM_FAST"
 body_color = "BLACK"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 18, into = "SHACHOWL" }]   # [{ method, param, into }]
 
 [dex]
 height = 5
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route101", "Route102", "Route103"]
 level_band = [2, 8]
-family = ["SHACHOUND"]
+family = ["SHACHOUND", "SHACHOWL"]

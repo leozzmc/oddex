@@ -1736,6 +1736,11 @@ enum __attribute__((packed)) Species
     SPECIES_GRINARBOR,
     SPECIES_RIDGELOOM,
     SPECIES_TREKCART,
+    SPECIES_KARABEKI,
+    SPECIES_KYOZOSU,
+    SPECIES_SHACHOWL,
+    SPECIES_UTOMAW,
+    SPECIES_DAIBEKI,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

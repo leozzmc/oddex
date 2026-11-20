@@ -139,6 +139,7 @@
         .levelUpLearnset = sBekuramaLevelUpLearnset,
         .teachableLearnset = sBekuramaTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 14, SPECIES_KARABEKI}),
     },
 
     [SPECIES_SHAWABOLT] =
@@ -490,6 +491,7 @@
         .levelUpLearnset = sUtoghastLevelUpLearnset,
         .teachableLearnset = sUtoghastTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 25, SPECIES_UTOMAW}),
     },
 
     [SPECIES_SHOJOBOB] =
@@ -701,6 +703,7 @@
         .levelUpLearnset = sKyokonLevelUpLearnset,
         .teachableLearnset = sKyokonTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 20, SPECIES_KYOZOSU}),
     },
 
     [SPECIES_SHACHOUND] =
@@ -771,6 +774,7 @@
         .levelUpLearnset = sShachoundLevelUpLearnset,
         .teachableLearnset = sShachoundTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 18, SPECIES_SHACHOWL}),
     },
 
     [SPECIES_USOBUZZ] =
@@ -3022,5 +3026,356 @@
         )
         .levelUpLearnset = sTrekcartLevelUpLearnset,
         .teachableLearnset = sTrekcartTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_KARABEKI] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 70,
+        .baseDefense   = 55,
+        .baseSpeed     = 55,
+        .baseSpAttack  = 55,
+        .baseSpDefense = 40,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_STEEL),
+        .catchRate = 120,
+        .expYield = 119,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_GRASS),
+        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_EARLY_BIRD, ABILITY_HEAVY_METAL },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Karabeki"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_KARABEKI,
+        .categoryName = _("Crow Tengu"),
+        .height = 10,
+        .weight = 280,
+        .description = COMPOUND_STRING(
+            "The tengu mask has grown a crow's beak\n"
+            "and black wings. It drills travellers in\n"
+            "swordplay on mountain paths, and still\n"
+            "never opens its clamped lips to speak."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Karabeki,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Karabeki,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Karabeki,
+        .shinyPalette = gMonShinyPalette_Karabeki,
+        .iconSprite = gMonIcon_Karabeki,
+        .iconPalIndex = 4,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Karabeki)
+        OVERWORLD(
+            sPicTable_Karabeki,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Karabeki,
+            gShinyOverworldPalette_Karabeki
+        )
+        .levelUpLearnset = sKarabekiLevelUpLearnset,
+        .teachableLearnset = sKarabekiTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_DAIBEKI}),
+    },
+
+    [SPECIES_KYOZOSU] =
+    {
+        .baseHP        = 78,
+        .baseAttack    = 60,
+        .baseDefense   = 61,
+        .baseSpeed     = 100,
+        .baseSpAttack  = 60,
+        .baseSpDefense = 61,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GHOST),
+        .catchRate = 90,
+        .expYield = 147,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_PICKUP, ABILITY_NONE, ABILITY_FRISK },
+        .bodyColor = BODY_COLOR_WHITE,
+        .speciesName = _("Kyozosu"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_KYOZOSU,
+        .categoryName = _("Fox Priest"),
+        .height = 5,
+        .weight = 325,
+        .description = COMPOUND_STRING(
+            "An old fox that goes about dressed as a\n"
+            "priest, preaching against traps. Its\n"
+            "second tail always slips out from under\n"
+            "the robe when it smells bait."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Kyozosu,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Kyozosu,
+        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Kyozosu,
+        .shinyPalette = gMonShinyPalette_Kyozosu,
+        .iconSprite = gMonIcon_Kyozosu,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Kyozosu)
+        OVERWORLD(
+            sPicTable_Kyozosu,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Kyozosu,
+            gShinyOverworldPalette_Kyozosu
+        )
+        .levelUpLearnset = sKyozosuLevelUpLearnset,
+        .teachableLearnset = sKyozosuTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_SHACHOWL] =
+    {
+        .baseHP        = 70,
+        .baseAttack    = 90,
+        .baseDefense   = 60,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 60,
+        .types = MON_TYPES(TYPE_DARK, TYPE_PSYCHIC),
+        .catchRate = 127,
+        .expYield = 147,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_STRONG_JAW },
+        .bodyColor = BODY_COLOR_BLACK,
+        .speciesName = _("Shachowl"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_SHACHOWL,
+        .categoryName = _("Hound Mask"),
+        .height = 10,
+        .weight = 370,
+        .description = COMPOUND_STRING(
+            "A third eye opened on its mask when a\n"
+            "song calmed it. It still runs down its\n"
+            "quarry, but stops to listen whenever\n"
+            "the prayer flags on its back flutter."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Shachowl,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Shachowl,
+        .backPicSize = MON_COORDS_SIZE(48, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Shachowl,
+        .shinyPalette = gMonShinyPalette_Shachowl,
+        .iconSprite = gMonIcon_Shachowl,
+        .iconPalIndex = 4,
+        .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Shachowl)
+        OVERWORLD(
+            sPicTable_Shachowl,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Shachowl,
+            gShinyOverworldPalette_Shachowl
+        )
+        .levelUpLearnset = sShachowlLevelUpLearnset,
+        .teachableLearnset = sShachowlTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_UTOMAW] =
+    {
+        .baseHP        = 60,
+        .baseAttack    = 45,
+        .baseDefense   = 80,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 95,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_FLYING, TYPE_GHOST),
+        .catchRate = 45,
+        .expYield = 154,
+        .evYield_SpAttack = 2,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FLYING, EGG_GROUP_AMORPHOUS),
+        .abilities = { ABILITY_KEEN_EYE, ABILITY_NONE, ABILITY_CURSED_BODY },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Utomaw"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_UTOMAW,
+        .categoryName = _("Hell Bird"),
+        .height = 12,
+        .weight = 280,
+        .description = COMPOUND_STRING(
+            "The seabird the hunter killed, grown\n"
+            "huge in the other world. It carries his\n"
+            "gaunt mask in its beak over the waves,\n"
+            "and never quite lets him go."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Utomaw,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Utomaw,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Utomaw,
+        .shinyPalette = gMonShinyPalette_Utomaw,
+        .iconSprite = gMonIcon_Utomaw,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NORMAL,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Utomaw)
+        OVERWORLD(
+            sPicTable_Utomaw,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Utomaw,
+            gShinyOverworldPalette_Utomaw
+        )
+        .levelUpLearnset = sUtomawLevelUpLearnset,
+        .teachableLearnset = sUtomawTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_DAIBEKI] =
+    {
+        .baseHP        = 90,
+        .baseAttack    = 100,
+        .baseDefense   = 70,
+        .baseSpeed     = 80,
+        .baseSpAttack  = 80,
+        .baseSpDefense = 60,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_STEEL),
+        .catchRate = 45,
+        .expYield = 240,
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD, EGG_GROUP_GRASS),
+        .abilities = { ABILITY_CHLOROPHYLL, ABILITY_EARLY_BIRD, ABILITY_HEAVY_METAL },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Daibeki"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_DAIBEKI,
+        .categoryName = _("Great Tengu"),
+        .height = 13,
+        .weight = 596,
+        .description = COMPOUND_STRING(
+            "A great tengu of the cedar peaks. One\n"
+            "sweep of its feathered fan raises a gale,\n"
+            "and it still teaches swordplay to those\n"
+            "brave enough to climb up to it."),
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Daibeki,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Daibeki,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Daibeki,
+        .shinyPalette = gMonShinyPalette_Daibeki,
+        .iconSprite = gMonIcon_Daibeki,
+        .iconPalIndex = 5,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 4, SHADOW_SIZE_M)
+        FOOTPRINT(Daibeki)
+        OVERWORLD(
+            sPicTable_Daibeki,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Daibeki,
+            gShinyOverworldPalette_Daibeki
+        )
+        .levelUpLearnset = sDaibekiLevelUpLearnset,
+        .teachableLearnset = sDaibekiTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },

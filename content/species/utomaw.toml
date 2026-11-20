@@ -1,0 +1,53 @@
+# Stage 2 of Utoghast (docs/research/mask-designs.md): replaces Pelipper.
+
+id = "UTOMAW"
+name = "Utomaw"
+category = "Hell Bird"
+
+types = ["FLYING", "GHOST"]
+abilities = ["KEEN_EYE", "NONE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 45, def = 80, spa = 95, spd = 70, spe = 90 }   # total 440
+ev_yield = { spa = 2 }
+catch_rate = 45
+exp_yield = 154
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FLYING", "AMORPHOUS"]
+growth_rate = "MEDIUM_FAST"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 12
+weight = 280
+text = """
+The seabird the hunter killed, grown
+huge in the other world. It carries his
+gaunt mask in its beak over the waves,
+and never quite lets him go."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "STOCKPILE"], [1, "SWALLOW"], [1, "SPIT_UP"], [1, "GROWL"], [1, "ASTONISH"], [5, "GUST"], [9, "QUICK_ATTACK"], [13, "NIGHT_SHADE"], [17, "WING_ATTACK"], [21, "SHADOW_SNEAK"], [25, "AERIAL_ACE"], [29, "HEX"], [33, "AIR_SLASH"], [38, "HURRICANE"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "ENDURE", "FACADE", "FLY", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/utomaw"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NORMAL"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [25, 45]
+family = ["UTOGHAST", "UTOMAW"]
