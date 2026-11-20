@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "THUNDER_SHOCK"], [1, "GROWL"], [4, "LEAFAGE"], [8, "QUICK_ATTACK"], [12, "ELECTRO_BALL"], [16, "MAGICAL_LEAF"], [20, "SPARK"], [24, "GRASS_KNOT"], [28, "THUNDERBOLT"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF (Pikachu's Surf is an event move, not the house pet's).
 teachable = [
-    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
+    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
 ]
 egg = []
 

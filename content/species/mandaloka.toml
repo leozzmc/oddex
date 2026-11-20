@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "POUND"], [1, "GROWL"], [1, "SAND_ATTACK"], [0, "EMBER"], [8, "RAPID_SPIN"], [12, "MUD_SHOT"], [16, "ROUND"], [20, "BULLDOZE"], [26, "HYPER_VOICE"], [32, "EARTH_POWER"], [38, "FIRE_SPIN"], [44, "LAVA_PLUME"], [50, "BOOMBURST"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF (a fire mandala does not swim; Slaking and Exploud could).
 teachable = [
-    "ATTRACT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "FIRE_BLAST", "FLAMETHROWER", "SANDSTORM", "SUNNY_DAY", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+    "ATTRACT", "CUT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
 ]
 egg = []
 

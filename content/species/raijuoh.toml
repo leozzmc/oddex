@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "TACKLE"], [1, "THUNDER_WAVE"], [1, "LEER"], [8, "BITE"], [12, "SHOCK_WAVE"], [16, "THUNDER_FANG"], [20, "HOWL"], [24, "CRUNCH"], [26, "WILD_CHARGE"], [30, "DISCHARGE"], [36, "DARK_PULSE"], [42, "THUNDER"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no DIVE, SURF, WATERFALL (Sharpedo maps here only as a placeholder for an unreachable Super Rod slot; a thunder beast does not swim).
 teachable = [
-    "CRUNCH", "DARK_PULSE", "DIG", "SHOCK_WAVE", "THUNDERBOLT", "THUNDER_WAVE", "THUNDER", "ATTRACT", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+    "ATTRACT", "CRUNCH", "DARK_PULSE", "DIG", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
 ]
 egg = []
 

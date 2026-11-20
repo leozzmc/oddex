@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [0, "ARM_THRUST"], [1, "TACKLE"], [1, "HARDEN"], [1, "LEECH_LIFE"], [12, "BUG_BITE"], [15, "BULK_UP"], [18, "VITAL_THROW"], [22, "SILVER_WIND"], [26, "BRICK_BREAK"], [30, "X_SCISSOR"], [34, "SUPERPOWER"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF (a mosquito does not swim; Surf came in with Hariyama's list, not from Beautifly or Dustox).
 teachable = [
-    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "BULK_UP", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "THIEF", "TOXIC",
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "BULK_UP", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
 ]
 egg = []
 

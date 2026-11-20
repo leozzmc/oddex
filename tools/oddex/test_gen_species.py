@@ -31,5 +31,14 @@ class Warnings(unittest.TestCase):
         self.assertIn('B should come right after A', apart[0])
 
 
+class Hms(unittest.TestCase):
+    def test_unlearnable_hms(self):
+        species = [{'learnset': {'teachable': ['CUT', 'SURF']}}, {'learnset': {}}]
+        self.assertEqual(gs.unlearnable_hms(species, ['CUT', 'SURF', 'DIVE']), ['DIVE'])
+
+    def test_game_hm_list(self):   # reads FOREACH_HM from the game's tms_hms.h
+        self.assertEqual(gs.unlearnable_hms([], None)[:2], ['CUT', 'FLY'])
+
+
 if __name__ == '__main__':
     unittest.main()

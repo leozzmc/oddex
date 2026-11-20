@@ -231,8 +231,19 @@ def validate(all_species, roles, regional, idents, existing=None):
         if target not in ids and f'SPECIES_{target}' not in idents:
             errors.append(f'{ROLES.relative_to(ROOT)}: role {role} points to unknown species '
                           f'{target}{old_name_hint(target, renamed)}')
+    errors += [f'no original species can learn HM {m} (story progress needs one; add it to a '
+               'teachable list, following the vanilla species replaced)' for m in unlearnable_hms(all_species)]
     if errors:
         raise SpeciesError('\n'.join(errors))
+
+
+def unlearnable_hms(all_species, hms=None):
+    """HMs (FOREACH_HM in tms_hms.h) that no original species has in its teachable list."""
+    if hms is None:
+        text = (GAME / 'include/constants/tms_hms.h').read_text()
+        hms = re.findall(r'F\((\w+)\)', re.search(r'#define FOREACH_HM\(F\)(.*?)\n\n', text, re.S).group(1))
+    learnable = {m for s in all_species for m in s['learnset'].get('teachable', [])}
+    return [m for m in hms if m not in learnable]
 
 
 def warnings(all_species, regional):

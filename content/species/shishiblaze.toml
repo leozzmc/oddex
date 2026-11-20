@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "SCRATCH"], [1, "GROWL"], [3, "EMBER"], [6, "LOW_KICK"], [9, "BITE"], [12, "FLAME_WHEEL"], [15, "KARATE_CHOP"], [18, "BULK_UP"], [21, "FLAMETHROWER"], [24, "DRAIN_PUNCH"], [27, "OVERHEAT"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF (Makuhita's Surf does not suit a fire lion mask).
 teachable = [
-    "AERIAL_ACE", "ATTRACT", "BRICK_BREAK", "BULK_UP", "CRUNCH", "DIG", "DRAIN_PUNCH", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+    "AERIAL_ACE", "ATTRACT", "BRICK_BREAK", "BULK_UP", "CRUNCH", "DIG", "DRAIN_PUNCH", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "OVERHEAT", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
 ]
 egg = []
 
