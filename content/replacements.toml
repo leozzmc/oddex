@@ -15,6 +15,13 @@
 stage_mismatch_ok = [
     "MARILL",    # Route 104 wild; Azurill (its stage 1) is never met in the Rustboro segment
     "PIKACHU",   # only the Rustboro house pet (role RUSTBORO_PET); Pichu never appears
+    # Lavaridge segment (mask-designs.md, "Lavaridge 段"):
+    "NINJASK",   # stage 2 onto stage-1 Torobi; Nincada never appears in the segment
+    "ROSELIA",   # stage 2 (after Budew) onto single-stage Higanmen; Budew never appears
+    "ZANGOOSE",  # single-stage, strong (458): onto stage-2 Kyozosu (420), one trainer only
+    "KECLEON",   # single-stage (440): onto stage-2 Kyozosu, the fox in disguise for the camouflager
+    "SKARMORY",  # single-stage, strong (465): onto stage-3 Daibeki (480), the steel great tengu
+    "AZUMARILL", # stage 3, graphics only (Route 117 day care yard); Magatide as for Marill
 ]
 
 [replace]
@@ -108,3 +115,34 @@ GULPIN = "KUMOZUKA"     # poison, 266 vs 302
 CARVANHA = "KAMORAI"    # water, 310 vs 305 (Team Aqua at the museum)
 GOLDEEN = "KAMORAI"     # water, 310 vs 320
 AZURILL = "SHOJOBOB"    # baby stage; 220 vs 190 is +16%, accepted for a deliberately weak baby
+# Lavaridge segment (after Wattson -> Lavaridge, up to Flannery; mask-designs.md "Lavaridge 段").
+# New species: the Numel line, the fishing catfish, Seviper, Roselia and the Usobuzz line's stage 3.
+NUMEL = "HIFUKKO"
+CAMERUPT = "KAMADORO"
+BARBOACH = "NAMAZURA"
+CORPHISH = "NAMAZURA"   # the same fishing slot; Kamorai already covers three water species
+SEVIPER = "JATAI"
+ROSELIA = "HIGANMEN"
+BEAUTIFLY = "YOKOZUNAT"   # Tsunacoon's stage 3 (Lv10); both cocoon branches end in it
+DUSTOX = "YOKOZUNAT"
+# Existing species (same stage and a shared type where possible; the user accepted the four
+# that are more than 15% below the vanilla total: Spinda, Solrock, Grimer, Koffing).
+SPINDA = "MANDALUMB"     # normal, 360 -> 280 (-22%); it spins like the mandala
+TRAPINCH = "MANDALUMB"   # ground; the sand pit and the sand mandala
+SANDSHREW = "YAMAMBRR"   # ground
+SWABLU = "UTOGHAST"      # flying
+DODUO = "KARUVAJRA"      # flying
+SPOINK = "GACHIRINZA"    # psychic
+BALTOY = "GACHIRINZA"    # psychic
+WYNAUT = "GACHIRINZA"    # psychic; the Lavaridge egg is role EGG_GIFT
+SOLROCK = "IWADAWN"      # rock, 460 -> 375 (-18%); the sun disc of the rock door
+GRIMER = "KUMOZUKA"      # poison, 325 -> 266 (-18%)
+KOFFING = "KUMOZUKA"     # poison, 340 -> 266 (-22%)
+GRAVELER = "MANDARING"   # stage 2, ground (Geodude is in the segment, so not stage-1 Komarock)
+SWELLOW = "UTOMAW"       # stage 2, flying
+SHARPEDO = "RAIJUOH"     # stage 2, dark; the Super Rod slot of Route 118's fishing table
+NINJASK = "TOROBI"
+ZANGOOSE = "KYOZOSU"
+KECLEON = "KYOZOSU"
+SKARMORY = "DAIBEKI"
+AZUMARILL = "MAGATIDE"

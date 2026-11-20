@@ -1,0 +1,54 @@
+# Lavaridge segment (docs/research/mask-designs.md, "Lavaridge 段"): replaces Roselia (Aroma Ladies; Budew never appears).
+# Stats follow the vanilla species it replaces (same total); moves are provisional.
+
+id = "HIGANMEN"
+name = "Higanmen"
+category = "Grave Lily"
+
+types = ["GRASS", "POISON"]
+abilities = ["NATURAL_CURE", "POISON_POINT", "LEAF_GUARD"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 50, atk = 60, def = 45, spa = 100, spd = 80, spe = 65 }   # total 400
+ev_yield = { spa = 2 }
+catch_rate = 150
+exp_yield = 140
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FAIRY", "GRASS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 25
+text = """
+A spider lily by the graves with a calm
+woman's face at its heart. It blooms only
+around the equinox, with no leaves at
+all. Its roots are poisonous."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "POISON_STING"], [1, "POISON_STING"], [1, "ABSORB"], [1, "GROWTH"], [1, "STUN_SPORE"], [1, "WORRY_SEED"], [5, "MEGA_DRAIN"], [10, "LEECH_SEED"], [15, "MAGICAL_LEAF"], [20, "TOXIC_SPIKES"], [25, "SWEET_SCENT"], [30, "GIGA_DRAIN"], [35, "SYNTHESIS"], [40, "TOXIC"], [45, "PETAL_BLIZZARD"], [50, "AROMATHERAPY"], [55, "INGRAIN"], [60, "PETAL_DANCE"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "BULLET_SEED", "ENDURE", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/higanmen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route117"]
+level_band = [20, 30]
+family = ["HIGANMEN"]

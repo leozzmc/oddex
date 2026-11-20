@@ -1,0 +1,54 @@
+# Lavaridge segment (docs/research/mask-designs.md, "Lavaridge 段"): replaces Seviper (Route 114).
+# Stats follow the vanilla species it replaces (same total); moves are provisional.
+
+id = "JATAI"
+name = "Jatai"
+category = "Sash Snake"
+
+types = ["POISON", "GHOST"]
+abilities = ["SHED_SKIN", "NONE", "INFILTRATOR"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 73, atk = 100, def = 60, spa = 100, spd = 60, spe = 65 }   # total 458
+ev_yield = { atk = 1, spa = 1 }
+catch_rate = 90
+exp_yield = 160
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD", "AMORPHOUS"]
+growth_rate = "FLUCTUATING"
+body_color = "PURPLE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 27
+weight = 30
+text = """
+A sash left behind by a jealous woman.
+At night it coils itself up and lifts a
+hashihime face. The pattern on the silk
+is really scales."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "WRAP"], [1, "SWAGGER"], [4, "BITE"], [6, "LICK"], [9, "POISON_TAIL"], [11, "FEINT"], [14, "SCREECH"], [19, "GLARE"], [21, "POISON_FANG"], [24, "VENOSHOCK"], [29, "GASTRO_ACID"], [31, "POISON_JAB"], [34, "HAZE"], [39, "CRUNCH"], [41, "BELCH"], [44, "COIL"], [46, "SLUDGE_BOMB"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLAMETHROWER", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "IRON_TAIL", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/jatai"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["Route114"]
+level_band = [15, 17]
+family = ["JATAI"]

@@ -386,7 +386,7 @@
 - 進化時學的招式放在 level 0:Razor Leaf、Air Slash(Daibeki)、Stockpile、Psycho Cut、Slash。
 - 種族值總和照原版取代的角色。
 
-## Lavaridge 段:Mauville 之後 → Flannery,新角色 6 隻(2026-11-20,Mark;**待使用者審查**,還沒建模)
+## Lavaridge 段:Mauville 之後 → Flannery,新角色 6 隻(2026-11-20,Mark;使用者核准,已建模)
 
 需求來自 Sonia 的盤點(`check_species_refs --scope lavaridge`,`plan-b-references.md` §9.2):27 種原版角色還沒有對照。原則跟 Mauville 段一樣:屬性對得上、階段相同、種族值差在 15% 以內,就用現有角色填;只有屬性或角色真的對不上時才新做。美術維持 Blender 立體版(`docs/ART_GUIDELINES.md` 2026-11-20 更新),每隻新角色先寫 Brief。
 

@@ -17,7 +17,7 @@ egg_groups = ["BUG"]
 growth_rate = "MEDIUM_FAST"
 body_color = "BROWN"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 10, into = "YOKOZUNAT" }]   # [{ method, param, into }]
 
 [dex]
 height = 6
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["PetalburgWoods"]
 level_band = [7, 10]
-family = ["USOBUZZ", "TSUNACOON"]
+family = ["USOBUZZ", "TSUNACOON", "YOKOZUNAT"]

@@ -1741,6 +1741,12 @@ enum __attribute__((packed)) Species
     SPECIES_SHACHOWL,
     SPECIES_UTOMAW,
     SPECIES_DAIBEKI,
+    SPECIES_HIFUKKO,
+    SPECIES_HIGANMEN,
+    SPECIES_JATAI,
+    SPECIES_KAMADORO,
+    SPECIES_NAMAZURA,
+    SPECIES_YOKOZUNAT,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

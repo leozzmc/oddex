@@ -36,5 +36,5 @@ PEEKO = "UTOGHAST"              # Wingull
 # The pet in a Rustboro City house (RustboroCity_House3: cry, text and object graphic; was Pikachu).
 RUSTBORO_PET = "INARIZUMA"
 
-# Lavaridge: the old lady's EGG (giveegg). Vanilla until the [lavaridge] species are in.
-EGG_GIFT = "WYNAUT"              # Wynaut
+# Lavaridge: the old lady's EGG (giveegg; Wynaut in vanilla): Gachirinza, the moon sitter meditating by the hot spring.
+EGG_GIFT = "GACHIRINZA"             # Wynaut

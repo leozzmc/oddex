@@ -1,0 +1,54 @@
+# Lavaridge segment (docs/research/mask-designs.md, "Lavaridge 段"): replaces Numel (Fiery Path, Route 112, Jagged Pass; Flannery).
+# Stats follow the vanilla species it replaces (same total); moves are provisional.
+
+id = "HIFUKKO"
+name = "Hifukko"
+category = "Fire Blower"
+
+types = ["FIRE", "GROUND"]
+abilities = ["OBLIVIOUS", "SIMPLE", "OWN_TEMPO"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 60, def = 40, spa = 65, spd = 45, spe = 35 }   # total 305
+ev_yield = { spa = 1 }
+catch_rate = 255
+exp_yield = 61
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 33, into = "KAMADORO" }]   # [{ method, param, into }]
+
+[dex]
+height = 7
+weight = 240
+text = """
+A hyottoko mask that never stops blowing
+on the little brazier on its back. The
+harder it blows, the redder its face and
+the higher the flames."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "GROWL"], [5, "EMBER"], [8, "FOCUS_ENERGY"], [12, "BULLDOZE"], [15, "INCINERATE"], [19, "AMNESIA"], [22, "LAVA_PLUME"], [26, "EARTH_POWER"], [29, "CURSE"], [31, "TAKE_DOWN"], [40, "EARTHQUAKE"], [43, "FLAMETHROWER"], [47, "DOUBLE_EDGE"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "OVERHEAT", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/hifukko"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["FieryPath", "Route112", "JaggedPass"]
+level_band = [14, 33]
+family = ["HIFUKKO", "KAMADORO"]

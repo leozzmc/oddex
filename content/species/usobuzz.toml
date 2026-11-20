@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route101", "Route102"]
 level_band = [2, 8]
-family = ["USOBUZZ", "TSUNACOON"]
+family = ["USOBUZZ", "TSUNACOON", "YOKOZUNAT"]

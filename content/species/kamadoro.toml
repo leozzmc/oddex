@@ -1,0 +1,54 @@
+# Lavaridge segment (docs/research/mask-designs.md, "Lavaridge 段"): replaces Camerupt (Flannery, Team Magma).
+# Stats follow the vanilla species it replaces (same total); moves are provisional.
+
+id = "KAMADORO"
+name = "Kamadoro"
+category = "Clay Stove"
+
+types = ["FIRE", "GROUND"]
+abilities = ["MAGMA_ARMOR", "SOLID_ROCK", "ANGER_POINT"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 100, def = 70, spa = 105, spd = 75, spe = 40 }   # total 460
+ev_yield = { atk = 1, spa = 1 }
+catch_rate = 150
+exp_yield = 161
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD"]
+growth_rate = "MEDIUM_FAST"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 19
+weight = 2200
+text = """
+Its brazier has grown into a whole clay
+stove. Both fire holes on its back roar
+like volcanoes, and the soot has turned
+its puckered face black."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "ROCK_SLIDE"], [1, "TACKLE"], [1, "GROWL"], [1, "EMBER"], [1, "FISSURE"], [1, "FOCUS_ENERGY"], [1, "ERUPTION"], [12, "BULLDOZE"], [15, "INCINERATE"], [19, "AMNESIA"], [22, "LAVA_PLUME"], [26, "EARTH_POWER"], [29, "CURSE"], [31, "TAKE_DOWN"], [39, "YAWN"], [46, "EARTHQUAKE"],
+]
+teachable = [
+    "ATTRACT", "BODY_SLAM", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "OVERHEAT", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kamadoro"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [33, 100]
+family = ["HIFUKKO", "KAMADORO"]

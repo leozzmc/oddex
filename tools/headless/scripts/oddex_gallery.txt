@@ -366,16 +366,53 @@ press START 2 120
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 wait 120
 shot gallery/1620_daibeki.png
 press START 2 120
 shot gallery/1620_daibeki_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1621_hifukko.png
+press START 2 120
+shot gallery/1621_hifukko_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1622_higanmen.png
+press START 2 120
+shot gallery/1622_higanmen_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1623_jatai.png
+press START 2 120
+shot gallery/1623_jatai_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1624_kamadoro.png
+press START 2 120
+shot gallery/1624_kamadoro_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1625_namazura.png
+press START 2 120
+shot gallery/1625_namazura_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1626_yokozunat.png
+press START 2 120
+shot gallery/1626_yokozunat_shiny.png
 press START 2 120

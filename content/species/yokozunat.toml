@@ -1,0 +1,54 @@
+# Lavaridge segment (docs/research/mask-designs.md, "Lavaridge 段"): replaces Beautifly and Dustox (Tsunacoon evolves at Lv10).
+# Stats follow the vanilla species it replaces (same total); moves are provisional.
+
+id = "YOKOZUNAT"
+name = "Yokozunat"
+category = "Gnat Champ"
+
+types = ["BUG", "FIGHTING"]
+abilities = ["SWARM", "NONE", "INNER_FOCUS"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 85, def = 60, spa = 40, spd = 50, spe = 100 }   # total 395
+ev_yield = { atk = 3 }
+catch_rate = 45
+exp_yield = 178
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["BUG"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 180
+text = """
+The mosquito spirit that trained in its
+rope-bound cocoon has burst out as a
+grand champion. The rope round its waist
+is now a yokozuna's tsuna."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "ARM_THRUST"], [1, "TACKLE"], [1, "HARDEN"], [1, "LEECH_LIFE"], [12, "BUG_BITE"], [15, "BULK_UP"], [18, "VITAL_THROW"], [22, "SILVER_WIND"], [26, "BRICK_BREAK"], [30, "X_SCISSOR"], [34, "SUPERPOWER"],
+]
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "BULK_UP", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/yokozunat"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [10, 100]
+family = ["USOBUZZ", "TSUNACOON", "YOKOZUNAT"]
