@@ -46,18 +46,31 @@ def load_rgba(path):
     return im
 
 
-def fit(im, size, bottom, max_w=None, max_h=None, resample=Image.LANCZOS):
+def content_box(im):
+    return im.getchannel('A').point(lambda a: 255 if a >= 128 else 0).getbbox()
+
+
+def fit_scale(ims, size, bottom):
+    """The scale that fits the largest of ims: pass it to fit() for all of them so frames of
+    one sprite (overworld directions) keep their relative size."""
+    boxes = [b for b in map(content_box, ims) if b]
+    return min([1.0] + [min(size[0] / (b[2] - b[0]), (bottom + 1) / (b[3] - b[1])) for b in boxes])
+
+
+def fit(im, size, bottom, max_w=None, max_h=None, resample=Image.LANCZOS, scale=None):
     """Crop to content, shrink to fit, paste bottom-aligned and centred on a transparent canvas.
     resample: LANCZOS for photos and painted art; NEAREST for flat toon renders, which must not
-    gain blended colours (thousands of them make the palette quantizer crawl)."""
-    box = im.getchannel('A').point(lambda a: 255 if a >= 128 else 0).getbbox()
+    gain blended colours (thousands of them make the palette quantizer crawl).
+    scale: a fixed scale (fit_scale) instead of this image's own."""
+    box = content_box(im)
     canvas = Image.new('RGBA', size, (0, 0, 0, 0))
     if not box:
         return canvas
     im = im.crop(box)
     max_w = max_w or size[0]
     max_h = max_h or bottom + 1
-    scale = min(1.0, max_w / im.width, max_h / im.height)
+    if scale is None:
+        scale = min(1.0, max_w / im.width, max_h / im.height)
     if scale < 1.0:
         im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), resample)
     canvas.paste(im, ((size[0] - im.width) // 2, bottom + 1 - im.height), im)

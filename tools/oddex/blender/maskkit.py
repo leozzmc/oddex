@@ -607,8 +607,9 @@ def flame_halo(center, radius, mat, inner=None, licks=16, length=0.35, bird=None
 
 # --- rendering --------------------------------------------------------------------------
 
-def frame_all(scene, margin=1.08):
-    """Fit the orthographic camera to every renderable object for the current view."""
+def frame_all(scene, margin=1.08, span=None):
+    """Fit the orthographic camera to every renderable object for the current view and return
+    the span that fit needs; span: use this ortho scale instead (several views at one scale)."""
     cam = scene.camera
     bpy.context.view_layer.update()
     inv = cam.matrix_world.inverted()
@@ -620,24 +621,33 @@ def frame_all(scene, margin=1.08):
             p = inv @ (o.matrix_world @ Vector(corner))
             xs.append(p.x)
             ys.append(p.y)
-    span = max(max(xs) - min(xs), max(ys) - min(ys)) * margin
+    need = max(max(xs) - min(xs), max(ys) - min(ys)) * margin
+    span = span or need
     cam.data.ortho_scale = span
     cam.data.shift_x = ((max(xs) + min(xs)) / 2) / span
     cam.data.shift_y = ((max(ys) + min(ys)) / 2) / span
+    return need
 
 
-def shoot(scene, path, azimuth=0.0, elevation=10.0, res=256, distance=12.0, size=0.9, keep_frame=False):
-    """Orthographic render from azimuth degrees around Z (0 = looking at the face from -Y).
-    size: fraction of the frame the model's larger side fills (smaller for early stages).
-    keep_frame: reuse the previous framing (animation frames must not be re-fitted)."""
+def aim(scene, azimuth, elevation, distance=12.0):
+    """Point the camera at the origin from azimuth degrees around Z (0 = looking at the face from -Y)."""
     cam = scene.camera
     az, el = math.radians(azimuth), math.radians(elevation)
     cam.location = (distance * math.sin(az) * math.cos(el), -distance * math.cos(az) * math.cos(el),
                     distance * math.sin(el))
     cam.rotation_euler = (Vector((0, 0, 0)) - cam.location).to_track_quat('-Z', 'Y').to_euler()
+
+
+def shoot(scene, path, azimuth=0.0, elevation=10.0, res=256, distance=12.0, size=0.9, keep_frame=False, span=None):
+    """Orthographic render from azimuth degrees around Z (0 = looking at the face from -Y).
+    size: fraction of the frame the model's larger side fills (smaller for early stages).
+    keep_frame: reuse the previous framing (animation frames must not be re-fitted).
+    span: a fixed ortho scale (frame_all), so several views share one scale."""
+    cam = scene.camera
+    aim(scene, azimuth, elevation, distance)
     scene.render.resolution_x = scene.render.resolution_y = res
     if not keep_frame:
         cam.data.shift_x = cam.data.shift_y = 0
-        frame_all(scene, margin=1.0 / size)
+        frame_all(scene, margin=1.0 / size, span=span)
     scene.render.filepath = path
     bpy.ops.render.render(write_still=True)

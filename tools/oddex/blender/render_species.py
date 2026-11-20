@@ -95,7 +95,14 @@ if layers:
 is_mask = opts.get('kind', 'mask') == 'mask'
 maskkit.show_front_only(scene, not is_mask)
 maskkit.shoot(scene, str(out / 'back.png'), azimuth=back_az, elevation=14, size=size)
-maskkit.shoot(scene, str(out / 'ow_back.png'), azimuth=180, elevation=25, res=128, size=0.9)
-maskkit.show_front_only(scene, True)
-for name, az in (('ow_front', 0), ('ow_side', opts.get('side_az', -60))):
-    maskkit.shoot(scene, str(out / f'{name}.png'), azimuth=az, elevation=25, res=128, size=0.9)
+# The overworld views share the scale the largest of them needs, or the creature changes size
+# (and look: a big mask from the front, a small body from the side) as it turns.
+ow = (('ow_back', 180, not is_mask), ('ow_front', 0, True), ('ow_side', opts.get('side_az', -60), True))
+spans = []
+for _, az, front_only in ow:
+    maskkit.show_front_only(scene, front_only)
+    maskkit.aim(scene, az, 25)
+    spans.append(maskkit.frame_all(scene, margin=1.0 / 0.9))
+for name, az, front_only in ow:
+    maskkit.show_front_only(scene, front_only)
+    maskkit.shoot(scene, str(out / f'{name}.png'), azimuth=az, elevation=25, res=128, span=max(spans))

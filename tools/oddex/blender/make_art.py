@@ -25,7 +25,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from import_art import TRANSPARENT_RGB, best_icon, to_indexed, write_jasc  # noqa: E402
-from import_art import fit as fit_art  # noqa: E402
+from import_art import fit as fit_art, fit_scale  # noqa: E402
 from placeholder_art import footprint  # noqa: E402
 from species_data import GAME, load_species  # noqa: E402
 
@@ -146,8 +146,8 @@ def write_sprites(base, out):
     n, s = views(base / 'normal'), views(base / 'shiny')
     kind = json.loads((base / 'normal' / 'opts.json').read_text())['kind']
 
-    def fit(im, size, bottom):
-        return fit_art(im, size, bottom, resample=Image.NEAREST)
+    def fit(im, size, bottom, scale=None):
+        return fit_art(im, size, bottom, resample=Image.NEAREST, scale=scale)
 
     def placed(v, names, size, bottom):
         return [fit(v[name], size, bottom) for name in names]
@@ -164,13 +164,14 @@ def write_sprites(base, out):
     icon_index, icon_pal = best_icon(icons)
     icon_ix = to_indexed(icons, icon_pal)
 
-    # Overworld: S, S-walk, N, N-walk, W, W-walk (east is mirrored by the game).
-    ow = []
-    for name in ('ow_front', 'ow_back', 'ow_side'):
-        ow += [fit(n[name], (32, 32), 30), fit(n[name], (32, 32), 29)]
-    s_ow = []
-    for name in ('ow_front', 'ow_back', 'ow_side'):
-        s_ow += [fit(s[name], (32, 32), 30), fit(s[name], (32, 32), 29)]
+    # Overworld: S, S-walk, N, N-walk, W, W-walk (east is mirrored by the game). One scale for
+    # every frame (the renders share one too), so the creature keeps its size as it turns.
+    names = ('ow_front', 'ow_back', 'ow_side')
+    k = fit_scale([n[name] for name in names], (32, 32), 29)
+    ow, s_ow = [], []
+    for name in names:
+        ow += [fit(n[name], (32, 32), 30, k), fit(n[name], (32, 32), 29, k)]
+        s_ow += [fit(s[name], (32, 32), 30, k), fit(s[name], (32, 32), 29, k)]
     ow_pal = quantize(ow)
     ow_ix = to_indexed(ow, ow_pal, layout='horizontal')
     s_ow_pal = shiny_palette([to_indexed([f], ow_pal) for f in ow], s_ow, ow_pal)
