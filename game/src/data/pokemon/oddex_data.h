@@ -387,7 +387,7 @@ static const struct SpriteFrameImage sPicTable_Usobuzz[] = {
 // Deigloom
 static const struct LevelUpMove sDeigloomLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_CONFUSION),
-    LEVEL_UP_MOVE( 1, MOVE_ASTONISH),
+    LEVEL_UP_MOVE( 0, MOVE_ASTONISH),
     LEVEL_UP_MOVE( 1, MOVE_DOUBLE_TEAM),
     LEVEL_UP_MOVE( 1, MOVE_HYPNOSIS),
     LEVEL_UP_MOVE(20, MOVE_NIGHT_SHADE),
@@ -419,7 +419,7 @@ static const struct SpriteFrameImage sPicTable_Deigloom[] = {
 
 // Hannyagon
 static const struct LevelUpMove sHannyagonLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_SHADOW_SNEAK),
+    LEVEL_UP_MOVE( 0, MOVE_SHADOW_SNEAK),
     LEVEL_UP_MOVE( 1, MOVE_DRAGON_BREATH),
     LEVEL_UP_MOVE( 1, MOVE_BITE),
     LEVEL_UP_MOVE( 1, MOVE_SCARY_FACE),
@@ -810,7 +810,7 @@ static const struct SpriteFrameImage sPicTable_Tsukuyume[] = {
 
 // Tsunacoon
 static const struct LevelUpMove sTsunacoonLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_HARDEN),
+    LEVEL_UP_MOVE( 0, MOVE_HARDEN),
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 7, MOVE_HARDEN),
     LEVEL_UP_MOVE(10, MOVE_BIDE),
@@ -905,7 +905,7 @@ static const struct LevelUpMove sMandalokaLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_POUND),
     LEVEL_UP_MOVE( 1, MOVE_GROWL),
     LEVEL_UP_MOVE( 1, MOVE_SAND_ATTACK),
-    LEVEL_UP_MOVE( 1, MOVE_EMBER),
+    LEVEL_UP_MOVE( 0, MOVE_EMBER),
     LEVEL_UP_MOVE( 8, MOVE_RAPID_SPIN),
     LEVEL_UP_MOVE(12, MOVE_MUD_SHOT),
     LEVEL_UP_MOVE(16, MOVE_ROUND),

@@ -31,7 +31,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 
 [learnset]
 level = [
-    [1, "POUND"], [1, "GROWL"], [1, "SAND_ATTACK"], [1, "EMBER"], [8, "RAPID_SPIN"], [12, "MUD_SHOT"], [16, "ROUND"], [20, "BULLDOZE"], [26, "HYPER_VOICE"], [32, "EARTH_POWER"], [38, "FIRE_SPIN"], [44, "LAVA_PLUME"], [50, "BOOMBURST"],
+    [1, "POUND"], [1, "GROWL"], [1, "SAND_ATTACK"], [0, "EMBER"], [8, "RAPID_SPIN"], [12, "MUD_SHOT"], [16, "ROUND"], [20, "BULLDOZE"], [26, "HYPER_VOICE"], [32, "EARTH_POWER"], [38, "FIRE_SPIN"], [44, "LAVA_PLUME"], [50, "BOOMBURST"],
 ]
 teachable = [
     "ATTRACT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "FIRE_BLAST", "FLAMETHROWER", "SANDSTORM", "SUNNY_DAY", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
