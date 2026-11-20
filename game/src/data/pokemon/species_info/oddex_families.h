@@ -3427,13 +3427,13 @@
         ),
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
         .backPic = gMonBackPic_Hifukko,
-        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicSize = MON_COORDS_SIZE(56, 56),
         .backPicYOffset = 8,
         .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
         .palette = gMonPalette_Hifukko,
         .shinyPalette = gMonShinyPalette_Hifukko,
         .iconSprite = gMonIcon_Hifukko,
-        .iconPalIndex = 3,
+        .iconPalIndex = 5,
         .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
         SHADOW(0, 4, SHADOW_SIZE_M)
         FOOTPRINT(Hifukko)
@@ -3699,7 +3699,7 @@
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Namazura,
-        .frontPicSize = MON_COORDS_SIZE(56, 48),
+        .frontPicSize = MON_COORDS_SIZE(64, 40),
         .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
