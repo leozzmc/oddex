@@ -61,11 +61,7 @@ trainers = [
     # The Route 104 rival (TRAINER_{MAY,BRENDAN}_RUSTBORO_*) comes after the Devon Goods errand: next scope.
 ]
 maps = ["Route104*", "PetalburgWoods", "RustboroCity*", "Route116"]
-exclude_refs = [
-    # Devon revives Lileep/Anorith from fossils found in the desert (Route 111): much later.
-    "data/maps/RustboroCity_DevonCorp_2F/scripts.inc:SPECIES_LILEEP",
-    "data/maps/RustboroCity_DevonCorp_2F/scripts.inc:SPECIES_ANORITH",
-]
+# Devon's fossil revival (2F) is migrated with [norman]: it uses the FOSSIL_ROOT/FOSSIL_CLAW roles.
 c_files = []
 
 [dewford]
