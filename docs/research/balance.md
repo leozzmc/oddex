@@ -255,3 +255,37 @@
   - 第 3 階段的「改成水/幽靈」版本:算出來對 Wattson 沒有幫助(Lv35),而且多了怕惡的弱點。如果選這個版本,(F) 的特性還是需要。
 - **不推薦**:只降等級(b),或只改 Wattson 的招式(c)。算出來 Ridgefin 還是太難,而且 Wattson 會整個變弱,Grinvine 會太輕鬆。
 - **連帶影響**:(F) 的特性會讓 Ridgefin 之後碰到電系的訓練家和野生(例如 New Mauville)都很輕鬆。這和原版 Marshtomp 的情況一樣,可以接受。
+
+## Flannery 戰的選項(2026-11-20,Mark;只是分析,數值和隊伍都還沒改)
+
+### 怎麼算的
+- 方法和 Brawly、Wattson 那兩段一樣:一對一,我方取最低亂數、對手取最高亂數,用 `tools/oddex/damage_calc.py`,範圍 Lv20–40。
+- 御三家用第 2 階段(Grinvine、Trekwheel、Ridgefin)和它們的 learnset;Ridgefin 有 Lightning Rod 和 Mud Shot。
+- **隊伍還沒換成原創角色**,所以用新對照的屬性來模擬:Slugma、Torkoal 換成 Shishiblaze(`--set X:species=SHISHIBLAZE`)。Numel 和 Camerupt 的位置之後是 Hifukko、Kamadoro,屬性同樣是火/地面,種族值總和也一樣,所以直接用 Numel、Camerupt 的數值代替。
+- 沒有算進去的:Overheat 用過之後特攻 −2、Sunny Day、Light Screen、White Herb、2 個 Hyper Potion、特性。Overheat 降特攻對我方有利,其他對 Flannery 有利。
+- `damage_calc.py` 改了一行:原版角色一律當作備用資料。這樣還沒換成原創角色的隊伍(下一段)也能算,不用加 `--vanilla`。
+- `--summary` 會把同名的兩隻(兩隻 Shishiblaze)合成一格,只顯示比較高的那個等級。
+
+### 結果:打得過的最低等級
+
+| 選項 | Grinvine | Trekwheel | Ridgefin | 說明 |
+|---|---|---|---|---|
+| 原版基準(Grovyle/Combusken/Marshtomp 打原版 Flannery) | ✗ | Lv36 | Lv26 | 原版的草系本來就打不過 |
+| 現在(隊伍還是原版角色) | ✗ | ✗ | Lv26 | |
+| (a) 照對照換:Hifukko 24、Shishiblaze 24、Kamadoro 26、王牌 Shishiblaze 29 | Lv39 | Lv38 | Lv23 | 已經比原版的草系好打,但 Lv39 要練很久 |
+| (b) 王牌改成 Mandaloka(地面/火,540) | ✗ | ✗ | Lv27 | 太難 |
+| (c) 王牌改成 Kamadoro 29,Camerupt 的位置放 Shishiblaze | ✗ | ✗ | Lv26 | 太難 |
+| (a),Grinvine 在 Lv24 學 Bulldoze／Rock Tomb／Rock Slide | Lv39 | Lv38 | Lv23 | 沒有用:擋住的是 Kamadoro 的 Overheat(2 倍、本系),一招就倒 |
+| (a),Kamadoro 的 Overheat 換成 Flame Wheel | Lv35 | Lv33 | Lv23 | |
+| **(F) (a),Kamadoro 降到 Lv24,Overheat 換成 Flame Wheel** | **Lv33** | **Lv33** | **Lv22** | **推薦** |
+
+- **擋住的是誰**:原版 Flannery 四隻都帶 Overheat(威力 130)。Grinvine 被 Kamadoro 的 Overheat 一招打倒(Lv30 時 128–151%),所以學覆蓋招式沒有用。
+- (F) 之後,剩下的門檻是王牌 Shishiblaze Lv29:單獨打它就要 Lv33。
+- Lv36 以後進化成第 3 階段(Grinarbor、Trekcart、Ridgeloom),三隻在 Lv36 都全贏。
+
+### 建議
+- **推薦 (F)**:Kamadoro(Camerupt 的位置)降到 Lv24,招式的 Overheat 換成 Flame Wheel;其他三隻照原版的招式和等級。
+  - 三隻御三家的門檻變成 33／33／22。原版是 ✗／36／26:草系從打不過變成打得過,火系稍微容易,水系差不多。
+  - **練等的影響**:Sonia 的 `to_mauville` 打 Wattson 前已經把 Grinpack 線練到 Lv33(Route 110,Lv24 → 33)。所以 (F) 之下,打 Flannery **不用再額外練等**,這是 `to_lavaridge` 能不能控制在合理長度的關鍵(`plan-b-references.md` §9.3)。
+  - 要改 `trainers.party`(Sonia 的範圍),在她套用對照時一起改;我這邊不用改任何角色資料。
+- **不推薦**:把王牌換成更強的 Mandaloka 或 Kamadoro(b、c),或只給 Grinvine 加覆蓋招式。
