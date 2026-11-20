@@ -303,6 +303,10 @@ David 的決定：「早期」不靠地圖前綴推斷，改用一份共用的�
 - **跨地圖連接**：
   - `plan.step()` 跨過 connection 後，如果落在比較窄的鄰接地圖範圍外，就回傳 None。以前跳過崖時不會檢查，例如從 Route 110 往 Mauville 規劃時，就讀到地圖外而當掉。
   - 正在跨過 connection 的那幾格，玩家座標會在地圖邊界外一格，這時 `units()` 先 `wait 10`，等換完地圖再規劃。
+- **`stepwalk.py`**：autopilot 的靜態規劃走不通時使用。它每走一段就重新規劃，戰鬥和對話交給 autopilot 處理，輸出格式跟 autopilot 一樣。
+  - 預設：用地圖資料做 BFS，會跨 warp 和崖，例如 Lavaridge 道館的洞和間歇泉。只有地塊有 warp 行為的那一邊才能用，所以單向的 warp 也算得對。
+  - `--live`：用執行中的地圖（`gBackupMapLayout`）和物件目前的位置規劃，例如已經藏起來的物件、`setmetatile` 改過的電閘、打完之後走過來擋路的訓練家。不想踩的格子（例如道館的開關）用 `--avoid x,y;...` 避開。
+  - 用法：`stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--avoid ...]`。
 - **防止空轉**：總共執行超過 `AP_MAX_STEPS` 個單位（預設 20000），或在戰鬥外同一位置連續 100 次送出同一個指令，就印出原因、已執行的指令和最後的狀態，以 exit 3 結束（`AP_PARTIAL=1` 也一樣會失敗）。起因是 Mauville 練等時，練等格上跳出 Match Call 的訊息，`grind` 在練等格上遇到操作被鎖住只會 `wait 30`，而 B 只在「走一步沒動」時才按，結果空轉了 32 萬步（約 5 小時 40 分）都沒停；那時攻擊招式還剩 Aerial Ace 的 19 PP，高於暫停門檻 10，所以也沒有因為 PP 不足而暫停。現在練等格上連續 3 次操作被鎖住就按 B。
 - `where.py` 會解密隊伍第一隻的招式和 PP（`EncryptBoxMon` 的 XOR 和 `personality % 24` 的子結構順序）。
 - `stage_reach.py`：判斷這個階段走得到的訓練家（§6.1）。
@@ -596,6 +600,6 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 - **HM 相容性**：Grinvine 原本學不了 Rock Smash，選草系或水系御三家的玩家會卡在 Mauville。David 決定每隻原創角色繼承它取代的原版角色的 HM 相容性；Mark 已經修好，並在 `gen_species` 加了檢查，任何一個 HM 沒有角色能學就會報錯。
 - **autopilot 的轉向**：上一次 hold 剛結束就按另一個方向，遊戲會繼續走，所以原本只想轉向的輕按會多走一格（Route 113、Route 110 的來回衝過頭）。現在轉向前先放開 2 格影格。
 - **autopilot 的忘招**：進化時學招（Horn Leech）的提示會選到 HM 招式 Rock Smash，遊戲拒絕忘掉 HM 後又重問，變成無限迴圈。現在 `slot_to_forget` 不會選 HM 招式（從 `tms_hms.h` 的 `FOREACH_HM` 解析）。測試在 `tools/oddex/test_autopilot.py`。
-- **道館和隱藏物件**：Lavaridge 道館的洞和間歇泉是單向的 warp（只有一邊的地塊有 warp 行為），還有只能往下跳的崖，用 warp／崖的 BFS 一步一步走，遇到戰鬥就交給 autopilot。Route 112 纜車附近被藏起來的 Magma 手下，靜態地圖仍然會擋路，所以改用執行中的地圖規劃。這兩個都是錄製用的暫時腳本，沒有放進 repo。
+- **道館和隱藏物件**：Lavaridge 道館的洞和間歇泉是單向的 warp（只有一邊的地塊有 warp 行為），還有只能往下跳的崖，用 warp／崖的 BFS 一步一步走，遇到戰鬥就交給 autopilot。Route 112 纜車附近被藏起來的 Magma 手下，靜態地圖仍然會擋路，所以改用執行中的地圖規劃。這兩種走法現在都在 `tools/headless/authoring/stepwalk.py`（§6.4）：預設模式處理道館，`--live` 處理纜車附近。
 
 只有在遊戲裡看過的手改：Fallarbor 的 Shojobob、Mt. Chimney 的 Shachound。Verdanturf、Route 117 育幼屋、Fallarbor Mart、Lavaridge 民宅和 Route 114 的手改，都不在這條路線上，只有 `check_maps` 和 `check_species_refs` 驗證過。Lavaridge 的蛋（`EGG_GIFT`）在畫面上看不出物種，只靠資料檢查。
