@@ -31,7 +31,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 
 [learnset]
 level = [
-    [0, "HARDEN"], [1, "TACKLE"], [7, "HARDEN"], [10, "BIDE"], [14, "IRON_DEFENSE"],
+    [0, "HARDEN"], [1, "TACKLE"], [10, "BIDE"], [14, "IRON_DEFENSE"],
 ]
 teachable = [
     "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",

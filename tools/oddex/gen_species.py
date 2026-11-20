@@ -245,8 +245,8 @@ def warnings(all_species, regional):
         levels = s['learnset']['level']
         if any(lv == 0 for lv, _ in levels):
             continue
-        # Level 1 moves are only taught on evolution with P_EVOLUTION_LEVEL_1_LEARN (Gen 8+, off
-        # here), so a level 1 move the previous stage never learns is reachable only by relearning.
+        # P_EVOLUTION_LEVEL_1_LEARN is GEN_LATEST (include/config/pokemon.h), so evolving skips level 1
+        # moves (src/pokemon.c): a level 1 move the previous stage never learns is only relearnable.
         known = {m for _, m in by_id[pid]['learnset']['level']}
         new = [m for lv, m in levels if lv == 1 and m not in known]
         if new:
