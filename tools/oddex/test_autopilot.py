@@ -55,6 +55,18 @@ class StepwalkTest(unittest.TestCase):
         self.assertEqual(path[0], "UP|")
 
 
+class StageReachTest(unittest.TestCase):
+    def test_surf_opens_the_sea(self):
+        import subprocess
+        sr = os.path.join(os.path.dirname(AP), "stage_reach.py")
+        def maps(*flags):
+            out = subprocess.run([sys.executable, "-I", sr, "Route104", "32", "43", "Route104,Route105", *flags],
+                                 capture_output=True, text=True, check=True).stdout
+            return out.splitlines()[0]
+        self.assertNotIn("Route105", maps())
+        self.assertIn("Route105", maps("--surf"))
+
+
 class AutopilotTest(unittest.TestCase):
     def test_hm_moves_are_the_eight_hms(self):
         names = {G["W"]["move_names"]()[m] for m in G["hm_moves"]()}
