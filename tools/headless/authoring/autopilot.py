@@ -294,11 +294,48 @@ def fix_lead(ss, prefix, k, slot=None):
     return cmds, out
 
 
+@lru_cache(None)
+def evo_states():
+    """(EVOSTATE_REPLACE_MOVE, MVSTATE_HANDLE_YES_NO) from evolution_scene.c's state enums."""
+    import re as _re
+    src = open(os.path.join(os.path.dirname(ROM), "src", "evolution_scene.c"), encoding="utf-8").read()
+
+    def index(name):
+        body = _re.search(r"enum\s*\{([^}]*\b" + name + r"\b[^}]*)\}", src).group(1)
+        names = _re.findall(r"^\s*(\w+)\s*,", body, _re.M)
+        return names.index(name)
+    return index("EVOSTATE_REPLACE_MOVE"), index("MVSTATE_HANDLE_YES_NO")
+
+
+TASK_SIZE, NUM_TASKS = 40, 16  # struct Task: func, isActive, prev, next, priority, s16 data[16]
+
+
+def evo_at_learn_prompt(st):
+    """True while the evolution scene shows "delete a move to make room for ...?" with YES/NO."""
+    replace, yes_no = evo_states()
+    for i in range(NUM_TASKS):
+        t = SYMS["gTasks"] + TASK_SIZE * i
+        func, active = W["read"](st, t, "<IB")
+        if active and func & ~1 == SYMS["Task_EvolutionScene"]:
+            state, learn = W["read"](st, t + 8, "<h")[0], W["read"](st, t + 8 + 2 * 6, "<h")[0]
+            return state == replace and learn == yes_no  # tState is data[0], tLearnMoveState data[6]
+    return False
+
+
 def battle_press(ss):
     """Next single input in battle: B at "delete a move?"; in the move menu, move the cursor to the
     best move against the opponent's types (best_move); otherwise A."""
     st = W["state"](ss)
     cb2 = W["read"](st, SYMS["gMain"] + 4, "<I")[0] & ~1
+    lo, hi = text_range("evolution_scene.o")
+    if lo <= cb2 < hi:
+        # Evolution scene. A advances its text; B would stop the evolution, so it is only used
+        # to answer NO at "delete a move to make room?" (P_ASK_MOVE_CONFIRMATION is FALSE, so NO
+        # gives up the move at once). The battle script check below must not run here: after a
+        # battle, gBattlescriptCurrInstr can still point into the learn-move script.
+        if evo_at_learn_prompt(st) and slot_to_forget(st) is None:
+            return "press B 2 30"
+        return "press A 2 30"
     lo, hi = text_range("pokemon_summary_screen.o")
     if lo <= cb2 < hi:
         # "Forget which move?" summary screen: move the cursor to the slot to forget, then A.
