@@ -10,6 +10,10 @@
 STARTER_GRASS = "GRINPACK"      # Treecko (the trio, docs/research/friends-designs.md)
 STARTER_FIRE = "TREKKEYE"       # Torchic
 STARTER_WATER = "RIDGECAP"      # Mudkip
+# Their second stages, for the rival's teams from Route 110 on.
+STARTER_GRASS_2 = "GRINVINE"    # Grovyle
+STARTER_FIRE_2 = "TREKWHEEL"    # Combusken
+STARTER_WATER_2 = "RIDGEFIN"    # Marshtomp
 
 # Pokemon Birch shows during the new-game intro (src/main_menu.c).
 INTRO_MON = "SHOJOBOB"          # Lotad
