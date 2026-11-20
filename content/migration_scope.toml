@@ -134,7 +134,7 @@ c_files = []
 
 [lavaridge]
 description = "After Wattson: Route 117/Verdanturf, Route 111-114, Fallarbor, Meteor Falls, Mt. Chimney, Jagged Pass, Lavaridge, up to Flannery"
-strict = false
+strict = true
 # Reachability: stage_reach.py --rock-smash from Mauville (Rock Smash comes from the Mauville house
 # with the Dynamo Badge; no Surf, Cut or Strength, whose HM is usable only with Flannery's badge),
 # plus a second run from the Mt. Chimney cable car station (the cable car is a scripted warp the BFS

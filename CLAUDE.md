@@ -62,7 +62,8 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 - 回歸腳本必須能從開機獨立跑完：共用開頭用 `include`，不要 `load` 別支腳本留下的 savestate。
 - 組合回歸腳本時，截圖前不要另外插入 `wait`：`shot` 本身不會讓遊戲多跑影格，但多出來的 `wait` 會讓之後的戰鬥亂數錯開。需要等畫面時，在分段錄製時就把 `wait` 做成一段（例如 `raw:wait 20`），再接著錄後面的分段。
 - 標題畫面不要按 SELECT（那是 Quickstart，會跳過 Birch 開場）。推進對話用 B，避免 A 又跟 NPC 講話或在 YES/NO 選到 YES。
-- 腳本的確定性來自固定的 RTC；ROM 或角色一改，經過戰鬥和草叢的路線就要重新產生。用 `tools/headless/authoring/autopilot.py` 閉環產生（每段之後讀 RAM 判斷位置、戰鬥、HP、招式；`where.py` 讀 savestate、`plan.py` 規劃少踩草的路線），組好後從開機連跑一次確認和分段結果相同，再連跑兩次確認逐像素一致。
+- 腳本的確定性來自固定的 RTC；ROM 或角色一改，經過戰鬥和草叢的路線就要重新產生。用 `tools/headless/authoring/autopilot.py` 閉環產生（每段之後讀 RAM 判斷位置、戰鬥、HP、招式；`where.py` 讀 savestate、`plan.py` 規劃少踩草的路線），組好後從開機連跑一次確認和分段結果相同，再連跑兩次確認逐像素一致。autopilot 的靜態規劃走不通時（隱藏物件、執行中才改變的地塊、單向 warp），改用 `tools/headless/authoring/stepwalk.py START.ss OUT_PREFIX MAP X Y [--live]`。
+- 原創角色可學的 HM，等於它在 `content/replacements.toml` 取代的原版角色能學的 HM（例外寫在 TOML 裡）；`gen_species` 會擋下沒有任何原創角色能學的 HM。
 
 ## 分析編譯產物
 
