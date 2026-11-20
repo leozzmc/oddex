@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-21 | **角色題材放寬**：除了能面／Cham 和神道、密教意象，也可以加入恐怖電影類的怨靈和外國神話生物（使用者舉例：貞子、人面獅身）。有版權的角色（貞子、伽椰子等）只取原型，改用公有領域的民間故事（貞子的原型改用〈番町皿屋敷〉的阿菊：井、長黑髮、白衣、數盤子）；外國神話照樣融合面具風格（人面獅身＝戴面具的四腳獸） | 使用者（版權處理：David） | repo 和 ROM 都公開，不能用電影的角色名稱、造型。人面獅身放進 Norman 段的沙漠（同一批，長路線只重錄一次）；阿菊等到有幽靈系位置的那一段 |
 | 2026-11-21 | **Norman 段核准**：新做 2 隻化石角色 Haniwort（埴輪，岩石/草，Lileep 位置）和 Dogoggle（遮光器土偶，岩石/蟲，Anorith 位置），先做單一階段，以代號 `FOSSIL_ROOT`、`FOSSIL_CLAW` 處理；Norman 維持現狀（王牌 Mandaloka，不調整）；to_norman 接受較長的路線（約 650–730 秒，含化石），維持每支腳本從開機跑 | 使用者 | 對照和設計見 mask-designs.md「Norman 段」，平衡見 balance.md「Norman 戰」 |
 | 2026-11-20 | Lavaridge 段的美術核准（Hifukko、Namazura、Higanmen 依 64 px 審查重畫後）；[lavaridge] 設成 strict。**HM 相容性規則**：原創角色繼承它取代的原版角色能學的 HM | 使用者（HM 規則：David） | Grinvine 原本學不了 Rock Smash，會卡在 Mauville（Sonia 發現）。例外 5 隻寫在 TOML |
 | 2026-11-20 | **Lavaridge 段（Wattson → Flannery）核准**：新做 6 隻 Hifukko（Numel）、Kamadoro（Camerupt）、Namazura（Barboach／Corphish）、Jatai（Seviper）、Higanmen（Roselia）、Yokozunat（Tsunacoon 第 3 階段）；種族值差超過 15% 的 4 個對照（Spinda→Mandalumb、Solrock→Iwadawn、Grimer／Koffing→Kumozuka）接受；Flannery 採 **(F)**：Kamadoro 降到 Lv24、Overheat 換 Flame Wheel | 使用者 | 對照和設計見 mask-designs.md「Lavaridge 段」，平衡見 balance.md「Flannery 戰的選項」；6 隻同一批提交，長路線只重錄一次 |
