@@ -1,0 +1,54 @@
+# Starter line, stage 3 (docs/research/friends-designs.md): replaces Sceptile.
+# The sprites are likenesses built by tools/oddex/likeness/compose.py (sources stay outside the repo).
+
+id = "GRINARBOR"
+name = "Grinarbor"
+category = "Face Tree"
+
+types = ["GRASS", "DARK"]
+abilities = ["OVERGROW", "NONE", "PICKPOCKET"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 80, atk = 105, def = 80, spa = 90, spd = 85, spe = 90 }   # total 530
+ev_yield = { atk = 3 }
+catch_rate = 45
+exp_yield = 265
+gender = 12.5
+egg_cycles = 20
+egg_groups = ["HUMAN_LIKE"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 19
+weight = 820
+text = """
+It has grown into a tree whose fruit
+are grinning faces. If a traveller
+laughs back, the fruit laugh until they
+drop from the boughs."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "HORN_LEECH"], [1, "NIGHT_SLASH"], [1, "TACKLE"], [1, "GROWL"], [3, "LEAFAGE"], [6, "BITE"], [9, "MEGA_DRAIN"], [12, "SUCKER_PUNCH"], [15, "RAZOR_LEAF"], [15, "AERIAL_ACE"], [18, "GROWTH"], [21, "GIGA_DRAIN"], [24, "CRUNCH"], [27, "SEED_BOMB"], [30, "INGRAIN"], [33, "KNOCK_OFF"], [38, "WOOD_HAMMER"], [44, "LEAF_STORM"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "DIG", "EARTHQUAKE", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/grinarbor"   # built by tools/oddex/likeness/compose.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [36, 100]
+family = ["GRINPACK", "GRINVINE", "GRINARBOR"]

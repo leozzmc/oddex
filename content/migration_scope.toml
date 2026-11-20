@@ -94,10 +94,8 @@ c_files = []
 
 [mauville]
 description = "Briney to Route 109 -> Slateport -> Route 110 -> Mauville, up to Wattson"
-# strict stays false until to_mauville is recorded, which waits for the starters' stage 2 (trio-evo):
-# Grinpack evolving at Lv16 shifts to_rustboro, to_dewford and to_mauville alike. The Route 110
-# rival and Edwin are left out below until their evolution lines are in replacements.toml.
-strict = false
+# Strict: to_mauville (make check-oddex-full) plays it from Granite Cave to Wattson's badge.
+strict = true
 # Route 109 and Slateport have only water and fishing tables; fishing is in scope since the Old Rod
 # (Dewford). Water tables need Surf. Mauville has no wild table.
 wild_maps = ["Route109", "SlateportCity", "Route110"]
@@ -111,11 +109,14 @@ trainers = [
     "TRAINER_DWAYNE", "TRAINER_JOHANNA", "TRAINER_SIMON",
     # Aqua grunts in the Oceanic Museum.
     "TRAINER_GRUNT_MUSEUM_1", "TRAINER_GRUNT_MUSEUM_2",
-    # Route 110 and the Cycling Road. Left out until the user decides the evolution lines (no
-    # replacement yet, so apply_replacements would refuse the whole scope):
-    #   TRAINER_{MAY,BRENDAN}_ROUTE_110_{TREECKO,TORCHIC,MUDKIP}: the starters' stage 2;
-    #   TRAINER_EDWIN_1: Nuzleaf (Bekurama's stage 2).
+    # The Route 110 rival (one of six parties, by the player's gender and starter). Their starters'
+    # stage 2 (Grovyle, Combusken, Marshtomp) are written as the STARTER_*_2 roles ("Oddex Starter
+    # Grass 2" ...), like the stage-1 roles in the earlier rival battles.
+    "TRAINER_MAY_ROUTE_110_TREECKO", "TRAINER_MAY_ROUTE_110_TORCHIC", "TRAINER_MAY_ROUTE_110_MUDKIP",
+    "TRAINER_BRENDAN_ROUTE_110_TREECKO", "TRAINER_BRENDAN_ROUTE_110_TORCHIC", "TRAINER_BRENDAN_ROUTE_110_MUDKIP",
+    # Route 110 and the Cycling Road. Edwin's Nuzleaf is Bekurama's stage 2 (Karabeki).
     "TRAINER_ABIGAIL_1", "TRAINER_ALYSSA", "TRAINER_ANTHONY", "TRAINER_BENJAMIN_1", "TRAINER_DALE", "TRAINER_EDWARD",
+    "TRAINER_EDWIN_1",
     "TRAINER_ISABEL_1", "TRAINER_JACLYN", "TRAINER_JACOB", "TRAINER_JASMINE", "TRAINER_JOSEPH", "TRAINER_KALEB",
     "TRAINER_TIMMY",
     # Trick House puzzle 1: Sally is reachable; Eddie and Robin need Cut.

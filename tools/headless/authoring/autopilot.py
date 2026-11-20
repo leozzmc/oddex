@@ -104,6 +104,36 @@ def type_chart():
     return [[raw[a * n + d] / 4096 for d in range(n)] for a in range(n)]
 
 
+@lru_cache(None)
+def species_info_size():
+    """sizeof(struct SpeciesInfo) in this build (pokemon.h's /*0xC4*/ comment is stale).
+    SPECIES_BULBASAUR is 1, so its entry starts that many bytes into gSpeciesInfo: find its base
+    stats (from gen_1_families.h) there, and check the size divides the table's size (nm -S)."""
+    import re as _re
+    src = open(os.path.join(os.path.dirname(ROM), "src/data/pokemon/species_info/gen_1_families.h")).read()
+    block = src[src.index("[SPECIES_BULBASAUR]"):]
+    stats = bytes(int(_re.search(r"\.%s\s*=\s*(\d+)" % k, block).group(1)) for k in
+                  ("baseHP", "baseAttack", "baseDefense", "baseSpeed", "baseSpAttack", "baseSpDefense"))
+    with open(ROM, "rb") as f:
+        f.seek(SYMS["gSpeciesInfo"] - 0x08000000)
+        head = f.read(0x400)
+    hits = [s for s in range(4, len(head) - 6, 4) if head[s:s + 6] == stats]
+    nm = subprocess.run([W["NM"], "-S", os.path.join(os.path.dirname(ROM), "pokeemerald.elf")],
+                        capture_output=True, text=True).stdout
+    total = int(_re.search(r"^\w+ (\w+) \w gSpeciesInfo$", nm, _re.M).group(1), 16)
+    assert len(hits) == 1 and total % hits[0] == 0, f"sizeof(struct SpeciesInfo) not found: {hits}, {total:#x}"
+    return hits[0]
+
+
+def species_types(species):
+    """A species' types from gSpeciesInfo in the built ROM (types, u8 x2, at +6)."""
+    with open(ROM, "rb") as f:
+        f.seek(SYMS["gSpeciesInfo"] - 0x08000000 + species * species_info_size() + 6)
+        types = set(f.read(2))
+    assert 0 not in types, f"species {species}: TYPE_NONE in gSpeciesInfo"
+    return types
+
+
 BATTLE_MON = 0x8C  # sizeof(struct BattlePokemon); moves at +12 (u16 x4), types at +34 (u8 x3), pp at +37
 # struct BattlePokemon: attack +2, defense +4, spAttack +8, spDefense +10 (u16); statStages +24
 # (s8 x8, STAT_HP/ATK/DEF/SPEED/SPATK/SPDEF/ACC/EVASION, 6 = no change).
@@ -212,6 +242,12 @@ def slot_to_forget(st):
     base = SYMS["gBattleMons"]
     types = set(W["read"](st, base + 34, "<3B")) - {0}
     stats = (W["read"](st, base + 2, "<H")[0], W["read"](st, base + 8, "<H")[0])
+    if not any(stats):
+        # Out of battle (the evolution scene) gBattleMons is cleared: use the party lead instead
+        # (struct Pokemon: attack +90, spAttack +96).
+        party = SYMS["gParties"]
+        stats = (W["read"](st, party + 90, "<H")[0], W["read"](st, party + 96, "<H")[0])
+        types = species_types(W["lead_species"](st, SYMS))
     moves, _ = W["lead_moves"](st, SYMS)
     info = move_info()
 
@@ -389,6 +425,10 @@ def compress(cmds):
 
 def units(start, goal, facing, stopped):
     """First executable unit of the planned route: (cmds, expected_end, new_facing, stopped_after)."""
+    m = load(start[0])
+    if not (0 <= start[1] < m["W"] and 0 <= start[2] < m["H"]):
+        # Mid-crossing of a map connection the position is a tile past the map's edge: let it finish.
+        return ["wait 10"], None, facing, stopped
     steps = plan(start, goal, True, bool(os.environ.get("AVOID_SIGHT")), want_steps=True)
     if not steps:
         return None

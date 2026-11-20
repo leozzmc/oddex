@@ -30,7 +30,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 
 [learnset]
 level = [
-    [1, "SHADOW_SNEAK"], [1, "DRAGON_BREATH"], [1, "BITE"], [1, "SCARY_FACE"], [36, "CRUNCH"], [40, "HEX"], [44, "DRAGON_CLAW"], [48, "SHADOW_BALL"], [52, "DRAGON_PULSE"], [58, "OUTRAGE"],
+    [0, "SHADOW_SNEAK"], [1, "DRAGON_BREATH"], [1, "BITE"], [1, "SCARY_FACE"], [36, "CRUNCH"], [40, "HEX"], [44, "DRAGON_CLAW"], [48, "SHADOW_BALL"], [52, "DRAGON_PULSE"], [58, "OUTRAGE"],
 ]
 teachable = [
     "ATTRACT", "CALM_MIND", "CRUNCH", "DRAGON_CLAW", "DRAGON_PULSE", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "OUTRAGE", "PROTECT", "PSYCHIC", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",

@@ -17,7 +17,7 @@ egg_groups = ["FLYING", "AMORPHOUS"]
 growth_rate = "MEDIUM_FAST"
 body_color = "GRAY"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 25, into = "UTOMAW" }]   # [{ method, param, into }]
 
 [dex]
 height = 6
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route103"]
 level_band = [2, 8]
-family = ["UTOGHAST"]
+family = ["UTOGHAST", "UTOMAW"]

@@ -22,13 +22,26 @@ stage_mismatch_ok = [
 TREECKO = "GRINPACK"
 TORCHIC = "TREKKEYE"
 MUDKIP = "RIDGECAP"
+# The starters' second stages (rival teams from Route 110 on).
+GROVYLE = "GRINVINE"
+COMBUSKEN = "TREKWHEEL"
+MARSHTOMP = "RIDGEFIN"
+# The starters' third stages.
+SCEPTILE = "GRINARBOR"
+BLAZIKEN = "TREKCART"
+SWAMPERT = "RIDGELOOM"
 # Early wild (Routes 101-103) and Route 102 trainers.
 POOCHYENA = "SHACHOUND"
+MIGHTYENA = "SHACHOWL"   # stage 2
 ZIGZAGOON = "KYOKON"
+LINOONE = "KYOZOSU"   # stage 2
 WURMPLE = "USOBUZZ"
 WINGULL = "UTOGHAST"
+PELIPPER = "UTOMAW"   # stage 2
 LOTAD = "SHOJOBOB"
 SEEDOT = "BEKURAMA"
+NUZLEAF = "KARABEKI"   # stage 2
+SHIFTRY = "DAIBEKI"   # stage 3 (Leaf Stone)
 SHROOMISH = "YAMAMBRR"
 TAILLOW = "SHAWABOLT"
 # Ralts line -> Ko-omote / Deigan / Hannya (stages 1 / 2 / 3; Gallade shares Hannya).

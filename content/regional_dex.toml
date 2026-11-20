@@ -1,19 +1,23 @@
 # Regional (Hoenn-slot) Pokedex order: the number the player sees in the Pokedex and summary.
 # Every original species must appear exactly once. While Gen 3 is enabled these follow the
 # vanilla 210 entries; once vanilla is disabled (plan B step 5) the first one is No. 001.
+# Each evolution line is kept together, in stage order. The numbers are not saved, so they can
+# be reordered freely (only the oddex_dex baselines change).
 
 order = [
-    "GRINPACK", "TREKKEYE", "RIDGECAP",
+    # The starters' lines.
+    "GRINPACK", "GRINVINE", "GRINARBOR",
+    "TREKKEYE", "TREKWHEEL", "TREKCART",
+    "RIDGECAP", "RIDGEFIN", "RIDGELOOM",
+    # Early routes.
     "OKINOIR", "SHISHIBLAZE", "KAMORAI",
-    "SHACHOUND", "KYOKON", "USOBUZZ", "SHAWABOLT", "UTOGHAST",
-    "SHOJOBOB", "BEKURAMA", "YAMAMBRR", "OMOTELLE", "DEIGLOOM", "HANNYAGON",
-    # Rustboro batch (appended so earlier numbers stay; reorder by route when vanilla is disabled).
-    "KOMAROCK", "IWADAWN", "KUMOZUKA", "MAGATIDE", "MANDALUMB", "TSUNACOON", "TSUKUYUME", "KARUVAJRA",
-    "INARIZUMA",
+    "SHACHOUND", "SHACHOWL", "KYOKON", "KYOZOSU", "USOBUZZ", "TSUNACOON", "SHAWABOLT", "UTOGHAST", "UTOMAW",
+    "SHOJOBOB", "SHOJOMAI", "BEKURAMA", "KARABEKI", "DAIBEKI", "YAMAMBRR", "OMOTELLE", "DEIGLOOM", "HANNYAGON",
+    # Rustboro batch.
+    "KOMAROCK", "IWADAWN", "KUMOZUKA", "MAGATIDE", "MANDALUMB", "MANDARING", "MANDALOKA",
+    "TSUKUYUME", "KARUVAJRA", "INARIZUMA",
     # Dewford pair.
     "GACHIRINZA", "KOMORIMEN",
-    # Later stages.
-    "MANDARING", "MANDALOKA",
     # Mauville batch.
-    "SUZURAI", "KAGURAI", "RAIJUMEN", "RAIJUOH", "TOROBI", "TOMOEDEN", "SHOJOMAI",
+    "SUZURAI", "KAGURAI", "RAIJUMEN", "RAIJUOH", "TOROBI", "TOMOEDEN",
 ]

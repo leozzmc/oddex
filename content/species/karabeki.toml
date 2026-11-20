@@ -1,0 +1,53 @@
+# Stage 2 of Bekurama (docs/research/mask-designs.md): replaces Nuzleaf.
+
+id = "KARABEKI"
+name = "Karabeki"
+category = "Crow Tengu"
+
+types = ["GRASS", "STEEL"]
+abilities = ["CHLOROPHYLL", "EARLY_BIRD", "HEAVY_METAL"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 65, atk = 70, def = 55, spa = 55, spd = 40, spe = 55 }   # total 340
+ev_yield = { atk = 2 }
+catch_rate = 120
+exp_yield = 119
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FIELD", "GRASS"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = [{ method = "ITEM", param = "ITEM_LEAF_STONE", into = "DAIBEKI" }]   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 280
+text = """
+The tengu mask has grown a crow's beak
+and black wings. It drills travellers in
+swordplay on mountain paths, and still
+never opens its clamped lips to speak."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "RAZOR_LEAF"], [1, "TACKLE"], [1, "HARDEN"], [3, "ABSORB"], [7, "GROWTH"], [11, "METAL_CLAW"], [15, "MAGICAL_LEAF"], [19, "IRON_DEFENSE"], [23, "FLASH_CANNON"], [27, "LEAF_BLADE"], [31, "IRON_HEAD"], [35, "SWORDS_DANCE"],
+]
+teachable = [
+    "ATTRACT", "BULLET_SEED", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH_CANNON", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/karabeki"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = ["evolution"]
+level_band = [14, 30]
+family = ["BEKURAMA", "KARABEKI", "DAIBEKI"]

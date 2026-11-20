@@ -17,7 +17,7 @@ egg_groups = ["HUMAN_LIKE"]
 growth_rate = "MEDIUM_SLOW"
 body_color = "BLACK"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 16, into = "TREKWHEEL" }]   # [{ method, param, into }]
 
 [dex]
 height = 6
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["starter"]
 level_band = [2, 8]
-family = ["TREKKEYE"]
+family = ["TREKKEYE", "TREKWHEEL", "TREKCART"]
