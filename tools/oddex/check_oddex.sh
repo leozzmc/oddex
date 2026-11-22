@@ -7,6 +7,8 @@
 #
 # Environment:
 #   ODDEX_REGRESSION_SCRIPTS space-separated names under tools/headless/scripts/
+#   ODDEX_BASELINE_SCRIPTS   scripts whose baselines are compared (default: the scripts run); a script
+#                            only included by a run one is covered by that run's shots
 #   ODDEX_SHOTS_BASELINE     dir with <script>/<shot>.png to compare pixel-exactly
 #                            (default tools/headless/baselines; set empty to skip)
 #   ODDEX_RUN                headless runner (default ~/oddex-toolchain/bin/oddex-run)
@@ -18,6 +20,7 @@ OUT="$ROOT/game/build/oddex-check"
 RUN="${ODDEX_RUN:-$HOME/oddex-toolchain/bin/oddex-run}"
 SCRIPTS="${ODDEX_REGRESSION_SCRIPTS:-to_littleroot to_starter oddex_gallery oddex_dex to_petalburg to_dolls}"
 ODDEX_SHOTS_BASELINE="${ODDEX_SHOTS_BASELINE-$ROOT/tools/headless/baselines}"
+BASELINES="${ODDEX_BASELINE_SCRIPTS:-$SCRIPTS}"  # whose baselines to compare (default: the scripts run)
 fail=0
 
 echo "== tool unit tests"
@@ -57,34 +60,35 @@ for name in $SCRIPTS; do
     (cd "$dir" && "$RUN" "$ROM" "$ROOT/tools/headless/scripts/$name.txt" > run.log 2> err.log; echo $? > status) &
 done
 wait
+dirs=""
 for name in $SCRIPTS; do
     dir="$OUT/$name"
     if [ "$(cat "$dir/status")" != 0 ]; then
         echo "$name: runner failed (see $dir/err.log)"
         fail=1
-        continue
-    fi
-    if grep -q -E 'ODDEX_CRASH_SCREEN|ODDEX_RESET' "$dir/err.log"; then
+    elif grep -q -E 'ODDEX_CRASH_SCREEN|ODDEX_RESET' "$dir/err.log"; then
         echo "$name: crash screen or game reset"
         grep -E 'ODDEX_CRASH_SCREEN|ODDEX_RESET' "$dir/err.log" | sort | uniq -c
         fail=1
-        continue
-    fi
-    shots=$(find "$dir" -name '*.png' | wc -l | tr -d ' ')
-    if [ -n "${ODDEX_SHOTS_BASELINE:-}" ] && [ -d "$ODDEX_SHOTS_BASELINE/$name" ]; then
-        diffs=0
-        for base in "$ODDEX_SHOTS_BASELINE/$name"/*.png; do
-            shot=$(find "$dir" -name "$(basename "$base")" | head -1)
-            if [ -z "$shot" ] || ! cmp -s "$base" "$shot"; then
-                echo "$name: differs from baseline: $(basename "$base")"
-                diffs=$((diffs + 1))
-            fi
-        done
-        [ "$diffs" -eq 0 ] || fail=1
-        echo "$name: $shots shots, $diffs baseline differences"
     else
-        echo "$name: ok ($shots shots)"
+        dirs="$dirs $dir"
+        echo "$name: ran, $(find "$dir" -name '*.png' | wc -l | tr -d ' ') shots"
     fi
+done
+# A script that includes another (to_winona includes to_norman ... to_starter) takes the included
+# script's shots too; shot names are unique across baselines, so one run covers every prefix.
+for name in $BASELINES; do
+    [ -n "${ODDEX_SHOTS_BASELINE:-}" ] && [ -d "$ODDEX_SHOTS_BASELINE/$name" ] || continue
+    diffs=0
+    for base in "$ODDEX_SHOTS_BASELINE/$name"/*.png; do
+        shot=$([ -n "$dirs" ] && find $dirs -name "$(basename "$base")" | head -1)
+        if [ -z "$shot" ] || ! cmp -s "$base" "$shot"; then
+            echo "$name: differs from baseline: $(basename "$base")"
+            diffs=$((diffs + 1))
+        fi
+    done
+    [ "$diffs" -eq 0 ] || fail=1
+    echo "$name: $diffs baseline differences"
 done
 
 exit $fail
