@@ -16,6 +16,40 @@ SHINY = {**NORMAL, 'hair': (0.80, 0.82, 0.90), 'collar': (0.20, 0.36, 0.80), 'co
 
 HEAD_C, HEAD_R = (0, 0, 0.1), (0.72, 0.66, 0.74)
 
+# Hand-placed pixels (make_art.apply_pixels): the two painted eyes as clean almonds with one glint
+# each, and the crack as a single thin line that starts clear of the eye.
+_K = {'k': (28, 18, 22), 'w': (255, 255, 255), 'e': (252, 248, 244), 'd': (238, 235, 230), 'a': (209, 206, 202),
+      'x': (111, 89, 97)}   # x, the crack: a colour the shiny palette keeps (the hair's turns silver)
+_FACE = [((25, 28), ['eeeeeddd',
+                     'eekkkkdd',
+                     'ekkwkkkd',
+                     'eekkkkdd',
+                     'eeeedddd']),
+         ((36, 28), ['dddaaaaa',
+                     'ddkkkkaa',
+                     'dkkwkkka',
+                     'ddkkkkaa',
+                     'dddaaaaa']),
+         ((27, 33), ['.d..',
+                     'xdd.',
+                     '.xdd',
+                     '..x.',
+                     '.dx.',
+                     '.x..',
+                     '.x..',
+                     '.dx.',
+                     '..x.'])]
+_ICON = [((11, 17), ['WWWWWWWWGG',
+                     'WKKWWWKKGG',
+                     'WWWWWWWWGG']),
+         ((14, 22), ['W'])]
+_IK = {'K': (65, 65, 65), 'W': (255, 255, 255), 'G': (189, 189, 189)}
+PIXELS = {'keys': {**_K, **_IK},
+          'front': {'box': (13, 10, 51, 56), 'patches': _FACE},
+          'front2': {'box': (12, 12, 52, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (7, 9, 25, 30), 'patches': _ICON},
+          'icon2': {'box': (7, 8, 25, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
 
 def doll_face(k, c, mats, missing_eye=False, crack=1.0):
     """The doll's head and painted face at HEAD_C; shared with Kaminobi (bigger crack, one eye gone)."""

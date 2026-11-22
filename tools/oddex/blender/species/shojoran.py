@@ -17,6 +17,27 @@ SHINY = {**NORMAL, 'hair': (0.96, 0.78, 0.26), 'hairdark': (0.70, 0.48, 0.10), '
          'cup': (0.16, 0.30, 0.74), 'face': (0.98, 0.62, 0.66), 'arm': (0.96, 0.66, 0.70)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the shojo's laughing face. Two dark arcs for eyes
+# squeezed shut with laughter, and a wide open grin with a row of white teeth. The specular glint
+# the render leaves beside the left eye is painted out.
+_FACE = [((30, 18), ['dd...',
+                     'dkkka',
+                     'kdddk',
+                     '..dda']),
+         ((38, 19), ['akkks',
+                     'kaaak',
+                     '..aa.']),
+         ((33, 26), ['kkkkkkkkk',
+                     'krfffffrk',
+                     'akrrrrrks',
+                     '.akkkkks.'])]
+PIXELS = {'keys': {'k': (28, 18, 22), 'd': (246, 153, 134), 'a': (213, 132, 116), 's': (172, 106, 92),
+                   'r': (111, 69, 69), 'f': (253, 248, 231)},   # r: a dark red the shiny palette keeps
+          'front': {'box': (8, 0, 56, 56), 'patches': _FACE},
+          'front2': {'box': (7, 2, 57, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]}}
+# The icon's eyes are already two clean dark pixels, so it has no patch.
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], glint=0.6)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

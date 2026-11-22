@@ -19,6 +19,32 @@ SHINY = {**NORMAL, 'hair': (0.86, 0.86, 0.92), 'kimono': (0.52, 0.26, 0.74), 'ki
          'lip': (0.40, 0.20, 0.60)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the whole 12x12 face. The good eye is a small almond
+# with a glint; the other has fallen out and left a round black socket, bigger than the eye; one
+# thin crack runs from the brow through the socket to the corner of the mouth and pulls it askew.
+_K = {'k': (28, 18, 22), 'w': (255, 255, 255), 'e': (251, 248, 243), 'd': (238, 235, 230), 'b': (209, 206, 202),
+      'x': (111, 89, 97), 'h': (75, 69, 85), 'c': (251, 218, 215), 'r': (231, 97, 104)}   # x: the crack, h: hair
+_FACE = ['.h.dddddx...',
+         '..edddddxb..',
+         '.eedddddkkb.',
+         'eekkkddkkkk.',
+         'ekwkkddkkkkb',
+         'eeddddddkkbb',
+         'eeddddddxbbb',
+         'ccdddddxbb..',
+         'dddddrxbbbb.',
+         'dddrrdbbbb..',
+         'dddddbbbbb..',
+         '.dbbbbbb....']
+_ICON = [((15, 10), ['WWW', 'WWW', 'KWK', 'WWW'])]
+PIXELS = {'keys': {**_K, 'K': (65, 65, 65), 'W': (255, 255, 255)},
+          'front': {'box': (2, 5, 62, 56), 'patches': [((28, 12), _FACE)]},
+          # The second frame is squashed: the face is one row shorter and sits two rows lower.
+          'front2': {'box': (1, 7, 63, 56), 'patches': [((28, 14), _FACE[:10] + _FACE[11:])]},
+          'icon': {'box': (2, 7, 30, 30), 'patches': _ICON},
+          'icon2': {'box': (2, 6, 30, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def strand(k, pts, r0, r1, mat, n=12):
     """A tapering lock of hair along a quadratic curve through three points."""
     a, b, c = (k.Vector(p) for p in pts)

@@ -652,6 +652,7 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 - **Iwadusk**:兔子坐在新月的彎裡、被月光照亮,不是光裡的剪影(剪影只有 3 px,看不出來)。
 - **Shojoran**:頭髮是一圈往同一個方向甩的尖束,不是一整片。
 - Duskull → Ichimai 採用(比原版強 36%,使用者接受);Tate & Liza 的實際改法見 `balance.md`。
+- **眼睛(2026-11-22,使用者:「眼睛都太粗糙了」)**:Kamikko、Kaminobi、Nobusumen、Enigmen、Shojoran 的眼睛和嘴改成手擺的像素(各模型檔的 `PIXELS`,`make_art.apply_pixels`),輪廓和資料不變。Kamikko 是乾淨的杏仁眼加一點高光;Kaminobi 一隻小眼、一個比眼睛大的黑眼窩、一道細裂痕;Nobusumen 是斜眼皮下的黃眼和直縫瞳孔,嘴和兩根長牙分開;Enigmen 是埃及式的眼線、紅色瞳孔和上揚的嘴角;Shojoran 是笑到瞇成弧線的眼睛和露齒的大笑。對照圖:`~/oddex-shots/mark/mossdeep/eyes_before_after_2x.png`。Iwadusk 沒有臉,不改。
 
 ### 範圍和清單是怎麼來的
 - 用 `check_species_refs.py --maps <地圖前綴> --json` 掃 David 給的路線:Route 121–124、Lilycove、Mt. Pyre、Aqua Hideout、Mossdeep(含道館和 Space Center)。另外加了 **Magma Hideout 和 Jagged Pass**:Emerald 的劇情是 Mt. Pyre → Magma Hideout → Aqua Hideout → Mossdeep,David 的路線沒列,請 Sonia 確認。

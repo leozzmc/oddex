@@ -18,6 +18,32 @@ SHINY = {**NORMAL, 'wing': (0.14, 0.46, 0.44), 'inner': (0.10, 0.28, 0.34), 'rib
          'paper': (0.55, 0.80, 1.0), 'smoke': (0.30, 0.55, 1.0), 'eye': (0.70, 1.0, 0.60)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): two glaring yellow eyes under slanted lids, each with
+# a slit pupil, and the gaping mouth with gums and two long fangs kept apart from them.
+_FACE = [((27, 16), ['kkkaaa',
+                     'kcckka',
+                     'kckcck',
+                     'akkkka']),
+         ((35, 16), ['asskkk',
+                     'akkcck',
+                     'kcckck',
+                     'skkkks']),
+         ((30, 23), ['akkkkkks',
+                     'kffggffk',
+                     'kfmmmmfk',
+                     'kfmmmmfk',
+                     'akmmmmks',
+                     'aakkkkss'])]
+_ICON = [((15, 12), ['YY.YY']), ((15, 15), ['KWKWK', '.KKK.'])]
+PIXELS = {'keys': {'k': (28, 18, 22), 'c': (255, 239, 124), 'a': (164, 159, 171), 's': (120, 116, 125),
+                   'g': (170, 80, 111), 'm': (48, 39, 56), 'f': (252, 249, 241),
+                   'Y': (246, 246, 41), 'K': (65, 65, 65), 'W': (255, 255, 255)},
+          'front': {'box': (5, 0, 59, 56), 'patches': _FACE},
+          'front2': {'box': (3, 1, 61, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (3, 3, 29, 30), 'patches': _ICON},
+          'icon2': {'box': (3, 2, 29, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, weathered=0.3)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

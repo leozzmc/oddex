@@ -12,6 +12,7 @@ and written to the species' [graphics] dir. The shiny palette is read off the sh
 the same pixels, so both palettes share indices exactly.
 """
 import argparse
+import importlib.util
 import json
 import os
 import subprocess
@@ -24,7 +25,7 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from import_art import TRANSPARENT_RGB, best_icon, to_indexed, write_jasc  # noqa: E402
+from import_art import TRANSPARENT_RGB, best_icon, nearest, to_indexed, write_jasc  # noqa: E402
 from import_art import fit as fit_art, fit_scale  # noqa: E402
 from placeholder_art import footprint  # noqa: E402
 from species_data import GAME, load_species  # noqa: E402
@@ -131,18 +132,58 @@ def shiny_palette(indexed_images, shiny_images, pal):
     return [pal[0]] + [v.most_common(1)[0][0] if v else pal[i] for i, v in enumerate(votes) if i]
 
 
+FRAMES = {'front': ('front', (0, 0), (64, 64)), 'front2': ('front', (0, 64), (64, 64)),
+          'icon': ('icon', (0, 0), (32, 32)), 'icon2': ('icon', (0, 32), (32, 32))}
+
+
+def load_pixels(module):
+    """A model's PIXELS table (see apply_pixels), or None."""
+    spec = importlib.util.spec_from_file_location(module, HERE / 'species' / f'{module}.py')
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return getattr(mod, 'PIXELS', None)
+
+
+def apply_pixels(sheets, pals, pixels, who=''):
+    """Hand-placed pixels over the rendered sprites (docs/ART_GUIDELINES.md, pixel-level cleanup):
+    small features a render cannot draw cleanly at 64px, eyes above all. pixels is a model's
+    PIXELS table:
+        {'keys': {char: (r, g, b)},
+         frame: {'box': (x0, y0, x1, y1), 'patches': [((x, y), [row, ...]), ...]}}
+    frame is front, front2, icon or icon2; each row is a string, '.' leaves the pixel alone and any
+    other character paints the palette entry nearest its key colour (so the shiny palette, which
+    shares indices, follows). box is the frame's content box the patches were drawn for: if a
+    changed model moves the sprite, this fails instead of painting eyes in the wrong place.
+    sheets and pals: {'front': image, 'icon': image} and their palettes."""
+    for frame, spec in pixels.items():
+        if frame == 'keys':
+            continue
+        sheet, (ox, oy), (w, h) = FRAMES[frame]
+        img, pal = sheets[sheet], pals[sheet]
+        box = img.crop((ox, oy, ox + w, oy + h)).getbbox()
+        if box != tuple(spec['box']):
+            sys.exit(f'make_art: {who} PIXELS[{frame!r}] was drawn for content box {tuple(spec["box"])} but the '
+                     f'sprite is now {box}; redraw the patches for the new render')
+        for (x, y), rows in spec['patches']:
+            for j, row in enumerate(rows):
+                for i, ch in enumerate(row):
+                    if ch != '.':
+                        img.putpixel((ox + x + i, oy + y + j), nearest(pal, pixels['keys'][ch]))
+
+
 def make(spec, keep=None):
     module = spec['graphics'].get('model', spec['id'].lower())
     with tempfile.TemporaryDirectory() as tmp:
         base = Path(keep) / module if keep else Path(tmp)
         render(module, 'normal', base / 'normal')
         render(module, 'shiny', base / 'shiny')
-        return write_sprites(base, GAME / spec['graphics']['dir'])
+        return write_sprites(base, GAME / spec['graphics']['dir'], load_pixels(module), spec['id'])
 
 
-def write_sprites(base, out):
+def write_sprites(base, out, pixels=None, who=''):
     """Turn the renders in base/normal and base/shiny into every sprite file and palette in out
-    (also used by tools/oddex/likeness/compose.py, which writes outside the repo)."""
+    (also used by tools/oddex/likeness/compose.py, which writes outside the repo).
+    pixels: the model's PIXELS table, painted over the front and icon frames (apply_pixels)."""
     n, s = views(base / 'normal'), views(base / 'shiny')
     kind = json.loads((base / 'normal' / 'opts.json').read_text())['kind']
 
@@ -176,6 +217,8 @@ def write_sprites(base, out):
     ow_ix = to_indexed(ow, ow_pal, layout='horizontal')
     s_ow_pal = shiny_palette([to_indexed([f], ow_pal) for f in ow], s_ow, ow_pal)
 
+    if pixels:
+        apply_pixels({'front': front_ix, 'icon': icon_ix}, {'front': pal, 'icon': icon_pal}, pixels, who)
     out.mkdir(parents=True, exist_ok=True)
     front_ix.save(out / 'anim_front.png', bits=4)
     back_ix.save(out / 'back.png', bits=4)

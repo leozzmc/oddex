@@ -19,6 +19,28 @@ SHINY = {**NORMAL, 'face': (0.94, 0.95, 1.0), 'gold': (0.62, 0.64, 0.72), 'blue'
          'body': (0.16, 0.15, 0.18), 'tuft': (0.50, 0.10, 0.10), 'feathertip': (0.92, 0.72, 0.22)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): kohl-rimmed Egyptian eyes, a red iris in a white eye
+# with the kohl drawn out into a wing at the outer corner, and the thin fixed smile.
+_FACE = [((31, 30), ['eekkkee',
+                     'kkfrrke',
+                     'eekkkee',
+                     'eeeeeee']),
+         ((38, 32), ['e']),
+         ((39, 30), ['eekkkdd.',
+                     'ekrrfkkk',
+                     'eekkkddd',
+                     '...d....']),
+         ((36, 40), ['k....k',     # the rendered mouth line, its corners turned up
+                     '.kkkkd'])]
+_ICON = [((16, 18), ['BBBBB', 'KRBRK'])]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (251, 251, 246), 'r': (249, 97, 89), 'e': (237, 229, 186), 'd': (207, 199, 162),
+                   'B': (246, 246, 172), 'K': (65, 65, 65), 'R': (213, 98, 65)},
+          'front': {'box': (2, 5, 62, 56), 'patches': _FACE},
+          'front2': {'box': (1, 7, 63, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (2, 6, 30, 30), 'patches': _ICON},
+          'icon2': {'box': (2, 5, 30, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     opts = _base['build'](k, c)
     feather = k.toon('feather', c['feather'], two_tone=True)
