@@ -35,6 +35,16 @@ stage_mismatch_ok = [
     "JIGGLYPUFF",  # stage 2 onto stage-1 Kyokon; Igglybuff never appears, Wigglytuff is Kyozosu
     "ABSOL",       # single-stage (465) onto stage-2 Raijuoh (475), the dark beast
     "ALTARIA",     # stage 2 onto single-stage Kumoryu: Winona's ace gets its own creature; Swablu stays Utoghast
+    # Mossdeep segment (mask-designs.md "Mossdeep 段"):
+    "CROBAT",      # stage 3 onto stage-2 Nobusumen (480 vs 535): one evolution covers Golbat and Crobat
+    "GIRAFARIG",   # single-stage (455) onto stage-2 Kyozosu (420)
+    "GYARADOS",    # stage 2 onto single-stage Kumoryu (490 vs 540): the carp that became a dragon
+    "MAWILE",      # single-stage (380) onto stage-2 Karabeki (340), steel
+    "PINSIR",      # single-stage (500) onto stage-3 Yokozunat (395), bug
+    "HERACROSS",   # single-stage (500) onto stage-3 Yokozunat (395), bug/fighting like it (Safari Zone)
+    "WOBBUFFET",   # stage 2 onto single-stage Tomoeden (405 = 405); Gachirinza (Wynaut) would be -31%
+    "LUVDISC",     # single-stage (330) onto stage-2 Shojomai (340), Route 125
+    "SEAKING",     # stage 2 onto stage-1 Kamorai (310 vs 450), Goldeen's creature; the line has no stage 2
 ]
 
 [replace]
@@ -189,3 +199,32 @@ ABSOL = "RAIJUOH"        # dark beast, 465 -> 475
 TROPIUS = "YATSUFU"      # grass/flying, Route 119's wild identity
 ALTARIA = "KUMORYU"      # dragon/flying, Winona's ace
 CASTFORM = "TERUBOZU"    # the Weather Institute gift (role WEATHER_GIFT)
+# Mossdeep segment (Winona -> Tate & Liza; mask-designs.md "Mossdeep 段", approved by the user 2026-11-22).
+SHUPPET = "KAMIKKO"      # the abandoned-doll line, Mt. Pyre's common ghost
+BANETTE = "KAMINOBI"     # its stage 2 (Lv37)
+DUSKULL = "ICHIMAI"      # ghost, 295 -> 400 (+36%, accepted by the user); the rarer ghost of the upper floors
+GOLBAT = "NOBUSUMEN"     # Komorimen's stage 2 (Lv22)
+CROBAT = "NOBUSUMEN"     # 535 -> 480 (-10%)
+CLAYDOL = "ENIGMEN"      # Sphinmen's stage 2 (Lv36); Tate & Liza
+LUNATONE = "IWADUSK"     # Iwadawn's night twin; Tate & Liza
+LUDICOLO = "SHOJORAN"    # Shojomai's stage 3 (Water Stone); the Lilycove rival
+CHIMECHO = "KAGURAI"     # stage 2, 455 -> 465; the wind chime and the kagura bells
+ELECTRODE = "KAGURAI"    # stage 2, 490 -> 465; Voltorb is Suzurai (Aqua Hideout's fake item balls)
+CHINCHOU = "KAMORAI"     # water/electric like it, 330 -> 310
+GIRAFARIG = "KYOZOSU"    # normal, 455 -> 420 (-8%)
+GYARADOS = "KUMORYU"     # flying, 540 -> 490 (-9%)
+MAWILE = "KARABEKI"      # steel, 380 -> 340 (-11%)
+PINSIR = "YOKOZUNAT"     # bug, 500 -> 395 (-21%, flagged)
+RHYHORN = "HIFUKKO"      # ground, 345 -> 305 (-12%)
+VULPIX = "SHISHIBLAZE"   # fire, 299 -> 310
+WOBBUFFET = "TOMOEDEN"   # psychic, 405 -> 405
+# Route 125 (north of Mossdeep, reachable with Surf; whether it joins the segment is Sonia's scope).
+MACHAMP = "YOKOZUNAT"    # stage 3, fighting, 505 -> 395 (-22%, flagged)
+LUVDISC = "SHOJOMAI"     # water, 330 -> 340
+SEAKING = "KAMORAI"      # water, 450 -> 310 (-31%, flagged)
+# Safari Zone, the four areas open before the Hall of Fame (wild only, so the gaps do not affect
+# battles; the two eastern areas are post-game and stay out of scope).
+PSYDUCK = "SHOJOBOB"     # water, 320 -> 220 (-31%)
+GOLDUCK = "SHOJOMAI"     # stage 2, water, 500 -> 340 (-32%); Psyduck's line
+HERACROSS = "YOKOZUNAT"  # bug/fighting, 500 -> 395 (-21%)
+PHANPY = "MANDALUMB"     # ground, 330 -> 280 (-15%)

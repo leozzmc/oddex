@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Kamikko → Kaminobi 的 Brief", option A; approved by the
+# user 2026-11-22): the abandoned ichimatsu doll whose hair keeps growing, a public-domain tale type
+# (no film character, no real temple's doll). Stage 1: only the floating head is left. Replaces
+# Shuppet (Mt. Pyre, Routes 121/123). Stats and abilities follow Shuppet.
+
+id = "KAMIKKO"
+name = "Kamikko"
+category = "Doll Head"
+
+types = ["GHOST", "FAIRY"]
+abilities = ["INSOMNIA", "FRISK", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 44, atk = 75, def = 35, spa = 63, spd = 33, spe = 45 }   # total 295
+ev_yield = { atk = 1 }
+catch_rate = 225
+exp_yield = 59
+gender = 50.0
+egg_cycles = 25
+egg_groups = ["AMORPHOUS"]
+growth_rate = "FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 37, into = "KAMINOBI" }]   # [{ method, param, into }]
+
+[dex]
+height = 6
+weight = 23
+text = """
+The head of a doll someone threw away
+on the mountain. Its hair was cut short
+once, but every time you look again it
+has grown a little longer."""
+scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ASTONISH"], [4, "SCREECH"], [7, "NIGHT_SHADE"], [10, "SPITE"], [13, "DISARMING_VOICE"], [16, "WILL_O_WISP"], [19, "SHADOW_SNEAK"], [22, "HEX"], [26, "CURSE"], [30, "SHADOW_BALL"], [34, "DRAINING_KISS"], [38, "SUCKER_PUNCH"], [42, "TRICK"], [48, "PHANTOM_FORCE"],
+]
+# HMs follow Shuppet, the vanilla species it replaces: Flash only.
+teachable = [
+    "ATTRACT", "BODY_SLAM", "CALM_MIND", "DARK_PULSE", "DAZZLING_GLEAM", "DOUBLE_TEAM", "DREAM_EATER", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SKILL_SWAP", "SLEEP_TALK", "SNATCH", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TAUNT", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TORMENT", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kamikko"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "S" }
+overworld = { size = "32x32", shadow = "S", tracks = "NONE" }
+
+[design]
+habitat = ["MtPyre", "Route121", "Route123"]
+level_band = [22, 30]
+family = ["KAMIKKO", "KAMINOBI"]

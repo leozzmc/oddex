@@ -644,7 +644,14 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 - **方案 B**:倒吊的娃娃(祈雨),裙擺朝上。不採用:倒過來的臉在 64 px 不好讀,而且整個輪廓會像一顆鈴(跟 Suzurai 撞)。
 - 形態:只有一種(Castform 的 Forecast 是寫死在 Castform 的種族上的,原創角色用不了)。特性:Forewarn／Cloud Nine(娃娃把天氣「吊起來」)。
 
-## Mossdeep 段(草稿)(2026-11-22,Mark;Winona → Tate & Liza。**只有文件,什麼都還沒建**;原版清單是 Mark 自己整理的草稿,等 Sonia 的正式範圍確認)
+## Mossdeep 段(草稿)(2026-11-22,Mark;Winona → Tate & Liza。原版清單是 Mark 自己整理的草稿,等 Sonia 的正式範圍確認)
+
+**狀態(2026-11-22)**:使用者核准了這份草稿,6 隻新角色都做了(`feat/mossdeep-batch`),對照寫進 `content/replacements.toml`。建模時和下面的 Brief 不同的地方:
+- **Nobusumen**:皮膜是四方形(像飛鼠,四個角各一隻爪),不是轉 45° 的菱形;菱形在 64 px 下和面具的耳朵擠在一起。
+- **Enigmen**:面具是淡金色,頭巾改成較深的橙金色,兩者才分得開;尾巴末端的小蛇沒有做(64 px 看不到),保留 Sphinmen 的尾巴。
+- **Iwadusk**:兔子坐在新月的彎裡、被月光照亮,不是光裡的剪影(剪影只有 3 px,看不出來)。
+- **Shojoran**:頭髮是一圈往同一個方向甩的尖束,不是一整片。
+- Duskull → Ichimai 採用(比原版強 36%,使用者接受);Tate & Liza 的實際改法見 `balance.md`。
 
 ### 範圍和清單是怎麼來的
 - 用 `check_species_refs.py --maps <地圖前綴> --json` 掃 David 給的路線:Route 121–124、Lilycove、Mt. Pyre、Aqua Hideout、Mossdeep(含道館和 Space Center)。另外加了 **Magma Hideout 和 Jagged Pass**:Emerald 的劇情是 Mt. Pyre → Magma Hideout → Aqua Hideout → Mossdeep,David 的路線沒列,請 Sonia 確認。

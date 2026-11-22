@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Nobusumen 的 Brief", option A; approved by the user
+# 2026-11-22): the nobusuma, the old bat of folklore that grows into a flying quilt, smothers faces and
+# blows out lanterns (a yokai, not a deity). Komorimen's evolution (Lv22, like Zubat); replaces both
+# Golbat (455) and Crobat (535) at 480.
+
+id = "NOBUSUMEN"
+name = "Nobusumen"
+category = "Night Quilt"
+
+types = ["POISON", "FLYING"]
+abilities = ["INNER_FOCUS", "NONE", "INFILTRATOR"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 80, atk = 85, def = 70, spa = 65, spd = 75, spe = 105 }   # total 480
+ev_yield = { spe = 2 }
+catch_rate = 90
+exp_yield = 200
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["FLYING"]
+growth_rate = "MEDIUM_FAST"
+body_color = "PURPLE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 16
+weight = 550
+text = """
+An old bat that has lived a hundred
+years. It spreads out flat as a quilt,
+drops over the face of a traveller and
+blows out the lantern before it feeds."""
+scale = { pokemon = 300, pokemon_offset = 4, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "CROSS_POISON"], [1, "ABSORB"], [1, "SUPERSONIC"], [1, "SCREECH"], [5, "ASTONISH"], [9, "POISON_FANG"], [13, "WING_ATTACK"], [17, "BITE"], [21, "AIR_CUTTER"], [26, "POISON_JAB"], [31, "AIR_SLASH"], [36, "MEAN_LOOK"], [41, "HAZE"], [46, "VENOSHOCK"], [51, "CONFUSE_RAY"], [56, "LEECH_LIFE"],
+]
+# HMs follow Golbat and Crobat, the vanilla species it replaces: Fly only.
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "CRUNCH", "DARK_PULSE", "DOUBLE_TEAM", "ENDURE", "FACADE", "FLY", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNATCH", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TAUNT", "THIEF", "TORMENT", "TOXIC", "X_SCISSOR",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/nobusumen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["evolution", "AquaHideout", "MagmaHideout"]
+level_band = [22, 45]
+family = ["KOMORIMEN", "NOBUSUMEN"]

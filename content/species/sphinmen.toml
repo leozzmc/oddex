@@ -18,7 +18,7 @@ egg_groups = ["MINERAL"]
 growth_rate = "MEDIUM_FAST"
 body_color = "YELLOW"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 36, into = "ENIGMEN" }]   # [{ method, param, into }]
 
 [dex]
 height = 9
@@ -52,4 +52,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route111", "MirageTower"]
 level_band = [18, 25]
-family = ["SPHINMEN"]
+family = ["SPHINMEN", "ENIGMEN"]

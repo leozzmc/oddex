@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Shojoran", option A; approved by the user 2026-11-22):
+# the shojo dancing "midare", the wild tiptoe dance on the waves in the Noh play Shojo, in a great sake
+# cup with a long ladle. Shojomai's evolution (Water Stone, like Lombre -> Ludicolo); replaces Ludicolo
+# (the Lilycove rival). Stats and abilities follow Ludicolo.
+
+id = "SHOJORAN"
+name = "Shojoran"
+category = "Wave Dance"
+
+types = ["WATER", "FAIRY"]
+abilities = ["SWIFT_SWIM", "RAIN_DISH", "OWN_TEMPO"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 80, atk = 70, def = 70, spa = 90, spd = 100, spe = 70 }   # total 480
+ev_yield = { spd = 3 }
+catch_rate = 45
+exp_yield = 240
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "FAIRY"]
+growth_rate = "MEDIUM_SLOW"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 15
+weight = 550
+text = """
+When the moon is on the water it floats
+out in a great cup and dances on the
+tips of its toes, hair flying. The
+sake in its ladle never runs dry."""
+scale = { pokemon = 300, pokemon_offset = 3, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "AQUA_STEP"], [1, "WATER_GUN"], [1, "GROWL"], [1, "ABSORB"], [1, "TEETER_DANCE"], [1, "BUBBLE_BEAM"], [1, "DRAINING_KISS"], [1, "FAKE_TEARS"], [1, "MOONBLAST"], [1, "RAIN_DANCE"],
+]
+# HMs follow Ludicolo, the vanilla species it replaces: Surf, Strength, Flash, Rock Smash, Waterfall, Dive.
+teachable = [
+    "ATTRACT", "BLIZZARD", "BODY_SLAM", "BRICK_BREAK", "BULLET_SEED", "DIVE", "DOUBLE_TEAM", "DRAIN_PUNCH", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH", "FOCUS_PUNCH", "FRUSTRATION", "GIGA_DRAIN", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC", "WATERFALL", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/shojoran"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 4, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["evolution", "LilycoveCity"]
+level_band = [30, 45]
+family = ["SHOJOBOB", "SHOJOMAI", "SHOJORAN"]

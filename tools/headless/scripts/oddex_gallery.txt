@@ -217,10 +217,10 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press RIGHT 2 10
@@ -434,15 +434,15 @@ shot gallery/1629_sphinmen.png
 press START 2 120
 shot gallery/1629_sphinmen_shiny.png
 press START 2 120
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
@@ -468,4 +468,40 @@ wait 120
 shot gallery/1633_yatsufu.png
 press START 2 120
 shot gallery/1633_yatsufu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1634_enigmen.png
+press START 2 120
+shot gallery/1634_enigmen_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1635_iwadusk.png
+press START 2 120
+shot gallery/1635_iwadusk_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1636_kamikko.png
+press START 2 120
+shot gallery/1636_kamikko_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1637_kaminobi.png
+press START 2 120
+shot gallery/1637_kaminobi_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1638_nobusumen.png
+press START 2 120
+shot gallery/1638_nobusumen_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1639_shojoran.png
+press START 2 120
+shot gallery/1639_shojoran_shiny.png
 press START 2 120

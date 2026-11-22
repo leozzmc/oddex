@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Enigmen 的 Brief", option A; approved by the user
+# 2026-11-22): the riddling winged Sphinx of Greek myth (a monster, not a deity) in a gold pharaoh's
+# mask. Sphinmen's evolution (Lv36, like Baltoy -> Claydol); replaces Claydol (Tate & Liza). Stats and
+# ability follow Claydol.
+
+id = "ENIGMEN"
+name = "Enigmen"
+category = "Riddle Wing"
+
+types = ["GROUND", "PSYCHIC"]
+abilities = ["LEVITATE", "NONE", "NONE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 60, atk = 70, def = 105, spa = 70, spd = 120, spe = 75 }   # total 500
+ev_yield = { spd = 2 }
+catch_rate = 90
+exp_yield = 175
+gender = "GENDERLESS"
+egg_cycles = 20
+egg_groups = ["MINERAL"]
+growth_rate = "MEDIUM_FAST"
+body_color = "YELLOW"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 15
+weight = 1080
+text = """
+It hovers over the dunes on wide wings
+and asks every traveller one riddle.
+The gold face never stops smiling,
+whatever the answer turns out to be."""
+scale = { pokemon = 280, pokemon_offset = 3, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "HYPER_BEAM"], [1, "TELEPORT"], [1, "HARDEN"], [1, "MUD_SLAP"], [1, "RAPID_SPIN"], [1, "CONFUSION"], [9, "ROCK_TOMB"], [12, "POWER_TRICK"], [15, "PSYBEAM"], [18, "ANCIENT_POWER"], [21, "IMPRISON"], [24, "COSMIC_POWER"], [27, "EXTRASENSORY"], [30, "EARTH_POWER"], [33, "SELF_DESTRUCT"], [38, "GUARD_SPLIT"], [38, "POWER_SPLIT"], [43, "SANDSTORM"], [48, "EXPLOSION"],
+]
+# HMs follow Claydol, the vanilla species it replaces: Strength, Flash, Rock Smash.
+teachable = [
+    "CALM_MIND", "DAZZLING_GLEAM", "DIG", "DOUBLE_TEAM", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REFLECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SAFEGUARD", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SIGNAL_BEAM", "SKILL_SWAP", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/enigmen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 8, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["evolution", "MossdeepGym"]
+level_band = [36, 50]
+family = ["SPHINMEN", "ENIGMEN"]

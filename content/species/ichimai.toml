@@ -1,6 +1,7 @@
 # Winona segment (docs/research/mask-designs.md, "留給之後的 Brief:盤子怨靈 Ichimai", option A): the plate-
 # counting well ghost after the public-domain Okiku of Bancho Sarayashiki (not Sadako, a copyrighted
-# character). A rare wild encounter on Route 120 (Lv25-30); no vanilla species it replaces.
+# character). A rare wild encounter on Route 120 (Lv25-30); from the Mossdeep segment it also replaces
+# Duskull on Mt. Pyre (replacements.toml).
 # Stats between Shuppet (295) and Banette (455), special-leaning.
 
 id = "ICHIMAI"
@@ -35,10 +36,10 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "ASTONISH"], [1, "WATER_GUN"], [6, "FAKE_TEARS"], [10, "NIGHT_SHADE"], [14, "SPITE"], [19, "HEX"], [23, "WATER_PULSE"], [28, "CURSE"], [32, "SHADOW_BALL"], [37, "GRUDGE"], [41, "MUDDY_WATER"], [46, "PERISH_SONG"],
 ]
-# No vanilla species to inherit HMs from: Surf and Dive only (a spirit of the well and the water).
-# No Cut, Strength or Rock Smash (no strength in its drowned arms), no Fly, Flash or Waterfall.
+# Surf and Dive of its own (a spirit of the well and the water), and Flash from Duskull, the vanilla
+# species it replaces on Mt. Pyre. No Cut, Strength or Rock Smash (no strength in its drowned arms).
 teachable = [
-    "ATTRACT", "BLIZZARD", "BODY_SLAM", "CALM_MIND", "DIVE", "DREAM_EATER", "ENDURE", "FACADE", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC", "WATER_PULSE",
+    "ATTRACT", "BLIZZARD", "BODY_SLAM", "CALM_MIND", "DIVE", "DREAM_EATER", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC", "WATER_PULSE"
 ]
 egg = []
 

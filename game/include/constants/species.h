@@ -1754,6 +1754,12 @@ enum __attribute__((packed)) Species
     SPECIES_KUMORYU,
     SPECIES_TERUBOZU,
     SPECIES_YATSUFU,
+    SPECIES_ENIGMEN,
+    SPECIES_IWADUSK,
+    SPECIES_KAMIKKO,
+    SPECIES_KAMINOBI,
+    SPECIES_NOBUSUMEN,
+    SPECIES_SHOJORAN,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

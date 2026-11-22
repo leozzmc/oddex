@@ -35,9 +35,10 @@ scale = { pokemon = 327, pokemon_offset = 0, trainer = 256, trainer_offset = 0 }
 level = [
     [1, "PECK"], [1, "GROWL"], [1, "MIST"], [1, "TWISTER"], [8, "DISARMING_VOICE"], [12, "FURY_ATTACK"], [16, "SAFEGUARD"], [20, "DRAGON_BREATH"], [24, "SING"], [28, "AIR_CUTTER"], [32, "COTTON_GUARD"], [35, "DRAGON_PULSE"], [38, "TAKE_DOWN"], [44, "DRAGON_DANCE"], [50, "PERISH_SONG"], [56, "SKY_ATTACK"],
 ]
-# HMs follow Altaria, the vanilla species it replaces: Fly and Rock Smash.
+# HMs follow the vanilla species it replaces: Fly and Rock Smash from Altaria; Surf, Strength, Waterfall
+# and Dive from Gyarados (the carp that swam up the falls).
 teachable = [
-    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "DAZZLING_GLEAM", "DOUBLE_TEAM", "DRAGON_CLAW", "DRAGON_PULSE", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FLY", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "IRON_TAIL", "OUTRAGE", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROAR", "ROCK_SMASH", "SAFEGUARD", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "THIEF", "TOXIC",
+    "AERIAL_ACE", "ATTRACT", "BODY_SLAM", "DAZZLING_GLEAM", "DIVE", "DOUBLE_TEAM", "DRAGON_CLAW", "DRAGON_PULSE", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FIRE_BLAST", "FLAMETHROWER", "FLY", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "IRON_TAIL", "OUTRAGE", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROAR", "ROCK_SMASH", "SAFEGUARD", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STEEL_WING", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "THIEF", "TOXIC", "WATERFALL"
 ]
 egg = []
 

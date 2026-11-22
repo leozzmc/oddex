@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Kamikko → Kaminobi 的 Brief", option A; approved by the
+# user 2026-11-22): the abandoned ichimatsu doll whose hair keeps growing, a public-domain tale type
+# (no film character, no real temple's doll). Stage 2 (Lv37): the whole doll, its hair grown to the
+# ground and walking for it. Replaces Banette. Stats and abilities follow Banette.
+
+id = "KAMINOBI"
+name = "Kaminobi"
+category = "Long Hair"
+
+types = ["GHOST", "FAIRY"]
+abilities = ["INSOMNIA", "FRISK", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 64, atk = 115, def = 65, spa = 83, spd = 63, spe = 65 }   # total 455
+ev_yield = { atk = 2 }
+catch_rate = 45
+exp_yield = 159
+gender = 50.0
+egg_cycles = 25
+egg_groups = ["AMORPHOUS"]
+growth_rate = "FAST"
+body_color = "RED"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 11
+weight = 125
+text = """
+Its hair never stopped growing. Now it
+reaches the ground and carries the doll
+about like legs. It walks the mountain
+at night, looking for its old home."""
+scale = { pokemon = 350, pokemon_offset = 8, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "PLAY_ROUGH"], [1, "ASTONISH"], [1, "SCREECH"], [1, "NIGHT_SHADE"], [1, "SPITE"], [13, "DISARMING_VOICE"], [16, "WILL_O_WISP"], [19, "SHADOW_SNEAK"], [22, "HEX"], [26, "CURSE"], [30, "SHADOW_BALL"], [34, "DRAINING_KISS"], [40, "SUCKER_PUNCH"], [46, "TRICK"], [53, "PHANTOM_FORCE"],
+]
+# HMs follow Banette, the vanilla species it replaces: Flash only.
+teachable = [
+    "ATTRACT", "BODY_SLAM", "CALM_MIND", "DARK_PULSE", "DAZZLING_GLEAM", "DOUBLE_TEAM", "DREAM_EATER", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SKILL_SWAP", "SLEEP_TALK", "SNATCH", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TAUNT", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TORMENT", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/kaminobi"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 4, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["evolution"]
+level_band = [37, 50]
+family = ["KAMIKKO", "KAMINOBI"]

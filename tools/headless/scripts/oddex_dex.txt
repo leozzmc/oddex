@@ -120,150 +120,174 @@ shot dex/238_shojomai.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/239_bekurama.png
+shot dex/239_shojoran.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/240_karabeki.png
+shot dex/240_bekurama.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/241_daibeki.png
+shot dex/241_karabeki.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/242_yamambrr.png
+shot dex/242_daibeki.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/243_omotelle.png
+shot dex/243_yamambrr.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/244_deigloom.png
+shot dex/244_omotelle.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/245_hannyagon.png
+shot dex/245_deigloom.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/246_komarock.png
+shot dex/246_hannyagon.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/247_iwadawn.png
+shot dex/247_komarock.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/248_kumozuka.png
+shot dex/248_iwadawn.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/249_magatide.png
+shot dex/249_kumozuka.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/250_mandalumb.png
+shot dex/250_magatide.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/251_mandaring.png
+shot dex/251_mandalumb.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/252_mandaloka.png
+shot dex/252_mandaring.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/253_tsukuyume.png
+shot dex/253_mandaloka.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/254_karuvajra.png
+shot dex/254_tsukuyume.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/255_inarizuma.png
+shot dex/255_karuvajra.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/256_gachirinza.png
+shot dex/256_inarizuma.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/257_komorimen.png
+shot dex/257_gachirinza.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/258_suzurai.png
+shot dex/258_komorimen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/259_kagurai.png
+shot dex/259_nobusumen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/260_raijumen.png
+shot dex/260_suzurai.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/261_raijuoh.png
+shot dex/261_kagurai.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/262_torobi.png
+shot dex/262_raijumen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/263_tomoeden.png
+shot dex/263_raijuoh.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/264_hifukko.png
+shot dex/264_torobi.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/265_kamadoro.png
+shot dex/265_tomoeden.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/266_namazura.png
+shot dex/266_hifukko.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/267_jatai.png
+shot dex/267_kamadoro.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/268_higanmen.png
+shot dex/268_namazura.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/269_haniwort.png
+shot dex/269_jatai.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/270_dogoggle.png
+shot dex/270_higanmen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/271_sphinmen.png
+shot dex/271_haniwort.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/272_ichimai.png
+shot dex/272_dogoggle.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/273_yatsufu.png
+shot dex/273_sphinmen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/274_kumoryu.png
+shot dex/274_enigmen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/275_terubozu.png
+shot dex/275_ichimai.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/276_yatsufu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/277_kumoryu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/278_terubozu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/279_kamikko.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/280_kaminobi.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/281_iwadusk.png
 press B 2 90
 press DOWN 2 20

@@ -375,3 +375,32 @@
   1. **草系太輕鬆可以嗎?** 這是 Grinarbor 的惡系屬性造成的,不是對照的問題。如果希望有壓力,最小的改法是給 Shachowl 或 Iwadusk 一招非超能力的招式(例如 Iwadusk 的 Ancient Power,或 Shachowl 的 Aerial Ace),要改 `trainers.party`(Sonia 的範圍)。
   2. **Iwadawn(375)和 Iwadusk(460)數值不對稱。** Iwadawn 原本接的是 Nosepass(375),Solrock 對到它本來就是 −18%(使用者之前接受過)。館主的雙王牌一強一弱會有點怪。選項:(a) 不管;(b) 道館裡的 Iwadawn 等級拉高 2–3 級;(c) Iwadusk 也做成 375,兩隻對稱,道館整體變簡單。我建議 (b)。
 - 火系如果之後實測真的過不了:把 Claydol 位置(Enigmen)的 Earthquake 換成 Bulldoze,火系的門檻會落在 Lv46。
+
+### 決定後的做法(2026-11-22;使用者核准「加一招非超能力的招式」和「Iwadawn 升 2–3 級」,以下是 Mark 選的最小改法,`trainers.party` 由 Sonia 改)
+
+角色做出來之後,用實際的資料重算(`--set CLAYDOL:species=ENIGMEN --set LUNATONE:species=IWADUSK`,數值和草稿用的原版相同,結果一樣)。
+
+**要改的只有兩處(`TRAINER_TATE_AND_LIZA_1`):**
+
+| 位置 | 原版 | 改成 |
+|---|---|---|
+| Lunatone → **Iwadusk** Lv42 @ Sitrus Berry | Light Screen / Psychic / Hypnosis / Calm Mind | **Moonblast** / Psychic / Hypnosis / Calm Mind |
+| Solrock → **Iwadawn** | Lv42 | **Lv44**(招式不變:Sunny Day / Solar Beam / Psychic / Flamethrower) |
+
+其他兩隻不動:Claydol → Enigmen Lv41(Earthquake / Ancient Power / Psychic / Light Screen)、Xatu → Shachowl Lv41(Psychic / Sunny Day / Confuse Ray / Calm Mind)。
+
+- **為什麼是 Iwadusk 的 Moonblast**:
+  - 妖精系打草/惡的 Grinarbor 是 2 倍,正好補上「超能力對它無效」的洞;對火/鋼的 Trekcart 只有 1/4,不會讓本來就最吃虧的火系更難。
+  - Moonblast 是 Iwadusk 自己 Lv40 學的升級招式(月光),不用另外找理由。
+  - 拿掉的是 Light Screen,而 Enigmen 還帶著一個,隊伍的功能沒有少。
+  - 另一個候選是 Shachowl 的 Aerial Ace,但 Shachowl 的招式機清單裡沒有 Aerial Ace,要另外開例外,所以不選。
+- **Iwadawn Lv44**:375 的 Iwadawn 和 460 的 Iwadusk 不對稱,升 2 級補一點。升到 Lv45 在計算上沒有差別,所以取 2 級。
+
+| | 草 | 火 | 水 |
+|---|---|---|---|
+| 原版基準 | Lv42 | ✗ | Lv48 |
+| 只照對照,不改 | Lv33 | ✗ | Lv38 |
+| **Moonblast + Iwadawn Lv44(採用)** | **Lv37** | ✗ | Lv38 |
+
+- 草系的門檻從 Lv33 升到 Lv37(卡在 Iwadusk),還是比原版低 5 級;火系和水系不變。
+- 限制和前面一樣:這是雙打,數字只能跟原版比較。火系在一對一還是過不了 Enigmen 的 Earthquake(原版的 Blaziken 也過不了);如果 Sonia 實測真的卡住,再把 Earthquake 換成 Bulldoze(火系 Lv46)。

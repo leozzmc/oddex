@@ -17,7 +17,7 @@ egg_groups = ["FLYING"]
 growth_rate = "MEDIUM_FAST"
 body_color = "PURPLE"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 22, into = "NOBUSUMEN" }]   # [{ method, param, into }]
 
 [dex]
 height = 8
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
 [design]
 habitat = ["GraniteCave"]
 level_band = [6, 11]
-family = ["KOMORIMEN"]
+family = ["KOMORIMEN", "NOBUSUMEN"]

@@ -1,0 +1,57 @@
+# Mossdeep segment (docs/research/mask-designs.md, "Iwadusk 的 Brief", option A; approved by the user
+# 2026-11-22): Iwadawn's night twin, the closed rock door with a crescent crack of moonlight and the
+# mochi-pounding moon rabbit of folklore inside it (imagery only, no moon god). Replaces Lunatone
+# (Tate & Liza). Stats and ability follow Lunatone.
+
+id = "IWADUSK"
+name = "Iwadusk"
+category = "Moon Door"
+
+types = ["ROCK", "PSYCHIC"]
+abilities = ["LEVITATE", "NONE", "NONE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 90, atk = 55, def = 65, spa = 95, spd = 85, spe = 70 }   # total 460
+ev_yield = { spa = 2 }
+catch_rate = 45
+exp_yield = 161
+gender = "GENDERLESS"
+egg_cycles = 25
+egg_groups = ["MINERAL"]
+growth_rate = "FAST"
+body_color = "BLUE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 10
+weight = 1680
+text = """
+A great rock that only opens a crack,
+and only at night. Look into the pale
+light on a full moon and you can see
+a rabbit inside, pounding rice cakes."""
+scale = { pokemon = 300, pokemon_offset = 3, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "TACKLE"], [1, "HARDEN"], [1, "CONFUSION"], [1, "ROCK_THROW"], [5, "HYPNOSIS"], [10, "ROCK_POLISH"], [15, "ROCK_SLIDE"], [20, "PSYSHOCK"], [25, "COSMIC_POWER"], [28, "MOONLIGHT"], [30, "PSYCHIC"], [35, "STONE_EDGE"], [40, "MOONBLAST"], [45, "FUTURE_SIGHT"], [50, "EXPLOSION"],
+]
+# HMs follow Lunatone, the vanilla species it replaces: Flash only.
+teachable = [
+    "BLIZZARD", "BODY_SLAM", "CALM_MIND", "DOUBLE_TEAM", "DREAM_EATER", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "LIGHT_SCREEN", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REFLECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_TOMB", "SAFEGUARD", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SIGNAL_BEAM", "SKILL_SWAP", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/iwadusk"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 8, size = "M" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["MossdeepGym"]
+level_band = [30, 42]
+family = ["IWADUSK"]
