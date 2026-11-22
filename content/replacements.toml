@@ -222,6 +222,8 @@ WOBBUFFET = "TOMOEDEN"   # psychic, 405 -> 405
 MACHAMP = "YOKOZUNAT"    # stage 3, fighting, 505 -> 395 (-22%, flagged)
 LUVDISC = "SHOJOMAI"     # water, 330 -> 340
 SEAKING = "KAMORAI"      # water, 450 -> 310 (-31%, flagged)
+# Shoal Cave (in Sonia's [mossdeep] scope with Route 125): the low-tide ice room.
+SNORUNT = "YAMAMBRR"     # ice, 300 -> 295; Spheal's creature, the mountain hag of the snow
 # Safari Zone, the four areas open before the Hall of Fame (wild only, so the gaps do not affect
 # battles; the two eastern areas are post-game and stay out of scope).
 PSYDUCK = "SHOJOBOB"     # water, 320 -> 220 (-31%)

@@ -687,6 +687,7 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 | Kyogre | 1 | 670 | | | 1 | Mt. Pyre Summit 的文字 | 同上 |
 
 - 其餘 68 種已經有對照(Winona 批次以前的表),不用動。
+- Sonia 的正式範圍(`plan-b-references.md` §12)多了 Shoal Cave,裡面的 Snorunt(冰,300,退潮時的冰室 3 格)對到 Yamambrr(冰/地面,295,同樣是第 1 階段;Snorunt 能學的 HM 只有 Flash,Yamambrr 已經有)。
 - Route 125 多出來的 3 種:Machamp → Yokozunat(505 → 395,**⚠ −22%**)、Luvdisc → Shojomai(330 → 340)、Seaking → Kamorai(450 → 310,**⚠ −31%**;Goldeen 已經是 Kamorai,這條線沒有第 2 階段)。
 - HM:Kumoryu 要加 Surf、Strength、Waterfall、Dive(從 Gyarados 來;雲龍游泳說得通,Strength 也可以),Yokozunat 加 Cut(Pinsir、Heracross),Ichimai 加 Flash(Duskull),Shojobob 加 Strength、Rock Smash(Psyduck,只有做 Safari 才需要)。新角色照它取代的原版:Kamikko/Kaminobi 是 Flash,Nobusumen 是 Fly,Enigmen 是 Strength、Flash、Rock Smash,Iwadusk 是 Flash,Shojoran 是 Surf、Strength、Flash、Rock Smash、Waterfall、Dive。
 
