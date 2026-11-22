@@ -17,20 +17,20 @@ SHINY = {**NORMAL, 'hair': (0.96, 0.78, 0.26), 'hairdark': (0.70, 0.48, 0.10), '
          'cup': (0.16, 0.30, 0.74), 'face': (0.98, 0.62, 0.66), 'arm': (0.96, 0.66, 0.70)}
 
 
-# Hand-placed pixels (make_art.apply_pixels): the shojo's laughing face. Two dark arcs for eyes
-# squeezed shut with laughter, and a wide open grin with a row of white teeth. The specular glint
-# the render leaves beside the left eye is painted out.
+# Hand-placed pixels (make_art.apply_pixels): no smile (docs/ART_GUIDELINES.md). The shojo is drunk:
+# round eyes stretched wide and staring, the pupils pointing different ways, and the mouth hanging
+# open in a slack O. The specular glint the render leaves beside the left eye is painted out.
 _FACE = [((30, 18), ['dd...',
                      'dkkka',
-                     'kdddk',
-                     '..dda']),
+                     'kfkfk',
+                     'dkkka']),
          ((38, 19), ['akkks',
-                     'kaaak',
-                     '..aa.']),
-         ((33, 26), ['kkkkkkkkk',
-                     'krfffffrk',
-                     'akrrrrrks',
-                     '.akkkkks.'])]
+                     'kffkk',
+                     'akkks']),
+         ((34, 27), ['akkkkks',
+                     'krrrrrk',
+                     'krrrrrk',
+                     '.kkkkk.'])]
 PIXELS = {'keys': {'k': (28, 18, 22), 'd': (246, 153, 134), 'a': (213, 132, 116), 's': (172, 106, 92),
                    'r': (111, 69, 69), 'f': (253, 248, 231)},   # r: a dark red the shiny palette keeps
           'front': {'box': (8, 0, 56, 56), 'patches': _FACE},

@@ -10,6 +10,28 @@ NORMAL = {'stone': (0.62, 0.60, 0.56), 'dark': (0.14, 0.13, 0.13), 'glow': (0.95
 SHINY = {**NORMAL, 'stone': (0.45, 0.42, 0.55), 'glow': (0.55, 0.85, 1.0), 'glow2': (0.40, 0.65, 1.0)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the lantern's eyes as two tall dark hollows, one in each lit window, instead
+# of two small squares crowded against the pillar.
+_FACE = [
+    ((31, 27), ['kkf8',
+                'kkf8',
+                'kk..']),
+    ((36, 27), ['8kk',
+                '8kk',
+                '.kk']),
+]
+_ICON = [
+    ((16, 16), ['K.K',
+                'K.K']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (250, 249, 241), '8': (164, 162, 157),
+                   'K': (65, 65, 65)},
+          'front': {'box': (4, 3, 60, 56), 'patches': _FACE},
+          'front2': {'box': (3, 5, 61, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (3, 6, 29, 30), 'patches': _ICON},
+          'icon2': {'box': (3, 5, 29, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     stone = k.toon('stone', c['stone'], steps=k.HORROR_STEPS, weathered=0.4)
     dark = k.flat('dark', c['dark'])

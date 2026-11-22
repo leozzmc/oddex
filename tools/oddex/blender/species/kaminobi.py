@@ -21,7 +21,7 @@ SHINY = {**NORMAL, 'hair': (0.86, 0.86, 0.92), 'kimono': (0.52, 0.26, 0.74), 'ki
 
 # Hand-placed pixels (make_art.apply_pixels): the whole 12x12 face. The good eye is a small almond
 # with a glint; the other has fallen out and left a round black socket, bigger than the eye; one
-# thin crack runs from the brow through the socket to the corner of the mouth and pulls it askew.
+# thin crack runs from the brow through the socket down to the corner of the flat mouth (no smile).
 _K = {'k': (28, 18, 22), 'w': (255, 255, 255), 'e': (251, 248, 243), 'd': (238, 235, 230), 'b': (209, 206, 202),
       'x': (111, 89, 97), 'h': (75, 69, 85), 'c': (251, 218, 215), 'r': (231, 97, 104)}   # x: the crack, h: hair
 _FACE = ['.h.dddddx...',
@@ -32,8 +32,8 @@ _FACE = ['.h.dddddx...',
          'eeddddddkkbb',
          'eeddddddxbbb',
          'ccdddddxbb..',
-         'dddddrxbbbb.',
-         'dddrrdbbbb..',
+         'ddddddxbbbb.',
+         'dddrrrbbbb..',
          'dddddbbbbb..',
          '.dbbbbbb....']
 _ICON = [((15, 10), ['WWW', 'WWW', 'KWK', 'WWW'])]

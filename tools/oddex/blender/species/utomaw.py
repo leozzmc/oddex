@@ -15,6 +15,28 @@ SHINY = {**_base['SHINY'], 'bird': (0.30, 0.30, 0.34), 'bill': (0.55, 0.75, 0.85
          'eye': (0.95, 0.85, 0.20), 'rib': (0.70, 0.75, 0.80)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): a bird of prey's glare, a red eye with a black pupil under a heavy dark brow.
+_FACE = [
+    ((27, 17), ['kkkk',
+                'rkrf',
+                'rrrf']),
+    ((36, 17), ['akkk',
+                'arkr',
+                'arr.']),
+]
+_ICON = [
+    ((13, 11), ['KK']),
+    ((14, 12), ['R']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'r': (237, 89, 80), 'f': (246, 246, 244), 'a': (173, 175, 173),
+                   'K': (65, 65, 65),
+                   'R': (246, 98, 82)},
+          'front': {'box': (2, 7, 61, 56), 'patches': _FACE},
+          'front2': {'box': (1, 9, 62, 56), 'patches': [((x - 1, y + 2), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (3, 8, 28, 30), 'patches': _ICON},
+          'icon2': {'box': (3, 7, 28, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     opts = _base['build'](k, c)
     bird = k.toon('bird', c['bird'], two_tone=True)

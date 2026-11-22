@@ -28,6 +28,30 @@ def lily(k, at, r, petal, n=6):
         k.spike(mid, tip, r * 0.1, petal)
 
 
+# Hand-placed pixels (make_art.apply_pixels): the death-flower mask's eyes as tall black hollows, a single red point in each.
+_FACE = [
+    ((27, 24), ['.kk.',
+                'kkkk',
+                'krkk',
+                '.kk.']),
+    ((37, 24), ['.kk.',
+                'kkkk',
+                'kkrk',
+                '.kk.']),
+]
+_ICON = [
+    ((11, 14), ['KKWWWKK',
+                'KKWWWKK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'r': (239, 89, 97),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255)},
+          'front': {'box': (10, 0, 53, 56), 'patches': _FACE},
+          'front2': {'box': (9, 2, 55, 56), 'patches': [((x + 1, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (6, 4, 26, 30), 'patches': _ICON},
+          'icon2': {'box': (6, 3, 26, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=(0.62, 0.85, 1.0))
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

@@ -13,6 +13,24 @@ SHINY = {**NORMAL, 'face': (0.98, 0.62, 0.70), 'hair': (0.95, 0.75, 0.25), 'wate
          'arm': (0.95, 0.66, 0.72)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): no smile (docs/ART_GUIDELINES.md). The same wide staring drunk eyes as
+# Shojobob; the render's glint beside the left eye is painted out.
+_FACE = [
+    ((26, 30), ['dd',
+                'dd',
+                'd.']),
+    ((28, 32), ['dkkk9',
+                'kfkfk',
+                'dkkk9']),
+    ((37, 31), ['9kkk9',
+                'kffkk',
+                '9kkk9']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (243, 250, 255), 'd': (243, 149, 129), '9': (211, 128, 111)},
+          'front': {'box': (7, 14, 56, 56), 'patches': _FACE},
+          'front2': {'box': (6, 16, 57, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], glint=0.6)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

@@ -8,6 +8,7 @@
 - **以其為靈感,不照描**:參考的是面具的「類型」(表情、角、眼睛的處理、上色慣例),不參考任何特定的照片、收藏品或現代作品。能面是數百年傳承的傳統器物,以類型為靈感沒有版權問題。
 - **避開神聖的核心**:Cham 的神祇面具(例如 Mahakala、閻魔法王的本尊)不做成可以抓的怪獸,只用動物類和故事角色類(Shawa Shachi 裡的鹿和獵犬)。能面方面,〈翁〉被視為「能にして能にあらず」的祭儀,演出前要齋戒;它的黒式尉也帶有神性。見第 1 隻的說明和替代方案。
 - **立體感**:面具本體要看得出是有厚度的器物,包含側面的木頭斷面、內側的凹面、漆面高光、3~4 階陰影,以及綁繩或掛環。四腳獸則是身體配上一張立體的面具,面具和臉之間要看得出前後層次。
+- **不畫笑臉**(使用者 2026-11-22):眼睛不畫成笑到瞇起來的弧形,嘴角不上揚,不露齒笑。原型在笑的面具(猩々、翁、嘯等)改成瞪眼、呆滯或嚴肅的表情;嘴可以張開,但不是在笑。細節見 `docs/ART_GUIDELINES.md` 原則 5。下面各隻的 Brief 裡寫到「笑」的地方,是這條規則之前的設計,以實際的 sprite 為準。
 - **劇情位置不變**(御三家、各野生位置、Route 102 訓練家用的兩隻)。屬性和名字照面具重新決定,繼續維持「少見又怪」的屬性組合。
 - **ID 不變**:改名會讓 `SPECIES_*` 常數改變。目前的 `gen_species.py` 只往後追加,如果直接改 id,會被當成刪掉舊的、新增一隻,後面的編號就會移動。所以實作時要在 TOML 加 `previous_ids = ["MOSSPRIT"]`,讓產生器知道這是改名、沿用原本的編號;同時一併更新 `roles.toml`、`regional_dex.toml` 和替換表。
 
@@ -653,6 +654,12 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 - **Shojoran**:頭髮是一圈往同一個方向甩的尖束,不是一整片。
 - Duskull → Ichimai 採用(比原版強 36%,使用者接受);Tate & Liza 的實際改法見 `balance.md`。
 - **眼睛(2026-11-22,使用者:「眼睛都太粗糙了」)**:Kamikko、Kaminobi、Nobusumen、Enigmen、Shojoran 的眼睛和嘴改成手擺的像素(各模型檔的 `PIXELS`,`make_art.apply_pixels`),輪廓和資料不變。Kamikko 是乾淨的杏仁眼加一點高光;Kaminobi 一隻小眼、一個比眼睛大的黑眼窩、一道細裂痕;Nobusumen 是斜眼皮下的黃眼和直縫瞳孔,嘴和兩根長牙分開;Enigmen 是埃及式的眼線、紅色瞳孔和上揚的嘴角;Shojoran 是笑到瞇成弧線的眼睛和露齒的大笑。對照圖:`~/oddex-shots/mark/mossdeep/eyes_before_after_2x.png`。Iwadusk 沒有臉,不改。
+- **眼睛,第二輪(2026-11-22,使用者:「大致可以,但不要笑臉」,並核准重畫 19 隻既有角色的眼睛)**:
+  - Mossdeep 的笑臉拿掉:Shojoran 改成瞪大的圓眼(兩邊瞳孔朝不同方向)和張開的 O 形嘴;Enigmen 的嘴角改成往下;Kaminobi 的嘴改成平的。
+  - 用同樣的 `PIXELS` 方法重畫 19 隻(正面兩幀和 icon;顏色都選異色調色盤不會變掉的):Omotelle(沉重眼皮的下垂眼)、Deigloom(金眼加黑框和瞳孔)、Kyokon 和 Kyozosu(往外上挑的黑色細眼,上面一道紅)、Inarizuma(水平的細眼,上面一道紅)、Shojobob 和 Shojomai(瞪大的圓眼)、Higanmen(直的黑眼窩,裡面一點紅)、Sphinmen(眼線、黑瞳孔、平的嘴)、Yatsufu(圓環形的小眼、平的嘴)、Tsukuyume(閉著的眼是一條直線加三根睫毛)、Namazura(沉重眼皮的半眼)、Ichimai(頭髮縫裡的一隻眼,離裂痕一格)、Gachirinza(閉眼是兩條直線,嘴是短的平線)、Dogoggle(有黑框的護目鏡眼和一道橫縫)、Tsunacoon(往旁邊瞪的方框眼)、Utomaw(濃眉下的紅眼)、Jatai(金色的蛇眼和直縫瞳孔)、Torobi(兩個窗裡各一個直的黑眼)。
+  - Shojomai 和 Ichimai 的 icon 原本就有清楚的眼睛,沒有改。
+  - 對照圖(24 隻,含異色和 icon):`~/oddex-shots/mark/mossdeep/eyes24_before_after_2x.png`、`eyes24_before_after_1x.png`。
+  - 還在笑、這次沒有改的既有角色(等使用者決定):**Tomoeden**(笑到瞇起來的眼和張開的笑嘴)、**Terubozu**(墨水畫的歪笑)、**Okinoir**(翁面的月牙形笑眼)。Kyokon 鼻子下面的紅線(原本的設計是「細細的笑」)在 64 px 只是一小段紅線,看不出是笑。
 
 ### 範圍和清單是怎麼來的
 - 用 `check_species_refs.py --maps <地圖前綴> --json` 掃 David 給的路線:Route 121–124、Lilycove、Mt. Pyre、Aqua Hideout、Mossdeep(含道館和 Space Center)。另外加了 **Magma Hideout 和 Jagged Pass**:Emerald 的劇情是 Mt. Pyre → Magma Hideout → Aqua Hideout → Mossdeep,David 的路線沒列,請 Sonia 確認。

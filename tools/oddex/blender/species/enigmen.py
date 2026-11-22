@@ -20,7 +20,7 @@ SHINY = {**NORMAL, 'face': (0.94, 0.95, 1.0), 'gold': (0.62, 0.64, 0.72), 'blue'
 
 
 # Hand-placed pixels (make_art.apply_pixels): kohl-rimmed Egyptian eyes, a red iris in a white eye
-# with the kohl drawn out into a wing at the outer corner, and the thin fixed smile.
+# with the kohl drawn out into a wing at the outer corner, and a thin stern mouth (no smile).
 _FACE = [((31, 30), ['eekkkee',
                      'kkfrrke',
                      'eekkkee',
@@ -30,8 +30,8 @@ _FACE = [((31, 30), ['eekkkee',
                      'ekrrfkkk',
                      'eekkkddd',
                      '...d....']),
-         ((36, 40), ['k....k',     # the rendered mouth line, its corners turned up
-                     '.kkkkd'])]
+         ((36, 41), ['.kkkkd',     # the rendered mouth line, its corners turned down: no smile
+                     'k....k'])]
 _ICON = [((16, 18), ['BBBBB', 'KRBRK'])]
 PIXELS = {'keys': {'k': (28, 18, 22), 'f': (251, 251, 246), 'r': (249, 97, 89), 'e': (237, 229, 186), 'd': (207, 199, 162),
                    'B': (246, 246, 172), 'K': (65, 65, 65), 'R': (213, 98, 65)},

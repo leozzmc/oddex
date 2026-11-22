@@ -10,6 +10,28 @@ NORMAL = {'face': (0.90, 0.20, 0.12), 'lacquer': (0.20, 0.06, 0.05), 'hair': (0.
 SHINY = {**NORMAL, 'face': (0.98, 0.62, 0.70), 'hair': (0.95, 0.75, 0.25), 'water': (0.35, 0.30, 0.80)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): no smile (docs/ART_GUIDELINES.md). Round eyes stretched wide and staring,
+# the pupils pointing different ways: the shojo is drunk.
+_FACE = [
+    ((28, 32), ['akkk8',
+                'kfkfk',
+                'akkk8']),
+    ((39, 31), ['8kkk8',
+                'kffkk',
+                '8kkk8']),
+]
+_ICON = [
+    ((14, 20), ['KK']),
+    ((19, 19), ['KK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (237, 249, 255), 'a': (243, 123, 97), '8': (211, 106, 83),
+                   'K': (65, 65, 65)},
+          'front': {'box': (6, 12, 58, 56), 'patches': _FACE},
+          'front2': {'box': (4, 15, 60, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (4, 10, 28, 30), 'patches': _ICON},
+          'icon2': {'box': (4, 9, 28, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], glint=0.6)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

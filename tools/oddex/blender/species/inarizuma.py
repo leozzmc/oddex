@@ -12,6 +12,37 @@ NORMAL = {'mask': (0.96, 0.95, 0.92), 'lacquer': (0.18, 0.08, 0.05), 'red': (0.8
 SHINY = {**NORMAL, 'body': (0.92, 0.72, 0.30), 'mask': (0.98, 0.88, 0.60), 'fire': (0.70, 0.45, 0.95),
          'fire2': (0.95, 0.85, 1.0)}
 
+# Hand-placed pixels (make_art.apply_pixels): the shrine fox's eyes, level and heavy-lidded (Kyokon's slant), each a
+# straight dark lid over a narrower eye with a line of red above.
+_FACE = [
+    ((28, 23), ['....c...',
+                'ffffcccc',
+                'ffrrrrrc',
+                'ffkkkkkc',
+                'fffkkkcc']),
+    ((39, 23), ['ccccc...',
+                'ccccccc.',
+                'rrrrrss.',
+                'kkkkks..',
+                '.kkk....']),
+]
+_ICON = [
+    ((15, 15), ['WRRWWWRR',
+                'WKKWWWKK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22),
+                   'r': (237, 104, 89),
+                   'f': (250, 249, 246),
+                   'c': (224, 223, 220),
+                   's': (184, 183, 181),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255),
+                   'R': (213, 98, 65)},
+          'front': {'box': (5, 1, 58, 56), 'patches': _FACE},
+          'front2': {'box': (4, 4, 59, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (4, 5, 28, 30), 'patches': _ICON},
+          'icon2': {'box': (4, 4, 28, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
 
 def build(k, c):
     mask_m = k.toon('mask', c['mask'], steps=(0.5, 0.78, 1.0))

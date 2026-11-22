@@ -8,6 +8,34 @@ NORMAL = {'mask': (0.95, 0.94, 0.90), 'lacquer': (0.18, 0.08, 0.05), 'red': (0.7
           'gold': (0.92, 0.75, 0.25)}
 SHINY = {**NORMAL, 'mask': (0.20, 0.20, 0.24), 'red': (0.90, 0.75, 0.25), 'body': (0.70, 0.72, 0.78)}
 
+# Hand-placed pixels (make_art.apply_pixels): the fox mask's eyes as black slits slanting up to the outer corners,
+# each under a line of red.
+_FACE = [
+    ((33, 24), ['rrreeccc',
+                'kkkrrrcc',
+                'eekkkkrr',
+                'eeeeckkk']),
+    ((44, 24), ['cccccrrr',
+                'ccrrrkkk',
+                'rrkkkkcs',
+                'kkkcc...']),
+]
+_ICON = [
+    ((16, 16), ['KKWWWWKKG']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22),
+                   'r': (228, 97, 89),
+                   'e': (249, 248, 243),
+                   'c': (223, 222, 218),
+                   's': (183, 182, 179),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255),
+                   'G': (189, 189, 180)},
+          'front': {'box': (10, 2, 54, 56), 'patches': _FACE},
+          'front2': {'box': (9, 5, 55, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (6, 6, 26, 30), 'patches': _ICON},
+          'icon2': {'box': (6, 5, 26, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
 
 def build(k, c):
     mask_m = k.toon('mask', c['mask'], steps=(0.5, 0.78, 1.0), weathered=0.15)

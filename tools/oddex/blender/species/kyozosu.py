@@ -31,6 +31,31 @@ class _Longer:
         kw.update(length=1.75, girth=0.42, leg=0.32, tail=two_tails)
         return self._k.beast_behind_mask(mask_height, body_mat, **kw)
 
+# Hand-placed pixels (make_art.apply_pixels): the same slanting fox eyes as Kyokon, smaller on the tilted mask.
+_FACE = [
+    ((32, 29), ['rrrffff',
+                'kkkrrrf',
+                'ffkkkkf',
+                'ffffff.']),
+    ((42, 29), ['eeeerrrb',
+                'errrkkkb',
+                'ekkkkebb']),
+]
+_ICON = [
+    ((16, 18), ['KKWWWWKK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22),
+                   'r': (228, 97, 89),
+                   'f': (249, 248, 243),
+                   'e': (223, 222, 218),
+                   'b': (183, 182, 179),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255)},
+          'front': {'box': (7, 0, 56, 56), 'patches': _FACE},
+          'front2': {'box': (5, 2, 58, 56), 'patches': [((x + 1, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (4, 4, 27, 30), 'patches': _ICON},
+          'icon2': {'box': (4, 3, 27, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
 
 def build(k, c):
     opts = _base['build'](_Longer(k), c)

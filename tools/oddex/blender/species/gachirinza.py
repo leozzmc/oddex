@@ -12,6 +12,35 @@ SHINY = {**NORMAL, 'face': (0.60, 0.70, 0.92), 'robe': (0.25, 0.30, 0.65), 'limb
          'moon': (1.0, 0.88, 0.55)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): no smile (docs/ART_GUIDELINES.md). The sitter's eyes shut in meditation as
+# two straight dark lines, and the mouth a short flat line.
+_FACE = [
+    ((29, 17), ['..d..',
+                'kkkkk']),
+    ((40, 17), ['kkkk']),
+    ((30, 23), ['d...a',
+                '.kkk.']),
+]
+# The second frame moves the parts by different amounts, so it has its own patches.
+_FACE2 = [
+    ((29, 19), ['ddda.',
+                'kkkkk']),
+    ((41, 19), ['kkkk']),
+    ((31, 24), ['....a',
+                'kkkk.']),
+]
+_ICON = [
+    ((14, 12), ['KKSSKK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'd': (246, 207, 149), 'a': (196, 164, 118),
+                   'K': (65, 65, 65),
+                   'S': (180, 131, 90)},
+          'front': {'box': (9, 2, 55, 56), 'patches': _FACE},
+          'front2': {'box': (8, 5, 56, 56), 'patches': _FACE2},
+          'icon': {'box': (5, 5, 27, 30), 'patches': _ICON},
+          'icon2': {'box': (5, 4, 27, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, glint=0.3)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

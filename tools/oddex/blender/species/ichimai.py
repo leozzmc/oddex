@@ -17,6 +17,18 @@ SHINY = {**NORMAL, 'robe': (0.40, 0.56, 0.92), 'pattern': (0.85, 0.65, 0.20), 's
          'stonedark': (0.10, 0.28, 0.28), 'moss': (0.80, 0.58, 0.18)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the one eye that shows through the hair, a dark oval with a single glint,
+# set clear of the crack beside it.
+_FACE = [
+    ((27, 11), ['.kkk..',
+                'kkwkke',
+                '.kkk..']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'w': (252, 249, 246), 'e': (234, 232, 229)},
+          'front': {'box': (12, 0, 52, 56), 'patches': _FACE},
+          'front2': {'box': (11, 2, 53, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _FACE]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=(0.6, 0.85, 1.0))
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

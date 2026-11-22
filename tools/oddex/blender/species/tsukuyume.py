@@ -10,6 +10,25 @@ NORMAL = {'face': (0.86, 0.90, 0.98), 'lacquer': (0.12, 0.10, 0.20), 'hair': (0.
 SHINY = {**NORMAL, 'moon': (0.85, 0.20, 0.18), 'hair': (0.90, 0.90, 0.92), 'lid': (0.90, 0.35, 0.30)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): asleep, not smiling: each closed eye a straight dark line with three
+# lashes hanging below it.
+_FACE = [
+    ((27, 32), ['kkkkkka',
+                'kekakaa']),
+    ((39, 32), ['kkkkkk',
+                'akakak']),
+]
+_ICON = [
+    ((14, 19), ['KKK..KK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'e': (239, 244, 253), 'a': (190, 194, 202),
+                   'K': (65, 65, 65)},
+          'front': {'box': (6, 3, 58, 56), 'patches': _FACE},
+          'front2': {'box': (5, 5, 59, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (4, 6, 28, 30), 'patches': _ICON},
+          'icon2': {'box': (4, 5, 28, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, glint=0.2)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

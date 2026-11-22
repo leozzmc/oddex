@@ -11,6 +11,27 @@ NORMAL = {'face': (0.93, 0.86, 0.55), 'lacquer': (0.25, 0.15, 0.08), 'eye': (0.9
 SHINY = {**NORMAL, 'cocoon': (0.42, 0.22, 0.48), 'straw': (0.95, 0.80, 0.30), 'strawdark': (0.72, 0.52, 0.12)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): two boxed eyes glaring sideways out of the cocoon, a white eye with the
+# pupil pushed to one side.
+_FACE = [
+    ((29, 16), ['kkkk',
+                'kfkk',
+                'kkkk']),
+    ((38, 16), ['kkkk',
+                'kfkk',
+                'kkkk']),
+]
+_ICON = [
+    ((14, 11), ['K..K']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (251, 251, 249),
+                   'K': (65, 65, 65)},
+          'front': {'box': (13, 6, 51, 56), 'patches': _FACE},
+          'front2': {'box': (12, 8, 51, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (7, 6, 25, 30), 'patches': _ICON},
+          'icon2': {'box': (7, 5, 25, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, weathered=0.2)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

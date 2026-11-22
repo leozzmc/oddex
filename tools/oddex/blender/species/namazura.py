@@ -14,6 +14,24 @@ SHINY = {**NORMAL, 'face': (0.98, 0.80, 0.40), 'tuft': (1.0, 0.96, 0.80), 'body'
          'gourd': (0.30, 0.62, 0.62), 'cord': (0.20, 0.30, 0.75)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the catfish's sluggish eyes, a straight dark lid over a narrower eye.
+_FACE = [
+    ((25, 34), ['kkkk',
+                'ckkc']),
+    ((35, 34), ['kkkk',
+                'ckkc']),
+]
+_ICON = [
+    ((12, 20), ['KK..KK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'c': (199, 196, 186),
+                   'K': (65, 65, 65)},
+          'front': {'box': (2, 20, 62, 56), 'patches': _FACE},
+          'front2': {'box': (1, 21, 63, 56), 'patches': [((x, y + 0), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (3, 13, 29, 30), 'patches': _ICON},
+          'icon2': {'box': (3, 12, 29, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, glint=0.3)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

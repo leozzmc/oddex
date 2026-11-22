@@ -29,6 +29,29 @@ def leaf(k, root, side, size, mat, vein, lobes=7, spread=(-30, 150)):
     k.ellipsoid(root, (size * 0.28, 0.05, size * 0.28), mat)
 
 
+# Hand-placed pixels (make_art.apply_pixels): no smile (docs/ART_GUIDELINES.md). The old man's eyes as small round
+# rings, wide open and staring under the white brows, and the mouth a flat line.
+_FACE = [
+    ((36, 28), ['.kkk.',
+                'ckfkc',
+                '.kkk.']),
+    ((44, 28), ['kkk',
+                'kfk',
+                'kkk']),
+    ((39, 35), ['ckkkkk',
+                'ccccc.']),
+]
+_ICON = [
+    ((15, 17), ['K.K']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (252, 252, 249), 'c': (216, 197, 163),
+                   'K': (65, 65, 65)},
+          'front': {'box': (3, 12, 61, 56), 'patches': _FACE},
+          'front2': {'box': (1, 14, 62, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (2, 9, 29, 30), 'patches': _ICON},
+          'icon2': {'box': (2, 8, 29, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     wood = k.toon('wood', c['wood'], steps=(0.55, 0.8, 1.0), weathered=0.2)
     wooddark = k.toon('wooddark', c['wooddark'], two_tone=True)

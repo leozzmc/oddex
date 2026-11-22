@@ -13,6 +13,39 @@ SHINY = {**NORMAL, 'clay': (0.36, 0.46, 0.58), 'pattern': (0.92, 0.74, 0.28), 'g
          'claw': (0.24, 0.30, 0.42), 'tip': (0.95, 0.80, 0.30)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the dogu's goggle eyes, each a pale oval with a dark rim and one bold slit
+# across it, so they stand out from the clay body.
+_FACE = [
+    ((19, 25), ['..kkkkk..',
+                '.kfffffk.',
+                'kfffffffk',
+                'kkkkkkkkk',
+                'kfffffffk',
+                '.kfffffk.',
+                '..kkkkk..']),
+    ((31, 25), ['..kkkk..',
+                '.kffffk.',
+                'kffffffk',
+                'kkkkkkkk',
+                'kffffffk',
+                '.kffffk.',
+                '..kkkk..']),
+]
+_ICON = [
+    ((10, 15), ['WWWGGWWW',
+                'KKKGGKKK',
+                'WWWGGWWW']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (241, 236, 223),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255),
+                   'G': (189, 189, 180)},
+          'front': {'box': (4, 16, 59, 56), 'patches': _FACE},
+          'front2': {'box': (3, 18, 60, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (3, 11, 28, 30), 'patches': _ICON},
+          'icon2': {'box': (3, 10, 28, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     clay = k.toon('clay', c['clay'], steps=k.HORROR_STEPS, glint=0.15)
     pattern = k.toon('pattern', c['pattern'], two_tone=True)

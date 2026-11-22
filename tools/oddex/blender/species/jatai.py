@@ -15,6 +15,33 @@ SHINY = {**NORMAL, 'obi': (0.20, 0.42, 0.40), 'obidark': (0.08, 0.22, 0.22), 'pa
          'cord': (0.95, 0.70, 0.20)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): snake eyes, gold with a black vertical slit and a dark rim, in place of a
+# cluster of gold, red and dark pixels.
+_FACE = [
+    ((29, 23), ['.kkk..',
+                'kekek.',
+                'kekekc',
+                'kekekc',
+                '.kkkcc']),
+    ((37, 23), ['..kkk..',
+                '.kekek.',
+                '.kekek.',
+                '.kekek.',
+                '..kkk..']),
+]
+_ICON = [
+    ((15, 15), ['KY.KY',
+                'KY.KY']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'e': (246, 226, 149), 'c': (198, 188, 184),
+                   'K': (65, 65, 65),
+                   'Y': (246, 246, 41)},
+          'front': {'box': (13, 2, 51, 56), 'patches': _FACE},
+          'front2': {'box': (12, 4, 52, 56), 'patches': [((x, y + 1), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (7, 5, 25, 30), 'patches': _ICON},
+          'icon2': {'box': (7, 4, 25, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=k.HORROR_STEPS, glint=0.3, weathered=0.15)
     blush = k.flat('blush', c['blush'])

@@ -8,6 +8,20 @@ NORMAL = {'face': (0.90, 0.92, 0.86), 'lacquer': (0.14, 0.06, 0.05), 'hollow': (
 SHINY = {**NORMAL, 'face': (0.78, 0.86, 0.96), 'gold': (0.55, 0.95, 0.80), 'hair': (0.82, 0.82, 0.88)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): the deigan's gold eyes, each a round gold eye with a
+# dark rim and a black pupil instead of a soft gold blob.
+_EYES = [((23, 22), ['..kkkk..', '.kbbbbk.', 'kbbkkbbk', '.kbbbbkD', 'FFkkkk..']),
+         ((37, 22), ['..kkkk..', '.kbbbbk.', 'kbbkkbbk', '.kbbbbk.', '..kkkk..']),
+         ((41, 21), ['D'])]
+_ICON = [((13, 14), ['3KKK22KKK2', 'KYYKK2KYYK', '3KKK22KKK2'])]
+PIXELS = {'keys': {'k': (28, 18, 22), 'b': (246, 223, 129), 'D': (220, 222, 216), 'F': (244, 246, 239),
+                   'K': (65, 65, 65), 'Y': (246, 246, 139), '3': (255, 255, 255), '2': (189, 189, 189)},
+          'front': {'box': (11, 0, 53, 56), 'patches': _EYES},
+          'front2': {'box': (10, 4, 54, 56), 'patches': [((x, y + 2), rows) for (x, y), rows in _EYES]},
+          'icon': {'box': (6, 4, 26, 30), 'patches': _ICON},
+          'icon2': {'box': (6, 3, 26, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=(0.55, 0.8, 1.0), weathered=0.2)
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)

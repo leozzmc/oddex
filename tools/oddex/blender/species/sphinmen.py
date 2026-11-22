@@ -16,6 +16,35 @@ SHINY = {**NORMAL, 'gold': (0.82, 0.84, 0.90), 'blue': (0.66, 0.12, 0.14), 'body
          'tuft': (0.28, 0.28, 0.32)}
 
 
+# Hand-placed pixels (make_art.apply_pixels): kohl-rimmed eyes, a black pupil in a white eye with the kohl drawn out into
+# a short wing at the outer corner, and a flat stern mouth (no smile).
+_FACE = [
+    ((31, 23), ['......ee..',
+                'fffffkkkee',
+                'ffkkkfkfke',
+                'fffffkkkee']),
+    ((41, 25), ['e',
+                'e']),
+    ((43, 23), ['...cccc',
+                '.kkkccc',
+                'kfkfkkk',
+                '.kkkc..']),
+    ((40, 38), ['kkkke',
+                'eeee.']),
+]
+_ICON = [
+    ((15, 14), ['WWWWWW',
+                'KKWWKK']),
+]
+PIXELS = {'keys': {'k': (28, 18, 22), 'f': (251, 247, 239), 'e': (233, 230, 222), 'c': (203, 200, 193),
+                   'K': (65, 65, 65),
+                   'W': (255, 255, 255)},
+          'front': {'box': (8, 0, 56, 56), 'patches': _FACE},
+          'front2': {'box': (6, 0, 58, 56), 'patches': [((x, y + 0), rows) for (x, y), rows in _FACE]},
+          'icon': {'box': (4, 3, 27, 30), 'patches': _ICON},
+          'icon2': {'box': (4, 2, 27, 29), 'patches': [((x, y - 1), rows) for (x, y), rows in _ICON]}}
+
+
 def build(k, c):
     face_m = k.toon('face', c['face'], steps=(0.62, 0.85, 1.0))
     lacquer = k.toon('lacquer', c['lacquer'], two_tone=True)
