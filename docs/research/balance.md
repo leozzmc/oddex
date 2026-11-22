@@ -404,3 +404,10 @@
 
 - 草系的門檻從 Lv33 升到 Lv37(卡在 Iwadusk),還是比原版低 5 級;火系和水系不變。
 - 限制和前面一樣:這是雙打,數字只能跟原版比較。火系在一對一還是過不了 Enigmen 的 Earthquake(原版的 Blaziken 也過不了);如果 Sonia 實測真的卡住,再把 Earthquake 換成 Bulldoze(火系 Lv46)。
+
+### 實測(2026-11-22,Sonia 錄的 `to_mossdeep`,照上面的表)
+
+- 錄製用的隊伍:Grinarbor Lv46 + Haniwort Lv27 先發,後面是 Terubozu Lv25、Utoghast Lv18、Kyokon Lv4。結果是贏,但前四隻全倒,最後靠 Lv4 的 Kyokon 收尾。
+- 這是「一隻主力帶四隻陪跑」的測試隊伍:雙打的第二個位置一兩回合就倒,主力等於一打二。所以上面的 Lv37 是一對一的門檻,**不能當成單隻主力過雙打的等級**;六隻都在 Lv40 上下的隊伍沒有測過。
+- Magma Hideout 的 Maxie(Shachowl 37、Nobusumen 38、Kamadoro 39)也很緊:Lv44 的主力打完剩 4 HP、PP 幾乎用光(基地裡沒有補血點,原版也沒有)。
+- 決定(David 同意):平衡先不動。如果之後要調簡單,最小的改法是 Iwadawn 降回 Lv42;Moonblast 不動,它是擋住草系主力一路打穿的那一招。
