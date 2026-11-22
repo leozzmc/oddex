@@ -924,6 +924,40 @@ Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport
 只靠資料檢查、沒在遊戲裡看過：
 - Ichimai（Route 120 的 1% 欄位）：要遇到得在草叢耗很久，沒有排進路線。
 - Route 119 的 Feebas 釣點（`FISHING_SPOT`）、Fortree 的交換本身（只拍了開出條件的台詞）。
-- 橋上的影子圖（`OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW`）：截圖 w05 是夜間色調，橋上 (12,16) 看不出影子，要請 Mark 確認是圖太暗還是沒畫出來。
+- 橋上的影子圖（`OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW`）有畫出來：截圖 w05 畫面最下緣、橋的陰影帶下面多出一小塊帶兩個尖角的凸起（Kyozosu 的耳朵，倒影是上下顛倒的）。物件本身被橋的地塊蓋住，只看得到水面的倒影，顏色跟陰影帶相同，所以只有凸出來的 4 列看得見；原版的 Kecleon 也是這樣。
 - 沒經過的訓練家：Surf 補漏的游泳選手（Route 103 東側以外）、Abandoned Ship、Route 120 橋以南、道館的 Humberto；他們的隊伍只靠 `check_species_refs`。
+
+## 12. 第 6 步第七段：Winona 之後 → Tate & Liza（第 7 個徽章）
+
+`[mossdeep]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。Mark 的批次（feat/mossdeep-batch）合併之後才套用。
+
+### 12.1 可達性
+
+- 用 `stage_reach.py --rock-smash --cut --strength --surf` 從 Fortree 跑，再依故事用地圖名單限制。
+- 範圍內：Route 121–125、Safari Zone 西邊 4 區、Lilycove、Mt. Pyre、Magma Hideout、Aqua Hideout、Mossdeep（含道館和 Space Center）、Shoal Cave（退潮的 5 張地圖）。
+- 人工判斷：
+  - Magma Hideout：入口是腳本打開的（要 Mt. Pyre 的 Magma Emblem），BFS 走不到，所以整個 Hideout 和 Jagged Pass 的手下是人工加入的。Mark 草稿加這兩處是對的。
+  - Space Center 的 Magma 襲擊：在拿到徽章之後，但緊接著發生、在同一個城市，所以放進來。
+  - Route 125 和 Shoal Cave：從 Mossdeep 往北衝浪一小段就到，放進來。
+  - Mossdeep 南邊和西邊的海（Route 126–134、Pacifidlog）：有 Surf 就到得了，但故事是拿到 Dive 之後才去，留給下一段，跟水下和 Sootopolis 一起做。
+  - Safari Zone 的東北、東南兩區：破關後才開（`hall_of_fame.inc`），用 `exclude_maps` 排除。
+  - Lilycove 的華麗大賽會場：屬於設施資料，排除。
+- 以前漏掉、這一段補上的：
+  - New Mauville：`[winona]` 把它當成「要 Basement Key」而排除，但玩家有 Surf 之後 Wattson 就會給鑰匙，所以那時就進得去。這是我之前判斷錯的。
+  - Trick House 謎題 4（5 個徽章，應該在 `[winona]`）和謎題 5（6 個徽章）。謎題 5 沒有訓練家。
+  - Route 116 的 Tunneler's Rest House。
+- 新增 115 筆訓練家（含勁敵 6 種組合、Tate & Liza、Maxie 兩次、Tabitha 兩次、Matt）和 52 個野生表。
+
+### 12.2 範圍內的原版角色，和 Mark 草稿的差別
+
+`check_species_refs.py --scope mossdeep`：749 筆、102 種（wild 518、party 204、script 13、text 11、gfx 3）。Mark 的草稿是主路線 542 筆加 Route 125 的 27 筆；多出來的是 Safari Zone、Shoal Cave、New Mauville、Trick House 和 Space Center。
+
+- 拿 Mark 分支（da7b0213）的 `replacements.toml` 對照：party 和 wild 只有 **Snorunt** 沒有對照（Shoal Cave 的冰室，3 格）。
+- 依決策用 `exclude_refs` 排除：Groudon（Magma Hideout 4F 的過場、Space Center 和 Mt. Pyre 的文字）、Kyogre（Mt. Pyre 的文字）、Steven 家的 Beldum（破關後才送）。
+- 還要手改的 script／text／gfx（共 27 筆，都有現成的對照）：
+  - New Mauville 的假道具球：Voltorb 的 `setwildbattle` 和叫聲 6 筆。
+  - Aqua Hideout B1F 的假道具球：Electrode 4 筆（Mark 的表對到 Kagurai）。
+  - 寵物：Lilycove 百貨 1F 的 Azumarill、Lilycove House1 的 Kecleon、Mossdeep House4 的 Skitty。
+  - 文字：擋住 Route 124 的 Wailmer（Lilycove 和 Mossdeep 共 5 句）、Mt. Pyre 兩位訓練家提到的 Zigzagoon 和 Skitty。
+- Tate & Liza 的隊伍照 Mark 在 balance.md 寫的改（Iwadusk Lv42 帶 Moonblast、Iwadawn Lv44），套用時一起做。
 
