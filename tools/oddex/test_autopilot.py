@@ -69,6 +69,21 @@ class StepwalkTest(unittest.TestCase):
         frozen = lambda cur: ((d, n) for d, n in S["gate_neighbors"]("FortreeCity_Gym")(cur) if n[3] == cur[3])
         self.assertIsNone(S["bfs"](start, at_winona, frozen))
 
+    def test_mossdeep_gym_needs_its_floor_switches(self):
+        nb = S["puzzle_neighbors"]("MossdeepCity_Gym")
+        start = ("MossdeepCity_Gym", 7, 34, nb.start)
+        at_leaders = lambda s: s[1:3] == (23, 8)  # below Tate
+        path = S["bfs"](start, at_leaders, nb)
+        self.assertIsNotNone(path)
+        self.assertTrue(any(d.endswith("|") for d in path))  # the pads warp inside the gym
+        still = lambda cur: ((d, n) for d, n in nb(cur) if n[3] == cur[3])  # no statue ever moves
+        self.assertIsNone(S["bfs"](start, at_leaders, still))
+
+    def test_warps_outside_their_map_are_ignored(self):
+        # A Slateport map lists a warp past its layout; a search that visits them all must not crash.
+        maps = {n for n in G["ID2NAME"].values() if n.split("_")[0] == "SlateportCity"}
+        self.assertIsNone(S["bfs"](("SlateportCity_Harbor", 8, 13), ("SlateportCity", 28, 13), S["warp_neighbors"](maps)))
+
 
 class StageReachTest(unittest.TestCase):
     def test_surf_opens_the_sea(self):

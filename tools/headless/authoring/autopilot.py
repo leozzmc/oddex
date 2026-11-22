@@ -11,6 +11,8 @@ commands in one continuous run reproduces the same result (verified separately).
 usage: autopilot.py START.ss OUT_PREFIX FACING WAYPOINT [WAYPOINT ...]
 (AP_PARTIAL=1: when the route cannot be finished, still print the commands executed so far and
 the state they end in, instead of failing)
+(AP_MIN_HP=N: stop the same way, exit status 0, as soon as the lead stands free in the overworld
+below N percent HP, so the caller can heal and call again from the printed state)
 WAYPOINT = Map:x:y, or grind:Map:x1:y1:x2:y2:LEVEL to walk between two grass tiles until the lead
 reaches LEVEL (stops early when its HP drops below GRIND_MIN_HP percent, default 35, or its
 damaging moves have fewer than 10 PP left, so the caller can heal). Wild battles against an
@@ -37,6 +39,7 @@ LOW_PP = 5         # swap slot 1 out before a battle once its PP drops below thi
 MAX_BATTLE_PRESSES = 600  # a battle longer than this is stuck (e.g. slot 1 out of PP mid-battle)
 DIALOG_B = 15      # B presses when a move went nowhere outside battle
 GRIND_MIN_HP = int(os.environ.get("GRIND_MIN_HP", "35"))  # grind pauses below this HP percent
+MIN_HP = int(os.environ.get("AP_MIN_HP", "0"))  # walk stops below this HP percent (0: never)
 MAX_STEPS = int(os.environ.get("AP_MAX_STEPS", "20000"))  # units per run; a real route needs far fewer
 NO_PROGRESS = 100  # same command at the same position this many times in a row outside battle
 LOCKED_WAITS = 3   # waits on a grind tile with controls locked before B clears the message
@@ -44,6 +47,10 @@ LOCKED_WAITS = 3   # waits on a grind tile with controls locked before B clears 
 
 class Runaway(SystemExit):
     """A guard stopped a run that was making no progress."""
+
+
+class LowHP(SystemExit):
+    """AP_MIN_HP: the lead needs healing before the route continues."""
 
 
 def run(ss_in, cmds, ss_out):
@@ -515,7 +522,7 @@ def main():
         walk(goals, ss, prefix, facing, out)
     except SystemExit as e:
         runaway = isinstance(e, Runaway)
-        if not (os.environ.get("AP_PARTIAL") or runaway) or not isinstance(e.code, str):
+        if not (os.environ.get("AP_PARTIAL") or runaway or isinstance(e, LowHP)) or not isinstance(e.code, str):
             raise
         # AP_PARTIAL=1: report what was executed up to the failure, so the caller can continue
         # from the last state by hand (the commands reproduce it exactly). Runaway guards report
@@ -542,6 +549,10 @@ def walk(goals, ss, prefix, facing, out):
         goal = spec[1] if grind else spec
         while True:
             name, x, y, cb = where(ss)
+            if MIN_HP and not grind and cb == "CB2_Overworld" and not stuck and controls_free(ss):
+                hp, mhp = W["read"](W["state"](ss), SYMS["gParties"] + 86, "<HH")
+                if hp * 100 < mhp * MIN_HP:
+                    raise LowHP(f"lead HP {hp}/{mhp} below AP_MIN_HP={MIN_HP}; heal and resume")
             if grind and cb == "CB2_Overworld" and not stuck and controls_free(ss):
                 locked_waits = 0
                 st = W["state"](ss)

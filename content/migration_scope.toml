@@ -314,7 +314,7 @@ exclude_maps = ["AbandonedShip_HiddenFloor*", "AbandonedShip_Underwater*"]
 
 [mossdeep]
 description = "After Winona: Routes 121-125, the Safari Zone, Lilycove, Mt. Pyre, the Magma and Aqua hideouts, Mossdeep, Tate & Liza"
-strict = false
+strict = true
 # Reachability: stage_reach.py --rock-smash --cut --strength --surf from Fortree, limited by hand to the
 # maps this stage reaches by story: Route 120's bridge is open (Devon Scope), so Route 121, the Safari
 # Zone, Route 122, Mt. Pyre, Route 123 and Lilycove follow; Mt. Pyre's Magma Emblem opens the Magma

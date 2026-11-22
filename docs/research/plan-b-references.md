@@ -929,7 +929,7 @@ Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport
 
 ## 12. 第 6 步第七段：Winona 之後 → Tate & Liza（第 7 個徽章）
 
-`[mossdeep]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。Mark 的批次（feat/mossdeep-batch）合併之後才套用。
+`[mossdeep]` 已套用並設為 `strict = true`（接在 Mark 的 feat/mossdeep-batch 之後）；回歸腳本是 `to_mossdeep`（§12.4）。
 
 ### 12.1 可達性
 
@@ -959,6 +959,45 @@ Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport
   - Aqua Hideout B1F 的假道具球：Electrode → Kagurai（4 筆）。
   - 寵物：Lilycove 百貨 1F 的 Azumarill → Magatide、Lilycove House1 的 Kecleon → Kyozosu、Mossdeep House4 的 Skitty → Mandalumb。
   - 文字：Team Aqua 在 Lilycove 海灣訓練的 Wailmer 和 Mossdeep 的「Wailmer watching」→ Kamorai（共 5 句）、Mt. Pyre 兩位訓練家提到的 Zigzagoon → Kyokon 和 Skitty → Mandalumb。
-  - 這些地圖都不在 to_winona 的路線上，還沒有在遊戲裡看過。
-- Tate & Liza 的隊伍照 Mark 在 balance.md 寫的改（Iwadusk Lv42 帶 Moonblast、Iwadawn Lv44），套用時一起做。
+  - 在 `to_mossdeep` 裡看過的：Lilycove House1 的 Kyozosu（s01）、Aqua Hideout 的 Kagurai（s05）、Mossdeep House4 的 Mandalumb（s06）。沒看過的：Lilycove 百貨的 Magatide（勁敵站在門口）、New Mauville、Mt. Pyre 裡面和 Lilycove／Mossdeep 改過的那幾句對話。
+- Tate & Liza 的隊伍照 Mark 在 balance.md 寫的改了（Iwadusk Lv42 帶 Moonblast、Iwadawn Lv44）。
+- 沒處理：擋住 Route 124 的那幾格是 Lilycove tileset 裡畫成 Wailmer 的 metatile（`METATILE_Lilycove_Wailmer*`），文字已經改成 Kamorai，但圖還是 Wailmer。這是 tileset 美術，`check_species_refs` 看不到。
+
+### 12.3 套用和重新同步
+
+- `apply_replacements.py --scope mossdeep`：204 隻訓練家的角色、518 格野生資料；之後 `check_species_refs.py --scope mossdeep` 是 0 筆。
+- `resync.py prepare`（舊 ROM = 5a7585ec，新 ROM = 套用後）第一次實際跑：`to_winona` 的 770 個 chunk 全部「no difference」（地圖、座標、是否可操作、等級、打倒的訓練家數都相同），所以腳本不用改，`run`／`shots`／`assemble` 還是沒有實際跑過。兩個 ROM 並排跑約 22 分鐘。
+- 72 張截圖有 10 張差 15–78 個像素，逐張看過後更新基準：
+  - 重畫的眼睛（Shojobob、Omotelle、Utomaw、Kyozosu）。
+  - Haniwort 的圖鑑編號 269 → 271。
+  - 6 隻訓練家角色的性別符號。原因：`GeneratePartySeed` 是 `Crc32B(struct Trainer) ^ OT id`，struct 裡有指標，ROM 版面一動，訓練家角色的 personality（性別）就會變。目前只影響畫面；哪天有 Attract、Rivalry、Cute Charm 介入就會影響戰鬥。
+
+### 12.4 `to_mossdeep`
+
+接在 `to_winona` 後面。路線：
+1. 出 Fortree 道館（旋轉門）→ 回血 → Mart（5 個 Ultra Ball、20 個 Hyper Potion）→ Route 120 的橋和訓練家 → Route 121（Team Aqua 往 Mt. Pyre 的過場）→ Lilycove 回血 → House1 的寵物（截圖 s01）。
+2. 回 Route 121 的碼頭，往南衝浪到 Route 122，抓一隻野生 Utoghast（會 Fly 也會 Surf；Ultra Ball 丟兩顆），從背包教 HM02。
+3. Mt. Pyre：1F → 外側 → 山頂的 4 個手下 → Archie 帶走寶珠（截圖 s02）、拿到 Magma Emblem。
+4. Fly 到 Lavaridge → 纜車 → Jagged Pass，Magma Emblem 打開 Hideout。
+   - 1F 有 3 顆 Strength 巨石：在門口把 HM04 教給 Kyokon。回程從北邊再推一次（換地圖後巨石會復位）。
+   - 手下、Tabitha → 4F 的 Maxie（截圖 s03）。打完 Grinarbor 剩 4 HP、招式 PP 幾乎用完，這一場很驚險。
+5. 走出 Hideout → Fly 到 Slateport 回血 → Harbor 前 Capt. Stern 的訪問 → Archie 開走潛水艇（截圖 s04）。
+6. Fly 到 Lilycove → 衝浪進 Aqua Hideout → B1F 的假道具球是野生 Kagurai（截圖 s05）→ B2F 的 Matt → 潛水艇離開。
+7. 從入口的水池出來，往東衝浪過 Route 124 到 Mossdeep 回血 → House4 的寵物（截圖 s06）。
+8. Mossdeep 道館：箭頭地板的規劃器踩開關讓雕像讓路 → Tate & Liza 的雙打（截圖 s07）→ Mind Badge（截圖 s08）。
+   - 這一場只剩 Kyokon 站著：Grinarbor、Haniwort、Terubozu、Utoghast 都倒了。贏了，但等於是 Mark 擔心的「一打二」；要讓路線更穩，可以先練第二隻。
+
+Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge 是左 11、上 1；Jagged Pass → Slateport 是右 2、下 7；Slateport → Lilycove 是右 10、上 7。
+
+這一段新增或修正的工具（測試在 `tools/oddex/test_autopilot.py`）：
+- autopilot `AP_MIN_HP=N`：隊首在野外、可操作、HP 低於 N% 時停下來（印出到目前為止的指令和狀態，結束碼 0），呼叫的人喝藥後接著跑。
+- stepwalk `--min-hp N`：同樣的停法。
+- stepwalk 的箭頭地板（Mossdeep 道館，`src/rotating_tile_puzzle.c`）：BFS 的狀態包含每個物件的位置；踩到地板開關時，站在同色箭頭上的物件往箭頭方向移一格；道館內的傳送點會走。物件位置讀 save block 的 `objectEventTemplates`（離玩家太遠、沒有生成的雕像也算得到）。
+- stepwalk：同一格連續兩步都沒走到（站著的 NPC、地圖資料看不出來的高低差）就當成擋住，重新規劃；以前會無限重試（David 遇到的 600 秒逾時是另一個原因，但症狀一樣）。
+- stepwalk：走到一半才發現沒有路時，還是印出已經走的指令和狀態，結束碼 2；以前整段指令會丟掉。
+- stepwalk：`warp_events` 座標超出地圖的 warp（Slateport 有一個）會讓靜態規劃當掉，現在略過。
+- 靜態規劃看不到「已經隱藏」的物件：Route 120 橋上的 `HIDDEN_BLOCKER` 和 Steven、Route 121 的 Aqua 手下、Route 112 纜車前的 Magma 手下、Mt. Chimney 南邊、Aqua Hideout 門口的兩個手下，都要用 `--live` 走過去。Fortree 的樹屋和吊橋（高低差）靜態規劃也過不了，一樣用 `--live`。
+- 錄製時踩到的坑：
+  - Fly、教招式之後，START 選單的游標和背包的口袋會留在上次的位置；喝藥的按鍵巨集假設游標在 BAG、口袋在 ITEMS，所以每次 Fly 或教完招式都要把它們放回去。
+  - 一串分段重跑時，中間有一段失敗而沒有停下來，後面的分段就接在舊的 savestate 上，組起來從開機跑會走偏。分段結束時除了位置，也要比 `gRngValue` 和 vblank 計數。
 

@@ -1,6 +1,6 @@
 """Walk where autopilot.py's static planner cannot, replanning after every unit.
 
-usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--avoid x,y;x,y...]
+usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--avoid x,y;x,y...] [--min-hp N]
 
 default  BFS on map data across warps and ledges: a warp is taken only where its tile has a warp
          behavior (doors, ladders, holes; the Lavaridge Gym's holes and geysers are one-way), ledges
@@ -8,8 +8,14 @@ default  BFS on map data across warps and ledges: a warp is taken only where its
          first "_": LavaridgeTown, its houses, LavaridgeTown_Gym_1F and _B1F); no map
          connections. An exit mat (arrow warp) is stepped on, then pushed again. Rotating gate
          puzzles (the Fortree Gym, Trick House puzzle 6) are planned with the gates' live
-         orientations (VAR_TEMP_0..) and the rotation rules of src/rotating_gate.c. One step per
-         unit (trainers interrupt).
+         orientations (VAR_TEMP_0..) and the rotation rules of src/rotating_gate.c. The Mossdeep
+         Gym's arrow tiles are planned with the objects where they stand now: a floor switch moves
+         those on arrows of its colour, the pads warp inside the gym. One step per unit (trainers
+         interrupt).
+         When the way is lost after some steps (a tile turned out blocked), the commands so far and
+         the state they end in are still printed, with exit status 2.
+--min-hp N  stop (commands so far, end state) once the lead stands free below N percent HP, so the
+         caller can heal and call again.
 --surf   water is walkable (waterfalls are not); stepping from land onto water uses Surf (A, YES).
 --live   BFS on the running game's collision grid of the current map (gBackupMapLayout) with the
          objects where they stand now: hidden objects that map.json still lists, setmetatile
@@ -64,7 +70,8 @@ def warp_neighbors(maps, surf=False):
     only with surf."""
     def warps(mp):
         m = G["load"](mp)
-        return {(w["x"], w["y"]): w for w in m["json"]["warp_events"] if is_warp(G["cell"](m, w["x"], w["y"])[2])}
+        return {(w["x"], w["y"]): w for w in m["json"]["warp_events"]  # vanilla has warps outside their map
+                if 0 <= w["x"] < m["W"] and 0 <= w["y"] < m["H"] and is_warp(G["cell"](m, w["x"], w["y"])[2])}
 
     def through(mp, w, d):
         dest = G["ID2NAME"][w["dest_map"]]
@@ -176,6 +183,56 @@ def gate_neighbors(mp, objs=None):
     return neighbors
 
 
+# Arrow-tile puzzles (src/rotating_tile_puzzle.c): stepping on a floor switch moves every object that
+# stands on an arrow of the switch's colour one tile along the arrow (nothing checks where it lands).
+# shortcut: the colour order and the script name pattern are copied from the Mossdeep Gym; add the Trick
+# House puzzle (another first metatile) when a route needs it.
+TILE_PUZZLES = {"MossdeepCity_Gym": 0x250}  # METATILE_MossdeepGym_YellowArrow_Right; 8 metatiles per colour
+SWITCH_COLOURS = ["Yellow", "Blue", "Green", "Purple", "Red"]
+ARROWS = [(1, 0), (0, 1), (-1, 0), (0, -1)]  # right, down, left, up
+
+
+def puzzle_neighbors(mp, objs=None):
+    """Steps in an arrow-tile puzzle; states are (map, x, y, frozenset of object tiles). objs: the
+    objects' tiles now (default map.json's). Pads warping inside the map are taken ('|'), exits are not."""
+    import re, struct
+    m, first = G["load"](mp), TILE_PUZZLES[mp]
+    start = frozenset(m["objs"] if objs is None else objs)
+    events = {(c["x"], c["y"]): c.get("script", "") for c in m["json"].get("coord_events", [])}
+    switch = {t: SWITCH_COLOURS.index(c.group(1)) for t, sc in events.items()
+              if (c := re.search(r"_(%s)FloorSwitch$" % "|".join(SWITCH_COLOURS), sc))}
+    pads, exits = {}, set()
+    for w in m["json"]["warp_events"]:
+        if G["ID2NAME"].get(w["dest_map"]) == mp:
+            d = m["json"]["warp_events"][int(w["dest_warp_id"])]
+            pads[(w["x"], w["y"])] = (d["x"], d["y"])
+        else:
+            exits.add((w["x"], w["y"]))
+    exits |= {t for t, sc in events.items() if t not in switch}  # e.g. the pad back to the entrance
+
+    def press(objs, colour):
+        out = set()
+        for x, y in objs:
+            k = (struct.unpack_from("<H", m["blk"], 2 * (y * m["W"] + x))[0] & 0x3FF) - first
+            dx, dy = ARROWS[k % 8] if 0 <= k < 40 and k // 8 == colour and k % 8 < 4 else (0, 0)
+            out.add((x + dx, y + dy))
+        return frozenset(out)
+
+    def neighbors(cur):
+        _, x, y, objs = cur
+        for d, (dx, dy) in DIRS.items():
+            nx, ny = x + dx, y + dy
+            if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in objs or (nx, ny) in exits \
+                    or G["cell"](m, nx, ny)[0]:
+                continue
+            if (nx, ny) in pads:
+                yield d + "|", (mp, *pads[(nx, ny)], objs)
+            else:
+                yield d, (mp, nx, ny, press(objs, switch[(nx, ny)]) if (nx, ny) in switch else objs)
+    neighbors.start = start
+    return neighbors
+
+
 def live_objects(ss):
     """Tiles of the active objects other than the player, in map coordinates."""
     st, out = W["state"](ss), set()
@@ -185,6 +242,18 @@ def live_objects(ss):
             x, y = W["read"](st, b + 16, "<hh")
             out.add((x - OFF, y - OFF))
     return out
+
+
+TEMPLATES_OFFSET = 0xC70  # offsetof(struct SaveBlock1, objectEventTemplates); shortcut: hard-coded like VARS_OFFSET
+
+
+def template_objects(ss, mp):
+    """Tiles of the map's objects in the save block's templates: where the arrow-tile puzzle keeps
+    them, also for the ones too far from the player to be active."""
+    st = W["state"](ss)
+    sb1 = W["read"](st, SYMS["gSaveBlock1Ptr"], "<I")[0]
+    return {W["read"](st, sb1 + TEMPLATES_OFFSET + 24 * i + 4, "<hh")
+            for i in range(len(G["load"](mp)["json"]["object_events"]))}
 
 
 def live_neighbors(ss, avoid):
@@ -216,15 +285,28 @@ def surfing(ss):
 def main():
     ss, prefix, goal = ARGV[0], ARGV[1], (ARGV[2], int(ARGV[3]), int(ARGV[4]))
     live, surf = "--live" in ARGV, "--surf" in ARGV
+    min_hp = int(ARGV[ARGV.index("--min-hp") + 1]) if "--min-hp" in ARGV else 0
     avoid = []
     if "--avoid" in ARGV:
         avoid = [tuple(map(int, t.split(","))) for t in ARGV[ARGV.index("--avoid") + 1].split(";")]
-    cmds, facing = [], "DOWN"
+    cmds, facing, stuck = [], "DOWN", None
+    # Tiles two steps in a row did not reach (a standing NPC, a height the map data hides) are planned around.
+    blocked, fails, tried = set(), {}, None
     for k in range(G["MAX_STEPS"]):
         mp, x, y, cb = G["where"](ss)
         free = cb == "CB2_Overworld" and G["controls_free"](ss)
         if (mp, x, y) == goal and free:
             break
+        if free and min_hp:
+            hp, mhp = W["read"](W["state"](ss), SYMS["gParties"] + 86, "<HH")
+            if hp * 100 < mhp * min_hp:
+                print(f"# stopped: lead HP {hp}/{mhp} below --min-hp {min_hp}; heal and resume", file=sys.stderr)
+                break
+        if free and tried and tried[0] == (mp, x, y):
+            fails[tried[1]] = fails.get(tried[1], 0) + 1
+            if fails[tried[1]] >= 2:
+                blocked.add(tried[1])
+        tried = None
         if not free:
             c = [G["battle_press"](ss) if cb != "CB2_Overworld" else "press B 2 30"]
         else:
@@ -235,15 +317,23 @@ def main():
                 sb1 = W["read"](st, SYMS["gSaveBlock1Ptr"], "<I")[0]
                 orients = tuple(W["read"](st, sb1 + VARS_OFFSET, f"<{len(gates(mp))}B"))  # VAR_TEMP_0.. bytes
                 dirs = bfs((mp, x, y, orients), lambda st_: st_[:3] == goal, gate_neighbors(mp, live_objects(ss)))
+            elif mp in TILE_PUZZLES and goal[0] == mp and not live:
+                objs = frozenset(template_objects(ss, mp) | live_objects(ss))
+                dirs = bfs((mp, x, y, objs), lambda st_: st_[:3] == goal, puzzle_neighbors(mp, objs))
             else:
                 nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf)
-                dirs = bfs((mp, x, y), goal, nb)
+                dirs = bfs((mp, x, y), goal, lambda cur: ((d, n) for d, n in nb(cur) if n not in blocked))
             if not dirs:
-                raise SystemExit(f"no path {(mp, x, y)} -> {goal}")
+                if not cmds:
+                    raise SystemExit(f"no path {(mp, x, y)} -> {goal}")
+                # Part of the way is walked: report it like a finished run, but fail (exit status 2).
+                stuck = f"no path {(mp, x, y)} -> {goal}"
+                break
             d = dirs[0].rstrip("|")
             n = 1 if not live else next((i for i, e in enumerate(dirs) if e != dirs[0]), len(dirs))
             m = G["load"](mp)
             nx, ny = x + DIRS[d][0], y + DIRS[d][1]
+            tried = ((mp, x, y), (mp, nx, ny))
             onto_water = 0 <= nx < m["W"] and 0 <= ny < m["H"] and G["is_water"](G["cell"](m, nx, ny)[2])
             if surf and onto_water and not surfing(ss):
                 # Face the water, A for the prompt, A for YES; the "used SURF" text is cleared by
@@ -262,6 +352,9 @@ def main():
         raise SystemExit(f"step limit at {G['where'](ss)}")
     print("\n".join(G["compress"](cmds)))
     print(f"# end {G['where'](ss)} facing {facing} state {ss}", file=sys.stderr)
+    if stuck:
+        print(stuck, file=sys.stderr)
+        sys.exit(2)
 
 
 if __name__ == "__main__":
