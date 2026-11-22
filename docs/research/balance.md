@@ -342,3 +342,36 @@
 ### 建議
 - **不用改**。三條線都在原版門檻的 +3 級以內,草系還容易很多,Sonia 的 Grinarbor 在 Lv36 就能過關,`to_winona` 不需要額外練等。
 - 如果使用者希望 Winona 對草系有原版那樣的壓力:最小的改法是把 Kumoryu 升到 Lv35(要改 `trainers.party`,Sonia 的範圍)。這一版沒有算這個選項,要的話再算。
+
+## Tate & Liza 戰(草稿)(2026-11-22,Mark;只是分析,角色和隊伍都還沒做)
+
+### 怎麼算的
+- `tools/oddex/damage_calc.py TATE_AND_LIZA_1 --summary --levels 30-55`,一對一,我方取最低亂數、對手取最高亂數。
+- 隊伍:Claydol Lv41、Xatu Lv41、Lunatone Lv42(Sitrus Berry)、Solrock Lv42。Xatu → Shachowl、Solrock → Iwadawn 用 `--set X:species=` 換掉。Claydol 和 Lunatone 的新角色(Enigmen、Iwadusk,見 `mask-designs.md`「Mossdeep 段(草稿)」)還沒做,但提案是照原版的屬性和數值,所以直接用原版的 Claydol、Lunatone 來算。
+- **限制:這是雙打,計算器只會算一對一。** 沒有算到的:
+  - 對手兩隻同時打我方一隻;我方也有兩隻可以分攤。
+  - Earthquake 在雙打會打到全場(每個目標 ×0.75,也會打到 Claydol 自己的隊友;Levitate 的隊友不受影響)。
+  - Light Screen、Calm Mind、Sunny Day(之後 Solar Beam 一回合發動、Flamethrower ×1.5)、Hypnosis、Confuse Ray、Sitrus Berry、4 個 Hyper Potion、特性(Levitate)。
+  - 所以表上的等級只能用來比較「跟原版差多少」,不是實際過關的等級。
+- Sonia 的路線目前只帶 Grinarbor 一隻。雙打只帶一隻會變成 1 對 2,這一戰可能要多帶一隻。
+
+### 結果:打得過的最低等級(一對一)
+
+| 選項 | 草 | 火 | 水 | 說明 |
+|---|---|---|---|---|
+| 原版基準(Sceptile/Blaziken/Swampert 打原版) | Lv42 | ✗ | Lv48 | Blaziken 在 Lv55 以內打不過 Lunatone(超能力打格鬥 2 倍) |
+| 照草稿的對照,第 3 階段(Grinarbor/Trekcart/Ridgeloom) | Lv33 | ✗ | Lv38 | 火系卡在 Claydol 的 Earthquake |
+| 照草稿的對照,第 2 階段(Grinvine/Trekwheel/Ridgefin) | Lv38 | ✗ | Lv50 | |
+| Solrock 的位置維持原版的 460(不用 375 的 Iwadawn) | Lv38 | ✗ | Lv38 | 只有草系的門檻提高 5 級 |
+| Claydol 的 Earthquake 換成 Bulldoze | Lv33 | Lv46 | Lv38 | 火系變成打得過 |
+
+- **草系非常輕鬆**:Grinarbor 是草/惡,超能力招式對它無效。Shachowl 和 Lunatone 的攻擊招式只有 Psychic,完全打不動它;Claydol 的 Earthquake 只有 15–18%。唯一有威脅的是 Iwadawn 的 Flamethrower(27–33%)。門檻比原版低 9 級。
+- **火系在一對一打不過,但原版也一樣**:Trekcart 是火/鋼,Claydol 的 Earthquake 打它 4 倍(Lv45 時 135–160%,一招倒)。原版的 Blaziken 卡在 Lunatone,所以「火系在這一戰最吃虧」跟原版一致,只是換了一隻擋路的。實際是雙打,火系的玩家可以讓隊友處理 Claydol。
+- **水系**比原版容易 10 級(Ridgeloom 是水/飛行,Earthquake 無效)。
+
+### 建議
+- **先不用改**,等角色做出來、Sonia 實際錄到這一戰再看。三條線都沒有比原版難。
+- 要請使用者決定的兩件事:
+  1. **草系太輕鬆可以嗎?** 這是 Grinarbor 的惡系屬性造成的,不是對照的問題。如果希望有壓力,最小的改法是給 Shachowl 或 Iwadusk 一招非超能力的招式(例如 Iwadusk 的 Ancient Power,或 Shachowl 的 Aerial Ace),要改 `trainers.party`(Sonia 的範圍)。
+  2. **Iwadawn(375)和 Iwadusk(460)數值不對稱。** Iwadawn 原本接的是 Nosepass(375),Solrock 對到它本來就是 −18%(使用者之前接受過)。館主的雙王牌一強一弱會有點怪。選項:(a) 不管;(b) 道館裡的 Iwadawn 等級拉高 2–3 級;(c) Iwadusk 也做成 375,兩隻對稱,道館整體變簡單。我建議 (b)。
+- 火系如果之後實測真的過不了:把 Claydol 位置(Enigmen)的 Earthquake 換成 Bulldoze,火系的門檻會落在 Lv46。
