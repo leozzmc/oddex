@@ -158,15 +158,17 @@ def gate_step(m, gs, orients, d, x, y):
     return False, orients
 
 
-def gate_neighbors(mp):
-    """Steps in a rotating gate puzzle; states are (map, x, y, gate orientations)."""
+def gate_neighbors(mp, objs=None):
+    """Steps in a rotating gate puzzle; states are (map, x, y, gate orientations). objs: tiles taken
+    by objects (the live ones: a trainer walks up to the player), default map.json's."""
     m, gs = G["load"](mp), gates(mp)
+    objs = m["objs"] if objs is None else objs
 
     def neighbors(cur):
         _, x, y, orients = cur
         for d, (dx, dy) in DIRS.items():
             nx, ny = x + dx, y + dy
-            if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"] or G["cell"](m, nx, ny)[0]:
+            if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in objs or G["cell"](m, nx, ny)[0]:
                 continue
             blocked, o = gate_step(m, gs, orients, d, nx, ny)
             if not blocked:
@@ -174,16 +176,22 @@ def gate_neighbors(mp):
     return neighbors
 
 
-def live_neighbors(ss, avoid):
-    """Steps on the running game's grid for the current map, with objects where they stand."""
-    st = W["state"](ss)
-    w, h, p = W["read"](st, SYMS["gBackupMapLayout"], "<iiI")
-    blocked = set(avoid)
+def live_objects(ss):
+    """Tiles of the active objects other than the player, in map coordinates."""
+    st, out = W["state"](ss), set()
     for i in range(16):
         b = SYMS["gObjectEvents"] + 36 * i
         if W["read"](st, b, "<B")[0] & 1 and W["read"](st, b + 8, "<B")[0] != 255:  # active, not the player
             x, y = W["read"](st, b + 16, "<hh")
-            blocked.add((x - OFF, y - OFF))
+            out.add((x - OFF, y - OFF))
+    return out
+
+
+def live_neighbors(ss, avoid):
+    """Steps on the running game's grid for the current map, with objects where they stand."""
+    st = W["state"](ss)
+    w, h, p = W["read"](st, SYMS["gBackupMapLayout"], "<iiI")
+    blocked = set(avoid) | live_objects(ss)
 
     def free(x, y):
         return 0 <= x < w - 2 * OFF and 0 <= y < h - 2 * OFF and (x, y) not in blocked \
@@ -226,7 +234,7 @@ def main():
                 st = W["state"](ss)
                 sb1 = W["read"](st, SYMS["gSaveBlock1Ptr"], "<I")[0]
                 orients = tuple(W["read"](st, sb1 + VARS_OFFSET, f"<{len(gates(mp))}B"))  # VAR_TEMP_0.. bytes
-                dirs = bfs((mp, x, y, orients), lambda st_: st_[:3] == goal, gate_neighbors(mp))
+                dirs = bfs((mp, x, y, orients), lambda st_: st_[:3] == goal, gate_neighbors(mp, live_objects(ss)))
             else:
                 nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf)
                 dirs = bfs((mp, x, y), goal, nb)

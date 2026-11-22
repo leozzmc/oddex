@@ -226,6 +226,13 @@ class ApplyReplacementsTest(unittest.TestCase):
         vanilla, _, aliases = refs.load_species(game)
         self.assertIn(aliases["SPECIES_ODDEX_EGG_GIFT"], vanilla)
 
+    def test_dialogue_scan_knows_form_aliases(self):
+        # The Weather Institute said "received CASTFORM!" and nothing flagged it: the species key is
+        # SPECIES_CASTFORM_NORMAL, the word in the text is its alias.
+        words = refs.text_words({"SPECIES_CASTFORM_NORMAL", "SPECIES_ZUBAT"},
+                                {"SPECIES_CASTFORM": "SPECIES_CASTFORM_NORMAL", "SPECIES_ODDEX_PEEKO": "SPECIES_ZUBAT"})
+        self.assertEqual(words, {"CASTFORM", "ZUBAT"})
+
     def test_exclude_refs_also_hold_back_apply_replacements(self):
         # Altering Cave's tables 2-9 only switch in by a Mystery Event: exclude_refs keeps their species
         # out, so a table that maps Zubat (table 1) is enough.
