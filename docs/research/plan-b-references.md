@@ -952,12 +952,13 @@ Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport
 
 `check_species_refs.py --scope mossdeep`：749 筆、102 種（wild 518、party 204、script 13、text 11、gfx 3）。Mark 的草稿是主路線 542 筆加 Route 125 的 27 筆；多出來的是 Safari Zone、Shoal Cave、New Mauville、Trick House 和 Space Center。
 
-- 拿 Mark 分支（da7b0213）的 `replacements.toml` 對照：party 和 wild 只有 **Snorunt** 沒有對照（Shoal Cave 的冰室，3 格）。
+- 拿 Mark 分支的 `replacements.toml` 對照：party 和 wild 全部都有對照（Snorunt 在 ca2c25be 補上，對到 Yamambrr）。
 - 依決策用 `exclude_refs` 排除：Groudon（Magma Hideout 4F 的過場、Space Center 和 Mt. Pyre 的文字）、Kyogre（Mt. Pyre 的文字）、Steven 家的 Beldum（破關後才送）。
-- 還要手改的 script／text／gfx（共 27 筆，都有現成的對照）：
-  - New Mauville 的假道具球：Voltorb 的 `setwildbattle` 和叫聲 6 筆。
-  - Aqua Hideout B1F 的假道具球：Electrode 4 筆（Mark 的表對到 Kagurai）。
-  - 寵物：Lilycove 百貨 1F 的 Azumarill、Lilycove House1 的 Kecleon、Mossdeep House4 的 Skitty。
-  - 文字：擋住 Route 124 的 Wailmer（Lilycove 和 Mossdeep 共 5 句）、Mt. Pyre 兩位訓練家提到的 Zigzagoon 和 Skitty。
+- 手改的 script／text／gfx（共 27 筆，已完成；之後這三類是 0 筆）：
+  - New Mauville 的假道具球：Voltorb → Suzurai（`setwildbattle` 和叫聲 6 筆）。
+  - Aqua Hideout B1F 的假道具球：Electrode → Kagurai（4 筆）。
+  - 寵物：Lilycove 百貨 1F 的 Azumarill → Magatide、Lilycove House1 的 Kecleon → Kyozosu、Mossdeep House4 的 Skitty → Mandalumb。
+  - 文字：Team Aqua 在 Lilycove 海灣訓練的 Wailmer 和 Mossdeep 的「Wailmer watching」→ Kamorai（共 5 句）、Mt. Pyre 兩位訓練家提到的 Zigzagoon → Kyokon 和 Skitty → Mandalumb。
+  - 這些地圖都不在 to_winona 的路線上，還沒有在遊戲裡看過。
 - Tate & Liza 的隊伍照 Mark 在 balance.md 寫的改（Iwadusk Lv42 帶 Moonblast、Iwadawn Lv44），套用時一起做。
 
