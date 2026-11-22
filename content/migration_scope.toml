@@ -311,3 +311,80 @@ script_files = ["data/scripts/kecleon.inc"]
 # silhouette (the HIDDEN_BLOCKER), so only the name is vanilla.
 exclude_refs = ["data/maps/Route120/map.json:SPECIES_KECLEON"]
 exclude_maps = ["AbandonedShip_HiddenFloor*", "AbandonedShip_Underwater*"]
+
+[mossdeep]
+description = "After Winona: Routes 121-125, the Safari Zone, Lilycove, Mt. Pyre, the Magma and Aqua hideouts, Mossdeep, Tate & Liza"
+strict = false
+# Reachability: stage_reach.py --rock-smash --cut --strength --surf from Fortree, limited by hand to the
+# maps this stage reaches by story: Route 120's bridge is open (Devon Scope), so Route 121, the Safari
+# Zone, Route 122, Mt. Pyre, Route 123 and Lilycove follow; Mt. Pyre's Magma Emblem opens the Magma
+# Hideout in Jagged Pass (a scripted entrance, added by hand); then the Aqua Hideout, Route 124 and
+# Mossdeep. Route 125 and Shoal Cave (low tide) are a short Surf north of Mossdeep and belong here.
+# The Space Center's Magma raid follows the badge directly, in the same city: in.
+# Left for the next segment: the sea south and west of Mossdeep (Routes 126-134, Pacifidlog; Surf
+# reaches it, the story goes there with Dive), everything underwater, Sootopolis, Ever Grande.
+# The Safari Zone's Northeast and Southeast areas open after the Hall of Fame (hall_of_fame.inc).
+# Backlog from earlier stages: New Mauville (Wattson hands out the Basement Key once the player has
+# Surf; [winona] wrongly left it out as locked), Trick House puzzles 4 (5 badges) and 5 (6 badges),
+# Route 116's Tunneler's Rest House.
+wild_maps = ["Route121", "Route122", "Route123", "Route124", "Route125", "LilycoveCity", "MossdeepCity",
+             "MtPyre_1F", "MtPyre_2F", "MtPyre_3F", "MtPyre_4F", "MtPyre_5F", "MtPyre_6F", "MtPyre_Exterior", "MtPyre_Summit",
+             "MagmaHideout_1F", "MagmaHideout_2F_1R", "MagmaHideout_2F_2R", "MagmaHideout_2F_3R",
+             "MagmaHideout_3F_1R", "MagmaHideout_3F_2R", "MagmaHideout_3F_3R", "MagmaHideout_4F",
+             "SafariZone_South", "SafariZone_Southwest", "SafariZone_North", "SafariZone_Northwest",
+             "ShoalCave_LowTideEntranceRoom", "ShoalCave_LowTideInnerRoom", "ShoalCave_LowTideStairsRoom",
+             "ShoalCave_LowTideLowerRoom", "ShoalCave_LowTideIceRoom",
+             "NewMauville_Entrance", "NewMauville_Inside"]
+trainers = [
+    # Route 121, Route 123, Mt. Pyre (the Aqua grunts on the summit).
+    "TRAINER_KATE_AND_JOY", "TRAINER_VANESSA", "TRAINER_WALTER_1", "TRAINER_TAMMY", "TRAINER_JESSICA_1", "TRAINER_CALE",
+    "TRAINER_MYLES", "TRAINER_PAT", "TRAINER_MARCEL", "TRAINER_CRISTIN_1",
+    "TRAINER_WENDY", "TRAINER_BRAXTON", "TRAINER_VIOLET", "TRAINER_MIU_AND_YUKI", "TRAINER_CAMERON_1", "TRAINER_JACKI_1",
+    "TRAINER_KINDRA", "TRAINER_JONAS", "TRAINER_KAYLEY", "TRAINER_ED", "TRAINER_FERNANDO_1", "TRAINER_ALBERTO",
+    "TRAINER_FREDRICK", "TRAINER_JAZMYN", "TRAINER_DAVIS",
+    "TRAINER_MARK", "TRAINER_DEZ_AND_LUKE", "TRAINER_ZANDER", "TRAINER_LEAH", "TRAINER_WILLIAM", "TRAINER_KAYLA",
+    "TRAINER_GABRIELLE_1", "TRAINER_TASHA", "TRAINER_ATSUSHI", "TRAINER_VALERIE_1", "TRAINER_CEDRIC",
+    "TRAINER_GRUNT_MT_PYRE_1", "TRAINER_GRUNT_MT_PYRE_2", "TRAINER_GRUNT_MT_PYRE_3", "TRAINER_GRUNT_MT_PYRE_4",
+    # The rival in Lilycove (scripted; one per starter and gender).
+    "TRAINER_BRENDAN_LILYCOVE_MUDKIP", "TRAINER_BRENDAN_LILYCOVE_TORCHIC", "TRAINER_BRENDAN_LILYCOVE_TREECKO",
+    "TRAINER_MAY_LILYCOVE_MUDKIP", "TRAINER_MAY_LILYCOVE_TORCHIC", "TRAINER_MAY_LILYCOVE_TREECKO",
+    # Magma Hideout (entered from Jagged Pass with the Magma Emblem; judged by hand).
+    "TRAINER_GRUNT_JAGGED_PASS",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_1", "TRAINER_GRUNT_MAGMA_HIDEOUT_2", "TRAINER_GRUNT_MAGMA_HIDEOUT_3",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_4", "TRAINER_GRUNT_MAGMA_HIDEOUT_5", "TRAINER_GRUNT_MAGMA_HIDEOUT_6",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_7", "TRAINER_GRUNT_MAGMA_HIDEOUT_8", "TRAINER_GRUNT_MAGMA_HIDEOUT_9",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_10", "TRAINER_GRUNT_MAGMA_HIDEOUT_11", "TRAINER_GRUNT_MAGMA_HIDEOUT_12",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_13", "TRAINER_GRUNT_MAGMA_HIDEOUT_14", "TRAINER_GRUNT_MAGMA_HIDEOUT_15",
+    "TRAINER_GRUNT_MAGMA_HIDEOUT_16", "TRAINER_TABITHA_MAGMA_HIDEOUT", "TRAINER_MAXIE_MAGMA_HIDEOUT",
+    # Aqua Hideout.
+    "TRAINER_GRUNT_AQUA_HIDEOUT_1", "TRAINER_GRUNT_AQUA_HIDEOUT_2", "TRAINER_GRUNT_AQUA_HIDEOUT_3",
+    "TRAINER_GRUNT_AQUA_HIDEOUT_4", "TRAINER_GRUNT_AQUA_HIDEOUT_5", "TRAINER_GRUNT_AQUA_HIDEOUT_6",
+    "TRAINER_GRUNT_AQUA_HIDEOUT_7", "TRAINER_GRUNT_AQUA_HIDEOUT_8", "TRAINER_MATT",
+    # Routes 124 and 125.
+    "TRAINER_SPENCER", "TRAINER_ROLAND", "TRAINER_JENNY_1", "TRAINER_GRACE", "TRAINER_CHAD", "TRAINER_LILA_AND_ROY_1",
+    "TRAINER_DECLAN", "TRAINER_ISABELLA",
+    "TRAINER_NOLEN", "TRAINER_STAN", "TRAINER_TANYA", "TRAINER_SHARON", "TRAINER_ERNEST_1", "TRAINER_KIM_AND_IRIS",
+    "TRAINER_PRESLEY", "TRAINER_AURON",
+    # Mossdeep Gym, Tate & Liza, and the Space Center raid.
+    "TRAINER_PRESTON", "TRAINER_BLAKE", "TRAINER_MAURA", "TRAINER_SAMANTHA", "TRAINER_VIRGIL", "TRAINER_HANNAH",
+    "TRAINER_NATE", "TRAINER_SYLVIA", "TRAINER_CLIFFORD", "TRAINER_MACEY", "TRAINER_KATHLEEN", "TRAINER_NICHOLAS",
+    "TRAINER_TATE_AND_LIZA_1",
+    "TRAINER_GRUNT_SPACE_CENTER_1", "TRAINER_GRUNT_SPACE_CENTER_2", "TRAINER_GRUNT_SPACE_CENTER_3",
+    "TRAINER_GRUNT_SPACE_CENTER_4", "TRAINER_GRUNT_SPACE_CENTER_5", "TRAINER_GRUNT_SPACE_CENTER_6",
+    "TRAINER_GRUNT_SPACE_CENTER_7", "TRAINER_TABITHA_MOSSDEEP", "TRAINER_MAXIE_MOSSDEEP",
+    # Trick House puzzle 4 (backlog: 5 badges).
+    "TRAINER_CORA", "TRAINER_PAULA", "TRAINER_YUJI",
+]
+maps = ["Route121*", "Route122", "Route123*", "Route124*", "Route125", "LilycoveCity*", "MossdeepCity*", "MtPyre*",
+        "MagmaHideout*", "AquaHideout*", "SafariZone*", "ShoalCave_LowTide*", "NewMauville*",
+        "Route110_TrickHousePuzzle4", "Route110_TrickHousePuzzle5", "Route116_TunnelersRestHouse"]
+exclude_maps = ["SafariZone_Northeast", "SafariZone_Southeast", "LilycoveCity_Contest*"]
+# Decided 2026-11-22 (DECISIONS.md): Groudon and Kyogre are designed with the Sootopolis segment; the
+# Magma Hideout cutscene and the lore text keep them until then. Steven's Beldum is a post-game gift
+# (FLAG_SYS_GAME_CLEAR).
+exclude_refs = [
+    "data/maps/MagmaHideout_4F/scripts.inc:SPECIES_GROUDON", "data/maps/MagmaHideout_4F/map.json:SPECIES_GROUDON",
+    "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc:SPECIES_GROUDON",
+    "data/maps/MtPyre_Summit/scripts.inc:SPECIES_GROUDON", "data/maps/MtPyre_Summit/scripts.inc:SPECIES_KYOGRE",
+    "data/maps/MossdeepCity_StevensHouse/scripts.inc:SPECIES_BELDUM",
+]
