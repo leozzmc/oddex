@@ -79,6 +79,13 @@ def load_species(game):
     return vanilla, known, aliases
 
 
+def text_words(vanilla, aliases):
+    """Names to look for in dialogue: one-word vanilla species, and one-word aliases of vanilla forms
+    (SPECIES_CASTFORM = SPECIES_CASTFORM_NORMAL: the text says CASTFORM, the key is the form)."""
+    names = set(vanilla) | {a for a, t in aliases.items() if t in vanilla and not a.startswith("SPECIES_ODDEX_")}
+    return {s[len("SPECIES_"):] for s in names if "_" not in s[len("SPECIES_"):] and len(s) > len("SPECIES_") + 3}
+
+
 def party_species_token(line):
     first = re.sub(r"\s*@.*$", "", line).strip()
     first = re.sub(r"\((M|F)\)", "", first).strip()
@@ -238,7 +245,7 @@ def main():
     vanilla, known, aliases = load_species(game)
     if not vanilla:
         sys.exit(f"no species found under {game}/src/data/pokemon/species_info")
-    vanilla_words = {s[len("SPECIES_"):] for s in vanilla if "_" not in s[len("SPECIES_"):] and len(s) > len("SPECIES_") + 3}
+    vanilla_words = text_words(vanilla, aliases)
     findings = []
 
     def add(cat, path, line, token, context):

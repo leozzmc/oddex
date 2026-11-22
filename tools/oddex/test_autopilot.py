@@ -54,6 +54,21 @@ class StepwalkTest(unittest.TestCase):
         path = S["bfs"](("VerdanturfTown", 1, 15), ("VerdanturfTown_FriendshipRatersHouse", 4, 5), S["warp_neighbors"](house))
         self.assertEqual(path[0], "UP|")
 
+    def test_surf_crosses_route118s_river(self):
+        cross = lambda surf: S["bfs"](("Route118", 10, 9), ("Route118", 32, 9), S["warp_neighbors"]({"Route118"}, surf))
+        self.assertIsNone(cross(False))
+        self.assertIsNotNone(cross(True))
+
+    def test_fortree_gym_needs_its_gates_turned(self):
+        gs = S["gates"]("FortreeCity_Gym")
+        self.assertEqual(len(gs), 8)
+        start = ("FortreeCity_Gym", 15, 23, tuple(g[3] for g in gs))
+        at_winona = lambda s: s[:3] == ("FortreeCity_Gym", 15, 3)
+        path = S["bfs"](start, at_winona, S["gate_neighbors"]("FortreeCity_Gym"))
+        self.assertIsNotNone(path)
+        frozen = lambda cur: ((d, n) for d, n in S["gate_neighbors"]("FortreeCity_Gym")(cur) if n[3] == cur[3])
+        self.assertIsNone(S["bfs"](start, at_winona, frozen))
+
 
 class StageReachTest(unittest.TestCase):
     def test_surf_opens_the_sea(self):
@@ -76,6 +91,11 @@ class AutopilotTest(unittest.TestCase):
         self.assertLess(G["reflect_factor"](False, {"COUNTER", "YAWN"}), 1)
         self.assertEqual(G["reflect_factor"](True, {"COUNTER", "YAWN"}), 1)
         self.assertLess(G["reflect_factor"](True, {"MIRROR_COAT"}), 1)
+
+    def test_replacement_is_the_strongest_benched_member(self):
+        party = [(40, 121), (23, 0), (4, 17), (25, 71), (0, 0), (0, 0)]
+        self.assertEqual(G["replacement"](party, {0}), 3)          # not the fainted one, not Lv4
+        self.assertIsNone(G["replacement"]([(40, 0), (23, 0)], set()))
 
     def test_turning_releases_the_pad_first(self):
         # Facing UP after a hold, the next leg goes LEFT: a release frame comes before the turn tap,

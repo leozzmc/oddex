@@ -183,6 +183,13 @@ def best_move(st):
     return max(scored)[3] if scored else None
 
 
+def replacement(party, standing):
+    """Party slot to send out after a knockout: the highest-level one with HP that is not already
+    in the battle (party: [(level, hp)], standing: slots of our battlers still up), or None."""
+    cands = [(lvl, -i, i) for i, (lvl, hp) in enumerate(party) if hp and i not in standing]
+    return max(cands)[2] if cands else None
+
+
 def reflect_factor(special, foe_moves):
     """Avoid the category the foe can send back double (Counter, Mirror Coat): Norman's Mandaloka
     Counters a physical hit for more than the lead's HP."""
@@ -393,6 +400,22 @@ def battle_press(ss):
         if evo_at_learn_prompt(st) and slot_to_forget(st) is None:
             return "press B 2 30"
         return "press A 2 30"
+    lo, hi = text_range("party_menu.o")
+    if lo <= cb2 < hi:
+        # The party menu in battle. With every battler of ours standing it came from "Will you
+        # switch?" after a knockout (asked once the party has a second member): B backs out. With
+        # one fainted (a double battle's partner, or the lead) a replacement must be chosen.
+        mine = [0, 2] if W["read"](st, SYMS["gBattleTypeFlags"], "<I")[0] & 1 else [0]  # BATTLE_TYPE_DOUBLE
+        hp = {b: W["read"](st, SYMS["gBattleMons"] + b * BATTLE_MON + 42, "<H")[0] for b in mine}
+        if all(hp.values()):
+            return "press B 2 30"
+        standing = {W["read"](st, SYMS["gBattlerPartyIndexes"] + 2 * b, "<H")[0] for b in mine if hp[b]}
+        party = [W["read"](st, SYMS["gParties"] + 100 * i + 84, "<BxH") for i in range(6)]  # level, hp
+        pick = replacement(party, standing)
+        cur = W["read"](st, SYMS["gPartyMenu"] + 9, "<b")[0]  # slotId
+        if pick is None or cur == pick:
+            return "press A 2 30"  # A opens the slot's menu, A again sends it out
+        return "press DOWN 2 20" if cur < pick else "press UP 2 20"
     lo, hi = text_range("pokemon_summary_screen.o")
     if lo <= cb2 < hi:
         # "Forget which move?" summary screen: move the cursor to the slot to forget, then A.
