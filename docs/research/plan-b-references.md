@@ -749,7 +749,7 @@ script／text／gfx 的 32 筆要手改，不是 `apply_replacements` 會處理�
 
 ## 11. 第 6 步第六段：Norman 之後 → Winona（第 6 個徽章）
 
-`[winona]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
+`[winona]`（`strict = true`）：對照（Mark 的 Winona 批）、Ichimai 和代號都已經套用，回歸腳本是 `to_winona`（§11.6）。範圍的理由寫在 `content/migration_scope.toml` 的註解裡。
 
 ### 11.1 可達性
 
@@ -898,4 +898,32 @@ Winona 批的美術改了走路圖，載入時間跟著變，亂數從 Slateport
 - Route 110 的練等（Lv24 → 33）改成手動用 autopilot `grind:` 重做。
 - Fan Club 的寵物截圖（m02）那一段是用走路補的；為了不讓後面全部位移，沒有再加對話，所以只拍到寵物，台詞只靠資料檢查。
 - Route 110 有 1 名訓練家在新路線上被繞過，只影響經驗值。
+
+### 11.6 `to_winona`
+
+接在 `to_norman` 後面。路線：
+1. 出 Wally 家 → Route 103 的草叢抓一隻 Kyokon（Grinarbor 學不了 Surf），從背包教 HM03 → Oldale 回血 → 衝浪橫越 Route 103。
+2. Route 110 → Mauville 回血 → 衝浪過 Route 118 的河 → Route 119。
+   - (6,54)–(6,55) 是泥坡，要騎 Mach Bike 全速才上得去（跟 Mirage Tower 一樣逐格錄）。
+   - 第一次走到 Weather Institute 門口時血量太低，身上也沒有藥，所以折回 Mauville 回血、在 Mart 買 15 個 Super Potion 再上來。這一段繞路約 3.3 萬格，留在腳本裡。
+3. Weather Institute：手下 → 喝藥 → Shelly（截圖 w01）→ 研究員送 `WEATHER_GIFT`（Terubozu，截圖 w02）。
+4. 往北到 (25,31) 的勁敵（截圖 w03），拿到 HM02 → Fortree 回血 → House1 的交換（截圖 w04：台詞同時顯示 Torobi 和 Tomoeden，選 NO）。
+5. Route 120 橋上的 Steven（截圖 w05）→ `HIDDEN_BLOCKER` 的野生戰（Kyozosu Lv30，截圖 w06）→ Devon Scope → 回 Fortree 用 Devon Scope 趕走道館前的那隻（截圖 w07）。
+6. Fortree 道館：旋轉門 → Jared、Ashley → 喝藥 → Flint 和 Edwardo 同一步看到玩家，變成雙打，贏了但 Grinarbor 倒下 → 出道館回血再進來（旋轉門會重置）→ Darius → 喝藥 → Winona（截圖 w08 戰鬥、w09 王牌 Kumoryu、w10 徽章）。Grinarbor Lv41 剩 33/124 HP 贏了。
+
+這一段新增或修正的工具（測試都在 `tools/oddex/test_autopilot.py`）：
+- stepwalk `--surf`：水可以走，瀑布不行；從陸地踏上水面時走 Surf 的提示（A、YES）。沒加 `--surf` 時，水現在會擋路（以前靜態 BFS 把水當成可走）。
+- stepwalk 的旋轉門：在 Fortree 道館和 Trick House 謎題 6，BFS 的狀態包含每個門的方向，方向從 `VAR_TEMP_0` 起的位元組讀，規則照 `src/rotating_gate.c`（表格是抄過來的，那個檔案一改就要重抄）。物件用執行中的位置：訓練家打完會走到玩家旁邊，只看 `map.json` 會卡住。
+- autopilot 的隊伍選單：隊伍超過一隻之後，打倒對手會問要不要換（選到 YES 就進隊伍選單），現在按 B 退出；有人倒下必須換上時，選等級最高、還有 HP、不在場上的那一隻。
+- stage_reach `--surf`（§11.1）。
+
+錄製時發現、已處理的問題：
+- Weather Institute 的台詞寫死「received CASTFORM!」，`check_species_refs` 的文字檢查沒抓到。改成先 `bufferspeciesname` 再顯示「received {STR_VAR_1}!」；下一句「changes shape according to the weather」不符合單一型態的 Terubozu，改成「wishes for clear skies, whatever the weather conditions」。兩句合計的長度跟原本相同，ROM 的版面不變。
+- 背包和隊伍選單會記住上次的位置：雙打換過人之後，「用在誰身上」的游標停在別隻身上，藥就用錯對象。喝藥的指令一律先按 LEFT 回到第一隻。
+
+只靠資料檢查、沒在遊戲裡看過：
+- Ichimai（Route 120 的 1% 欄位）：要遇到得在草叢耗很久，沒有排進路線。
+- Route 119 的 Feebas 釣點（`FISHING_SPOT`）、Fortree 的交換本身（只拍了開出條件的台詞）。
+- 橋上的影子圖（`OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW`）：截圖 w05 是夜間色調，橋上 (12,16) 看不出影子，要請 Mark 確認是圖太暗還是沒畫出來。
+- 沒經過的訓練家：Surf 補漏的游泳選手（Route 103 東側以外）、Abandoned Ship、Route 120 橋以南、道館的 Humberto；他們的隊伍只靠 `check_species_refs`。
 

@@ -111,11 +111,11 @@ Route119_WeatherInstitute_2F_EventScript_SendCastformToPC::
 	end
 
 Route119_WeatherInstitute_2F_EventScript_ReceivedCastformFanfare::
+	bufferspeciesname STR_VAR_1, SPECIES_ODDEX_WEATHER_GIFT
 	playfanfare MUS_OBTAIN_ITEM
 	message Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_ODDEX_WEATHER_GIFT
 	return
 
 Route119_WeatherInstitute_2F_EventScript_ExplainCastform::
@@ -289,11 +289,11 @@ Route119_WeatherInstitute_2F_Text_NoRoomForPokemon:
 	.string "for this POKéMON.$"
 
 Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform:
-	.string "{PLAYER} received CASTFORM!$"
+	.string "{PLAYER} received {STR_VAR_1}!$"
 
 Route119_WeatherInstitute_2F_Text_PokemonChangesWithWeather:
-	.string "That POKéMON changes shape according\n"
-	.string "to the weather conditions.\p"
+	.string "That POKéMON wishes for clear skies,\n"
+	.string "whatever the weather conditions.\p"
 	.string "There're plenty of them in the\n"
 	.string "INSTITUTE--go ahead and take it.$"
 

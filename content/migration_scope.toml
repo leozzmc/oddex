@@ -252,7 +252,7 @@ maps = ["MirageTower*", "AlteringCave", "RustboroCity_DevonCorp_2F", "PetalburgC
 
 [winona]
 description = "After Norman: Surf, Route 118 to 120 with the Weather Institute and Fortree, Winona; the Surf backlog of earlier routes"
-strict = false
+strict = true
 # Reachability: stage_reach.py --rock-smash --cut --strength --surf from Petalburg, limited to the maps
 # this stage can reach by story (Surf is HM03 from Wally's father after Norman; Waterfall and Dive come
 # later, so waterfalls, underwater maps and Abandoned Ship's hidden floor stay out). Story locks judged
