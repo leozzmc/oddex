@@ -644,6 +644,140 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 - **方案 B**:倒吊的娃娃(祈雨),裙擺朝上。不採用:倒過來的臉在 64 px 不好讀,而且整個輪廓會像一顆鈴(跟 Suzurai 撞)。
 - 形態:只有一種(Castform 的 Forecast 是寫死在 Castform 的種族上的,原創角色用不了)。特性:Forewarn／Cloud Nine(娃娃把天氣「吊起來」)。
 
+## Mossdeep 段(草稿)(2026-11-22,Mark;Winona → Tate & Liza。**只有文件,什麼都還沒建**;原版清單是 Mark 自己整理的草稿,等 Sonia 的正式範圍確認)
+
+### 範圍和清單是怎麼來的
+- 用 `check_species_refs.py --maps <地圖前綴> --json` 掃 David 給的路線:Route 121–124、Lilycove、Mt. Pyre、Aqua Hideout、Mossdeep(含道館和 Space Center)。另外加了 **Magma Hideout 和 Jagged Pass**:Emerald 的劇情是 Mt. Pyre → Magma Hideout → Aqua Hideout → Mossdeep,David 的路線沒列,請 Sonia 確認。
+- 訓練家是從這些地圖的 `scripts.inc` 找出來的(和 `check_species_refs` 的 `--maps` 一樣),所以只有第一次對戰的隊伍(`_1`),不含 rematch。
+- **主路線**:542 筆、88 種,其中 **20 種還沒有對照**(wild 306、party 188、script 11、text 32、gfx 5)。
+- **Route 125**(Mossdeep 北邊,有 Surf 就到得了;David 的路線沒列):27 筆、17 種,另有 3 種沒有對照(Luvdisc、Machamp、Seaking)。要不要放進這一段由 Sonia 決定,下面先把對照寫好。
+- **Safari Zone**:見最後一節。
+
+### 沒有對照的 20 種(主路線)
+
+| 原版 | 階段 | 種族值 | wild | party(等級) | 其他 | 出現 | 建議 |
+|---|---|---|---|---|---|---|---|
+| Shuppet | 1 | 295 | 75 | 3(Lv29–32) | | Mt. Pyre 全部、Route 121/123 | **新角色 Kamikko** |
+| Duskull | 1 | 295 | 15 | 2(Lv29–30) | | Mt. Pyre 4F–6F、Summit | Ichimai(400,**比原版強 36%**) |
+| Golbat | 2 | 455 | | 2(Lv34–40) | | Aqua/Magma 幹部 | **新角色 Nobusumen**(480) |
+| Crobat | 3 | 535 | | 2(Lv38–43) | | Maxie(Magma Hideout、Space Center) | Nobusumen(−10%) |
+| Claydol | 2 | 500 | | 1(Lv41) | | Tate & Liza | **新角色 Enigmen**(Sphinmen 的第 2 階段) |
+| Lunatone | 1 | 460 | | 2(Lv30–42) | | Tate & Liza、1 名訓練家 | **新角色 Iwadusk** |
+| Ludicolo | 3 | 480 | | 4(Lv32) | | Lilycove 的勁敵 | **新角色 Shojoran**(可選;不做的話對到 Shojomai,⚠ −29%) |
+| Chimecho | 2 | 455 | 2 | | | Mt. Pyre Summit(2%) | Kagurai(465);風鈴對神樂鈴 |
+| Electrode | 2 | 490 | | | script 4 | Aqua Hideout B1F 的假道具球 | Kagurai(−5%);Voltorb 已經是 Suzurai |
+| Chinchou | 1 | 330 | | 1(Lv34) | | 訓練家 | Kamorai(310,同樣是水/電) |
+| Girafarig | 1 | 455 | | 2(Lv36) | | 訓練家(Safari 也有) | Kyozosu(420,−8%;一般) |
+| Gyarados | 2 | 540 | | 1(Lv34) | | 訓練家 | Kumoryu(490,−9%;鯉魚躍龍門變成龍) |
+| Mawile | 1 | 380 | | 1(Lv29) | | 訓練家 | Karabeki(340,−11%;鋼) |
+| Pinsir | 1 | 500 | | 1(Lv27) | | 訓練家(Safari 也有) | Yokozunat(395,**⚠ −21%**;蟲) |
+| Rhyhorn | 1 | 345 | | 1(Lv31) | | 訓練家(Safari 也有) | Hifukko(305,−12%;地面) |
+| Vulpix | 1 | 299 | 4 | | | Mt. Pyre Exterior | Shishiblaze(310;火)。備案 Inarizuma(狐火的狐狸,但屬性對不上) |
+| Wobbuffet | 2 | 405 | | 3(Lv26–36) | | 訓練家(Safari 也有) | Tomoeden(405;超能力)。Wynaut 是 Gachirinza(280),對過去會是 −31% |
+| Beldum | 1 | 300 | | | 7 | Steven 家送的角色 | **先排除**:破關後才拿得到(`FLAG_SYS_GAME_CLEAR`);之後做成代號 |
+| Groudon | 1 | 670 | | | 17 | Magma Hideout 4F 的過場、Space Center 和 Mt. Pyre 的文字 | **先排除**:傳說角色要使用者決定,建議等 Sootopolis 那一段一起設計 |
+| Kyogre | 1 | 670 | | | 1 | Mt. Pyre Summit 的文字 | 同上 |
+
+- 其餘 68 種已經有對照(Winona 批次以前的表),不用動。
+- Route 125 多出來的 3 種:Machamp → Yokozunat(505 → 395,**⚠ −22%**)、Luvdisc → Shojomai(330 → 340)、Seaking → Kamorai(450 → 310,**⚠ −31%**;Goldeen 已經是 Kamorai,這條線沒有第 2 階段)。
+- HM:Kumoryu 要加 Surf、Strength、Waterfall、Dive(從 Gyarados 來;雲龍游泳說得通,Strength 也可以),Yokozunat 加 Cut(Pinsir、Heracross),Ichimai 加 Flash(Duskull),Shojobob 加 Strength、Rock Smash(Psyduck,只有做 Safari 才需要)。新角色照它取代的原版:Kamikko/Kaminobi 是 Flash,Nobusumen 是 Fly,Enigmen 是 Strength、Flash、Rock Smash,Iwadusk 是 Flash,Shojoran 是 Surf、Strength、Flash、Rock Smash、Waterfall、Dive。
+
+### Mt. Pyre 的幽靈:Ichimai 接 Duskull,Shuppet 做新的人偶線
+- **Duskull → Ichimai**:Duskull 只在高樓層和山頂(15 格),比較少見,符合 Ichimai「稀有」的定位;兩隻都是「遮住臉、只露一隻眼」的亡靈。缺點是 Ichimai 是單一階段的 400,比 Duskull(295)強 36%,野生 Lv22–29 的對手會比原版硬。如果使用者覺得太強,備案是 Duskull 也對到 Kamikko,Ichimai 只留在 Route 120。
+- **Shuppet → 新的人偶線**:Shuppet 是 Mt. Pyre 最常見的野生(75 格),Banette 是「被丟掉的人偶生出怨念」,正好是使用者說的恐怖片原型。這一段只出現 Shuppet,但建議兩個階段一起做:玩家在這裡的等級(Lv35–40)已經到 Shuppet 進化的 Lv37,抓到卻不能進化會很奇怪,之後 Phoebe 和後面的訓練家也會用到 Banette。
+
+#### Kamikko → Kaminobi 的 Brief(Shuppet → Banette 位置)
+- **原型**:「頭髮會自己變長的人偶」這個公有領域的怪談類型(市松人形),加上人形供養(把不要的人偶送到寺廟供奉)的習俗。不用任何電影的角色或造型,也不用現實中寺廟供奉的那一尊的名字。
+- **一句話概念**:被丟在山上的市松人偶。第 1 階段只剩一顆飄在空中的人偶頭,齊耳的短髮;進化後頭髮長到拖地,自己動起來當手腳用。
+- **Kamikko(第 1 階段,幽靈/妖精,295)**
+  - 輪廓:一顆圓圓的白色人偶頭,齊耳的黑色妹妹頭,脖子下面只剩一小截破掉的紅色和服領口,像一顆飄著的球。
+  - 表情:人偶畫上去的細眼和小小的紅唇,一邊的臉頰有一道裂痕;眼睛是空的黑洞,裡面一點白光。
+  - 調色盤:瓷白 2 階、黑髮 2 階、紅領口 2 階、裂痕和眼洞的黑、白光、輪廓。約 9 色。異色:銀白的頭髮、藍色的領口。
+  - 正面:臉、裂痕、短髮、領口。背面:整片的黑髮和後面的蝴蝶結。
+- **Kaminobi(第 2 階段,幽靈/妖精,455,Lv37 進化)**
+  - 輪廓:穿紅色和服的整尊人偶,頭髮長到地上,分成兩大束往兩邊撐開,像蜘蛛的腳一樣把身體撐離地面;人偶本身的手腳垂著不動。
+  - 表情:同一張人偶臉,裂痕變大,一隻眼睛掉了只剩黑洞,嘴角被裂痕拉成歪斜的笑。
+  - 調色盤:瓷白 2 階、黑髮 3 階(要畫出一束一束)、紅色和服 2 階、金色腰帶、眼洞的黑、輪廓。約 11 色。異色:白髮、紫色和服。
+  - 正面:臉、和服、往兩邊撐開的頭髮。背面:頭髮從後腦勺像瀑布一樣分成兩束,和服背後的大結。
+- **方案 A(採用)**:上面這樣,進化靠「頭髮變長」。兩個階段的輪廓差很多(球 → 被頭髮撐起來的人偶),64 px 分得開。
+- **方案 B**:縫滿補丁的布偶(更接近 Banette 的拉鍊嘴)。不採用:跟原版太像,而且布偶的臉在 64 px 沒有面具系列的「臉」。
+- 名字是暫定的:Kamikko(髪っ子)、Kaminobi(髪伸び)。
+
+### Team Aqua/Magma 的蝙蝠:Nobusumen(Golbat、Crobat 位置)
+Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat 和 Crobat,Komorimen 對不上(−46% 以上),所以給它一個進化,同時接 Golbat 和 Crobat 兩個位置(只做一隻,少做一個階段)。
+
+#### Nobusumen 的 Brief
+- **原型**:野衾(のぶすま)。日本民間傳說裡,活得很久的蝙蝠會變成野衾:像一張棉被一樣飛過來蓋住人的臉,吹熄燈籠,吸血。妖怪,不是神祇。
+- **一句話概念**:蝙蝠面長大後,皮膜張成一整張四方形的「被子」,四個角各有一隻爪,面具在正中央,尾巴上掛著一個被它吹熄、還在冒煙的紙燈籠。
+- **輪廓**:菱形(四方形轉 45°)的風箏形,上面兩個角是耳朵和翼爪,下面拖著燈籠。和 Komorimen 橫向張開的蝙蝠翅膀分得開。
+- **表情**:Komorimen 的蝙蝠面,但嘴張得更大,露出兩根吸血的長牙;眼睛是發光的黃色。
+- **調色盤**:皮膜的紫 2 階、內側的暗紅 2 階、面具的灰白 2 階、黃眼、牙的白、燈籠的米色和煙的灰、輪廓。約 11 色。異色:青綠色的皮膜、藍色的鬼火還在燈籠裡燒。
+- **正面**:面具、張開的方形皮膜、爪、燈籠。**背面**:皮膜的背面(骨架的線條)和耳朵、燈籠。
+- **方案 A(採用)**:方形的皮膜。**方案 B**:只是把 Komorimen 放大、加第二對翅膀(像 Crobat)。不採用:跟原版太像,輪廓也跟 Komorimen 分不開。
+- 數值:毒/飛行,480(Golbat 455 和 Crobat 535 之間),Komorimen Lv22 進化(和 Zubat 一樣)。
+
+### Tate & Liza 的隊伍:Enigmen 和 Iwadusk
+原版是 Claydol Lv41、Xatu Lv41、Lunatone Lv42、Solrock Lv42。Xatu → Shachowl、Solrock → Iwadawn 已經有對照;Claydol 和 Lunatone 沒有。Baltoy 是 Sphinmen(300),對到 Claydol 會是 −40%,館主的隊伍不能這樣,所以 Sphinmen 要有進化;Lunatone 是館主的王牌之一,要一隻和 Iwadawn 成對的角色。
+
+#### Enigmen 的 Brief(Claydol 位置,Sphinmen 的第 2 階段)
+- **原型**:希臘神話裡出謎題的 Sphinx(有翅膀,答不出來就吃掉旅人),加上埃及法老的黃金面具。使用者核准的外國神話題材;怪物,不是神祇。
+- **一句話概念**:Sphinmen 長出一對大翅膀,浮在空中;白色的能面換成一張黃金的法老面具,下巴有編成辮子的假鬍子,尾巴末端變成一條小蛇。
+- **輪廓**:往上張開的一對大翅膀、條紋頭巾和黃金面具、蹲坐的獅身、捲起的蛇尾。比 Sphinmen 多了翅膀,一眼分得出來。
+- **表情**:黃金面具上深藍色的眼線和永遠不變的微笑;眼睛是空洞的,裡面一點紅光。
+- **調色盤**:金 3 階、深藍的條紋 2 階、翅膀的羽毛(白到青綠)2 階、黃褐色的獅身 2 階、紅光、輪廓。約 12 色。異色:銀色面具和紅色條紋、黑色的獅身。
+- **正面**:面具、頭巾、兩邊張開的翅膀、前爪。**背面**:翅膀的背面、頭巾後面的辮子、蛇尾。
+- **方案 A(採用)**:有翅膀的 Sphinx。**方案 B**:金字塔形的石像,只有臉會動。不採用:失去獅身,而且跟 Iwadawn 的石頭太像。
+- 數值:地面/超能力,500,特性 Levitate,Sphinmen Lv36 進化(照 Baltoy → Claydol)。
+
+#### Iwadusk 的 Brief(Lunatone 位置)
+- **原型**:Iwadawn 是岩戶和日輪;Iwadusk 是同一塊岩石的夜晚那一面,加上「月亮上有兔子在搗麻糬」的民間傳說和賞月(月見)的供品。只用意象,不做成月神。
+- **一句話概念**:關上的岩戶,中間裂開一道新月形的縫,淡藍色的月光從縫裡漏出來,光裡看得到搗麻糬的兔子的剪影;岩石頂上放著一串月見糰子和一束芒草。
+- **輪廓**:和 Iwadawn 一樣的大岩石(成對),但日輪的圓換成新月的彎,頂上多了芒草的穗。兩隻放在一起時一圓一彎。
+- **表情**:新月的裂縫就是它閉著的眼睛(睡著的臉),下面一道小小的嘴。
+- **調色盤**:岩石的藍灰 3 階、月光的淡藍和白 2 階、兔子剪影的深藍、糰子的白、芒草的金 2 階、注連繩、輪廓。約 12 色。異色:紅月(月光改成橙紅)。
+- **正面**:岩石、新月形的光、兔子的剪影、糰子和芒草。**背面**:岩石的背面和注連繩。
+- **方案 A(採用)**:和 Iwadawn 成對的岩戶。**方案 B**:一隻抱著月亮的石兔。不採用:跟 Iwadawn 看不出是一對,雙打的館主需要一看就知道是一組。
+- 數值:岩石/超能力,460(照 Lunatone),特性 Levitate。**注意**:Iwadawn 是 375(原本接的是 Nosepass),所以這一對的數值不對稱;見 `balance.md` 的建議。
+
+### 可選:Shojoran(Ludicolo 位置,Shojobob 線的第 3 階段)
+- 只有 Lilycove 的勁敵用到(6 種組合裡的 4 種,Lv32)。不做的話對到 Shojomai(480 → 340,⚠ −29%)。之後 Victory Road 一帶的訓練家還會用到 Ludicolo,所以建議做,但可以排在這一批的最後。
+- **原型**:能〈猩々〉的特殊演出「乱(みだれ)」:喝醉的猩々在海浪上踮著腳跳舞。Shojomai 已經是「猩々的舞」,這是同一個角色跳得最瘋的樣子。
+- **一句話概念**:紅色長髮甩成一大圈的猩々,踩在一個浮在浪上的大酒杯裡,一手拿著長柄的酒杓。
+- **輪廓**:甩開的紅色長髮(比身體還大的一圈)、下面的大酒杯和浪花、斜舉的酒杓。
+- **表情**:猩々面:紅臉、笑著的少年臉,眼睛瞇成一條線。
+- **調色盤**:紅髮 3 階、紅臉 2 階、金色的衣服 2 階、朱漆的酒杯 2 階、浪花的白和藍、輪廓。約 12 色。異色:金髮、藍色的酒杯。
+- **正面**:臉、甩開的頭髮、酒杯、酒杓。**背面**:頭髮的背面和酒杯。
+- **方案 A(採用)**:踩在酒杯裡跳舞。**方案 B**:抱著一個大酒甕。不採用:靜態的姿勢失去 Ludicolo「跳舞」的特徵。
+- 數值:水/妖精,480,Shojomai 用 Water Stone 進化(照 Lombre → Ludicolo)。
+
+### Safari Zone:建議現在只遷移開放的 4 區,東邊 2 區先排除
+- Safari Zone 有 6 區,127 筆野生、38 種。其中 **Southeast 和 Northeast 是破關後才開放的擴建區**:`data/scripts/hall_of_fame.inc` 進殿堂時才 `setflag FLAG_HIDE_SAFARI_ZONE_SOUTH_CONSTRUCTION_WORKERS`,在那之前工人擋著路。Johto 的角色全部只在這 2 區:Aipom、Gligar、Hoothoot、Houndour、Ledyba、Mareep、Miltank、Octillery、Pineco、Quagsire、Remoraid、Shuckle、Snubbull、Spinarak、Stantler、Sunkern、Teddiursa、Wooper,共 18 種。
+- **建議**:
+  1. **東邊 2 區放進 `exclude_maps`**,等破關後的內容再處理。這一段到不了,不會遇到。
+  2. **西邊 4 區(South、Southwest、North、Northwest)現在就遷移,只用現有角色**。玩家從 Route 121 就走得進去,原版角色留在野生表裡,debug build 會 assert、release build 會變成 `SPECIES_NONE`,所以不能留著。
+- 4 區裡沒有對照的 9 種:Girafarig、Wobbuffet、Pinsir、Rhyhorn 和主路線一樣;另外 5 種只在 Safari:
+
+| 原版 | 種族值 | 區域 | 建議 |
+|---|---|---|---|
+| Psyduck | 320 | Southwest、Northwest(水面) | Shojobob(220,⚠ −31%) |
+| Golduck | 500 | Northwest(水面) | Shojomai(340,⚠ −32%);和 Psyduck 同一條線 |
+| Seaking | 450 | Southwest、Northwest(釣魚) | Kamorai(310,⚠ −31%);和 Goldeen 同一隻 |
+| Heracross | 500 | North | Yokozunat(395,⚠ −21%;同樣是蟲/格鬥) |
+| Phanpy | 330 | North | Mandalumb(280,−15%;地面) |
+
+- 這 5 個 ⚠ 都只是野生:對戰的難度不受影響,只是抓到的角色比原版弱。Safari Zone 本來是「抓稀有角色」的地方,全部換成路上已經有的角色會失去這個意義。**之後可以考慮**把幾隻目前很少見的原創角色(例如 Sphinmen、Ichimai)放進來,或是另外做 Safari 限定的角色;這要使用者決定,不在這一段的最小範圍裡。
+
+### 這一段的新角色(建議)
+
+| 角色 | 取代 | 屬性 | 種族值 | 一句話 | 必要嗎 |
+|---|---|---|---|---|---|
+| Kamikko | Shuppet | 幽靈/妖精 | 295 | 飄著的市松人偶頭 | 必要(Mt. Pyre 的野生主力) |
+| Kaminobi | Banette | 幽靈/妖精 | 455 | 頭髮長到拖地、用頭髮走路的人偶 | 建議一起做(這一段不出現) |
+| Nobusumen | Golbat、Crobat | 毒/飛行 | 480 | 野衾:方形皮膜的老蝙蝠,拖著吹熄的燈籠 | 必要(幹部和 Maxie) |
+| Enigmen | Claydol | 地面/超能力 | 500 | 長翅膀、戴黃金面具的 Sphinx | 必要(Tate & Liza) |
+| Iwadusk | Lunatone | 岩石/超能力 | 460 | 月夜的岩戶,新月的裂縫裡有搗麻糬的兔子 | 必要(Tate & Liza) |
+| Shojoran | Ludicolo | 水/妖精 | 480 | 在酒杯裡跳「乱」的猩々 | 可選(勁敵 4 筆) |
+
 ## 還沒用到的候選
 - 能:殺生石(野干或小飛出)、熊坂(長霊癋見)、邯鄲男、真蛇(Omotelle 線如果要有第 4 階段)、増女(〈羽衣〉的天女)、童子(〈菊慈童〉)、黒髭(龍神)、小癋見(〈野守〉〈鵜飼〉的地獄小鬼)、怪士(〈船弁慶〉的平知盛亡靈)。
 - 狂言:武悪(和它的變化形神鳴,〈雷〉的雷神)、乙、賢徳(動物精靈)、猿(〈靭猿〉)、狸、蛸(うそぶき面)、祖父、尼、福の神(神面,不採用)。
