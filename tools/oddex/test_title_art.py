@@ -41,5 +41,29 @@ class Layer(unittest.TestCase):
         self.assertFalse([(x, y) for y in range(y0, y1 + 1) for x in range(x0, x1 + 1) if self.g[y][x] == ta.GLOW])
 
 
+class Text(unittest.TestCase):
+    GREYS = [(255, 74, 238)] + [(v, v, v) for v in (156, 90, 222, 24, 74, 238, 41, 172, 106, 189, 139, 205, 123, 65, 255)]
+
+    def test_banner(self):
+        rows = ta.banner(self.GREYS)
+        self.assertEqual((len(rows), len(rows[0])), (32, 128))
+        xs = [x for r in rows for x, c in enumerate(r) if c != ta.BANNER_PAL_KEY]
+        self.assertTrue(90 <= max(xs) - min(xs) <= 126, (min(xs), max(xs)))   # five letters across both 64px sprites
+        self.assertTrue(min(xs) < 32 and max(xs) > 96)
+        self.assertIn(15, {c for r in rows for c in r})                        # white letters
+        self.assertTrue(all(r[0] == r[-1] == ta.BANNER_PAL_KEY for r in rows))  # nothing cut off at the sides
+
+    def test_fan_line(self):
+        rows = ta.fan_line()
+        self.assertEqual((len(rows), len(rows[0])), (8, 160))
+        self.assertLessEqual({c for r in rows for c in r}, {0, 1, 3, 4, 5})     # the sheet's own shades
+        xs = [x for r in rows for x, c in enumerate(r) if c]
+        self.assertTrue(ta.LINE_X0 - 1 <= min(xs) and max(xs) <= ta.LINE_X1)
+        mid = (min(xs) + max(xs)) / 2
+        self.assertLess(abs(mid - (ta.LINE_X0 + ta.LINE_X1) / 2), 2)            # centred where vanilla's line was
+        with self.assertRaises(SystemExit):
+            ta.fan_line('FAN GAME, NOT OFFICIAL, NOT OFFICIAL')   # too wide for the line
+
+
 if __name__ == '__main__':
     unittest.main()

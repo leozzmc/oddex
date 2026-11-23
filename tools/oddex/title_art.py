@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Draw the title screen's back layer: Utsuroban, the ship from the sky, where vanilla has Rayquaza.
+"""Draw the title screen's back layer (Utsuroban, the ship from the sky, where vanilla has Rayquaza), the
+ODDEX version banner and the line under PRESS START.
 
     python3 tools/oddex/title_art.py [--preview OUT.png]
 
@@ -22,7 +23,7 @@ import struct
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -155,6 +156,128 @@ def preview(g, path):
     im.resize((im.width * 2, im.height * 2), Image.NEAREST).save(path)
 
 
+# --- the version banner and the line under PRESS START --------------------------------------------
+
+BANNER_PAL_KEY = 0                    # emerald_version.png: index 0 is the transparent key, the rest greys
+BANNER_DARK = (24, 16, 24)
+
+
+def banner(palette):
+    """ODDEX as the 128x32 version banner (two 64x32 sprites side by side), in vanilla's style:
+    chunky white letters rising a little to the right, a heavy dark edge and a drop shadow, the
+    edges softened with the palette's greys. Returns rows of palette indices."""
+    S = 8
+    hi = Image.new('L', (128 * S, 32 * S), 0)
+    w, h, t, gap, y0 = 19, 21, 7, 3, 5.5
+    c = t * 0.8                       # the horizontal strokes are a little thinner than the stems
+    x = (128 - (5 * w + 4 * gap)) / 2
+
+    def letter(draw):
+        """Draw one letter on its own layer (so a letter can cut holes without touching its neighbours)."""
+        layer = Image.new('L', hi.size, 0)
+        d = ImageDraw.Draw(layer)
+        draw(lambda x0, y0_, x1, y1, fill=255: d.rectangle([x0 * S, y0_ * S, x1 * S - 1, y1 * S - 1], fill=fill),
+             lambda x0, y0_, x1, y1, fill=255: d.ellipse([x0 * S, y0_ * S, x1 * S - 1, y1 * S - 1], fill=fill),
+             lambda pts: d.polygon([(px * S, py * S) for px, py in pts], fill=255))
+        hi.paste(ImageChops.lighter(hi, layer))
+
+    def o(box, oval, poly, x=x):
+        oval(x, y0, x + w, y0 + h)
+        oval(x + t, y0 + c, x + w - t, y0 + h - c, 0)
+
+    def dee(x):
+        def draw(box, oval, poly):
+            oval(x - w * 0.3, y0, x + w, y0 + h)          # the bowl
+            box(x - w, y0, x, y0 + h, 0)                  # cut it off at the stem
+            oval(x - w * 0.3 + t, y0 + c, x + w - t, y0 + h - c, 0)
+            box(x, y0, x + t, y0 + h)                     # the stem
+        return draw
+
+    def e(box, oval, poly, x=x + 3 * (w + gap)):
+        box(x, y0, x + t, y0 + h)
+        box(x, y0, x + w - 2, y0 + c)
+        box(x, y0 + h - c, x + w - 2, y0 + h)
+        box(x, y0 + h / 2 - c / 2, x + w - 5, y0 + h / 2 + c / 2)
+
+    def ex(box, oval, poly, x=x + 4 * (w + gap) - 1):
+        poly([(x, y0), (x + t + 1, y0), (x + w, y0 + h), (x + w - t - 1, y0 + h)])
+        poly([(x + w - t - 1, y0), (x + w, y0), (x + t + 1, y0 + h), (x, y0 + h)])
+
+    for draw in (o, dee(x + w + gap), dee(x + 2 * (w + gap)), e, ex):
+        letter(draw)
+    hi = hi.rotate(3, resample=Image.BICUBIC)   # rising to the right, as vanilla's banner does
+    edge = hi.filter(ImageFilter.MaxFilter(2 * 2 * S + 1))                      # a 2px dark edge
+    edge = ImageChops.lighter(edge, ImageChops.offset(edge, S, int(1.5 * S)))   # and its drop shadow
+    letter, edge = hi.resize((128, 32), Image.BOX), edge.resize((128, 32), Image.BOX)
+    greys = [(i, c) for i, c in enumerate(palette) if i != BANNER_PAL_KEY]
+    rows = []
+    for y in range(32):
+        row = []
+        for x in range(128):
+            if edge.getpixel((x, y)) < 110:
+                row.append(BANNER_PAL_KEY)
+                continue
+            k = letter.getpixel((x, y)) / 255
+            top = 255 - 34 * max(0, y - 14) / 14            # white, a little greyer toward the foot
+            v = [BANNER_DARK[j] + (top - BANNER_DARK[j]) * k for j in range(3)]
+            row.append(min(greys, key=lambda ic: sum((a - b) ** 2 for a, b in zip(ic[1], v)))[0])
+        rows.append(row)
+    return rows
+
+
+# The line under PRESS START (press_start.png): the second 8px row of the sheet, from x = 8. In vanilla it
+# is the copyright line; here it says what this is. 5 rows of body in the sheet's own shades, a 1px black edge.
+FAN_LINE = 'FAN GAME, NOT OFFICIAL'
+GLYPHS = {
+    'F': ['######', '##....', '#####.', '##....', '##....'], 'A': ['.####.', '##..##', '######', '##..##', '##..##'],
+    'N': ['##..##', '###.##', '######', '##.###', '##..##'], 'G': ['.#####', '##....', '##.###', '##..##', '.#####'],
+    'M': ['##...##', '###.###', '#######', '##.#.##', '##...##'], 'E': ['######', '##....', '#####.', '##....', '######'],
+    'O': ['.####.', '##..##', '##..##', '##..##', '.####.'], 'T': ['######', '..##..', '..##..', '..##..', '..##..'],
+    'I': ['##', '##', '##', '##', '##'], 'C': ['.#####', '##....', '##....', '##....', '.#####'],
+    'L': ['##....', '##....', '##....', '##....', '######'], ',': ['..', '..', '..', '.#', '.#', '#.'], ' ': ['...'] * 5,
+}
+LINE_SHADES = [5, 5, 4, 3, 3, 3]   # the sheet's palette indices for each body row, top to bottom
+LINE_X0, LINE_X1, LINE_Y = 8, 152, 8   # vanilla's line spans x 8..152 of the row y 8..15
+
+
+def fan_line(text=FAN_LINE):
+    """The 8 rows (160 wide) of the line, as palette indices; the text is centred where vanilla's was."""
+    width = sum(len(GLYPHS[ch][0]) + 1 for ch in text) - 1
+    if width > LINE_X1 - LINE_X0:
+        sys.exit(f'title_art: {text!r} is {width}px wide, the line holds {LINE_X1 - LINE_X0}')
+    body = {}
+    x = LINE_X0 + (LINE_X1 - LINE_X0 - width) // 2
+    for ch in text:
+        for j, row in enumerate(GLYPHS[ch]):
+            for i, c in enumerate(row):
+                if c == '#':
+                    body[(x + i, 1 + j)] = LINE_SHADES[j]
+        x += len(GLYPHS[ch][0]) + 1
+    rows = [[0] * 160 for _ in range(8)]
+    for (px, py) in body:
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                if 0 <= px + dx < 160 and 0 <= py + dy < 8:
+                    rows[py + dy][px + dx] = 1
+    for (px, py), c in body.items():
+        rows[py][px] = c
+    return rows
+
+
+def write_text(out=OUT):
+    """Rewrite the version banner, and the line under PRESS START in place (PRESS START itself is kept)."""
+    b = Image.open(out / 'emerald_version.png')
+    pal = b.getpalette()[:48]
+    rows = banner([tuple(pal[i * 3:i * 3 + 3]) for i in range(16)])
+    b.putdata([c for r in rows for c in r])
+    b.save(out / 'emerald_version.png', bits=8)
+    p = Image.open(out / 'press_start.png')
+    for y, r in enumerate(fan_line()):
+        for x, c in enumerate(r):
+            p.putpixel((x, LINE_Y + y), c)
+    p.save(out / 'press_start.png', bits=8)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--preview')
@@ -162,6 +285,7 @@ def main():
     g = draw()
     tiles, entries = tilemap(g)
     write(tiles, entries)
+    write_text()
     print(f'title_art: {len(tiles)} tiles (256 fit)')
     if args.preview:
         preview(g, args.preview)
