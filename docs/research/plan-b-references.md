@@ -1001,3 +1001,111 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
   - Fly、教招式之後，START 選單的游標和背包的口袋會留在上次的位置；喝藥的按鍵巨集假設游標在 BAG、口袋在 ITEMS，所以每次 Fly 或教完招式都要把它們放回去。
   - 一串分段重跑時，中間有一段失敗而沒有停下來，後面的分段就接在舊的 savestate 上，組起來從開機跑會走偏。分段結束時除了位置，也要比 `gRngValue` 和 vblank 計數。
 
+## 13. 第 6 步第八段：Tate & Liza 之後 → Juan（第 8 個徽章）
+
+`[sootopolis]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。角色和對照等使用者決定。
+
+### 13.1 可達性和範圍邊界
+
+- `stage_reach.py --rock-smash --cut --strength --surf` 跑三次：從 Mossdeep（海面）、Seafloor Cavern 裡面、Sootopolis 裡面。工具不會算 Dive，所以只有 Dive 才到得了的地方是人工加入的。
+- 範圍內：
+  - Route 126–131：主線會經過（Route 128 潛水到 Seafloor Cavern、Route 126 潛水到 Sootopolis、Route 129–131 往 Sky Pillar）。
+  - Route 132–134 和 Pacifidlog：只要有 Surf 就到得了（`[mossdeep]` 留到這一段），海上的角色和 Route 126–131 是同一批，一起做比留一塊原版划算。
+  - Seafloor Cavern、Sootopolis（含道館和 Juan）、Cave of Origin、Sky Pillar。
+  - 水下地圖：Route 124、126、127、128、129、Seafloor Cavern 和 Sootopolis 的水下。只有 Route 124 和 126 的水下有野生表。
+  - Abandoned Ship 隱藏樓層的野生表（要 Dive 才進得去；地圖本身早就在範圍裡）。
+  - Route 126 小島上的 Brenda：要 Dive 才到得了，人工加入。
+- 人工判斷：
+  - Sky Pillar 的入口只存在於 Route 131 被劇情換掉的版面（`setmaplayoutindex LAYOUT_ROUTE131_SKY_PILLAR`，在 Cave of Origin 見過 Wallace 之後），BFS 看不到，人工加入。
+  - 沒有 Waterfall：Wallace 在道館前給 HM07，但要 Rain Badge 才能用。Ever Grande、Victory Road、Meteor Falls 上層和其他瀑布留給下一段。
+  - Cave of Origin 有 3 張 R/S 留下來、進不去的地圖，但有野生表。一起放進來，免得留下原版資料。
+- 排除：
+  - 破關後才有的：Marine Cave、Terra Cave 和它們的水下入口（Route 105、125 的水下）、Mystery Events House 的地下室。
+  - **待決定**：Sealed Chamber（Route 134 潛水）和三個 Regi 洞窟。`src/braille_puzzles.c` 直接檢查隊伍裡有沒有 Wailord 和 Relicanth，三隻 Regi 是 `setwildbattle`。這是支線，草稿先不放。
+- 80 名訓練家：Route 126–134 的 62 名、Seafloor Cavern 的 5 名手下加 Shelly 和 Archie、Sootopolis 道館 10 名、Juan。31 個野生表。
+
+### 13.2 範圍內的原版角色
+
+`check_species_refs.py --scope sootopolis`：677 筆、68 種（wild 439、party 139、text 65、script 23、gfx 11）。
+
+- 54 種在 `replacements.toml` 已經有對照（海上最多的是 Zubat/Golbat 164、Wailmer 70、Tentacool 51、Magikarp 42、Wingull/Pelipper 47）。進化階段對不對得上要等 `apply_replacements` 檢查。
+- **沒有對照的 11 種一般角色**：
+
+| 原版 | 出現的地方 |
+|---|---|
+| Clamperl | Route 124、126 水下的野生（各 2 格）、道館的 Olivia |
+| Relicanth | Route 124、126 水下的野生（各 2 格） |
+| Corsola | Route 128 釣魚 1 格、Pacifidlog PC 的一句話 |
+| Wailord | Route 129 水面 1 格 |
+| Whiscash | Juan、Route 133 的 Mollie |
+| Sealeo | Juan、Route 133 的 Franklin |
+| Crawdaunt | Juan |
+| Kingdra | Juan（王牌，Lv46） |
+| Seadra | Route 133 的 Linda |
+| Medicham | Route 132 的 Makayla |
+| Bagon | Route 134 的 Aaron、Pacifidlog House3 的一句話 |
+
+  - Juan 的 5 隻裡有 4 隻沒對照（Luvdisc 已對到 Shojomai）。
+- **一般角色的 script／text／gfx（要手改，都有對照）**：
+  - Pacifidlog House2 的兩隻 Azurill（造型、叫聲、文字）。
+  - Sootopolis House1 的 Kecleon、House4 的 Azumarill（造型、叫聲、文字）；House6 提到 Wailmer 的一句話。
+  - Sootopolis 的「Lotad and Seedot House」：比大小的活動，`setvar` 傳 `SPECIES_SEEDOT`／`SPECIES_LOTAD` 給 C，文字提到兩者共 28 處。照對照是 Bekurama 和 Shojobob；變數名和地圖名（LotadAndSeedotHouse）保留。
+
+### 13.3 Kyogre、Groudon、Rayquaza 在劇情裡的出場
+
+三隻都沒有對照（依 2026-11-22 的決策，Kyogre 和 Groudon 跟這一段一起設計）。範圍內共 56 筆：
+
+| 檔案 | 角色 | 方式 |
+|---|---|---|
+| `data/maps/SeafloorCavern_Room9/map.json` | Kyogre | 物件造型 `OBJ_EVENT_GFX_KYOGRE_FRONT`、`OBJ_EVENT_GFX_KYOGRE_ASLEEP` |
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | Kyogre（8）、Groudon（1） | 只有文字（Archie 的台詞）；過場用 `DoOrbEffect`、`ShakeCamera`，沒有叫聲 |
+| `data/scripts/cave_of_origin.inc` | Kyogre、Groudon | `playmoncry SPECIES_KYOGRE`（R/S 留下的共用腳本，一行同時被算成兩種） |
+| `data/maps/CaveOfOrigin_B1F/scripts.inc` | Rayquaza（5）、Kyogre、Groudon | 只有文字（Wallace） |
+| `data/maps/SootopolisCity/map.json` | 三隻 | 物件造型 `OBJ_EVENT_GFX_GROUDON_SIDE`、`OBJ_EVENT_GFX_KYOGRE_SIDE`、`OBJ_EVENT_GFX_RAYQUAZA` |
+| `data/maps/SootopolisCity/scripts.inc` | 三隻 | `playmoncry`：Kyogre 4、Groudon 2、Rayquaza 4；`special Script_DoRayquazaScene` 4 次；`setweather WEATHER_ABNORMAL`／`WEATHER_DOWNPOUR`；文字 14 處 |
+| `data/maps/SkyPillar_Outside/scripts.inc` | Rayquaza | 文字 1 處；`setweather WEATHER_ABNORMAL` |
+| `data/maps/SkyPillar_Top/map.json` | Rayquaza | 物件造型 `OBJ_EVENT_GFX_RAYQUAZA`、`OBJ_EVENT_GFX_RAYQUAZA_STILL` |
+| `data/maps/SkyPillar_Top/scripts.inc` | Rayquaza | `playmoncry` 3、`setwildbattle SPECIES_RAYQUAZA`（事件結束後回到山頂可以打的那一場，`BattleSetup_StartLegendaryBattle`）、`setvar`、文字 1 處 |
+
+範圍外、但同樣寫死這三隻的地方（`check_species_refs` 歸在 c／mechanics，或根本看不到）：
+
+| 檔案 | 內容 |
+|---|---|
+| `src/rayquaza_scene.c` | Sootopolis 的過場動畫（三隻的大圖、`PlayCry_Normal(SPECIES_RAYQUAZA)`）；圖在 `graphics/rayquaza_scene/` 的 5 個資料夾 |
+| `src/intro.c` | 開機動畫第 3 幕：Groudon 和 Kyogre 的叫聲和大圖 |
+| `src/title_screen.c` | 標題畫面的 Rayquaza 圖 |
+| `src/battle_setup.c:595`、`src/battle_bg.c:911`、`src/pokemon.c:5096`、`src/battle_transition.c` | 對戰這三隻時的專用轉場、背景和音樂 |
+| `src/field_specials.c:3534`、`src/field_weather_effect.c` | 異常天氣（`WEATHER_ABNORMAL`）；破關後 Marine／Terra Cave 的位置 |
+| `src/event_object_movement.c:521`、`src/field_effect.c:3440` | 物件的色盤和倒影；`FldEff_RayquazaSpotlight` |
+| `src/follower_helper.c:389` | 跟隨者台詞的條件 |
+| `data/maps/MarineCave_End`、`TerraCave_End` | 破關後的 `setwildbattle`（排除） |
+| `[mossdeep]` 的 `exclude_refs` | Magma Hideout 4F 的 Groudon 造型和叫聲、Space Center 和 Mt. Pyre 的文字：這一段要一起收掉 |
+
+要請使用者決定的是：這三隻要不要換、換成什麼；過場動畫（`rayquaza_scene.c`）、開機動畫和標題畫面是大圖，換掉的成本比一般角色高很多。
+
+### 13.4 路線錄製的難度
+
+接在 `to_mossdeep` 後面（它停在道館裡 Tate & Liza 面前，隊伍只剩 Kyokon 站著）。預估順序和每一段的難處：
+
+1. Mossdeep 回血 → **Space Center**：手下 → 和 Steven 搭檔的雙打（`multi_2_vs_2`，要先在選單選 3 隻出場）。
+   - 新東西：多人對戰的選隊伍畫面；autopilot 沒打過有搭檔的雙打。
+   - Steven 的搭檔隊伍（Metang、Skarmory、Aggron）在 `src/data/battle_partners.party`。以前 `check_species_refs` 和 `apply_replacements` 都不看這個檔案，所以 `[mossdeep]` 是 strict 但這三隻還是原版。
+     - 已修：兩個工具都會讀這個檔案（格式跟 `trainers.party` 一樣），scope 用 `partners = ["PARTNER_STEVEN"]` 明確列出。
+     - `[mossdeep]` 加了 `partners`；Skarmory 已經套用成 Daibeki；Metang 和 Aggron 還沒有對照，先用 `exclude_refs` 列出來，等這一段的對照表。
+2. Steven 家拿 HM08。**隊伍裡沒有能學 Dive 的**（Kyokon、Utoghast 都不行）；海上的 Shojobob（Tentacool 的對照）同時能學 Surf、Dive、Waterfall，抓一隻可以取代 Kyokon 的 Surf。
+3. Route 127 → 128 潛水 → **Seafloor Cavern**。這是最難的一段：
+   - 潛水：stepwalk 沒有 Dive（深水上按 B 下潛、水下再按 B 上浮、`dive`／`emerge` 連接）。要加，規模跟 `--surf` 差不多。
+   - 洞裡有 225 格水流（踩上去會被沖走）、31 顆 Strength 巨石、5 顆 Rock Smash 岩石。規劃器不會算水流和推石頭的結果，大概要逐間手解，或替水流加規劃。
+   - 5 名手下、Shelly、Archie。
+4. Kyogre 醒來之後，海上是 `WEATHER_ABNORMAL`（對戰時算下雨）：水系招式變強。autopilot 選招不看天氣，照樣能跑，只是受到的傷害會變多。
+5. Route 126 潛水 → Sootopolis → Steven、Wallace → Cave of Origin（沒有戰鬥，可以用 `--live` 走）。
+6. 出 Sootopolis，衝浪 Route 127 → 131（沿路的游泳訓練家很多，要喝藥）→ Route 131 換版面後的 **Sky Pillar**：
+   - 2F 和 4F 有 72 格裂開的地板，要騎 Mach Bike 全速通過（跟 Mirage Tower 一樣逐格錄），掉下去會回到下一層。
+7. 山頂的 Rayquaza 過場 → Fly 回 Sootopolis → 過場 → Wallace 給 HM07 → **道館**：
+   - 3 區薄冰（同一張地圖，共 64 格），每格只能踩一次、全部踩過樓梯才出現；踩錯會掉到 B1F 跟訓練家打。規劃器不會，三區的走法要手寫。
+   - Juan：5 隻水系，Lv41–46，對草系的 Grinarbor 有利，但要看 Mark 怎麼對照。
+
+估計：
+- 長度跟 `to_mossdeep` 差不多或更長（7000 行、每次約 25 分鐘）。`check-oddex-full` 會從約 30 分鐘變成約 50 分鐘以上。
+- 要新增的工具：stepwalk 的 Dive（一定要）；水流的規劃（看 Seafloor Cavern 手解的結果決定）；選隊伍畫面的按鍵。
+- 最大的風險是隊伍：`to_mossdeep` 的兩場頭目戰都只是驚險過關，這一段開頭就是連續戰鬥（Space Center），中途又沒有地方回血（Seafloor Cavern）。建議這一段一開始先練第二隻。

@@ -9,6 +9,7 @@
 #                 "Map:kind" takes just that table, whatever wild_kinds says
 #   wild_kinds    encounter tables to include, e.g. ["land_mons"] (default: all kinds)
 #   trainers      explicit TRAINER_* constants; trainers are never inferred from maps
+#   partners      explicit PARTNER_* constants: multi-battle partners (src/data/battle_partners.party)
 #   maps          map names for scripts, text and Pokemon-shaped map objects; shell-style
 #                 wildcards allowed ("LittlerootTown*" includes the town's interiors)
 #   exclude_maps  map names/wildcards removed from `maps`
@@ -375,6 +376,8 @@ trainers = [
     # Trick House puzzle 4 (backlog: 5 badges).
     "TRAINER_CORA", "TRAINER_PAULA", "TRAINER_YUJI",
 ]
+# Steven fights beside the player in the Space Center raid (multi_2_vs_2).
+partners = ["PARTNER_STEVEN"]
 maps = ["Route121*", "Route122", "Route123*", "Route124*", "Route125", "LilycoveCity*", "MossdeepCity*", "MtPyre*",
         "MagmaHideout*", "AquaHideout*", "SafariZone*", "ShoalCave_LowTide*", "NewMauville*",
         "Route110_TrickHousePuzzle4", "Route110_TrickHousePuzzle5", "Route116_TunnelersRestHouse"]
@@ -387,4 +390,63 @@ exclude_refs = [
     "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc:SPECIES_GROUDON",
     "data/maps/MtPyre_Summit/scripts.inc:SPECIES_GROUDON", "data/maps/MtPyre_Summit/scripts.inc:SPECIES_KYOGRE",
     "data/maps/MossdeepCity_StevensHouse/scripts.inc:SPECIES_BELDUM",
+    # Steven's partner team: waiting for the [sootopolis] mapping (Metang and Aggron have none yet;
+    # his Skarmory is mapped and applied).
+    "src/data/battle_partners.party:SPECIES_METANG", "src/data/battle_partners.party:SPECIES_AGGRON",
 ]
+
+[sootopolis]
+description = "After Tate & Liza: Dive, Routes 126-134, the Seafloor Cavern, Sootopolis, the Cave of Origin, the Sky Pillar, Pacifidlog, Juan"
+strict = false
+# Draft: nothing is applied yet. Reachability: stage_reach.py --rock-smash --cut --strength --surf, once
+# from Mossdeep for the surface (Routes 126-134 and Pacifidlog), once inside the Seafloor Cavern and once
+# inside Sootopolis: the tool does not model Dive, so the places only Dive reaches are added by hand
+# (Steven hands out HM08 in Mossdeep after the Space Center raid): the Seafloor Cavern under Route 128,
+# Sootopolis under Route 126, Brenda's islet on Route 126, the underwater maps, the Abandoned Ship's
+# hidden floor. The Sky Pillar's door on Route 131 only exists in the layout the story swaps in
+# (setmaplayoutindex, after Wallace in the Cave of Origin): added by hand.
+# No Waterfall here: Wallace gives HM07 before the gym, but it needs the Rain Badge. Left for the next
+# segment: Ever Grande, Victory Road, Meteor Falls' upper rooms and the other waterfalls.
+# Post-game, out: the Marine and Terra Caves with their underwater entrances (Routes 105, 125, 127 and 129
+# after the Hall of Fame), the Mystery Events house's basement.
+# Open (a decision): the Sealed Chamber and the three Regi caves (Route 134 with Dive; braille_puzzles.c
+# checks the party for Wailord and Relicanth). Left out of this draft.
+wild_maps = ["Route126", "Route127", "Route128", "Route129", "Route130", "Route131", "Route132", "Route133", "Route134",
+             "PacifidlogTown", "SootopolisCity", "Underwater_Route124", "Underwater_Route126",
+             "SeafloorCavern_Entrance", "SeafloorCavern_Room1", "SeafloorCavern_Room2", "SeafloorCavern_Room3",
+             "SeafloorCavern_Room4", "SeafloorCavern_Room5", "SeafloorCavern_Room6", "SeafloorCavern_Room7",
+             "SeafloorCavern_Room8",
+             "CaveOfOrigin_Entrance", "CaveOfOrigin_1F", "CaveOfOrigin_UnusedRubySapphireMap1",
+             "CaveOfOrigin_UnusedRubySapphireMap2", "CaveOfOrigin_UnusedRubySapphireMap3",
+             "SkyPillar_1F", "SkyPillar_3F", "SkyPillar_5F",
+             "AbandonedShip_HiddenFloorCorridors"]
+trainers = [
+    # Routes 126-128 (the sea around Sootopolis and south of Mossdeep; Brenda's islet on Route 126 needs Dive).
+    "TRAINER_BARRY", "TRAINER_DEAN", "TRAINER_NIKKI", "TRAINER_BRENDA", "TRAINER_SIENNA", "TRAINER_PABLO_1",
+    "TRAINER_ISOBEL", "TRAINER_LEONARDO", "TRAINER_CAMDEN", "TRAINER_DONNY", "TRAINER_JONAH", "TRAINER_ROGER",
+    "TRAINER_HENRY", "TRAINER_AIDAN", "TRAINER_KOJI_1", "TRAINER_ATHENA", "TRAINER_ISAIAH_1", "TRAINER_KATELYN_1",
+    "TRAINER_WAYNE", "TRAINER_RUBEN", "TRAINER_ALEXA", "TRAINER_CARLEE", "TRAINER_HARRISON",
+    # Routes 129-131 (on the way to the Sky Pillar and Pacifidlog).
+    "TRAINER_CHASE", "TRAINER_ALLISON", "TRAINER_TISHA", "TRAINER_REED", "TRAINER_CLARENCE", "TRAINER_RODNEY",
+    "TRAINER_KATIE", "TRAINER_SANTIAGO", "TRAINER_RICHARD", "TRAINER_HERMAN", "TRAINER_SUSIE", "TRAINER_KARA",
+    "TRAINER_RELI_AND_IAN", "TRAINER_KEVIN", "TRAINER_TALIA",
+    # Routes 132-134 (the currents west of Pacifidlog: Surf alone gets there).
+    "TRAINER_GILBERT", "TRAINER_DANA", "TRAINER_KIYO", "TRAINER_RONALD", "TRAINER_PAXTON", "TRAINER_DARCY",
+    "TRAINER_MAKAYLA", "TRAINER_JONATHAN", "TRAINER_FRANKLIN", "TRAINER_LINDA", "TRAINER_DEBRA", "TRAINER_BECK",
+    "TRAINER_WARREN", "TRAINER_MOLLIE", "TRAINER_CONOR", "TRAINER_JACK", "TRAINER_LAUREL", "TRAINER_AARON",
+    "TRAINER_ALEX", "TRAINER_HITOSHI", "TRAINER_MARLEY", "TRAINER_KELVIN", "TRAINER_REYNA", "TRAINER_HUDSON",
+    # Seafloor Cavern (reached with Dive from Route 128; Archie is scripted).
+    "TRAINER_GRUNT_SEAFLOOR_CAVERN_1", "TRAINER_GRUNT_SEAFLOOR_CAVERN_2", "TRAINER_SHELLY_SEAFLOOR_CAVERN",
+    "TRAINER_GRUNT_SEAFLOOR_CAVERN_5", "TRAINER_GRUNT_SEAFLOOR_CAVERN_3", "TRAINER_GRUNT_SEAFLOOR_CAVERN_4",
+    "TRAINER_ARCHIE",
+    # Sootopolis Gym and Juan.
+    "TRAINER_ANDREA", "TRAINER_CONNIE", "TRAINER_BRIANNA", "TRAINER_BRIDGET", "TRAINER_TIFFANY", "TRAINER_BETHANY",
+    "TRAINER_CRISSY", "TRAINER_OLIVIA", "TRAINER_DAPHNE", "TRAINER_ANNIKA", "TRAINER_JUAN_1",
+]
+maps = ["Route126", "Route127", "Route128", "Route129", "Route130", "Route131", "Route132", "Route133", "Route134",
+        "PacifidlogTown*", "SootopolisCity*", "CaveOfOrigin*", "SkyPillar*", "SeafloorCavern*",
+        "Underwater_Route124", "Underwater_Route126", "Underwater_Route127", "Underwater_Route128", "Underwater_Route129",
+        "Underwater_SeafloorCavern", "Underwater_SootopolisCity"]
+exclude_maps = ["SootopolisCity_MysteryEventsHouse_B1F"]
+# The Kyogre/Groudon/Rayquaza story script shared by several maps.
+script_files = ["data/scripts/cave_of_origin.inc"]

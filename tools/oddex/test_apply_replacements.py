@@ -253,6 +253,39 @@ class ApplyReplacementsTest(unittest.TestCase):
         found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
         self.assertFalse({f["species"] for f in found} & {f"SPECIES_{s}" for s in others})
 
+    def test_partners_are_scanned_and_rewritten_like_trainers(self):
+        # battle_partners.party (Steven in the Space Center) has the trainers.party format.
+        partners = os.path.join(self.dir, "battle_partners.party")
+        with open(partners, "w") as f:
+            f.write("=== PARTNER_NONE ===\nName:\n\n=== PARTNER_STEVEN ===\nName: STEVEN\nAI: Basic Trainer\n\n"
+                    "Metang\nLevel: 42\n- Psychic\n\nSkarmory @ Leftovers\nLevel: 43\n- Steel Wing\n")
+        body = '[s]\npartners = ["PARTNER_STEVEN"]\n'
+        table = 'stage_mismatch_ok = ["SKARMORY"]\n[replace]\nSKARMORY = "DAIBEKI"\n'
+        r = self.run_tool("--scope", "s", "--scope-file", self.table(body, "s.toml"), "--partners", partners, table=table)
+        self.assertEqual(r.returncode, 1)  # Metang has no mapping: listed, nothing written
+        self.assertIn("METANG: 1 (PARTNER_STEVEN (battle_partners.party:8))", r.stdout)
+        self.assertIn("Skarmory @ Leftovers", read(partners))
+        excl = body + 'exclude_refs = ["src/data/battle_partners.party:SPECIES_METANG"]\n'
+        r = self.run_tool("--scope", "s", "--scope-file", self.table(excl, "s.toml"), "--partners", partners, table=table)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn("party: 1 Pokemon", r.stdout)
+        self.assertIn("Metang\nLevel: 42", read(partners))
+        self.assertIn("Daibeki @ Leftovers\nLevel: 43", read(partners))
+        self.assertEqual(self.files(), (self.party0, self.wild0))
+        # A scope without the partner leaves the file alone, and an unknown partner is a scope error.
+        r = self.run_tool("--scope", "s", "--scope-file", self.table('[s]\npartners = ["PARTNER_NOBODY"]\n', "s.toml"),
+                          "--partners", partners, table=table)
+        self.assertIn("partners: PARTNER_NOBODY is not in battle_partners.party", r.stderr + r.stdout)
+
+    def test_check_species_refs_sees_partner_parties(self):
+        # Reads the real game: Steven's Metang stays vanilla until the [sootopolis] mapping.
+        # shortcut: needs a still-vanilla partner, repoint when Steven's team is fully migrated
+        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
+               "--scope-file", self.table('[s]\npartners = ["PARTNER_STEVEN"]\n', "s.toml")]
+        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        self.assertIn(("party", "src/data/battle_partners.party", "SPECIES_METANG", "PARTNER_STEVEN"),
+                      {(f["category"], f["file"], f["species"], f["context"]) for f in found})
+
     def test_wild_maps_map_kind_takes_one_table(self):
         # "VictoryRoad_B1F:rock_smash_mons" takes that one table, whatever wild_kinds says;
         # Sky Pillar follows wild_kinds and has no fishing table.

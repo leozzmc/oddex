@@ -97,12 +97,20 @@ def party_species_token(line):
     return "SPECIES_" + re.sub(r"_+", "_", re.sub(r"[^A-Z0-9]", "_", name.upper().replace("'", "").replace("’", ""))).strip("_")
 
 
+PARTY_FILES = ["src/data/trainers.party", "src/data/battle_partners.party"]  # same format; partners are PARTNER_*
+PARTY_HEADER = r"^=== ((?:TRAINER|PARTNER)_\w+) ==="
+
+
 def scan_party(game, add):
-    path = "src/data/trainers.party"
+    for path in PARTY_FILES:
+        scan_party_file(game, add, path)
+
+
+def scan_party_file(game, add, path):
     trainer, after_blank, in_header = None, False, False
     for ln, raw in enumerate(read_text(os.path.join(game, path)).split("\n"), 1):
         line = raw.rstrip("\n")
-        m = re.match(r"^=== (TRAINER_\w+) ===", line)
+        m = re.match(PARTY_HEADER, line)
         if m:
             trainer, after_blank, in_header = m.group(1), False, True
             continue
@@ -200,7 +208,7 @@ def trainer_maps(game):
     out = collections.defaultdict(set)
     for f in glob.glob(os.path.join(game, "data/maps/*/scripts.inc")):
         m = f.split(os.sep)[-2]
-        for t in re.findall(r"\b(TRAINER_[A-Z0-9_]+)\b", read_text(f)):
+        for t in re.findall(r"\b((?:TRAINER|PARTNER)_[A-Z0-9_]+)\b", read_text(f)):
             out[t].add(m)
     return out
 
@@ -213,7 +221,7 @@ def in_scope(f, scope):
     if cat == "unknown":
         cat = "party" if f["file"].endswith(".party") else "wild"
     if cat == "party":
-        return ctx in scope.trainers
+        return ctx in scope.trainers or ctx in scope.partners
     if cat == "wild":
         map_name, _, kind = ctx.partition(":")
         return scope.has_wild(map_name, kind)
