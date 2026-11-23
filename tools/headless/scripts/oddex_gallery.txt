@@ -505,3 +505,32 @@ shot gallery/1639_shojoran.png
 press START 2 120
 shot gallery/1639_shojoran_shiny.png
 press START 2 120
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press LEFT 2 10
+press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+wait 120
+shot gallery/1640_magaryu.png
+press START 2 120
+shot gallery/1640_magaryu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1641_onamazu.png
+press START 2 120
+shot gallery/1641_onamazu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1642_yukinba.png
+press START 2 120
+shot gallery/1642_yukinba_shiny.png
+press START 2 120

@@ -1,0 +1,55 @@
+# Sootopolis segment (docs/research/mask-designs.md, "Onamazu 的 Brief"): Namazura's evolution, replaces Whiscash
+# (Juan). Stats follow Whiscash (same total); moves are provisional.
+
+id = "ONAMAZU"
+name = "Onamazu"
+category = "Tremor Fish"
+
+types = ["WATER", "GROUND"]
+abilities = ["OBLIVIOUS", "ANTICIPATION", "HYDRATION"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 110, atk = 78, def = 73, spa = 76, spd = 71, spe = 60 }   # total 468
+ev_yield = { hp = 2 }
+catch_rate = 75
+exp_yield = 164
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_2"]
+growth_rate = "MEDIUM_FAST"
+body_color = "GRAY"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 14
+weight = 980
+text = """
+It outgrew its gourd, and the old mask
+split and slid up its brow. A town rides
+on its back. When it rolls over in the
+mud, every roof for miles around shakes."""
+scale = { pokemon = 320, pokemon_offset = 8, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "EARTHQUAKE"], [1, "WATER_GUN"], [1, "MUD_SLAP"], [6, "REST"], [6, "SNORE"], [12, "WATER_PULSE"], [18, "AMNESIA"], [24, "AQUA_TAIL"], [33, "MUDDY_WATER"], [40, "ZEN_HEADBUTT"], [46, "FUTURE_SIGHT"], [52, "FISSURE"],
+]
+# HMs as Namazura (Whiscash brings Surf, Strength, Rock Smash, Waterfall, Dive; Cut is Namazura's from Corphish).
+teachable = [
+    "AERIAL_ACE", "ATTRACT", "BLIZZARD", "BODY_SLAM", "BRICK_BREAK", "CUT", "DIG", "DIVE", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC", "WATERFALL", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/onamazu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SHAKE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = []
+level_band = [30, 50]
+family = ["NAMAZURA", "ONAMAZU"]

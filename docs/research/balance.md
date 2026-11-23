@@ -430,6 +430,9 @@
 | **B:三隻進化型(Shojomai、Onamazu、Yukinba、Jatai、Magaryu)** | **Lv48** | **Lv68** | **Lv42** |
 | B,Yukinba 維持冰/地面 | Lv48 | Lv68 | Lv42 |
 | B,王牌降到 Lv44(估 Magaryu 500 的效果) | Lv46 | Lv65 | Lv40 |
+| **B,用做出來的角色重算(2026-11-23)** | **Lv46** | **Lv64** | **Lv42** |
+
+最後一列是 Onamazu、Yukinba、Magaryu 做出來之後用實際資料算的(`--set WHISCASH:species=ONAMAZU --set SEALEO:species=YUKINBA --set KINGDRA:species=MAGARYU`,Jatai 用下面建議的招式):Magaryu 的種族值是 500 不是 540,所以草和火比用 Kingdra 估的低 2–4 級;火系還是比原版高 5 級。
 
 卡住每個御三家的都是王牌(Kingdra 位置):
 - **草(Grinarbor,草/惡)**:比原版低 8 級。Kingdra 的 Ice Beam 打它是 2 倍(54–64%),它的 Wood Hammer 只有 45–54%。

@@ -17,7 +17,7 @@ egg_groups = ["WATER_2"]
 growth_rate = "MEDIUM_FAST"
 body_color = "GRAY"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 30, into = "ONAMAZU" }]
 
 [dex]
 height = 6
@@ -51,4 +51,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
 [design]
 habitat = ["Route111", "Route114", "Route117", "MeteorFalls"]
 level_band = [10, 30]
-family = ["NAMAZURA"]
+family = ["NAMAZURA", "ONAMAZU"]

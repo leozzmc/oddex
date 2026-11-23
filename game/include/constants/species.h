@@ -1760,6 +1760,9 @@ enum __attribute__((packed)) Species
     SPECIES_KAMINOBI,
     SPECIES_NOBUSUMEN,
     SPECIES_SHOJORAN,
+    SPECIES_MAGARYU,
+    SPECIES_ONAMAZU,
+    SPECIES_YUKINBA,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

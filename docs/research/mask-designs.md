@@ -804,7 +804,12 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - 大張美術:Sootopolis 的過場改成在地圖上演、開機動畫拿掉、標題畫面只換一張(使用者沒有反對,視為接受)。
 - 傳說角色:不是下面「請使用者選方向」那三個方向裡的原型,使用者另外指定了主題,見「傳說角色:新方向的提案」。
 - 傳說角色的方案(同一天稍後):海底 A(觸鬚石面具)、天上 A(虛舟)、大地 A(〈The Dunwich Horror〉的蛋形繩球,虛構,不碰規則)。可以建模的 Brief 在「傳說三隻:可以直接建模的 Brief」。
-- 以上都還沒做:美術、TOML、`replacements.toml`、`roles.toml` 都沒動。
+- **進度(2026-11-23)**:對照都寫進 `replacements.toml`(13 筆);Onamazu、Magaryu、Yukinba 做好了(`feat/sootopolis-batch`)。傳說三隻、Pacifidlog 的代號(Sonia)還沒做。建模時和下面的 Brief 不同的地方:
+  - **Onamazu**:額頭上的面具碎片沒有眼洞。試過「白色碎片加一道眼縫」,在 64 px 會被看成額頭上的第三隻眼;改成方邊的白色碎片、上面兩撮眉毛、左邊是鋸齒狀的斷口(眼洞原本的位置)。尾巴甩在身體右邊,破葫蘆掛在尾巴上。正面動畫是 `V_SHAKE`(翻身就地震)。
+  - **Magaryu**:勾玉排成一個從頭頂繞過去的弧,不是平放的 S(S 形在正面視角會前後重疊);嘴前只有一小股水,長的水柱在 64 px 像一根藍色的棍子。
+  - **Yukinba**:照 Brief。背面是一顆塞滿雪的白髮後腦加冰柱(面具的內側不露出來)。全部是雌性。
+  - 三隻的眼睛和嘴都是手點的(各模型檔的 `PIXELS`):Onamazu 是厚眼皮下的半睜眼和一條嘴角朝下的長嘴;Magaryu 是圓睜的眼和圈起來的嘯面嘴;Yukinba 是斜眉下的金色小眼和張開的缺牙嘴。
+  - 遊戲內截圖:`~/oddex-shots/mark/sootopolis/01_gallery_dex_2x.png`。
 
 ### 範圍和清單
 - 範圍照 Sonia 的草稿(`feat/sootopolis-scope` b6e38503,`plan-b-references.md` §13):Route 126–134、Pacifidlog、Seafloor Cavern、Sootopolis(含道館和 Juan)、Cave of Origin、Sky Pillar、水下地圖、Abandoned Ship 的隱藏樓層。`check_species_refs.py --scope sootopolis`:677 筆、68 種,54 種已經有對照。
