@@ -70,10 +70,10 @@ def build(k, c):
     # The beam first (it is behind everything else it touches): a widening cone with a bright core.
     k.cone((0, 0.1, -1.2), 0.8, 1.5, beam, radius2=0.3, segments=24)
     k.cone((0, -0.5, -1.2), 0.36, 1.5, core, radius2=0.12, segments=16)
-    # The box no one may touch, hanging in the beam, tied crosswise.
-    k.cylinder((0, -0.9, -1.3), 0.3, 0.38, box, rot=(0, 0, math.pi / 4), segments=4)
-    k.rod((-0.22, -1.13, -1.3), (0.22, -1.13, -1.3), 0.03, cord)
-    k.rod((0, -1.13, -1.5), (0, -1.0, -0.6), 0.03, cord)
+    # The box no one may touch, hanging in the beam: a plain box wider than it is tall, on one cord. Nothing
+    # crosses it: a red box tied crosswise on the pale beam read as a red cross at 32px, a protected emblem.
+    k.cylinder((0, -0.9, -1.3), 0.38, 0.3, box, rot=(0, 0, math.pi / 4), segments=4)
+    k.rod((0, -0.9, -1.15), (0, -0.9, -0.6), 0.03, cord)   # one cord from its lid up into the hull
 
     # The lower hull: a deep bowl plated with strips of iron, riveted in gold.
     k.ellipsoid((0, 0, 0.05), (1.3, 1.3, 0.62), iron)
