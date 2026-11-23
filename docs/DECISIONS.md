@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-23 | 標題畫面：背景換成 Utsuroban 的剪影（feat/title-screen b91a8daa）；上面的「POKéMON」標題字維持原版，副標題「EMERALD VERSION」改成「ODDEX」，底部的「©2005 GAME FREAK inc.」改成「FAN GAME, NOT OFFICIAL」的寫法；開機動畫另外處理 | 使用者 | Mark 的兩個 ODDEX 標題字草稿（漆面能面、夜裡的眼睛）沒有採用，放在 ~/oddex-shots/mark/title/ |
 | 2026-11-23 | 核准傳說三隻的設計：Sokonemu（LEGEND_SEA）、Okafumi（LEGEND_LAND）、Utsuroban（LEGEND_SKY），feat/sootopolis-batch 3c9c74a8；Utsuroban 地圖小圖箱子上的紅色「+」（像紅十字標誌）要拿掉；劇情裡的大型物件先用角色自己的 32×32 地圖圖（OBJ_EVENT_GFX_SPECIES），睡姿和 64×64 飛行圖等在遊戲裡看過再決定 | 使用者 | 紅十字標誌受國際法保護，遊戲裡不用 |
 | 2026-11-23 | 核准 Onamazu、Magaryu、Yukinba 的美術（feat/sootopolis-batch 385eb501）；Onamazu 額頭的面具碎片不留眼洞（64 px 會被看成第三隻眼） | 使用者 | 截圖 ~/oddex-shots/mark/sootopolis/01_gallery_dex_2x.png |
 | 2026-11-23 | 傳說三隻的細節：大地那隻（繩球）用側面的嘴喝光地下水和雲，所以烈日、乾旱和龜裂的劇情照用，特性和天氣的 C 不改，只改對話；屬性**地面/幽靈**（抓的時候不能用 False Swipe，使用者接受）；暫名 Sokonemu（海底）、Utsuroban（天上）、Okafumi（大地），代號 LEGEND_SEA／LEGEND_LAND／LEGEND_SKY | 使用者 | Brief 見 mask-designs.md「傳說三隻：可以直接建模的 Brief」 |
