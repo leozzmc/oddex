@@ -449,12 +449,13 @@
 
 | 位置 | 原版 | 改成 | 招式 |
 |---|---|---|---|
-| 1 | Luvdisc Lv41 | Shojomai Lv41 | 照原版(Water Pulse / Attract / Sweet Kiss / Flail);學不了的由 Sonia 換成同類的招式 |
+| 1 | Luvdisc Lv41 | Shojomai Lv41 | Water Pulse / Attract / **Teeter Dance** / **Draining Kiss**(Sweet Kiss、Flail 學不了;Teeter Dance 一樣是讓對手混亂,兩招都是它自己的升級招式) |
 | 2 | Whiscash Lv41 | Onamazu Lv41 | 照原版(Rain Dance / Water Pulse / Amnesia / Earthquake) |
-| 3 | Sealeo Lv43 | Yukinba Lv43 | 照原版(Encore / Body Slam / Aurora Beam / Water Pulse) |
-| 4 | Crawdaunt Lv43 | Jatai Lv43 | Water Pulse / **Poison Jab** / **Crunch** / Taunt(Jatai 學不了 Crabhammer;Crunch 是它 Lv39 的升級招式) |
+| 3 | Sealeo Lv43 | Yukinba Lv43 | **Icy Wind** / Body Slam / Aurora Beam / Water Pulse(Encore 學不了;Icy Wind 是 Lv17 的升級招式,降速度) |
+| 4 | Crawdaunt Lv43 | Jatai Lv43 | Water Pulse / **Poison Jab** / **Crunch** / **Haze**(Crabhammer、Taunt、Leer 學不了;Water Pulse 加進 Jatai 的招式機清單,它取代的 Tentacruel 本來就學得了;其餘三招都是 Lv31–39 的升級招式) |
 | 5 | Kingdra Lv46 @ Chesto Berry | Magaryu Lv46 @ Chesto Berry | 照原版(Water Pulse / Double Team / Ice Beam / Rest) |
 
+- 2026-11-23:Sonia 套用後逐招檢查,20 招裡有 7 招學不了,上表已經換成學得了的招式(粗體)。換掉的都是變化招式或威力相近的招式,門檻的數字不變(Jatai 那一格本來就是用 Water Pulse / Poison Jab / Crunch 算的)。
 - 如果做了 Kamonari(可選的第 4 隻),第 4 個位置可以換成它(水/電):對三隻御三家的門檻不變(那一格是 Lv36–45;Ridgeloom 的特性 Lightning Rod 不吃電),但 Juan 的隊伍會有四隻水系。
 - **要不要幫火系調簡單,請使用者決定。** 可以用的改法,效果由大到小:
   - 王牌降 2 級(Lv44):草 46、火 65、水 40。全部一起變簡單。
