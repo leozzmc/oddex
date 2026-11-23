@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-23 | **傳說三隻**：Kyogre → 海底的觸鬚石面具神像（暫名 Sokonemu，水/超能力，原型〈The Call of Cthulhu〉1928）；Rayquaza → 虛舟＋小灰人（暫名 Utsuroban，超能力/飛行，原型《兎園小説》的虛舟和 UFO 目擊傳說），也是標題畫面那一張；Groudon → 〈The Dunwich Horror〉(1929) 結尾的蛋形繩球（暫名 Hiderijishi，虛構的神，不碰「真實信仰的神不能捕捉」的規則）。三隻都可以捕捉，劇情骨架不變 | 使用者 | 只用 1930 年以前出版、已進入美國公有領域的原作描述；不用 Derleth／Chaosium 的設定和後人造型，遊戲裡不出現 Lovecraft 的專有名詞。大地那隻要怎麼接上烈日和乾旱的劇情，由 Mark 在 Brief 裡提出 |
 | 2026-11-23 | **Sootopolis 段（Mossdeep → Juan）**：新做 3 隻進化型 Onamazu（Namazura→，水/地面，Whiscash）、Magaryu（Magatide→，水/龍，Kingdra／Seadra）、Yukinba（Yamambrr→，冰/幽靈，Sealeo），不做 Kamonari；Clamperl→Magatide、Relicanth→Dogoggle（−26%／−27%，只出現在水底）；Pacifidlog 交換要 Kamikko、給 Magatide；Steven 雙打隊友改成 Kagurai、Daibeki、Enigmen；Juan 先不調，等路線錄完再看；Sealed Chamber 和三隻 Regi 延到破關後；過場改在地圖上演、開機動畫先拿掉、標題畫面只換一張圖。**傳說三隻改成新主題：UFO＋外星人、克蘇魯神話的怪物、「其他的神」**，Mark 先提案，使用者再決定 | 使用者 | 草稿見 mask-designs.md「Sootopolis 段」、balance.md「Juan 戰」、plan-b-references §13；克蘇魯只用公有領域的原作描述 |
 | 2026-11-23 | 確認所有暫定決定：Ichimai 的造型和數值、Winona 段（對照表，Yatsufu、Kumoryu、Terubozu，Kyozosu）、Feebas→Namazura 和兩個遊戲內交換、Snorunt→Yamambrr、Dewford 段（Gachirinza、Komorimen、Peeko 代號）；確認後 main 前進到 develop | 使用者 | 先前標「暫定，待使用者確認」的各列已改成已確認 |
 | 2026-11-22 | **不要笑臉**（新角色一律不笑；眼睛不能瞇成笑弧、嘴角不上翹、不咧嘴笑）；**24 隻的眼睛改成手動點的像素**（Mossdeep 段 5 隻 + 既有 19 隻，make_art 的 apply_pixels，重新產生美術時會保留）；既有還在笑的 Tomoeden、Terubozu、Okinoir 先不改（翁面本來就是笑面） | 使用者 | 眼睛的規則寫在 ART_GUIDELINES；對照圖 ~/oddex-shots/mark/mossdeep/eyes24_before_after_2x.png |
