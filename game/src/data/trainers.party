@@ -5091,8 +5091,8 @@ Level: 41
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Water Pulse
 - Attract
-- Sweet Kiss
-- Flail
+- Teeter Dance
+- Draining Kiss
 
 Onamazu
 Level: 41
@@ -5105,7 +5105,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 Yukinba
 Level: 43
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Encore
+- Icy Wind
 - Body Slam
 - Aurora Beam
 - Water Pulse
@@ -5114,9 +5114,9 @@ Jatai
 Level: 43
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Water Pulse
-- Crabhammer
-- Taunt
-- Leer
+- Poison Jab
+- Crunch
+- Haze
 
 Magaryu @ Chesto Berry
 Level: 46

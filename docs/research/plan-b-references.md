@@ -1135,6 +1135,6 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 - **還是原版、這個範圍管不到的**：
   - **待處理：intro、title**。開機動畫（`src/intro.c`）和標題畫面（`src/title_screen.c`）還是原版三隻。拿掉開機動畫會改變開機的影格數，所有回歸腳本開頭的按鍵時序都可能位移；標題畫面要等 Mark 的 128×128 圖。David 會另外排成一個獨立的 commit。
   - 對戰背景和音樂對原版三隻的特例（`battle_bg.c`、`pokemon.c`）：新角色不會觸發，沒有壞處，只是少了專用背景。
-- Juan 的招式：20 招裡有 7 招是新角色學不到的（Shojomai 的 Sweet Kiss、Flail；Yukinba 的 Encore；Jatai 的 4 招全部）。訓練家的招式不用學得會，所以不會壞；要換成什麼由 Mark 決定。
+- Juan 的招式：套用後 20 招裡有 7 招是新角色學不到的，照 Mark 在 balance.md 定的換掉，現在 20 招都學得到：Shojomai 是 Water Pulse／Attract／Teeter Dance／Draining Kiss，Yukinba 是 Icy Wind／Body Slam／Aurora Beam／Water Pulse，Jatai 是 Water Pulse／Poison Jab／Crunch／Haze；Onamazu 和 Magaryu 不變。
 - 沒有在遊戲裡看過：這一段還沒有路線。試過用除錯選單直接傳送去看，沒成功（選單按法跟 `to_dolls` 的不一樣），留給 `to_sootopolis`。
 
