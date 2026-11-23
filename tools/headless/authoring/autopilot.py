@@ -197,6 +197,15 @@ def replacement(party, standing):
     return max(cands)[2] if cands else None
 
 
+PARTNER_BATTLE = (1 << 6) | (1 << 22)  # BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER
+
+
+def menu_slot(index, partner):
+    """Party-menu position of our party member `index`. With a partner (Steven in the Space Center) the
+    menu shows our lead, the partner's lead, then our bench: ours sit at 0, 2, 3."""
+    return index + 1 if partner and index else index
+
+
 def reflect_factor(special, foe_moves):
     """Avoid the category the foe can send back double (Counter, Mirror Coat): Norman's Mandaloka
     Counters a physical hit for more than the lead's HP."""
@@ -412,13 +421,16 @@ def battle_press(ss):
         # The party menu in battle. With every battler of ours standing it came from "Will you
         # switch?" after a knockout (asked once the party has a second member): B backs out. With
         # one fainted (a double battle's partner, or the lead) a replacement must be chosen.
-        mine = [0, 2] if W["read"](st, SYMS["gBattleTypeFlags"], "<I")[0] & 1 else [0]  # BATTLE_TYPE_DOUBLE
+        flags = W["read"](st, SYMS["gBattleTypeFlags"], "<I")[0]
+        partner = bool(flags & PARTNER_BATTLE)  # battler 2 and half of the menu belong to the partner
+        mine = [0, 2] if flags & 1 and not partner else [0]  # BATTLE_TYPE_DOUBLE
         hp = {b: W["read"](st, SYMS["gBattleMons"] + b * BATTLE_MON + 42, "<H")[0] for b in mine}
         if all(hp.values()):
             return "press B 2 30"
         standing = {W["read"](st, SYMS["gBattlerPartyIndexes"] + 2 * b, "<H")[0] for b in mine if hp[b]}
         party = [W["read"](st, SYMS["gParties"] + 100 * i + 84, "<BxH") for i in range(6)]  # level, hp
         pick = replacement(party, standing)
+        pick = None if pick is None else menu_slot(pick, partner)
         cur = W["read"](st, SYMS["gPartyMenu"] + 9, "<b")[0]  # slotId
         if pick is None or cur == pick:
             return "press A 2 30"  # A opens the slot's menu, A again sends it out

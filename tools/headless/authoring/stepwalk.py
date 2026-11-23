@@ -1,6 +1,6 @@
 """Walk where autopilot.py's static planner cannot, replanning after every unit.
 
-usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--avoid x,y;x,y...] [--min-hp N]
+usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--dive] [--avoid x,y;x,y...] [--min-hp N]
 
 default  BFS on map data across warps and ledges: a warp is taken only where its tile has a warp
          behavior (doors, ladders, holes; the Lavaridge Gym's holes and geysers are one-way), ledges
@@ -16,6 +16,9 @@ default  BFS on map data across warps and ledges: a warp is taken only where its
          the state they end in are still printed, with exit status 2.
 --min-hp N  stop (commands so far, end state) once the lead stands free below N percent HP, so the
          caller can heal and call again.
+--dive   also plans Dive (implies --surf): down from deep water (A, YES), up where the underwater map allows
+         surfacing (B, YES), through the dive/emerge connections and the maps' setdivewarp; the
+         Underwater_* maps join the search.
 --surf   water is walkable (waterfalls are not); stepping from land onto water uses Surf (A, YES).
 --live   BFS on the running game's collision grid of the current map (gBackupMapLayout) with the
          objects where they stand now: hidden objects that map.json still lists, setmetatile
@@ -65,9 +68,43 @@ def is_warp(beh):
     return any(k in beh for k in ("WARP", "DOOR", "LADDER", "ESCALATOR", "HOLE"))
 
 
-def warp_neighbors(maps, surf=False):
+DIVEABLE = {"MB_INTERIOR_DEEP_WATER", "MB_DEEP_WATER", "MB_SOOTOPOLIS_DEEP_WATER"}  # MetatileBehavior_IsDiveable
+NO_EMERGE = {"MB_NO_SURFACING", "MB_SEAWEED_NO_SURFACING", "MB_WATER_DOOR"}        # ..._IsUnableToEmerge (BUGFIX)
+
+
+def underwater(mp):
+    return G["load"](mp)["json"].get("map_type") == "MAP_TYPE_UNDERWATER"
+
+
+def dive_edge(mp, x, y):
+    """('DIVE' | 'EMERGE', (map, x, y)) for using Dive on this tile, or None (TrySetDiveWarp): down from
+    deep water, up from an underwater tile that allows surfacing. The destination is the map's dive or
+    emerge connection at the same coordinates, else the map script's fixed `setdivewarp`.
+    shortcut: the first setdivewarp of the script; the Sealed Chamber picks between two by a flag."""
+    import re
+    m = G["load"](mp)
+    beh = G["cell"](m, x, y)[2]
+    if underwater(mp):
+        if beh in NO_EMERGE:
+            return None
+        kind = "emerge"
+    elif beh in DIVEABLE:
+        kind = "dive"
+    else:
+        return None
+    conn = next((c for c in m["conn"] if c["direction"] == kind), None)
+    if conn:
+        return kind.upper(), (G["ID2NAME"][conn["map"]], x, y)
+    script = open(os.path.join(os.path.dirname(G["ROM"]), "data", "maps", mp, "scripts.inc")).read()
+    fixed = re.search(r"setdivewarp (MAP_\w+), (\d+), (\d+)", script)
+    if fixed and fixed.group(1) in G["ID2NAME"]:
+        return kind.upper(), (G["ID2NAME"][fixed.group(1)], int(fixed.group(2)), int(fixed.group(3)))
+    return None
+
+
+def warp_neighbors(maps, surf=False, dive=False):
     """Steps on map data: collision, map.json objects, ledges, warps into `maps` (marked '|'); water
-    only with surf."""
+    only with surf; with dive, also Dive down and up ('DIVE' / 'EMERGE') between `maps`."""
     def warps(mp):
         m = G["load"](mp)
         return {(w["x"], w["y"]): w for w in m["json"]["warp_events"]  # vanilla has warps outside their map
@@ -86,6 +123,10 @@ def warp_neighbors(maps, surf=False):
         if w and "ARROW" in beh and G["ID2NAME"].get(w["dest_map"]) in maps:
             # An exit mat warps only when pushed again while standing on it.
             yield through(mp, w, ARROW[beh.split("_")[-3]])
+        if dive:
+            e = dive_edge(mp, x, y)
+            if e and e[1][0] in maps:
+                yield e
         for d, (dx, dy) in DIRS.items():
             nx, ny = x + dx, y + dy
             if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"]:
@@ -275,6 +316,9 @@ def live_neighbors(ss, avoid):
 
 
 SURF_FRAMES = 8  # frames per tile while surfing (twice walking speed)
+# Dive: A on deep water, B underwater; the text, then A on YES. The "used DIVE" text and the warp are
+# waited out by the not-free branch of the loop (B never answers a prompt here: YES is already given).
+DIVE_CMDS = {"DIVE": ["wait 2", "press A 2 120", "press A 2 60"], "EMERGE": ["wait 2", "press B 2 120", "press A 2 60"]}
 
 
 def surfing(ss):
@@ -284,7 +328,8 @@ def surfing(ss):
 
 def main():
     ss, prefix, goal = ARGV[0], ARGV[1], (ARGV[2], int(ARGV[3]), int(ARGV[4]))
-    live, surf = "--live" in ARGV, "--surf" in ARGV
+    live, dive = "--live" in ARGV, "--dive" in ARGV
+    surf = "--surf" in ARGV or dive
     min_hp = int(ARGV[ARGV.index("--min-hp") + 1]) if "--min-hp" in ARGV else 0
     avoid = []
     if "--avoid" in ARGV:
@@ -310,7 +355,7 @@ def main():
         if not free:
             c = [G["battle_press"](ss) if cb != "CB2_Overworld" else "press B 2 30"]
         else:
-            area = {goal[0].split("_")[0], mp.split("_")[0]}
+            area = {goal[0].split("_")[0], mp.split("_")[0]} | ({"Underwater"} if dive else set())
             floors = {n for n in G["ID2NAME"].values() if n.split("_")[0] in area}
             if mp in GATE_MAPS and not live:
                 st = W["state"](ss)
@@ -321,7 +366,7 @@ def main():
                 objs = frozenset(template_objects(ss, mp) | live_objects(ss))
                 dirs = bfs((mp, x, y, objs), lambda st_: st_[:3] == goal, puzzle_neighbors(mp, objs))
             else:
-                nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf)
+                nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf, dive)
                 dirs = bfs((mp, x, y), goal, lambda cur: ((d, n) for d, n in nb(cur) if n not in blocked))
             if not dirs:
                 if not cmds:
@@ -332,10 +377,12 @@ def main():
             d = dirs[0].rstrip("|")
             n = 1 if not live else next((i for i, e in enumerate(dirs) if e != dirs[0]), len(dirs))
             m = G["load"](mp)
-            nx, ny = x + DIRS[d][0], y + DIRS[d][1]
-            tried = ((mp, x, y), (mp, nx, ny))
+            nx, ny = (x, y) if d in DIVE_CMDS else (x + DIRS[d][0], y + DIRS[d][1])
+            tried = None if d in DIVE_CMDS else ((mp, x, y), (mp, nx, ny))
             onto_water = 0 <= nx < m["W"] and 0 <= ny < m["H"] and G["is_water"](G["cell"](m, nx, ny)[2])
-            if surf and onto_water and not surfing(ss):
+            if d in DIVE_CMDS:
+                c = DIVE_CMDS[d]
+            elif surf and onto_water and not surfing(ss) and not underwater(mp):
                 # Face the water, A for the prompt, A for YES; the "used SURF" text is cleared by
                 # the not-free branch above.
                 c = ["wait 2", f"hold {d} 16", "wait 20", "press A 2 120", "press A 2 60"]

@@ -79,6 +79,16 @@ class StepwalkTest(unittest.TestCase):
         still = lambda cur: ((d, n) for d, n in nb(cur) if n[3] == cur[3])  # no statue ever moves
         self.assertIsNone(S["bfs"](start, at_leaders, still))
 
+    def test_dive_reaches_the_seafloor_cavern(self):
+        maps = {n for n in G["ID2NAME"].values() if n.split("_")[0] in ("Route128", "Underwater", "SeafloorCavern")}
+        start, goal = ("Route128", 30, 1), ("SeafloorCavern_Entrance", 10, 17)  # in from Route 127
+        self.assertIsNone(S["bfs"](start, goal, S["warp_neighbors"](maps, True)))
+        path = S["bfs"](start, goal, S["warp_neighbors"](maps, True, True))
+        self.assertEqual([d for d in path if d in ("DIVE", "EMERGE")], ["DIVE", "EMERGE"])
+        # down by the connection at the same tile, up by the underwater map's setdivewarp
+        self.assertEqual(S["dive_edge"]("Underwater_SeafloorCavern", 6, 5), ("EMERGE", goal))
+        self.assertIsNone(S["dive_edge"]("Route128", 5, 5))  # shallow water: no Dive
+
     def test_warps_outside_their_map_are_ignored(self):
         # A Slateport map lists a warp past its layout; a search that visits them all must not crash.
         maps = {n for n in G["ID2NAME"].values() if n.split("_")[0] == "SlateportCity"}
@@ -106,6 +116,10 @@ class AutopilotTest(unittest.TestCase):
         self.assertLess(G["reflect_factor"](False, {"COUNTER", "YAWN"}), 1)
         self.assertEqual(G["reflect_factor"](True, {"COUNTER", "YAWN"}), 1)
         self.assertLess(G["reflect_factor"](True, {"MIRROR_COAT"}), 1)
+
+    def test_partner_battle_menu_positions(self):
+        self.assertEqual([G["menu_slot"](i, False) for i in range(3)], [0, 1, 2])
+        self.assertEqual([G["menu_slot"](i, True) for i in range(3)], [0, 2, 3])  # the partner's lead sits at 1
 
     def test_replacement_is_the_strongest_benched_member(self):
         party = [(40, 121), (23, 0), (4, 17), (25, 71), (0, 0), (0, 0)]
