@@ -32,6 +32,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [0, "AIR_SLASH"], [1, "RAZOR_LEAF"], [1, "TACKLE"], [1, "HARDEN"], [3, "ABSORB"], [7, "GROWTH"], [11, "METAL_CLAW"], [15, "MAGICAL_LEAF"], [19, "IRON_DEFENSE"], [23, "FLASH_CANNON"], [27, "LEAF_BLADE"], [31, "IRON_HEAD"], [35, "SWORDS_DANCE"], [40, "LEAF_STORM"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no SURF (Aggron brings it; the steel tengu flies, it does not swim).
 teachable = [
     "ATTRACT", "BULLET_SEED", "CUT", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH", "FLASH_CANNON", "FLY", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STEEL_WING", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
 ]

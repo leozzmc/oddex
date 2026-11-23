@@ -45,6 +45,10 @@ stage_mismatch_ok = [
     "WOBBUFFET",   # stage 2 onto single-stage Tomoeden (405 = 405); Gachirinza (Wynaut) would be -31%
     "LUVDISC",     # single-stage (330) onto stage-2 Shojomai (340), Route 125
     "SEAKING",     # stage 2 onto stage-1 Kamorai (310 vs 450), Goldeen's creature; the line has no stage 2
+    # Sootopolis segment (mask-designs.md "Sootopolis 段"):
+    "CRAWDAUNT",   # stage 2 onto single-stage Jatai (458 vs 468): Juan; Corphish's Namazura evolves into Whiscash's slot
+    "WAILORD",     # stage 2 onto single-stage Kumoryu (490 vs 500): one wild slot on Route 129; Kamorai has no stage 2
+    "MEDICHAM",    # stage 2 onto stage-3 Yokozunat (395 vs 410): one trainer; Gachirinza (Meditite) would be -32%
 ]
 
 [replace]
@@ -230,3 +234,15 @@ PSYDUCK = "SHOJOBOB"     # water, 320 -> 220 (-31%)
 GOLDUCK = "SHOJOMAI"     # stage 2, water, 500 -> 340 (-32%); Psyduck's line
 HERACROSS = "YOKOZUNAT"  # bug/fighting, 500 -> 395 (-21%)
 PHANPY = "MANDALUMB"     # ground, 330 -> 280 (-15%)
+# Sootopolis segment (mask-designs.md "Sootopolis 段"; the user's decisions of 2026-11-23): Routes 126-134,
+# the underwater routes, Juan, and Steven's partner team (src/data/battle_partners.party). Whiscash,
+# Kingdra, Seadra and Sealeo wait for their new creatures (Onamazu, Magaryu, Yukinba).
+CRAWDAUNT = "JATAI"      # stage 2, 468 -> 458 (-2%); Juan
+WAILORD = "KUMORYU"      # stage 2, 500 -> 490 (-2%); Route 129
+CLAMPERL = "MAGATIDE"    # water, 345 -> 255 (-26%, flagged; underwater wild): the pearl and the jewel
+RELICANTH = "DOGOGGLE"   # rock, 485 -> 355 (-27%, flagged; underwater wild): the living fossil and the dug-up dogu
+CORSOLA = "HANIWORT"     # rock, 410 -> 355 (-13%); Pacifidlog stands on rows of them
+BAGON = "MAGATIDE"       # dragon, 300 -> 255 (-15%); the Pacifidlog trade uses roles instead
+MEDICHAM = "YOKOZUNAT"   # fighting, 410 -> 395 (-4%)
+METANG = "KAGURAI"       # steel, 420 -> 465 (+11%); Steven's partner team
+AGGRON = "DAIBEKI"       # steel, 530 -> 480 (-9%); Aron's line. Steven's third slot is hand-set to Enigmen
