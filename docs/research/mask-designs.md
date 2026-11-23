@@ -590,7 +590,7 @@
 - **待辦(使用者 2026-11-21 核准全部 9 隻)**:在下一段的角色批次裡套用這個 patch,用 `make_art.py` 重新產生這 9 隻的 sprite,在 1× 的畫廊和戰鬥裡看過,再更新 `oddex_gallery`/`oddex_dex` 的基準截圖。和新角色放在同一批,長路線只需要重錄一次。
 - 其他 30 隻在 1× 下輪廓都看得出來,這次不改。比較接近邊緣的是 Gachirinza(坐在月輪裡的人形比較小)、Iwadawn、Kagurai,之後如果還有餘力再看。
 
-## Winona 段(2026-11-21,Mark;David 暫定核准對照表和 3 隻新角色,待使用者確認)
+## Winona 段(2026-11-21,Mark;對照表和 3 隻新角色由使用者 2026-11-23 確認)
 
 Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版角色還沒有對照。原則和之前一樣:同一階段、至少一個相同屬性、種族值差距不大;已經有的角色優先。但 Winona 自己的隊伍(Swablu、Tropius、Pelipper、Skarmory、Altaria)如果全部用現有角色,會變成 Utoghast、?、Utomaw、Daibeki、Utomaw,道館館主的隊伍裡有重複,所以 Tropius 和 Altaria 各做一隻新角色;Weather Institute 送的 Castform 也做一隻(劇情送的角色,代號 `WEATHER_GIFT`)。
 
