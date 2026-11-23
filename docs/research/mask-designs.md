@@ -696,6 +696,7 @@ Sonia 的清單(`docs/research/plan-b-references.md` §11.2)裡有 20 種原版�
 - 其餘 68 種已經有對照(Winona 批次以前的表),不用動。
 - Sonia 的正式範圍(`plan-b-references.md` §12)多了 Shoal Cave,裡面的 Snorunt(冰,300,退潮時的冰室 3 格)對到 Yamambrr(冰/地面,295,同樣是第 1 階段;Snorunt 能學的 HM 只有 Flash,Yamambrr 已經有)。
 - Route 125 多出來的 3 種:Machamp → Yokozunat(505 → 395,**⚠ −22%**)、Luvdisc → Shojomai(330 → 340)、Seaking → Kamorai(450 → 310,**⚠ −31%**;Goldeen 已經是 Kamorai,這條線沒有第 2 階段)。
+- Lilycove 東邊擋路的那三隻(Team Aqua 的潛水艇離開前)是 tileset 的圖,不是物件:Lilycove secondary tileset 的 6 個 metatile(`METATILE_Lilycove_Wailmer0`–`3` 和兩個 `_Alt`,由 `LilycoveCity/scripts.inc` 的 `setmetatile` 放上去),共用 12 個 tile(0x319、0x31A、0x328–0x32B、0x338–0x33B、0x349、0x34A;`tiles.png` 的 (64,136) 起 32×32,四個角不算)。2026-11-23 重畫成浮在水面的 Kamorai(使用者選的):金色大眼、針孔瞳孔、皺眉、嘴角朝下的張口,不是笑臉。原本這些 tile 用 General 的 palette 0(只有藍、灰),畫不出紅色,所以 `metatiles.bin` 裡這 6 個 metatile 上層的 18 個 tile 改指到 palette 1(General 原本就有的,有四階紅);沒有新增或修改調色盤,map 和 script 也沒動。`check_species_refs` 看不到 tileset 的圖,以後換角色要記得這裡。
 - HM:Kumoryu 要加 Surf、Strength、Waterfall、Dive(從 Gyarados 來;雲龍游泳說得通,Strength 也可以),Yokozunat 加 Cut(Pinsir、Heracross),Ichimai 加 Flash(Duskull),Shojobob 加 Strength、Rock Smash(Psyduck,只有做 Safari 才需要)。新角色照它取代的原版:Kamikko/Kaminobi 是 Flash,Nobusumen 是 Fly,Enigmen 是 Strength、Flash、Rock Smash,Iwadusk 是 Flash,Shojoran 是 Surf、Strength、Flash、Rock Smash、Waterfall、Dive。
 
 ### Mt. Pyre 的幽靈:Ichimai 接 Duskull,Shuppet 做新的人偶線
