@@ -278,13 +278,20 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertIn("partners: PARTNER_NOBODY is not in battle_partners.party", r.stderr + r.stdout)
 
     def test_check_species_refs_sees_partner_parties(self):
-        # Reads the real game: Steven's Metang stays vanilla until the [sootopolis] mapping.
-        # shortcut: needs a still-vanilla partner, repoint when Steven's team is fully migrated
-        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
-               "--scope-file", self.table('[s]\npartners = ["PARTNER_STEVEN"]\n', "s.toml")]
-        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
-        self.assertIn(("party", "src/data/battle_partners.party", "SPECIES_METANG", "PARTNER_STEVEN"),
-                      {(f["category"], f["file"], f["species"], f["context"]) for f in found})
+        # On a scratch file, so it does not depend on which partners the game has migrated.
+        import types
+        path = "src/data/battle_partners.party"
+        os.makedirs(os.path.join(self.dir, "src", "data"))
+        with open(os.path.join(self.dir, path), "w") as f:
+            f.write("=== PARTNER_STEVEN ===\nName: STEVEN\nAI: Basic Trainer\n\nMetang\nLevel: 42\n- Psychic\n")
+        found = []
+        refs.scan_party_file(self.dir, lambda *a: found.append(a), path)
+        self.assertEqual(found, [("party", path, 5, "SPECIES_METANG", "PARTNER_STEVEN")])
+        finding = {"category": "party", "file": path, "species": "SPECIES_METANG", "context": "PARTNER_STEVEN"}
+        scope = types.SimpleNamespace(trainers=set(), partners={"PARTNER_STEVEN"}, excludes=lambda p, sp: False)
+        self.assertTrue(refs.in_scope(finding, scope))
+        scope.partners = set()
+        self.assertFalse(refs.in_scope(finding, scope))
 
     def test_wild_maps_map_kind_takes_one_table(self):
         # "VictoryRoad_B1F:rock_smash_mons" takes that one table, whatever wild_kinds says;
