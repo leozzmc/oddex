@@ -411,3 +411,50 @@
 - 這是「一隻主力帶四隻陪跑」的測試隊伍:雙打的第二個位置一兩回合就倒,主力等於一打二。所以上面的 Lv37 是一對一的門檻,**不能當成單隻主力過雙打的等級**;六隻都在 Lv40 上下的隊伍沒有測過。
 - Magma Hideout 的 Maxie(Shachowl 37、Nobusumen 38、Kamadoro 39)也很緊:Lv44 的主力打完剩 4 HP、PP 幾乎用光(基地裡沒有補血點,原版也沒有)。
 - 決定(David 同意):平衡先不動。如果之後要調簡單,最小的改法是 Iwadawn 降回 Lv42;Moonblast 不動,它是擋住草系主力一路打穿的那一招。
+
+## Juan 戰(草稿)(2026-11-23,Mark;只是分析,角色和隊伍都還沒做)
+
+### 怎麼算的
+- `tools/oddex/damage_calc.py JUAN_1 --summary --levels 36-70`,一對一,我方取最低亂數、對手取最高亂數。這一場是單打,所以計算器的假設比 Tate & Liza 那一場貼近實際。
+- 原版隊伍:Luvdisc Lv41、Whiscash Lv41、Sealeo Lv43、Crawdaunt Lv43、Kingdra Lv46(Chesto Berry)。
+- 新角色還沒做,用原版的數值代替:Onamazu = Whiscash(屬性和種族值相同);Magaryu = Kingdra(屬性相同,種族值 500 對 540,另外用「降 2 級」估一次);Yukinba = Sealeo 的數值、屬性換成冰/幽靈(`--set SEALEO:types=ICE,GHOST`)。Luvdisc → Shojomai、Crawdaunt → Jatai 用實際的角色。對照和 Brief 見 `mask-designs.md`「Sootopolis 段(草稿)」。
+- 我方用最終型(Grinarbor、Trekcart、Ridgeloom);原版基準用 `--vanilla 421e141a --starters SCEPTILE,BLAZIKEN,SWAMPERT`。
+- 限制:只算御三家單挑;沒有算 Juan 的 2 個 Hyper Potion、Double Team 的閃避、Rest 加 Chesto Berry、Attract 和混亂。這些都讓實際比數字難,所以數字只能跟原版比較。
+
+### 結果:每個御三家單挑打贏全隊的最低等級
+
+| | 草 | 火 | 水 |
+|---|---|---|---|
+| 原版基準(Sceptile / Blaziken / Swampert) | Lv56 | Lv59 | Lv44 |
+| A:全部用現有角色(Shojomai、Jatai、Yamambrr、Raijuoh、Shojoran) | Lv41 | Lv54 | Lv43 |
+| **B:三隻進化型(Shojomai、Onamazu、Yukinba、Jatai、Magaryu)** | **Lv48** | **Lv68** | **Lv42** |
+| B,Yukinba 維持冰/地面 | Lv48 | Lv68 | Lv42 |
+| B,王牌降到 Lv44(估 Magaryu 500 的效果) | Lv46 | Lv65 | Lv40 |
+
+卡住每個御三家的都是王牌(Kingdra 位置):
+- **草(Grinarbor,草/惡)**:比原版低 8 級。Kingdra 的 Ice Beam 打它是 2 倍(54–64%),它的 Wood Hammer 只有 45–54%。
+- **水(Ridgeloom,水/飛行)**:和原版差不多(−2 級)。Ice Beam 對水/飛行只是等倍。
+- **火(Trekcart,火/鋼)**:**比原版高 9 級,這是唯一變難的。** 兩個原因:
+  - 火和鋼打水/龍都只有 1/4,Trekcart 對王牌最好的招式是 Aerial Ace(18–22%);原版的 Blaziken 有格鬥系的等倍招式。
+  - Onamazu 的 Earthquake 打火/鋼是 4 倍(Lv50 時 119–140%,一擊);原版打 Blaziken 是 2 倍。
+- 火系在原版本來就是這個道館最吃虧的(Lv59),玩家要靠隊友;但現在差距更大。
+
+### Yukinba 的屬性
+冰/幽靈和冰/地面對三隻御三家的門檻沒有差別(那一格都是 Lv36)。差別在玩家的隊友:冰/地面的話,Juan 會有兩隻地面系(加上 Onamazu),電系招式有兩隻打不到;原版只有一隻。所以建議冰/幽靈。
+
+### 建議的隊伍(做法 B;`trainers.party` 由 Sonia 改)
+
+| 位置 | 原版 | 改成 | 招式 |
+|---|---|---|---|
+| 1 | Luvdisc Lv41 | Shojomai Lv41 | 照原版(Water Pulse / Attract / Sweet Kiss / Flail);學不了的由 Sonia 換成同類的招式 |
+| 2 | Whiscash Lv41 | Onamazu Lv41 | 照原版(Rain Dance / Water Pulse / Amnesia / Earthquake) |
+| 3 | Sealeo Lv43 | Yukinba Lv43 | 照原版(Encore / Body Slam / Aurora Beam / Water Pulse) |
+| 4 | Crawdaunt Lv43 | Jatai Lv43 | Water Pulse / **Poison Jab** / **Crunch** / Taunt(Jatai 學不了 Crabhammer;Crunch 是它 Lv39 的升級招式) |
+| 5 | Kingdra Lv46 @ Chesto Berry | Magaryu Lv46 @ Chesto Berry | 照原版(Water Pulse / Double Team / Ice Beam / Rest) |
+
+- 如果做了 Kamonari(可選的第 4 隻),第 4 個位置可以換成它(水/電):對三隻御三家的門檻不變(那一格是 Lv36–45;Ridgeloom 的特性 Lightning Rod 不吃電),但 Juan 的隊伍會有四隻水系。
+- **要不要幫火系調簡單,請使用者決定。** 可以用的改法,效果由大到小:
+  - 王牌降 2 級(Lv44):草 46、火 65、水 40。全部一起變簡單。
+  - Onamazu 的 Earthquake 換成 Mud Shot:只有 Onamazu 那一格從 Lv61 降到 Lv58,整隊的門檻還是卡在王牌(Lv68),幾乎沒有用。
+  - 王牌的 Ice Beam 換成 Dragon Pulse:草不變(Lv48)、火不變,水反而變難(Lv50)。不建議。
+  - 我的建議是先不調,照 Tate & Liza 的做法等 Sonia 錄完看實際結果:火系玩家到這裡通常已經有水上抓的隊友,而且這一場是單打。

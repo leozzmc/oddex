@@ -795,6 +795,160 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 | Iwadusk | Lunatone | 岩石/超能力 | 460 | 月夜的岩戶,新月的裂縫裡有搗麻糬的兔子 | 必要(Tate & Liza) |
 | Shojoran | Ludicolo | 水/妖精 | 480 | 在酒杯裡跳「乱」的猩々 | 可選(勁敵 4 筆) |
 
+## Sootopolis 段(草稿)(2026-11-23,Mark;Mossdeep 之後 → Juan,第 8 個徽章。只有文件,沒有動美術和資料;範圍和原版清單以 Sonia 的 `plan-b-references.md` §13 為準)
+
+### 範圍和清單
+- 範圍照 Sonia 的草稿(`feat/sootopolis-scope` b6e38503,`plan-b-references.md` §13):Route 126–134、Pacifidlog、Seafloor Cavern、Sootopolis(含道館和 Juan)、Cave of Origin、Sky Pillar、水下地圖、Abandoned Ship 的隱藏樓層。`check_species_refs.py --scope sootopolis`:677 筆、68 種,54 種已經有對照。
+- **沒有對照的**:一般角色 11 種(下表)、Steven 在 Space Center 雙打的隊友 2 種(Metang、Aggron,在 `src/data/battle_partners.party`)、傳說 3 種(另一節)。
+- 排除的(Sonia 的草稿):Marine Cave、Terra Cave(破關後);Sealed Chamber 和三個 Regi 洞窟(待決定,我的建議在最後)。
+- 訓練家只有第一次對戰的隊伍(`_1`),不含 rematch。我自己用 `--maps` 掃過一次主路線,沒對照的種類和 Sonia 的清單一致。
+
+### 沒有對照的 13 種(傳說 3 種另外談)
+
+| 原版 | 階段 | 種族值 | wild | party(等級) | 其他 | 出現 | 建議 |
+|---|---|---|---|---|---|---|---|
+| Whiscash | 2 | 468 | | 1(Lv41) | | Juan、Route 133 的 Mollie(Lv33) | **新角色 Onamazu**(Namazura 的進化,468)。只用現有角色:Jatai(458,−2%) |
+| Kingdra | 3 | 540 | | 1(Lv46) | | Juan 的王牌 | **新角色 Magaryu**(Magatide 的進化,500,−7%)。只用現有角色:Shojoran(480,−11%) |
+| Sealeo | 2 | 410 | | 1(Lv43) | | Juan、Route 133 的 Franklin(Lv34) | **新角色 Yukinba**(Yamambrr 的進化,440,+7%)。只用現有角色:Yamambrr(295,**⚠ −28%**)或 Ichimai(400,−2%,但不是冰系) |
+| Crawdaunt | 2 | 468 | | 1(Lv43) | | Juan | Jatai(458,−2%;毒/幽靈的大蛇,能學 Surf/Waterfall/Dive)。如果做了 Kamonari(見下),改對到它(480,+3%) |
+| Wailord | 2 | 500 | 1 | | | Route 129(1%) | Kumoryu(490,−2%)。如果做了 **Kamonari**(Kamorai 的進化,480,−4%),改對到它 |
+| Clamperl | 1 | 345 | 2 | 1(Lv35) | | Route 124、126 水下(65%)、道館的 Olivia | Magatide(255,**⚠ −26%**;珍珠對勾玉)。備案 Kamorai(310,−10%),但 Underwater 會變成 95% 都是 Kamorai |
+| Relicanth | 1 | 485 | 2 | | | Route 124、126 水下(5%) | Dogoggle(355,**⚠ −27%**;海底的活化石對出土的遮光器土偶)。備案 Iwadusk(460,−5%,但月亮石頭出現在海底說不通) |
+| Corsola | 1 | 410 | 1 | | text 1 | Route 128 釣魚、Pacifidlog 的對話(「這個城鎮蓋在 Corsola 的群落上」) | Haniwort(355,−13%;一排排埴輪像樁子一樣立在海裡,城鎮蓋在上面,對話可以照用) |
+| Bagon | 1 | 300 | | 1(Lv34) | text 1 | Route 134 的 Aaron、Pacifidlog 的交換(原版:玩家給 Bagon,換到 Horsea) | Magatide(255,−15%)。交換要另外定代號,見下 |
+| Seadra | 2 | 440 | | 1(Lv33) | | Route 133 的 Linda | **新角色 Magaryu**(500,+14%)。只用現有角色:Kumoryu(490,+11%) |
+| Medicham | 2 | 410 | | 1(Lv33) | | Route 132 的 Makayla | Yokozunat(395,−4%;格鬥)。Meditite 是 Gachirinza(280),對過去會是 −32% |
+| Metang | 2 | 420 | | 1(Lv42) | | Steven 的隊友(Space Center 雙打) | Kagurai(465,+11%;鋼,浮在空中的神樂鈴)。Beldum 之後對到 Suzurai(325,+8%),整條線對整條線 |
+| Aggron | 3 | 530 | | 1(Lv44) | | Steven 的隊友 | Daibeki(480,−9%;Aron 已經是 Bekurama,同一條線)。但 Skarmory 也是 Daibeki,Steven 會有兩隻,見下 |
+
+- **超過 15% 的只有兩個,而且都是我建議的**:Clamperl → Magatide(−26%)和 Relicanth → Dogoggle(−27%)。兩個都只在水底的野生遭遇出現(Clamperl 另有 1 名 Lv35 的道館訓練家),野生變弱不影響難度;換來的是水底不會整片都是同一隻,而且意象對得上。要是不接受,用備案就都在 15% 以內。
+- **順便可以修掉的舊問題**(都要先做 Kamonari):Seaking → Kamorai 目前是 **⚠ −31%**(這一段有 3 名訓練家,Lv34–40),改對到 Kamonari 是 +7%;Sharpedo 目前跨線對到 Raijuoh(雷獸),這一段 Archie 的王牌(Lv43)就是它,改成 Kamonari(+4%)之後 Aqua 的首領用的才是海裡的角色。當初就寫了「等做 Wailord 的那一段,給 Kamorai 做進化型時改對照」。
+- **Pacifidlog 的交換**:照對照的話是「給 Magatide、換 Magatide」,不能用。建議新增代號 `TRADE_PACIFIDLOG`(NPC 給的)和 `TRADE_PACIFIDLOG_WANT`(NPC 要的):NPC 要 **Kamikko**(人偶在主人之間轉手,對話「想要別的訓練家抓到的」照用),給 **Magatide**(做了 Magaryu 之後才有價值;不做的話改給 Kumoryu 太強,建議給 Namazura)。給哪一隻請使用者決定。
+- **Steven 的隊友**(`battle_partners.party`:Metang Lv42、Skarmory Lv43、Aggron Lv44):照對照會是 Kagurai、Daibeki、Daibeki。建議第三隻手動改成 **Enigmen**(500,比 Aggron 低 6%):Steven 在 R/S 當冠軍時本來就帶 Claydol,而 Claydol 的對照正是 Enigmen。對照表裡 Aggron 還是寫 Daibeki(之後別的地方出現時用)。
+- **Beldum 和 Metagross**(這一段不出現):Beldum → Suzurai 現在就可以寫進對照;Metagross(600)沒有夠強的鋼系,等破關後 Steven 那一段再給 Suzurai 線做第 3 階段。
+- **Sealed Chamber 和 Regi**:見最後的「支線」一節。
+
+### HM
+- **Waterfall 和 Dive 現在就有人能學**,不靠新角色:Waterfall 有 Utoghast/Utomaw、Kumoryu、Jatai、Magatide、Kamorai、Namazura、Shojobob 線、Ridgecap 線;Dive 有 Ichimai、Kumoryu、Jatai、Magatide、Kamorai、Namazura、Shojobob 線、Ridgecap 線。玩家在 Route 126 以前一定抓得到其中幾隻(Magatide 到處釣得到)。
+- 照「取代誰就繼承誰的 HM」:
+  - Jatai(Crawdaunt:Cut、Surf、Strength、Rock Smash、Waterfall、Dive):已經全部都有,不用改。
+  - Magatide(Clamperl:Surf、Waterfall、Dive;Bagon:Cut、Strength、Rock Smash):只缺 **Cut**。建議寫成例外(勾玉沒有可以砍的東西)。
+  - Dogoggle(Relicanth:Surf、Rock Smash、Waterfall、Dive):要加 **Surf、Waterfall、Dive**(Anorith 本來就是水裡的生物,說得通)。
+  - Haniwort(Corsola:Surf、Strength、Rock Smash):要加 **Surf**(Lileep 是海百合);Strength、Rock Smash 建議寫成例外(盆栽一樣的埴輪推不動石頭)。
+  - Kumoryu(Wailord):已經全部都有。
+  - Yokozunat(Medicham:Strength、Flash、Rock Smash):已經全部都有。
+  - Kagurai(Metang:Cut、Strength、Flash、Rock Smash):只有 Flash。Cut、Strength、Rock Smash 建議都寫成例外(一串鈴鐺沒有手腳;隊友的角色也用不到 HM)。
+  - Daibeki(Aggron:Cut、Surf、Strength、Rock Smash):只缺 Surf,建議寫成例外。
+  - 新角色:Onamazu 和 Magaryu 繼承基礎型的全部(Surf、Strength、Rock Smash、Waterfall、Dive);Yukinba 照 Yamambrr(Cut、Flash、Rock Smash、Strength),**不學 Surf/Waterfall/Dive**(和 Yamambrr 同一個例外:山姥不游泳);Kamonari 照 Kamorai 的全部。
+
+### 兩種做法:全部用現有角色,或做 3 隻進化型(建議)
+
+**A. 不做新角色。** Juan 的隊伍會是 Shojomai、Jatai、Yamambrr(或 Ichimai)、Jatai/Raijuoh、Shojoran。數字上除了 Yamambrr 都在 15% 以內,但第 8 個道館的「水系大師」只有兩隻水系,其餘是毒蛇、山姥或盤子怨靈、雷獸;Jatai 還得出現兩次或拿雷獸來湊。我不建議。
+
+**B. 做 3 隻既有角色的進化型(建議),第 4 隻可選。** 都是現有模型往上長,不是從零開始的新系列;而且 E4 的 Drake(Kingdra)、Glacia(Sealeo、Glalie、Walrein)和 Wallace(Whiscash)之後都會再用到。
+
+| 角色 | 取代 | 屬性 | 種族值 | 進化 | 一句話 | 必要嗎 |
+|---|---|---|---|---|---|---|
+| Onamazu | Whiscash | 水/地面 | 468 | Namazura Lv30 | 長到葫蘆裝不下的大鯰,背上馱著一排屋頂 | 必要(Juan) |
+| Magaryu | Kingdra、Seadra | 水/龍 | 500 | Magatide Lv32 | 一整串勾玉連成的龍 | 必要(Juan 的王牌) |
+| Yukinba | Sealeo | 冰/幽靈 | 440 | Yamambrr Lv32 | 走了一整個冬天的山姥,披著結冰的蓑衣,只剩一隻腳 | 必要(Juan 唯一的冰系) |
+| Kamonari | Wailord、Seaking、Sharpedo、(Crawdaunt) | 水/電 | 480 | Kamorai Lv30 | 面具周圍的鼓環長成一整圈雷鼓,底下拖著一道水龍捲 | 可選(修掉 Seaking −31% 和 Archie 的王牌) |
+
+為什麼現有角色填不了:
+- **Whiscash**:Barboach 已經是 Namazura(288),直接對過去是 −38%。水/地面的只有它。
+- **Kingdra**:水/龍的只有 Magatide(255,−53%)。Shojoran 數字上可以(−11%),但那是 Juan 隊伍裡 Shojomai 的進化,而且 E4 的 Drake 是龍系訓練家,到時候還是需要一隻水/龍。Magatide 現在是全遊戲最常釣到、卻沒有進化的角色(它取代的 Magikarp 正好是「會進化成龍」的那一隻),模型上本來就留了「將來長成龍角的兩個角芽」。
+- **Sealeo**:冰系只有 Yamambrr(295,−28%)。
+
+### Onamazu 的 Brief(Whiscash 位置)
+- **原型**:鯰繪裡的大鯰(安政大地震後的版畫:地底的大鯰一翻身就地震,背上馱著整個城鎮)。民間傳說的巨魚,不是神祇;和 Namazura 一樣,不放鹿島的神,也不放要石。
+- **一句話概念**:Namazura 長到葫蘆再也裝不下:葫蘆裂成兩半掛在尾巴上,原本戴著的白色翁面裂開、滑到額頭上,露出底下鯰魚自己的臉;背上是一排歪掉的瓦屋頂。
+- **輪廓**:橫向的寬扁身體,頭很寬,背上一排鋸齒狀的屋頂,兩根長鬚往兩邊甩。和 Namazura(正面一張大白臉)分得開:這一隻是側身的大魚。
+- **表情**:鯰魚本來就是嘴角朝下的寬嘴,閉著;兩隻小眼睛離得很遠、半睜著,像剛被吵醒。額頭上那半張翁面只剩眉毛和一隻眼洞,不是完整的笑臉(不要笑臉)。
+- **調色盤**:泥灰色的身體 3 階、肚子的米白 2 階、面具的白 2 階、鬚和輪廓的深色、屋瓦的藍灰 2 階、金色的眼。約 11 色。異色:金色的鯰魚(金鯰),屋瓦變成紅色。
+- **正面**:寬頭、額頭上的半張面具、兩根長鬚、背上的屋頂。**背面**:背上的屋頂、尾巴和掛著的破葫蘆。
+- **方案 A(建議)**:面具裂開滑到額頭,露出魚臉。**方案 B**:只是把 Namazura 放大,面具還戴著。不建議:翁面是笑臉,新角色不能笑;而且輪廓和 Namazura 分不開。
+- 數值:水/地面,468(和 Whiscash 相同),Namazura Lv30 進化(和 Barboach 一樣)。進化時學 Earthquake(一翻身就地震)。
+
+### Magaryu 的 Brief(Kingdra 位置)
+- **原型**:勾玉(古墳時代的玉飾,只取「逗號形的玉」的造型,不是三神器的八尺瓊勾玉)加上東亞的龍。和 Magatide 一樣只用器物的形狀;龍只取造型,不是龍神。
+- **一句話概念**:Magatide「想變成龍」的願望實現了:一整串勾玉首尾相接,連成一條 S 形的龍,最前面那一顆最大,是頭,角芽長成了分叉的金角。
+- **輪廓**:S 形的一串圓珠,由大到小,頭上兩根分叉的角,底下一圈潮水。和 Kumoryu(一大團雲裡的一張臉)分得開:這一隻是細長、一節一節的。
+- **表情**:Magatide 的嘯面嘴(噘起來的圓嘴)還在,現在往前噴出一道水柱;眼睛是瞪大的圓眼。噘嘴不是笑。
+- **調色盤**:翡翠綠 3 階、高光的白綠、角的金 2 階、水的藍 2 階、浪花的白、嘴唇的紅、眼白和瞳孔、輪廓。約 12 色。異色:瑪瑙紅的珠子、銀色的角。
+- **正面**:最大的那顆勾玉(頭)在前,後面的珠子繞成 S 形往後上方排。**背面**:珠子的背面和角,尾端最小的那顆翹起來。
+- **方案 A(建議)**:一串勾玉連成的龍。**方案 B**:一顆巨大的勾玉長出龍頭和四隻爪。不建議:64 px 下只是一個大逗號,和 Magatide 分不開。
+- 數值:水/龍,500(Seadra 440 和 Kingdra 540 之間;比 Kingdra 低 7%),Magatide Lv32 進化(和 Horsea 一樣;Route 133 的 Linda 是 Lv33)。進化時學 Dragon Pulse。
+
+### Yukinba 的 Brief(Sealeo 位置)
+- **原型**:雪婆(ゆきんば;愛媛等地的傳說,下雪的夜裡出現的獨腳老婆婆),加上能〈山姥〉後場「巡著雪走遍群山」的山姥。妖怪,不是神祇。
+- **一句話概念**:Yamambrr 走完一整個冬天之後的樣子:披著一件結滿冰的蓑衣,整個身體變成一個圓錐,底下只剩一隻踩著雪鞋的腳;拐杖凍成一根冰柱,頭髮凍成往後甩的一束束冰柱。
+- **輪廓**:圓錐形(蓑衣)頂著一顆頭,頭後面是放射狀的冰柱,旁邊一根比它高的冰杖。和 Yamambrr(一張大面具加亂髮)分得開:這一隻有身體,是直立的三角形。頭上是冰柱,不是冠(不要頭骨冠)。
+- **表情**:Yamambrr 那張滿是皺紋的臉凍成青白色,金色的小眼睛瞪著,嘴張開吐出一團白霧,缺了牙。不笑。
+- **調色盤**:臉的青白 2 階、皺紋的深藍、蓑衣的稻草色 2 階、冰的淺藍 2 階和白色高光、金眼、嘴裡的暗紅、輪廓。約 11 色。異色:蓑衣變成深紅色(夕陽下的雪山)、冰變成粉紫色。
+- **正面**:臉、蓑衣、冰杖、一隻腳。**背面**:蓑衣的背面(一層層稻草)和往後甩的冰柱頭髮。
+- **方案 A(建議)**:披蓑衣的獨腳雪婆。**方案 B**:雪女(白衣、黑長髮的年輕女人)。不建議現在做:老婆婆進化成年輕女人說不通;雪女留給之後 Glacia 的第二條冰系線(Glalie)。
+- 數值:**冰/幽靈**,440(比 Sealeo 高 7%),Yamambrr Lv32 進化(和 Spheal 一樣)。第二屬性從地面改成幽靈的理由:Onamazu 已經是地面,Juan 的隊伍要是有兩隻地面,電系招式就有兩隻打不到(原版只有 Whiscash 一隻)。要是使用者想維持冰/地面也可以,數字見 `balance.md`。
+
+### Kamonari 的 Brief(可選;Wailord、Seaking、Sharpedo 位置)
+- **原型**:Kamorai 的大飛出面(能〈賀茂〉裡用的面,和 Kamorai 一樣只取造型)加上雷太鼓的鼓環(只取圖樣)和海上的水龍捲。
+- **一句話概念**:Kamorai 周圍那圈金環長成一整圈六面的巴紋鼓,繞著面具轉;面具底下不再是水滴,而是一道往下擰的水龍捲。
+- **輪廓**:上面一個被鼓圍住的圓,下面一個倒三角的水柱,像一個陀螺。比 Kamorai(一個圓)高一倍。
+- **表情**:大飛出的凸眼更凸,針孔瞳孔;嘴張到最大,水從嘴角往下灌。嘴角朝下,和 Lilycove 的 tile 畫法一致。
+- **調色盤**:朱紅 3 階、金 2 階、鼓面的白、巴紋的黑、水的藍 2 階和白色浪花、輪廓。約 11 色。異色照 Kamorai:藏青的臉、銀色的眼和鼓。
+- **正面**:面具、鼓環、水龍捲。**背面**:面具的背面(深色)、鼓的背面和水龍捲。
+- 數值:水/電,480,Kamorai Lv30 進化(這一段的 Sharpedo 最低 Lv32、Seaking 最低 Lv34,都合法)。
+- 做的話要改的對照:Wailord、Seaking、Sharpedo → Kamonari(Sharpedo 之前幾段已經套成 Raijuoh 的訓練家要不要回頭改,由 Sonia 決定)。
+
+### 傳說角色:Kyogre、Groudon、Rayquaza(請使用者選方向)
+
+**現況**(原版 Emerald 的流程):
+- Seafloor Cavern:Archie 用寶珠喚醒 Kyogre(過場,不戰鬥)。Groudon 已經在 Magma Hideout 被喚醒(Mossdeep 段先排除的那 17 筆)。
+- Sootopolis:兩隻在城裡對打,天氣異常擴散到各條路線;Cave of Origin 裡只有 Wallace 的對話。
+- Sky Pillar:玩家爬到塔頂叫醒 Rayquaza(過場),牠飛到 Sootopolis 讓兩隻停手(`src/rayquaza_scene.c`,5 段全螢幕的過場動畫,有專用的圖)。
+- 可以抓的地方有 3 個,**都不在主線上**:Sky Pillar 塔頂的 Rayquaza(Lv70,事件後隨時可以去)、破關後 Marine Cave 的 Kyogre 和 Terra Cave 的 Groudon(Lv70)。
+- 這一段裡的引用共 56 筆(文字、叫聲、地圖上的大型物件圖),明細在 Sonia 的 §13.3;加上 `[mossdeep]` 先排除的 Magma Hideout、Space Center、Mt. Pyre 那幾筆。
+- **大張美術有三處,都比一般角色貴很多**(一般角色是 64×64 兩幀加背面、icon、地圖小圖):
+  - Sootopolis 的過場(`src/rayquaza_scene.c`,3138 行;`graphics/rayquaza_scene/` 5 段共 25 張圖):三隻各有 2–4 個專用姿勢,拆成零件(爪、肩、鰭、尾巴)由程式拼起來移動,最大的單張是 128×120。重畫等於每隻再畫好幾次,而且零件的切法綁在程式的座標上。
+  - 開機動畫第 3 幕(`src/intro.c`,`graphics/intro/scene_3/`):三隻各一張 128×128,加雲、閃電、背景。前兩幕也都是原版角色和原版主角,所以開機動畫整個都還沒換,不只是傳說的問題。
+  - 標題畫面(`src/title_screen.c`,`graphics/title_screen/rayquaza.png`,128×128):同一個畫面上還有原版的標題字。
+  - 另外每隻有地圖上的大型物件圖(正面、側面、睡著的)和專用的對戰轉場、背景。
+
+**規則**:神祇的意象可以用,神祇本身不能變成可以捕捉的角色。
+
+| | 方向一:換成妖怪,照樣可以抓 | 方向二:當成不可捕捉的自然力量 | 方向三:主線是自然力量,另外留可以抓的「餘波」 |
+|---|---|---|---|
+| 牠們是什麼 | 三隻原創角色,原型是傳說裡的妖怪或巨人,不是神祇。例如海:海坊主(暴風雨的海面升起的巨大黑影);陸:大太法師(踩出湖泊、堆出山的巨人);天:鳳凰(只在太平的時候出現的瑞鳥,牠一來爭鬥就停) | 不是角色,是現象:風暴和乾旱本身,畫成天上和海上的巨大面具(這裡可以直接用神祇的意象,因為不能抓、不進圖鑑) | 主線同方向二;三個捕捉點放的是風暴和乾旱退去後留下來的妖怪(同方向一的原型,但定位是「餘波」,比原版弱,約 580) |
+| Seafloor Cavern/Cave of Origin 的覺醒 | 不變,只換圖、叫聲和文字 | 不變,但對話要改寫:喚醒的不是生物,是被封住的風暴 | 同方向二 |
+| Sky Pillar 的平息 | 不變:叫醒第三隻,牠去讓兩隻停手 | 改成在塔頂完成一個儀式(例如敲響塔頂的鐘),天空的面具出現,風暴和乾旱散去。塔頂之後是空的 | 主線同方向二;事件後塔頂出現可以抓的那一隻 |
+| Kyogre/Groudon 能不能抓 | 能,和原版一樣(破關後的洞窟) | 不能。Marine Cave、Terra Cave 和破關後的異常天氣事件拿掉,或改放別的獎勵 | 能抓的是「餘波」的妖怪,位置和原版一樣 |
+| 要做的角色 | 3 隻完整的角色(戰鬥圖、圖鑑、數值)和 3 組大型地圖物件 | 只有 3 組大型地圖物件(面具);不用戰鬥圖和數值 | 兩邊都要:3 組面具物件,加 3 隻完整的角色 |
+| Sootopolis 的過場(5 段) | 建議**不重畫**:把 4 次 `Script_DoRayquazaScene` 換成在地圖上演(三隻的大型物件、鏡頭晃動、叫聲、天氣變化;Sootopolis 的腳本本來就有這些)。不用大圖,Sonia 改腳本。要保留全螢幕過場的話,是另外一筆約等於 6–8 隻角色的美術 | 同左;在地圖上演更適合「現象」的設定 | 同左 |
+| 開機動畫 | 和傳說的方向無關,三個方向都一樣:建議整段先拿掉(開機直接到標題),等遊戲內容定了再決定要不要做原創的開場 | 同左 | 同左 |
+| 標題畫面 | Rayquaza 那張換成一張 128×128 的原創圖(第三隻的臉,或御三家的面具);一張圖,成本約一隻角色的正面 | 同左,但畫的是天空的面具 | 同左 |
+| 腳本和對話 | 幾乎不用改,只換名字、叫聲、圖 | 改得最多:覺醒和平息的對話重寫,拿掉 3 個捕捉點 | 介於兩者之間 |
+| 風險 | 原型要挑得乾淨:名字裡有「神」的(例如旱魃在日本叫「日照り神」)或有地方信仰的要避開 | 少了三隻最有名的可捕捉角色,破關後的內容變少 | 工作量最大;「主線的那個」和「能抓的那個」是兩回事,要在對話裡講清楚 |
+
+**我的建議:方向一。** 這個遊戲裡所有角色本來就是「面具加上妖怪或故事角色」,傳說角色照同一套規則做最一致,劇情腳本幾乎不用改,也不會少掉任何捕捉點。上面舉的原型只是例子;使用者選定方向之後我再出這三隻的 Brief(每隻兩個方案),到時候一起確認原型有沒有碰到神祇。不管哪個方向,我都建議 Sootopolis 的過場改成在地圖上演、開機動畫先拿掉、標題畫面只換一張圖:這樣大張美術從三處二十幾張降到一張。標題畫面上的原版標題字是另一個問題(公開的 repo),請 David 另外處理。
+
+### 支線:Sealed Chamber 和三個 Regi(建議延後)
+- **建議:延到破關後內容那一段**(和 Marine/Terra Cave、Steven 的 Beldum、Metagross 一起),這一段維持 Sonia 草稿的排除。
+- 理由:
+  - 主線不需要它;做不做都不影響第 8 個徽章。
+  - 它要三隻新的傳說角色(Regirock、Regice、Registeel),而這一段已經有 Juan 的進化型和傳說三隻的方向要決定。
+  - `src/braille_puzzles.c` 直接檢查「第一隻是 Wailord、最後一隻是 Relicanth」,要改成代號(例如 `PUZZLE_FIRST`、`PUZZLE_LAST`),點字的提示也要跟著新角色重寫。
+- 延後期間的狀況:Sealed Chamber 走得進去,但門打不開(原版的 Wailord 和 Relicanth 已經拿不到),三個 Regi 洞窟的門也不會開。這是讀程式得到的結論,沒有在遊戲裡試過。
+- 到時候的設計方向(先記著):Regi 是「被封印的古代人造像」,和 Haniwort、Dogoggle(埴輪、土偶)同一個題材,可以做成岩、冰、鋼三尊大型的土偶或石人。
+
+### 需要使用者決定的事
+1. 做法 A(不做新角色)還是 B(Onamazu、Magaryu、Yukinba 三隻進化型)?B 的話 Kamonari 要不要一起做?
+2. Clamperl → Magatide(−26%)、Relicanth → Dogoggle(−27%):接受,還是用備案(Kamorai、Iwadusk)?
+3. Yukinba 的屬性:冰/幽靈(建議),還是維持冰/地面?
+4. Pacifidlog 的交換給哪一隻、要哪一隻。
+5. Steven 的隊友第三隻:手動改成 Enigmen(建議),還是照對照用兩隻 Daibeki?
+6. 傳說角色的方向(一、二、三),以及過場、開機動畫、標題畫面照上面的省法處理可不可以。
+7. Sealed Chamber 和 Regi 延到破關後那一段可不可以。
+8. Juan 的隊伍和招式:見 `balance.md`「Juan 戰(草稿)」。
+
 ## 還沒用到的候選
 - 能:殺生石(野干或小飛出)、熊坂(長霊癋見)、邯鄲男、真蛇(Omotelle 線如果要有第 4 階段)、増女(〈羽衣〉的天女)、童子(〈菊慈童〉)、黒髭(龍神)、小癋見(〈野守〉〈鵜飼〉的地獄小鬼)、怪士(〈船弁慶〉的平知盛亡靈)。
 - 狂言:武悪(和它的變化形神鳴,〈雷〉的雷神)、乙、賢徳(動物精靈)、猿(〈靭猿〉)、狸、蛸(うそぶき面)、祖父、尼、福の神(神面,不採用)。
