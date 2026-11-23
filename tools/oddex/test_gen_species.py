@@ -31,6 +31,15 @@ class Warnings(unittest.TestCase):
         self.assertIn('B should come right after A', apart[0])
 
 
+class Legendary(unittest.TestCase):
+    def test_fields(self):
+        self.assertEqual(gs.legendary_fields({}), '        .friendship = STANDARD_FRIENDSHIP,\n')
+        out = gs.legendary_fields({'legendary': True})
+        for field in ('.friendship = 0,', '.isRestrictedLegendary = TRUE,', '.perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,'):
+            self.assertIn(field, out)
+        self.assertNotIn('STANDARD_FRIENDSHIP', out)
+
+
 class Hms(unittest.TestCase):
     def test_unlearnable_hms(self):
         species = [{'learnset': {'teachable': ['CUT', 'SURF']}}, {'learnset': {}}]
