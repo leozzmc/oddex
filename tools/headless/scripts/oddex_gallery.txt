@@ -509,12 +509,12 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 wait 120
@@ -533,4 +533,22 @@ wait 120
 shot gallery/1642_yukinba.png
 press START 2 120
 shot gallery/1642_yukinba_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1643_okafumi.png
+press START 2 120
+shot gallery/1643_okafumi_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1644_sokonemu.png
+press START 2 120
+shot gallery/1644_sokonemu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1645_utsuroban.png
+press START 2 120
+shot gallery/1645_utsuroban_shiny.png
 press START 2 120

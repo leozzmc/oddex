@@ -28,4 +28,6 @@ order = [
     "ICHIMAI", "YATSUFU", "KUMORYU", "TERUBOZU",
     # Mossdeep segment.
     "KAMIKKO", "KAMINOBI", "IWADUSK",
+    # Sootopolis segment: the three legendaries, last in the dex.
+    "SOKONEMU", "OKAFUMI", "UTSUROBAN",
 ]

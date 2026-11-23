@@ -303,3 +303,15 @@ press A 2 150
 shot dex/284_iwadusk.png
 press B 2 90
 press DOWN 2 20
+press A 2 150
+shot dex/285_sokonemu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/286_okafumi.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/287_utsuroban.png
+press B 2 90
+press DOWN 2 20

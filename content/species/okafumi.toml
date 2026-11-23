@@ -1,0 +1,57 @@
+# Sootopolis segment (docs/research/mask-designs.md, "大地:Okafumi"): the Groudon slot (role LEGEND_LAND).
+# After the creature at the end of H. P. Lovecraft's "The Dunwich Horror" (1929, public domain). Stats and ability
+# follow Groudon (Drought drives the story's sun: its mouths drink the clouds); moves are provisional.
+
+id = "OKAFUMI"
+name = "Okafumi"
+category = "Hill Treader"
+
+types = ["GROUND", "GHOST"]
+abilities = ["DROUGHT", "NONE", "NONE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 100, atk = 150, def = 140, spa = 100, spd = 90, spe = 90 }   # total 670
+ev_yield = { atk = 3 }
+catch_rate = 3
+exp_yield = 335
+gender = "GENDERLESS"
+egg_cycles = 120
+egg_groups = ["NO_EGGS_DISCOVERED"]
+growth_rate = "SLOW"
+body_color = "GRAY"
+cry = "NONE"
+legendary = true   # no starting friendship, three perfect IVs, banned from random teams (gen_species.legendary_fields)
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 35
+weight = 9500
+text = """
+Seen only when the sun is cruelest. Its
+many mouths drink the wells, the rivers
+and the clouds dry, and the hills keep
+the print of every barrel-thick foot."""
+scale = { pokemon = 256, pokemon_offset = 0, trainer = 400, trainer_offset = 6 }
+
+[learnset]
+level = [
+    [1, "SCARY_FACE"], [1, "ANCIENT_POWER"], [1, "MUD_SHOT"], [1, "ABSORB"], [1, "PRECIPICE_BLADES"], [9, "EARTH_POWER"], [18, "BULK_UP"], [27, "EARTHQUAKE"], [36, "HAMMER_ARM"], [45, "FISSURE"], [54, "REST"], [63, "GIGA_DRAIN"], [72, "SHADOW_BALL"], [81, "SOLAR_BEAM"], [90, "LEECH_LIFE"],
+]
+# HMs as Groudon (Strength, Rock Smash), except: no CUT (a ball of rope has no blade).
+teachable = [
+    "BODY_SLAM", "BRICK_BREAK", "BULK_UP", "DIG", "DOUBLE_TEAM", "EARTHQUAKE", "ENDURE", "FACADE", "FOCUS_PUNCH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "REST", "RETURN", "ROAR", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SAFEGUARD", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/okafumi"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SHAKE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 8, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [70, 70]
+family = ["OKAFUMI"]

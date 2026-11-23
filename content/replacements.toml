@@ -250,3 +250,7 @@ WHISCASH = "ONAMAZU"     # Namazura's stage 2 (Lv30), same total (468); Juan
 SEALEO = "YUKINBA"       # Yamambrr's stage 2 (Lv32), 410 -> 440 (+7%); Juan
 SEADRA = "MAGARYU"       # Magatide's stage 2 (Lv32), 440 -> 500 (+14%)
 KINGDRA = "MAGARYU"      # 540 -> 500 (-7%); Juan's ace
+# The three legendaries. Scripts and C use the roles LEGEND_SEA, LEGEND_LAND and LEGEND_SKY.
+KYOGRE = "SOKONEMU"
+GROUDON = "OKAFUMI"
+RAYQUAZA = "UTSUROBAN"

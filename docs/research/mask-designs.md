@@ -1051,6 +1051,13 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 
 ### 傳說三隻:可以直接建模的 Brief(2026-11-23;使用者選了海底 A、天上 A、大地 A,對法照上表)
 
+**狀態(2026-11-23)**:使用者確認了大地用地面/幽靈、三個暫名和「喝水」的接法。三隻都做了(`feat/sootopolis-batch`):模型、TOML(`legendary = true`)、代號 `LEGEND_SEA`/`LEGEND_LAND`/`LEGEND_SKY`、對照。遊戲內截圖:`~/oddex-shots/mark/sootopolis/02_legendaries_gallery_dex_2x.png`、`03_legendaries_icon_overworld_2x.png`。和下面的 Brief 不同的地方:
+- **地圖上的大型物件圖沒有另外畫。** 查了才知道原版醒著的 Kyogre、Groudon、Rayquaza 物件用的是和 NPC 共用的調色盤(`OBJ_EVENT_PAL_TAG_NPC_3`/`_4`),圖只能用那幾個固定的顏色;專用的 `kyogre.pal`、`groudon.pal` 只給「睡著」的灰色版用。所以改用和其他角色一樣的做法:地圖物件寫 `OBJ_EVENT_GFX_SPECIES(ODDEX_LEGEND_SEA)`(Fortree 的 `ODDEX_HIDDEN_BLOCKER` 就是這樣放的),用的是每隻角色自己的 32×32 地圖圖和調色盤,這些圖已經跟著模型一起產生了。沒有的:睡著的姿勢(用同一張圖,靠腳本的叫聲和鏡頭表現醒來)、Sootopolis 上空 64×64 的大型飛行圖(現在是 32×32)。要不要另外補這兩樣,等 Sonia 接上去在遊戲裡看過再決定。
+- **Sokonemu**:翅膀沒有收在背後,而是從身體兩側往上張開(收在背後時正面完全看不到);異色的眼睛還是金色(和石頭上的金色斑點共用同一個調色盤索引)。第 2 幀眼縫多睜開 1 px。
+- **Okafumi**:蛋形比 Brief 寫的扁一點;繩圈之間多了幾條往外甩的繩頭,不然輪廓太像一個罐子。頂上的半張臉是手點的:眉、一個眼洞、半個鼻子、半張平的嘴,右邊是鋸齒狀的斷口。
+- **Utsuroban**:船的上半比香爐更扁,接近一般人想到的飛碟;船身上的四個記號在 64 px 只是幾個金點。窗裡的臉是手點的。
+- 招式表是暫定的;原版的專屬招式(Origin Pulse、Precipice Blades、Dragon Ascent)保留。
+
 三隻共用的規格(和一般角色不同的地方):
 - **要做的圖**:戰鬥圖正面兩幀和背面(64×64)、icon、足跡,和一般角色一樣走 `render_species.py` → `make_art.py`;眼睛用各模型檔的 `PIXELS` 手點。另外要**地圖上的大型物件圖**,取代原版那幾張:
   - 海底、大地:`pokemon_old/kyogre.png`、`groudon.png`,各 128×32(4 格 32×32:正面 1、睡著 1、側面 2)。
