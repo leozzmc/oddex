@@ -65,12 +65,12 @@ maps = ["Route104*", "PetalburgWoods", "RustboroCity*", "Route116"]
 # Devon's fossil revival (2F) is migrated with [norman]: it uses the FOSSIL_ROOT/FOSSIL_CLAW roles.
 # In-game trades: Rustboro House1 (TRADE_RUSTBORO / _WANT roles) was missed here and handed out a
 # disabled species until [winona] found it; trade.h is in scope so strict catches the next one.
-# Fortree's trade (TRADE_FORTREE / _WANT) is in the same file and migrated with it.
+# Fortree's trade (TRADE_FORTREE / _WANT) and Pacifidlog's (TRADE_PACIFIDLOG / _WANT) are in the same
+# file and migrated with it.
 c_files = ["src/data/trade.h"]
-# The file's other trades belong to later or other regions: Pacifidlog (Bagon for Horsea), the Battle
-# Frontier (Skitty for Meowth) and the FRLG ones. Each comes into scope with its own segment.
+# The file's other trades belong to later or other regions: the Battle Frontier (Skitty for Meowth) and
+# the FRLG ones. Each comes into scope with its own segment.
 exclude_refs = [
-    "src/data/trade.h:SPECIES_BAGON", "src/data/trade.h:SPECIES_HORSEA",
     "src/data/trade.h:SPECIES_SKITTY", "src/data/trade.h:SPECIES_MEOWTH",
     "src/data/trade.h:SPECIES_ABRA", "src/data/trade.h:SPECIES_ELECTRODE", "src/data/trade.h:SPECIES_FARFETCHD",
     "src/data/trade.h:SPECIES_GOLDUCK", "src/data/trade.h:SPECIES_JYNX", "src/data/trade.h:SPECIES_LICKITUNG",
@@ -376,7 +376,8 @@ trainers = [
     # Trick House puzzle 4 (backlog: 5 badges).
     "TRAINER_CORA", "TRAINER_PAULA", "TRAINER_YUJI",
 ]
-# Steven fights beside the player in the Space Center raid (multi_2_vs_2).
+# Steven fights beside the player in the Space Center raid (multi_2_vs_2): Kagurai, Daibeki and, set by
+# hand so that Aggron's Daibeki is not there twice, Enigmen.
 partners = ["PARTNER_STEVEN"]
 maps = ["Route121*", "Route122", "Route123*", "Route124*", "Route125", "LilycoveCity*", "MossdeepCity*", "MtPyre*",
         "MagmaHideout*", "AquaHideout*", "SafariZone*", "ShoalCave_LowTide*", "NewMauville*",
@@ -390,9 +391,6 @@ exclude_refs = [
     "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc:SPECIES_GROUDON",
     "data/maps/MtPyre_Summit/scripts.inc:SPECIES_GROUDON", "data/maps/MtPyre_Summit/scripts.inc:SPECIES_KYOGRE",
     "data/maps/MossdeepCity_StevensHouse/scripts.inc:SPECIES_BELDUM",
-    # Steven's partner team: waiting for the [sootopolis] mapping (Metang and Aggron have none yet;
-    # his Skarmory is mapped and applied).
-    "src/data/battle_partners.party:SPECIES_METANG", "src/data/battle_partners.party:SPECIES_AGGRON",
 ]
 
 [sootopolis]

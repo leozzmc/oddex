@@ -1051,6 +1051,8 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
   - Sootopolis House1 的 Kecleon、House4 的 Azumarill（造型、叫聲、文字）；House6 提到 Wailmer 的一句話。
   - Sootopolis 的「Lotad and Seedot House」：比大小的活動，`setvar` 傳 `SPECIES_SEEDOT`／`SPECIES_LOTAD` 給 C，文字提到兩者共 28 處。照對照是 Bekurama 和 Shojobob；變數名和地圖名（LotadAndSeedotHouse）保留。
 
+- **Pacifidlog 的交換**（已完成，跟 Rustboro、Fortree 一樣用代號）：照對照會變成「給 Magatide、換 Magatide」，所以另外定 `TRADE_PACIFIDLOG = MAGATIDE`（NPC 給的，暱稱 TAMA）和 `TRADE_PACIFIDLOG_WANT = KAMIKKO`（NPC 要的）。`src/data/trade.h` 改用代號，信件裡的 `EC_POKEMON(BAGON)`、`EC_POKEMON(HORSEA)` 換成一般單字（I WILL MAKE IT TOUGH PLEASE TRAIN IT WELL），House3 那句「wanted to get a BAGON」改成 KAMIKKO。`[rustboro]` 對 `trade.h` 的 Bagon、Horsea 例外已經拿掉。
+
 ### 13.3 Kyogre、Groudon、Rayquaza 在劇情裡的出場
 
 三隻都沒有對照（依 2026-11-22 的決策，Kyogre 和 Groudon 跟這一段一起設計）。範圍內共 56 筆：
@@ -1091,7 +1093,7 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
    - 新東西：多人對戰的選隊伍畫面；autopilot 沒打過有搭檔的雙打。
    - Steven 的搭檔隊伍（Metang、Skarmory、Aggron）在 `src/data/battle_partners.party`。以前 `check_species_refs` 和 `apply_replacements` 都不看這個檔案，所以 `[mossdeep]` 是 strict 但這三隻還是原版。
      - 已修：兩個工具都會讀這個檔案（格式跟 `trainers.party` 一樣），scope 用 `partners = ["PARTNER_STEVEN"]` 明確列出。
-     - `[mossdeep]` 加了 `partners`；Skarmory 已經套用成 Daibeki；Metang 和 Aggron 還沒有對照，先用 `exclude_refs` 列出來，等這一段的對照表。
+     - `[mossdeep]` 加了 `partners`。Steven 的隊伍現在是 Kagurai（Metang 的對照）、Daibeki（Skarmory 的對照）、Enigmen（Aggron 的對照也是 Daibeki，為了不重複，這一格是手改的），`exclude_refs` 的兩行已經拿掉。
 2. Steven 家拿 HM08。**隊伍裡沒有能學 Dive 的**（Kyokon、Utoghast 都不行）；海上的 Shojobob（Tentacool 的對照）同時能學 Surf、Dive、Waterfall，抓一隻可以取代 Kyokon 的 Surf。
 3. Route 127 → 128 潛水 → **Seafloor Cavern**。這是最難的一段：
    - 潛水：stepwalk 沒有 Dive（深水上按 B 下潛、水下再按 B 上浮、`dive`／`emerge` 連接）。要加，規模跟 `--surf` 差不多。
