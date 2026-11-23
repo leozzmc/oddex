@@ -1,0 +1,17 @@
+# The title screen, from boot: START skips the boot intro, then the logo shines, the ODDEX banner drops
+# and the back layer appears (tools/oddex/title_art.py: the ship from the sky, clouds drifting over
+# it, PRESS START and the fan-game line). Nothing else is pressed, so no save is touched.
+# The game pulses one palette colour over 256 frames (UpdateLegendaryMarkingColor): four shots 64
+# frames apart catch the windows, lights, signs and beam at four points of that cycle.
+wait 700
+press START
+wait 360
+shot title/t1_logo_and_banner.png
+wait 120
+shot title/t2_glow_a.png
+wait 64
+shot title/t3_glow_b.png
+wait 64
+shot title/t4_glow_c.png
+wait 64
+shot title/t5_glow_d.png

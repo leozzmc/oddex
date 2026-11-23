@@ -1,7 +1,13 @@
 # 標題畫面(2026-11-23,Mark)
 
 ## 現況
-- **背景層換成 Utsuroban 了**(`feat/title-screen`),標題字還是原版的,等使用者決定。開機動畫不在這次範圍。
+- **背景層換成 Utsuroban 了**(`feat/title-screen`);使用者看過,照用。開機動畫不在這次範圍。
+- **使用者對文字的決定(2026-11-23)**:
+  - 上面的「POKéMON」標題字維持原版,不換(下面兩個草稿都不用)。
+  - 副標題「EMERALD VERSION」改成「**ODDEX**」:`emerald_version.png`,大小、配色(白字、深色邊、陰影)和往右上斜的角度都照原版;調色盤沒有動。
+  - 底部版權那一行改成「**FAN GAME, NOT OFFICIAL**」:在 `press_start.png` 的第二列,PRESS START 那一列沒有動。字是照原版那一行的畫法另外點的(5 px 高、上白下灰、黑邊)。
+  - 兩張圖也由 `title_art.py` 產生;C 沒有改。
+- 回歸腳本 `tools/headless/scripts/oddex_title.txt`(在 `check-oddex` 的預設清單裡):標題字加副標題 1 張,背景出現後每隔 64 個影格 1 張、共 4 張(閃光一個循環的四個點)。
 - 產生方式:`python3 tools/oddex/title_art.py [--preview OUT.png]`,會寫出 `game/graphics/title_screen/` 的 `rayquaza.png`、`rayquaza.bin`、`rayquaza_and_clouds.pal`。檔名沿用原版,所以 C 一行都沒改。測試是 `tools/oddex/test_title_art.py`。
 - 截圖:`~/oddex-shots/mark/title/`(`01_title_glow_frames_2x.png` 是遊戲內閃光的四個階段)。
 
@@ -21,7 +27,7 @@
 - 箱子是素面的深色箱子,一條繩子吊著,沒有十字。
 - 用了 99 個 tile(上限 256);左右和上下鏡像的 tile 會共用。
 
-## 標題字:兩個草稿(還沒做進遊戲,等使用者選)
+## 標題字:兩個草稿(使用者決定不用;留著備查)
 草稿圖在 `~/oddex-shots/mark/title/`:`logo_A_lacquer_mask_*`、`logo_B_night_eyes_*`(`_on_title_3x.png` 是放在新背景上的樣子)。
 
 | | A:漆面 | B:夜裡的眼睛 |
