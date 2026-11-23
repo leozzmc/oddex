@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Rewrite vanilla species in trainers.party and wild_encounters.json to oddex species, in place.
+"""Rewrite vanilla species in trainers.party, battle_partners.party and wild_encounters.json to oddex
+species, in place.
 
   apply_replacements.py [--table content/replacements.toml] --scope early [--fallback ID] [--dry-run]
   apply_replacements.py [--table ...] [--maps A,B] [--kinds land_mons] ...   (ad hoc scope)
@@ -10,10 +11,10 @@ The table maps each vanilla species (one key per evolution stage) to an original
     [replace]
     POOCHYENA = "SHADEPUP"
 
-Only species tokens change: the species of each Pokemon in trainers.party (nickname, gender and
-item kept) and the "species" values in wild_encounters.json (no reformatting). Species that are
+Only species tokens change: the species of each Pokemon in trainers.party and of the multi-battle
+partners in battle_partners.party (nickname, gender and item kept) and the "species" values in wild_encounters.json (no reformatting). Species that are
 already original are left alone, so running twice changes nothing. What to rewrite comes from a
-scope in content/migration_scope.toml (explicit trainers, wild maps and table kinds), shared with
+scope in content/migration_scope.toml (explicit trainers and partners, wild maps and table kinds), shared with
 check_species_refs.py. For ad hoc runs, --maps selects trainers referenced by those maps' scripts
 and those maps' encounter tables, and --kinds limits the tables. FRLG (Kanto) tables are skipped. Without --fallback, any vanilla species
 in scope that the table does not cover is listed and nothing is written.
@@ -30,6 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 GAME = os.path.join(ROOT, "game")
 TABLE = os.path.join(ROOT, "content", "replacements.toml")
 PARTY = os.path.join(GAME, "src", "data", "trainers.party")
+PARTNERS = os.path.join(GAME, "src", "data", "battle_partners.party")
 WILD = os.path.join(GAME, "src", "data", "wild_encounters.json")
 
 
@@ -111,11 +113,12 @@ class Replacer:
         self.missing[name].append(where)
         return None
 
-    def party(self, text, select_trainer):
+    def party(self, text, select_trainer, path="src/data/trainers.party"):
+        """Rewrite a .party file's species (trainers.party, or battle_partners.party: same format)."""
         lines = text.split("\n")
         trainer, after_blank, in_header = None, False, False
         for i, line in enumerate(lines):
-            m = re.match(r"^=== (TRAINER_\w+) ===", line)
+            m = re.match(refs.PARTY_HEADER, line)
             if m:
                 trainer, after_blank, in_header = m.group(1), False, True
                 continue
@@ -129,7 +132,7 @@ class Replacer:
                     a, b = species_span(line)
                     old = line[a:b]
                     const = old if old.startswith("SPECIES_") else refs.party_species_token(old)
-                    new = self.target(const, f"{trainer} (trainers.party:{i + 1})", "src/data/trainers.party")
+                    new = self.target(const, f"{trainer} ({os.path.basename(path)}:{i + 1})", path)
                     if new:
                         lines[i] = line[:a] + ("SPECIES_" + new if old.startswith("SPECIES_") else display_name(new)) + line[b:]
                         self.changed["party"] += 1
@@ -167,12 +170,13 @@ class Replacer:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--table", default=TABLE)
-    ap.add_argument("--scope", help="a scope in content/migration_scope.toml (trainers + wild_maps/wild_kinds)")
+    ap.add_argument("--scope", help="a scope in content/migration_scope.toml (trainers + partners + wild_maps/wild_kinds)")
     ap.add_argument("--scope-file", default=migration_scope.SCOPE_FILE, help=argparse.SUPPRESS)
     ap.add_argument("--maps", help="ad hoc instead of --scope: map name prefixes (same rule as check_species_refs.py)")
     ap.add_argument("--kinds", help="ad hoc instead of --scope: encounter tables to rewrite, e.g. land_mons")
     ap.add_argument("--fallback", help="original species id for vanilla species the table does not cover")
     ap.add_argument("--party", default=PARTY, help="trainers.party to rewrite (default: the game's)")
+    ap.add_argument("--partners", default=PARTNERS, help="battle_partners.party to rewrite (default: the game's)")
     ap.add_argument("--wild", default=WILD, help="wild_encounters.json to rewrite (default: the game's)")
     ap.add_argument("--dry-run", action="store_true", help="report only; write nothing")
     args = ap.parse_args()
@@ -180,7 +184,7 @@ def main():
         ap.error("--scope already defines what to rewrite; drop --maps/--kinds")
     if args.scope:
         scope = migration_scope.get(GAME, [args.scope], args.scope_file)[0]
-        select_trainer = scope.trainers.__contains__
+        select_trainer = (scope.trainers | scope.partners).__contains__
         select_table = scope.has_wild
         excludes = scope.excludes
     else:
@@ -202,8 +206,10 @@ def main():
         print("\n".join(r.errors))
         sys.exit(1)
     party_in = read(args.party)
+    partners_in = read(args.partners)
     wild_in = read(args.wild)
     party_out = r.party(party_in, select_trainer)
+    partners_out = r.party(partners_in, select_trainer, "src/data/battle_partners.party")
     wild_out = r.wild(wild_in, select_table)
 
     if r.missing:
@@ -214,7 +220,8 @@ def main():
     print(f"party: {r.changed['party']} Pokemon, wild: {r.changed['wild']} slots"
           f"{' (dry run)' if args.dry_run else ''}")
     if not args.dry_run:
-        for path, old, new in ((args.party, party_in, party_out), (args.wild, wild_in, wild_out)):
+        for path, old, new in ((args.party, party_in, party_out), (args.partners, partners_in, partners_out),
+                               (args.wild, wild_in, wild_out)):
             if new != old:
                 with open(path, "w", encoding="utf-8") as f:
                     f.write(new)

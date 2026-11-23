@@ -1089,7 +1089,9 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 
 1. Mossdeep 回血 → **Space Center**：手下 → 和 Steven 搭檔的雙打（`multi_2_vs_2`，要先在選單選 3 隻出場）。
    - 新東西：多人對戰的選隊伍畫面；autopilot 沒打過有搭檔的雙打。
-   - Steven 的搭檔隊伍（Metang、Skarmory、Aggron）在 `src/data/battle_partners.party`，**`check_species_refs` 和 `apply_replacements` 都不看這個檔案**，所以 `[mossdeep]` 是 strict 但這三隻還是原版。Skarmory 有對照，Metang 和 Aggron 沒有。
+   - Steven 的搭檔隊伍（Metang、Skarmory、Aggron）在 `src/data/battle_partners.party`。以前 `check_species_refs` 和 `apply_replacements` 都不看這個檔案，所以 `[mossdeep]` 是 strict 但這三隻還是原版。
+     - 已修：兩個工具都會讀這個檔案（格式跟 `trainers.party` 一樣），scope 用 `partners = ["PARTNER_STEVEN"]` 明確列出。
+     - `[mossdeep]` 加了 `partners`；Skarmory 已經套用成 Daibeki；Metang 和 Aggron 還沒有對照，先用 `exclude_refs` 列出來，等這一段的對照表。
 2. Steven 家拿 HM08。**隊伍裡沒有能學 Dive 的**（Kyokon、Utoghast 都不行）；海上的 Shojobob（Tentacool 的對照）同時能學 Surf、Dive、Waterfall，抓一隻可以取代 Kyokon 的 Surf。
 3. Route 127 → 128 潛水 → **Seafloor Cavern**。這是最難的一段：
    - 潛水：stepwalk 沒有 Dive（深水上按 B 下潛、水下再按 B 上浮、`dive`／`emerge` 連接）。要加，規模跟 `--surf` 差不多。

@@ -9,7 +9,7 @@ import tomllib
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCOPE_FILE = os.path.join(ROOT, "content", "migration_scope.toml")
 WILD_KINDS = {"land_mons", "water_mons", "rock_smash_mons", "fishing_mons"}
-FIELDS = {"description", "strict", "wild_maps", "wild_kinds", "trainers", "maps", "exclude_maps", "exclude_refs", "c_files", "script_files"}
+FIELDS = {"description", "strict", "wild_maps", "wild_kinds", "trainers", "partners", "maps", "exclude_maps", "exclude_refs", "c_files", "script_files"}
 
 
 class Scope:
@@ -19,6 +19,7 @@ class Scope:
         self.wild_maps = set(data.get("wild_maps", []))
         self.wild_kinds = set(data.get("wild_kinds", []))
         self.trainers = set(data.get("trainers", []))
+        self.partners = set(data.get("partners", []))  # multi-battle partners (src/data/battle_partners.party)
         self.maps = list(data.get("maps", []))
         self.exclude_maps = list(data.get("exclude_maps", []))
         self.exclude_refs = set(data.get("exclude_refs", []))
@@ -45,6 +46,10 @@ class Scope:
             defined = set(re.findall(r"^=== (TRAINER_\w+) ===", f.read(), re.M))
         for t in sorted(self.trainers - defined):
             errors.append(f"trainers: {t} is not in trainers.party")
+        with open(os.path.join(game, "src/data/battle_partners.party"), encoding="utf-8") as f:
+            defined = set(re.findall(r"^=== (PARTNER_\w+) ===", f.read(), re.M))
+        for t in sorted(self.partners - defined):
+            errors.append(f"partners: {t} is not in battle_partners.party")
         for ref in self.exclude_refs:
             path = ref.rsplit(":", 1)[0]
             if not os.path.exists(os.path.join(game, path)):

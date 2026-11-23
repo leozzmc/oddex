@@ -9,6 +9,7 @@
 #                 "Map:kind" takes just that table, whatever wild_kinds says
 #   wild_kinds    encounter tables to include, e.g. ["land_mons"] (default: all kinds)
 #   trainers      explicit TRAINER_* constants; trainers are never inferred from maps
+#   partners      explicit PARTNER_* constants: multi-battle partners (src/data/battle_partners.party)
 #   maps          map names for scripts, text and Pokemon-shaped map objects; shell-style
 #                 wildcards allowed ("LittlerootTown*" includes the town's interiors)
 #   exclude_maps  map names/wildcards removed from `maps`
@@ -375,6 +376,8 @@ trainers = [
     # Trick House puzzle 4 (backlog: 5 badges).
     "TRAINER_CORA", "TRAINER_PAULA", "TRAINER_YUJI",
 ]
+# Steven fights beside the player in the Space Center raid (multi_2_vs_2).
+partners = ["PARTNER_STEVEN"]
 maps = ["Route121*", "Route122", "Route123*", "Route124*", "Route125", "LilycoveCity*", "MossdeepCity*", "MtPyre*",
         "MagmaHideout*", "AquaHideout*", "SafariZone*", "ShoalCave_LowTide*", "NewMauville*",
         "Route110_TrickHousePuzzle4", "Route110_TrickHousePuzzle5", "Route116_TunnelersRestHouse"]
@@ -387,6 +390,9 @@ exclude_refs = [
     "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc:SPECIES_GROUDON",
     "data/maps/MtPyre_Summit/scripts.inc:SPECIES_GROUDON", "data/maps/MtPyre_Summit/scripts.inc:SPECIES_KYOGRE",
     "data/maps/MossdeepCity_StevensHouse/scripts.inc:SPECIES_BELDUM",
+    # Steven's partner team: waiting for the [sootopolis] mapping (Metang and Aggron have none yet;
+    # his Skarmory is mapped and applied).
+    "src/data/battle_partners.party:SPECIES_METANG", "src/data/battle_partners.party:SPECIES_AGGRON",
 ]
 
 [sootopolis]
