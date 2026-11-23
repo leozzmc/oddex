@@ -54,6 +54,8 @@ TRADE_FORTREE = "TOMOEDEN"          # Plusle (Fortree House1)
 TRADE_FORTREE_WANT = "TOROBI"       # Volbeat
 TRADE_PACIFIDLOG = "MAGATIDE"       # Horsea (Pacifidlog House3)
 TRADE_PACIFIDLOG_WANT = "KAMIKKO"   # Bagon
+SIZE_RECORD_1 = "BEKURAMA"          # Seedot (Sootopolis: the brothers who compare sizes; src/pokemon_size_record.c)
+SIZE_RECORD_2 = "SHOJOBOB"          # Lotad
 
 # Winona segment.
 # The Weather Institute's gift on Route 119 (givemon; Castform in vanilla, one form here).

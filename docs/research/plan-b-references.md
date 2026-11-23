@@ -1003,7 +1003,7 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 
 ## 13. 第 6 步第八段：Tate & Liza 之後 → Juan（第 8 個徽章）
 
-`[sootopolis]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。角色和對照等使用者決定。
+`[sootopolis]` 已套用並設為 `strict = true`（§13.5）。§13.1–13.4 是套用前的草稿，數字是當時的。回歸腳本 `to_sootopolis` 還沒錄。
 
 ### 13.1 可達性和範圍邊界
 
@@ -1111,3 +1111,26 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 - 長度跟 `to_mossdeep` 差不多或更長（7000 行、每次約 25 分鐘）。`check-oddex-full` 會從約 30 分鐘變成約 50 分鐘以上。
 - 要新增的工具：stepwalk 的 Dive（一定要）；水流的規劃（看 Seafloor Cavern 手解的結果決定）；選隊伍畫面的按鍵。
 - 最大的風險是隊伍：`to_mossdeep` 的兩場頭目戰都只是驚險過關，這一段開頭就是連續戰鬥（Space Center），中途又沒有地方回血（Seafloor Cavern）。建議這一段一開始先練第二隻。
+
+### 13.5 套用和接線（接在 Mark 的 Sootopolis 批次之後）
+
+- 使用者的決定（2026-11-23）：新做 Onamazu、Magaryu、Yukinba；傳說三隻是 Sokonemu（海，代號 `LEGEND_SEA`）、Okafumi（陸，`LEGEND_LAND`）、Utsuroban（空，`LEGEND_SKY`）；Regi 和 Sealed Chamber 延到破關後。
+- `apply_replacements.py --scope sootopolis`：139 隻訓練家的角色、439 格野生資料。
+- 一般角色的手改：
+  - Pacifidlog House2 的兩隻 Azurill → Shojobob；Sootopolis House1 的 Kecleon → Kyozosu、House4 的 Azumarill → Magatide（造型、叫聲、文字）。
+  - 文字：Pacifidlog PC 的 Corsola → Haniwort、Sootopolis House6 的 Wailmer Doll → Kamorai Doll。
+  - 比大小的兄弟：C（`src/pokemon_size_record.c`）和腳本都改用代號 `SIZE_RECORD_1`（Bekurama，原本的 Seedot）和 `SIZE_RECORD_2`（Shojobob，原本的 Lotad）；文字 28 處。`[sootopolis]` 的 `c_files` 加了這個檔案。
+- 傳說三隻的接線（腳本、文字、地圖物件都用代號）：
+  - `playmoncry`、`setwildbattle`、`setvar`：Sootopolis、Sky Pillar 山頂、`cave_of_origin.inc`。
+  - 地圖物件：`OBJ_EVENT_GFX_KYOGRE_*`、`GROUDON_*`、`RAYQUAZA*` → `OBJ_EVENT_GFX_SPECIES(ODDEX_LEGEND_*)`（Seafloor Cavern Room9、Magma Hideout 4F、Sootopolis、Sky Pillar 山頂）。原版是 64×64 的專用圖，有「睡著」和「靜止」兩種造型；現在都是一般的角色小圖。
+  - Sootopolis 裡 Kyogre 的移動用了 `init_affine_anim`／`walk_left_affine`，要靠它自己的 affine 表；一般角色小圖沒有這張表，所以改成 `walk_fast_left`（跟 Groudon 的 `walk_fast_right` 對稱）。
+  - 文字：8 個腳本檔裡的名字都換了（含 `[mossdeep]` 之前排除的 Magma Hideout 4F、Space Center、Mt. Pyre）。名字變長，9 行重新換行。
+  - `[mossdeep]` 的 `exclude_refs` 只剩 Steven 家的 Beldum。
+- 山頂那一場野生戰（`BattleSetup_StartLegendaryBattle`）：角色不是原版的 Rayquaza，所以走 `default`，用一般的傳說轉場和音樂（`B_TRANSITION_BLUR`、`MUS_RG_VS_LEGEND`），不會出現原版的轉場圖。
+- **還是原版、這個範圍管不到的**：
+  - `Script_DoRayquazaScene` 的過場動畫（Sootopolis 腳本呼叫 4 次）：畫面上還是 Kyogre、Groudon、Rayquaza 的大圖。要嘛重畫，要嘛把這 4 次呼叫拿掉，需要決定。
+  - 開機動畫（`src/intro.c`）和標題畫面（`src/title_screen.c`）。
+  - 對戰背景和音樂對原版三隻的特例（`battle_bg.c`、`pokemon.c`）：新角色不會觸發，沒有壞處，只是少了專用背景。
+- Juan 的招式：20 招裡有 7 招是新角色學不到的（Shojomai 的 Sweet Kiss、Flail；Yukinba 的 Encore；Jatai 的 4 招全部）。訓練家的招式不用學得會，所以不會壞；要換成什麼由 Mark 決定。
+- 沒有在遊戲裡看過：這一段還沒有路線。試過用除錯選單直接傳送去看，沒成功（選單按法跟 `to_dolls` 的不一樣），留給 `to_sootopolis`。
+

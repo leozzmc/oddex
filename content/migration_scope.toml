@@ -383,20 +383,16 @@ maps = ["Route121*", "Route122", "Route123*", "Route124*", "Route125", "Lilycove
         "MagmaHideout*", "AquaHideout*", "SafariZone*", "ShoalCave_LowTide*", "NewMauville*",
         "Route110_TrickHousePuzzle4", "Route110_TrickHousePuzzle5", "Route116_TunnelersRestHouse"]
 exclude_maps = ["SafariZone_Northeast", "SafariZone_Southeast", "LilycoveCity_Contest*"]
-# Decided 2026-11-22 (DECISIONS.md): Groudon and Kyogre are designed with the Sootopolis segment; the
-# Magma Hideout cutscene and the lore text keep them until then. Steven's Beldum is a post-game gift
-# (FLAG_SYS_GAME_CLEAR).
+# Groudon and Kyogre in the Magma Hideout cutscene and the lore text are the LEGEND_LAND / LEGEND_SEA roles
+# since the Sootopolis segment. Steven's Beldum is a post-game gift (FLAG_SYS_GAME_CLEAR).
 exclude_refs = [
-    "data/maps/MagmaHideout_4F/scripts.inc:SPECIES_GROUDON", "data/maps/MagmaHideout_4F/map.json:SPECIES_GROUDON",
-    "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc:SPECIES_GROUDON",
-    "data/maps/MtPyre_Summit/scripts.inc:SPECIES_GROUDON", "data/maps/MtPyre_Summit/scripts.inc:SPECIES_KYOGRE",
     "data/maps/MossdeepCity_StevensHouse/scripts.inc:SPECIES_BELDUM",
 ]
 
 [sootopolis]
 description = "After Tate & Liza: Dive, Routes 126-134, the Seafloor Cavern, Sootopolis, the Cave of Origin, the Sky Pillar, Pacifidlog, Juan"
-strict = false
-# Draft: nothing is applied yet. Reachability: stage_reach.py --rock-smash --cut --strength --surf, once
+strict = true
+# Reachability: stage_reach.py --rock-smash --cut --strength --surf, once
 # from Mossdeep for the surface (Routes 126-134 and Pacifidlog), once inside the Seafloor Cavern and once
 # inside Sootopolis: the tool does not model Dive, so the places only Dive reaches are added by hand
 # (Steven hands out HM08 in Mossdeep after the Space Center raid): the Seafloor Cavern under Route 128,
@@ -407,8 +403,10 @@ strict = false
 # segment: Ever Grande, Victory Road, Meteor Falls' upper rooms and the other waterfalls.
 # Post-game, out: the Marine and Terra Caves with their underwater entrances (Routes 105, 125, 127 and 129
 # after the Hall of Fame), the Mystery Events house's basement.
-# Open (a decision): the Sealed Chamber and the three Regi caves (Route 134 with Dive; braille_puzzles.c
-# checks the party for Wailord and Relicanth). Left out of this draft.
+# Decided 2026-11-23: the Sealed Chamber and the three Regi caves (Route 134 with Dive; braille_puzzles.c
+# checks the party for Wailord and Relicanth) wait until after the Hall of Fame.
+# Not covered by this scope, still vanilla art: the Sootopolis cutscenes (src/rayquaza_scene.c), the boot
+# intro and the title screen.
 wild_maps = ["Route126", "Route127", "Route128", "Route129", "Route130", "Route131", "Route132", "Route133", "Route134",
              "PacifidlogTown", "SootopolisCity", "Underwater_Route124", "Underwater_Route126",
              "SeafloorCavern_Entrance", "SeafloorCavern_Room1", "SeafloorCavern_Room2", "SeafloorCavern_Room3",
@@ -446,5 +444,7 @@ maps = ["Route126", "Route127", "Route128", "Route129", "Route130", "Route131", 
         "Underwater_Route124", "Underwater_Route126", "Underwater_Route127", "Underwater_Route128", "Underwater_Route129",
         "Underwater_SeafloorCavern", "Underwater_SootopolisCity"]
 exclude_maps = ["SootopolisCity_MysteryEventsHouse_B1F"]
-# The Kyogre/Groudon/Rayquaza story script shared by several maps.
+# The legendaries' story script shared by several maps (LEGEND_SEA / LEGEND_LAND / LEGEND_SKY roles).
 script_files = ["data/scripts/cave_of_origin.inc"]
+# The Sootopolis brothers' size records (SIZE_RECORD_1 / _2 roles).
+c_files = ["src/pokemon_size_record.c"]
