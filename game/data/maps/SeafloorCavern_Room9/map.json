@@ -17,7 +17,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_SEAFLOOR_CAVERN_KYOGRE",
-      "graphics_id": "OBJ_EVENT_GFX_KYOGRE_FRONT",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ODDEX_LEGEND_SEA)",
       "x": 17,
       "y": 38,
       "elevation": 3,
@@ -100,7 +100,7 @@
     },
     {
       "local_id": "LOCALID_SEAFLOOR_CAVERN_KYOGRE_SLEEPING",
-      "graphics_id": "OBJ_EVENT_GFX_KYOGRE_ASLEEP",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ODDEX_LEGEND_SEA)",
       "x": 17,
       "y": 38,
       "elevation": 3,

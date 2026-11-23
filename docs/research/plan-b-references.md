@@ -1003,7 +1003,7 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 
 ## 13. 第 6 步第八段：Tate & Liza 之後 → Juan（第 8 個徽章）
 
-`[sootopolis]`（`strict = false`）只定義了範圍，訓練家、野生資料和 ROM 都還沒動。角色和對照等使用者決定。
+`[sootopolis]` 已套用並設為 `strict = true`（§13.5）。§13.1–13.4 是套用前的草稿，數字是當時的。回歸腳本 `to_sootopolis` 還沒錄。
 
 ### 13.1 可達性和範圍邊界
 
@@ -1051,6 +1051,8 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
   - Sootopolis House1 的 Kecleon、House4 的 Azumarill（造型、叫聲、文字）；House6 提到 Wailmer 的一句話。
   - Sootopolis 的「Lotad and Seedot House」：比大小的活動，`setvar` 傳 `SPECIES_SEEDOT`／`SPECIES_LOTAD` 給 C，文字提到兩者共 28 處。照對照是 Bekurama 和 Shojobob；變數名和地圖名（LotadAndSeedotHouse）保留。
 
+- **Pacifidlog 的交換**（已完成，跟 Rustboro、Fortree 一樣用代號）：照對照會變成「給 Magatide、換 Magatide」，所以另外定 `TRADE_PACIFIDLOG = MAGATIDE`（NPC 給的，暱稱 TAMA）和 `TRADE_PACIFIDLOG_WANT = KAMIKKO`（NPC 要的）。`src/data/trade.h` 改用代號，信件裡的 `EC_POKEMON(BAGON)`、`EC_POKEMON(HORSEA)` 換成一般單字（I WILL MAKE IT TOUGH PLEASE TRAIN IT WELL），House3 那句「wanted to get a BAGON」改成 KAMIKKO。`[rustboro]` 對 `trade.h` 的 Bagon、Horsea 例外已經拿掉。
+
 ### 13.3 Kyogre、Groudon、Rayquaza 在劇情裡的出場
 
 三隻都沒有對照（依 2026-11-22 的決策，Kyogre 和 Groudon 跟這一段一起設計）。範圍內共 56 筆：
@@ -1091,7 +1093,7 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
    - 新東西：多人對戰的選隊伍畫面；autopilot 沒打過有搭檔的雙打。
    - Steven 的搭檔隊伍（Metang、Skarmory、Aggron）在 `src/data/battle_partners.party`。以前 `check_species_refs` 和 `apply_replacements` 都不看這個檔案，所以 `[mossdeep]` 是 strict 但這三隻還是原版。
      - 已修：兩個工具都會讀這個檔案（格式跟 `trainers.party` 一樣），scope 用 `partners = ["PARTNER_STEVEN"]` 明確列出。
-     - `[mossdeep]` 加了 `partners`；Skarmory 已經套用成 Daibeki；Metang 和 Aggron 還沒有對照，先用 `exclude_refs` 列出來，等這一段的對照表。
+     - `[mossdeep]` 加了 `partners`。Steven 的隊伍現在是 Kagurai（Metang 的對照）、Daibeki（Skarmory 的對照）、Enigmen（Aggron 的對照也是 Daibeki，為了不重複，這一格是手改的），`exclude_refs` 的兩行已經拿掉。
 2. Steven 家拿 HM08。**隊伍裡沒有能學 Dive 的**（Kyokon、Utoghast 都不行）；海上的 Shojobob（Tentacool 的對照）同時能學 Surf、Dive、Waterfall，抓一隻可以取代 Kyokon 的 Surf。
 3. Route 127 → 128 潛水 → **Seafloor Cavern**。這是最難的一段：
    - 潛水：stepwalk 沒有 Dive（深水上按 B 下潛、水下再按 B 上浮、`dive`／`emerge` 連接）。要加，規模跟 `--surf` 差不多。
@@ -1109,3 +1111,31 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 - 長度跟 `to_mossdeep` 差不多或更長（7000 行、每次約 25 分鐘）。`check-oddex-full` 會從約 30 分鐘變成約 50 分鐘以上。
 - 要新增的工具：stepwalk 的 Dive（一定要）；水流的規劃（看 Seafloor Cavern 手解的結果決定）；選隊伍畫面的按鍵。
 - 最大的風險是隊伍：`to_mossdeep` 的兩場頭目戰都只是驚險過關，這一段開頭就是連續戰鬥（Space Center），中途又沒有地方回血（Seafloor Cavern）。建議這一段一開始先練第二隻。
+
+### 13.5 套用和接線（接在 Mark 的 Sootopolis 批次之後）
+
+- 使用者的決定（2026-11-23）：新做 Onamazu、Magaryu、Yukinba；傳說三隻是 Sokonemu（海，代號 `LEGEND_SEA`）、Okafumi（陸，`LEGEND_LAND`）、Utsuroban（空，`LEGEND_SKY`）；Regi 和 Sealed Chamber 延到破關後。
+- `apply_replacements.py --scope sootopolis`：139 隻訓練家的角色、439 格野生資料。
+- 一般角色的手改：
+  - Pacifidlog House2 的兩隻 Azurill → Shojobob；Sootopolis House1 的 Kecleon → Kyozosu、House4 的 Azumarill → Magatide（造型、叫聲、文字）。
+  - 文字：Pacifidlog PC 的 Corsola → Haniwort、Sootopolis House6 的 Wailmer Doll → Kamorai Doll。
+  - 比大小的兄弟：C（`src/pokemon_size_record.c`）和腳本都改用代號 `SIZE_RECORD_1`（Bekurama，原本的 Seedot）和 `SIZE_RECORD_2`（Shojobob，原本的 Lotad）；文字 28 處。`[sootopolis]` 的 `c_files` 加了這個檔案。
+- 傳說三隻的接線（腳本、文字、地圖物件都用代號）：
+  - `playmoncry`、`setwildbattle`、`setvar`：Sootopolis、Sky Pillar 山頂、`cave_of_origin.inc`。
+  - 地圖物件：`OBJ_EVENT_GFX_KYOGRE_*`、`GROUDON_*`、`RAYQUAZA*` → `OBJ_EVENT_GFX_SPECIES(ODDEX_LEGEND_*)`（Seafloor Cavern Room9、Magma Hideout 4F、Sootopolis、Sky Pillar 山頂）。原版是 64×64 的專用圖，有「睡著」和「靜止」兩種造型；現在都是一般的角色小圖。
+  - Sootopolis 裡 Kyogre 的移動用了 `init_affine_anim`／`walk_left_affine`，要靠它自己的 affine 表；一般角色小圖沒有這張表，所以改成 `walk_fast_left`（跟 Groudon 的 `walk_fast_right` 對稱）。
+  - 文字：8 個腳本檔裡的名字都換了（含 `[mossdeep]` 之前排除的 Magma Hideout 4F、Space Center、Mt. Pyre）。名字變長，9 行重新換行。
+  - `[mossdeep]` 的 `exclude_refs` 只剩 Steven 家的 Beldum。
+- 過場動畫（決定於 2026-11-23：不重畫，改成在地圖上演）：Sootopolis 腳本原本呼叫 4 次 `Script_DoRayquazaScene`，會播 Kyogre、Groudon、Rayquaza 的大圖，現在都拿掉了。
+  - 兩隻對打的那一段（從 PC 和從潛水上來各一次）：天氣變成 `WEATHER_ABNORMAL`、打雷，接著就是原本就有的地圖上對打（叫聲、鏡頭晃動）。
+  - 第三隻出現的那一段（各一次）：新的子腳本 `SootopolisCity_EventScript_SkyLegendArrives`。`LEGEND_SKY` 出現在兩隻中間，打雷、叫聲、鏡頭晃動；兩隻各退兩步，畫面暗下去，原地留下洶湧的水面（`SetRoughWater`），再亮起來。之後接原本的腳本（叫聲、放晴、飛走）。
+  - 從 PC 那個版本原本把 Rayquaza 的物件藏起來（`hideobjectat`），現在看得到。
+  - `src/rayquaza_scene.c` 和那個 special 還在，只是沒有腳本呼叫。
+- 山頂那一場野生戰（`BattleSetup_StartLegendaryBattle`）：角色不是原版的 Rayquaza，所以走 `default`，用一般的傳說轉場和音樂（`B_TRANSITION_BLUR`、`MUS_RG_VS_LEGEND`），不會出現原版的轉場圖。
+- **還是原版、這個範圍管不到的**：
+  - **待處理：intro、title**。開機動畫（`src/intro.c`）和標題畫面（`src/title_screen.c`）還是原版三隻。拿掉開機動畫會改變開機的影格數，所有回歸腳本開頭的按鍵時序都可能位移；標題畫面要等 Mark 的 128×128 圖。David 會另外排成一個獨立的 commit。
+  - 對戰背景和音樂對原版三隻的特例（`battle_bg.c`、`pokemon.c`）：新角色不會觸發，沒有壞處，只是少了專用背景。
+- Juan 的招式：套用後 20 招裡有 7 招是新角色學不到的，照 Mark 在 balance.md 定的換掉，現在 20 招都學得到：Shojomai 是 Water Pulse／Attract／Teeter Dance／Draining Kiss，Yukinba 是 Icy Wind／Body Slam／Aurora Beam／Water Pulse，Jatai 是 Water Pulse／Poison Jab／Crunch／Haze；Onamazu 和 Magaryu 不變。
+- 重新同步：`resync.py prepare`（舊 ROM = a3bfcfb2，新 ROM = 這一段全部套用後）對 `to_mossdeep` 的 950 個 chunk 全部「no difference」，腳本不用改（`run`／`shots`／`assemble` 還是沒有實際用到）。80 張截圖有 9 張不同，逐張看過後更新基準：8 張是訓練家角色的性別符號（原因見 §12.3），1 張是 Haniwort 的圖鑑編號 271 → 274。
+- 沒有在遊戲裡看過：這一段還沒有路線。試過用除錯選單直接傳送去看，沒成功（選單按法跟 `to_dolls` 的不一樣），留給 `to_sootopolis`。
+

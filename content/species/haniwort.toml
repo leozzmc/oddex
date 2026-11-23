@@ -33,8 +33,9 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "WRAP"], [1, "ASTONISH"], [4, "ACID"], [8, "CONFUSE_RAY"], [12, "INGRAIN"], [16, "ANCIENT_POWER"], [20, "MEGA_DRAIN"], [24, "BRINE"], [28, "AMNESIA"], [32, "GASTRO_ACID"], [36, "GIGA_DRAIN"], [41, "STOCKPILE"], [41, "SPIT_UP"], [41, "SWALLOW"], [44, "ENERGY_BALL"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no STRENGTH, ROCK_SMASH (Corsola brings them; a potted haniwa pushes and breaks nothing). SURF is from Corsola.
 teachable = [
-    "ATTRACT", "BODY_SLAM", "BULLET_SEED", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "TOXIC",
+    "ATTRACT", "BODY_SLAM", "BULLET_SEED", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_TOMB", "SANDSTORM", "SECRET_POWER", "SLEEP_TALK", "SLUDGE_BOMB", "SNORE", "SOLAR_BEAM", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "TOXIC",
 ]
 egg = []
 

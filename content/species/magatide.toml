@@ -17,7 +17,7 @@ egg_groups = ["WATER_1", "DRAGON"]
 growth_rate = "SLOW"
 body_color = "GREEN"
 cry = "NONE"
-evolutions = []   # [{ method, param, into }]
+evolutions = [{ method = "LEVEL", param = 32, into = "MAGARYU" }]
 
 [dex]
 height = 4
@@ -33,6 +33,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "SPLASH"], [1, "WATER_GUN"], [5, "TWISTER"], [10, "BUBBLE_BEAM"], [15, "DRAGON_BREATH"], [20, "AQUA_TAIL"], [25, "DRAGON_PULSE"],
 ]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no CUT (Bagon brings it; a jewel has nothing to cut with).
 teachable = [
     "ATTRACT", "BLIZZARD", "DIVE", "DRAGON_PULSE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATERFALL", "WATER_PULSE",
 ]
@@ -51,4 +52,4 @@ overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
 [design]
 habitat = ["Route104"]
 level_band = [5, 10]
-family = ["MAGATIDE"]
+family = ["MAGATIDE", "MAGARYU"]

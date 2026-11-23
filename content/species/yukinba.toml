@@ -1,0 +1,55 @@
+# Sootopolis segment (docs/research/mask-designs.md, "Yukinba 的 Brief"): Yamambrr's evolution, replaces Sealeo
+# (Juan). Total 440 (Sealeo 410); ice/ghost so Juan has one ground type, not two. Moves are provisional.
+
+id = "YUKINBA"
+name = "Yukinba"
+category = "Snow Hag"
+
+types = ["ICE", "GHOST"]
+abilities = ["ICE_BODY", "NONE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 90, atk = 55, def = 75, spa = 85, spd = 85, spe = 50 }   # total 440
+ev_yield = { hp = 2 }
+catch_rate = 120
+exp_yield = 144
+gender = 100.0   # percent female: always female
+egg_cycles = 20
+egg_groups = ["AMORPHOUS", "MINERAL"]
+growth_rate = "FLUCTUATING"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 13
+weight = 480
+text = """
+A mountain hag who walked a whole winter.
+Her straw cape froze into a bell of ice,
+her staff into a pillar. Travelers hear
+one foot crunching the snow behind them."""
+scale = { pokemon = 320, pokemon_offset = 8, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "HEX"], [1, "ASTONISH"], [1, "POWDER_SNOW"], [5, "MUD_SLAP"], [9, "ICE_SHARD"], [13, "BULLDOZE"], [17, "ICY_WIND"], [21, "DIG"], [25, "AVALANCHE"], [33, "AURORA_BEAM"], [38, "SHADOW_BALL"], [43, "BLIZZARD"], [48, "DESTINY_BOND"],
+]
+# HMs as Yamambrr: no SURF, WATERFALL, DIVE (Sealeo brings them; a mountain hag does not swim).
+teachable = [
+    "ATTRACT", "BLIZZARD", "BODY_SLAM", "CUT", "DIG", "EARTHQUAKE", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "ROCK_SMASH", "SANDSTORM", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SWAGGER", "TOXIC", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/yukinba"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "FOOT" }
+
+[design]
+habitat = []
+level_band = [32, 50]
+family = ["YAMAMBRR", "YUKINBA"]

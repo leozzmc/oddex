@@ -197,20 +197,20 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertIn("wild           12 refs", r.stdout)
 
     def test_script_files_bring_shared_scripts_into_scope(self):
-        # cave_of_origin.inc (data/scripts/) has a playmoncry SPECIES_KYOGRE (and GROUDON in a comment);
-        # no map's `maps` entry covers it, so it is in scope only through script_files.
-        # shortcut: needs a still-vanilla shared script (Kyogre is endgame), use a fixture game tree once it is migrated
+        # gift_pichu.inc (data/scripts/) has a giveegg SPECIES_PICHU; no map's `maps` entry covers it, so
+        # it is in scope only through script_files.
+        # shortcut: needs a still-vanilla shared script (a Mystery Gift), use a fixture game tree once it is migrated
         def refs(body):
             scope = self.table(body, "scope.toml")
             cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
                    "--scope-file", scope]
             return json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
         self.assertEqual(refs('[s]\nmaps = ["Route101"]\n'), [])  # migrated map, no shared script
-        found = refs('[s]\nscript_files = ["data/scripts/cave_of_origin.inc"]\n')
-        self.assertEqual({f["file"] for f in found}, {"data/scripts/cave_of_origin.inc"})
-        self.assertIn("SPECIES_KYOGRE", {f["species"] for f in found})
-        excl = ", ".join(sorted({f'"data/scripts/cave_of_origin.inc:{f["species"]}"' for f in found}))
-        excluded = refs(f'[s]\nscript_files = ["data/scripts/cave_of_origin.inc"]\nexclude_refs = [{excl}]\n')
+        found = refs('[s]\nscript_files = ["data/scripts/gift_pichu.inc"]\n')
+        self.assertEqual({f["file"] for f in found}, {"data/scripts/gift_pichu.inc"})
+        self.assertIn("SPECIES_PICHU", {f["species"] for f in found})
+        excl = ", ".join(sorted({f'"data/scripts/gift_pichu.inc:{f["species"]}"' for f in found}))
+        excluded = refs(f'[s]\nscript_files = ["data/scripts/gift_pichu.inc"]\nexclude_refs = [{excl}]\n')
         self.assertEqual(excluded, [])
 
     def test_roles_pointing_at_vanilla_resolve_to_it(self):
@@ -278,13 +278,20 @@ class ApplyReplacementsTest(unittest.TestCase):
         self.assertIn("partners: PARTNER_NOBODY is not in battle_partners.party", r.stderr + r.stdout)
 
     def test_check_species_refs_sees_partner_parties(self):
-        # Reads the real game: Steven's Metang stays vanilla until the [sootopolis] mapping.
-        # shortcut: needs a still-vanilla partner, repoint when Steven's team is fully migrated
-        cmd = [sys.executable, "-I", os.path.join(HERE, "check_species_refs.py"), "--scope", "s", "--json",
-               "--scope-file", self.table('[s]\npartners = ["PARTNER_STEVEN"]\n', "s.toml")]
-        found = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
-        self.assertIn(("party", "src/data/battle_partners.party", "SPECIES_METANG", "PARTNER_STEVEN"),
-                      {(f["category"], f["file"], f["species"], f["context"]) for f in found})
+        # On a scratch file, so it does not depend on which partners the game has migrated.
+        import types
+        path = "src/data/battle_partners.party"
+        os.makedirs(os.path.join(self.dir, "src", "data"))
+        with open(os.path.join(self.dir, path), "w") as f:
+            f.write("=== PARTNER_STEVEN ===\nName: STEVEN\nAI: Basic Trainer\n\nMetang\nLevel: 42\n- Psychic\n")
+        found = []
+        refs.scan_party_file(self.dir, lambda *a: found.append(a), path)
+        self.assertEqual(found, [("party", path, 5, "SPECIES_METANG", "PARTNER_STEVEN")])
+        finding = {"category": "party", "file": path, "species": "SPECIES_METANG", "context": "PARTNER_STEVEN"}
+        scope = types.SimpleNamespace(trainers=set(), partners={"PARTNER_STEVEN"}, excludes=lambda p, sp: False)
+        self.assertTrue(refs.in_scope(finding, scope))
+        scope.partners = set()
+        self.assertFalse(refs.in_scope(finding, scope))
 
     def test_wild_maps_map_kind_takes_one_table(self):
         # "VictoryRoad_B1F:rock_smash_mons" takes that one table, whatever wild_kinds says;

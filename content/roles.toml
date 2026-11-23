@@ -52,6 +52,10 @@ TRADE_RUSTBORO = "BEKURAMA"         # Seedot (Rustboro House1)
 TRADE_RUSTBORO_WANT = "OMOTELLE"    # Ralts
 TRADE_FORTREE = "TOMOEDEN"          # Plusle (Fortree House1)
 TRADE_FORTREE_WANT = "TOROBI"       # Volbeat
+TRADE_PACIFIDLOG = "MAGATIDE"       # Horsea (Pacifidlog House3)
+TRADE_PACIFIDLOG_WANT = "KAMIKKO"   # Bagon
+SIZE_RECORD_1 = "BEKURAMA"          # Seedot (Sootopolis: the brothers who compare sizes; src/pokemon_size_record.c)
+SIZE_RECORD_2 = "SHOJOBOB"          # Lotad
 
 # Winona segment.
 # The Weather Institute's gift on Route 119 (givemon; Castform in vanilla, one form here).
@@ -60,3 +64,9 @@ WEATHER_GIFT = "TERUBOZU"       # Castform
 # reveals (objects, Steven's setwildbattle and cry, the bridge shadow; Kecleon in vanilla): the old
 # fox disguised as a priest, whose illusion the scope breaks.
 HIDDEN_BLOCKER = "KYOZOSU"      # Kecleon
+
+# Sootopolis segment: the three legendaries of the story (objects, cries, text, setwildbattle and the
+# legendary battle setup in src/battle_setup.c; Kyogre, Groudon and Rayquaza in vanilla).
+LEGEND_SEA = "SOKONEMU"         # Kyogre: the sleeper under the sea
+LEGEND_LAND = "OKAFUMI"         # Groudon: the thing that drinks the land dry
+LEGEND_SKY = "UTSUROBAN"        # Rayquaza: the ship from the sky

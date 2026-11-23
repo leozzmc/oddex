@@ -1,0 +1,57 @@
+# Sootopolis segment (docs/research/mask-designs.md, "海底:Sokonemu"): the Kyogre slot (role LEGEND_SEA).
+# After the stone idol in H. P. Lovecraft's "The Call of Cthulhu" (1928, public domain). Stats and ability follow
+# Kyogre (Drizzle drives the story's rain); moves are provisional.
+
+id = "SOKONEMU"
+name = "Sokonemu"
+category = "Sleeper"
+
+types = ["WATER", "PSYCHIC"]
+abilities = ["DRIZZLE", "NONE", "NONE"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 100, atk = 100, def = 90, spa = 150, spd = 140, spe = 90 }   # total 670
+ev_yield = { spa = 3 }
+catch_rate = 3
+exp_yield = 335
+gender = "GENDERLESS"
+egg_cycles = 120
+egg_groups = ["NO_EGGS_DISCOVERED"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+legendary = true   # no starting friendship, three perfect IVs, banned from random teams (gen_species.legendary_fields)
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 45
+weight = 3520
+text = """
+A stone idol squatting on a block on the
+sea floor. It sleeps, and those who live
+by the sea all dream the same dream.
+When it wakes, the rain does not stop."""
+scale = { pokemon = 256, pokemon_offset = 0, trainer = 400, trainer_offset = 6 }
+
+[learnset]
+level = [
+    [1, "SCARY_FACE"], [1, "ANCIENT_POWER"], [1, "WATER_PULSE"], [1, "CONFUSION"], [1, "ORIGIN_PULSE"], [9, "AQUA_TAIL"], [18, "CALM_MIND"], [27, "MUDDY_WATER"], [36, "PSYCHIC"], [45, "HYPNOSIS"], [54, "AQUA_RING"], [63, "DREAM_EATER"], [72, "HYDRO_PUMP"], [81, "FUTURE_SIGHT"], [90, "WATER_SPOUT"],
+]
+# HMs as Kyogre: Surf, Strength, Rock Smash, Waterfall, Dive.
+teachable = [
+    "BLIZZARD", "BODY_SLAM", "BRICK_BREAK", "CALM_MIND", "DIVE", "DOUBLE_TEAM", "EARTHQUAKE", "ENDURE", "FACADE", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROAR", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SAFEGUARD", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SURF", "SWAGGER", "THUNDER", "THUNDER_WAVE", "TOXIC", "WATERFALL", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/sokonemu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SHAKE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 8, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [70, 70]
+family = ["SOKONEMU"]

@@ -1,0 +1,55 @@
+# Sootopolis segment (docs/research/mask-designs.md, "Magaryu 的 Brief"): Magatide's evolution, replaces Kingdra
+# (Juan's ace) and Seadra. Total 500, between Seadra (440) and Kingdra (540); moves are provisional.
+
+id = "MAGARYU"
+name = "Magaryu"
+category = "Jewel Dragon"
+
+types = ["WATER", "DRAGON"]
+abilities = ["SWIFT_SWIM", "NONE", "RATTLED"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 80, def = 90, spa = 95, spd = 85, spe = 80 }   # total 500
+ev_yield = { spa = 1, spd = 1 }
+catch_rate = 45
+exp_yield = 200
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "DRAGON"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 21
+weight = 620
+text = """
+The jewel that dreamed of being a dragon
+strung itself with others, head to tail,
+and became one. Each bead remembers the
+tide it swam in and hums when rain nears."""
+scale = { pokemon = 256, pokemon_offset = 2, trainer = 300, trainer_offset = 2 }
+
+[learnset]
+level = [
+    [0, "DRAGON_PULSE"], [1, "WATER_GUN"], [1, "TWISTER"], [10, "BUBBLE_BEAM"], [15, "DRAGON_BREATH"], [20, "AQUA_TAIL"], [25, "DRAGON_PULSE"], [36, "RAIN_DANCE"], [41, "HYDRO_PUMP"], [46, "DRAGON_DANCE"], [52, "OUTRAGE"],
+]
+# HMs as Magatide (Kingdra and Seadra bring Surf, Waterfall, Dive).
+teachable = [
+    "ATTRACT", "BLIZZARD", "DIVE", "DOUBLE_TEAM", "DRAGON_PULSE", "ENDURE", "FACADE", "FRUSTRATION", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "ROCK_SMASH", "SECRET_POWER", "SLEEP_TALK", "SNORE", "STRENGTH", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATERFALL", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/magaryu"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [32, 55]
+family = ["MAGATIDE", "MAGARYU"]

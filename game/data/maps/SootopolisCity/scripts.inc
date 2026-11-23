@@ -183,17 +183,16 @@ SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
+	@ oddex: no cinematic (it shows the vanilla legendaries); the weather turns and the fight plays on the map
 	setweather WEATHER_ABNORMAL
 	doweather
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-	special Script_DoRayquazaScene
+	playse SE_THUNDER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 60
 	waitse
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SEA, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
 	waitmovement 0
@@ -207,7 +206,7 @@ SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_LAND, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
 	waitmovement 0
@@ -221,7 +220,7 @@ SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SEA, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
 	waitmovement 0
@@ -282,17 +281,16 @@ SootopolisCity_EventScript_LegendariesSceneFromDive::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
+	@ oddex: no cinematic (it shows the vanilla legendaries); the weather turns and the fight plays on the map
 	setweather WEATHER_ABNORMAL
 	doweather
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-	special Script_DoRayquazaScene
+	playse SE_THUNDER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 60
 	waitse
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SEA, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
 	waitmovement 0
@@ -306,7 +304,7 @@ SootopolisCity_EventScript_LegendariesSceneFromDive::
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_LAND, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
 	waitmovement 0
@@ -320,7 +318,7 @@ SootopolisCity_EventScript_LegendariesSceneFromDive::
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SEA, CRY_MODE_ENCOUNTER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
 	waitmovement 0
@@ -375,9 +373,7 @@ SootopolisCity_Movement_KyogreAttack:
 	delay_16
 	delay_16
 	delay_16
-	init_affine_anim
-	walk_left_affine
-	clear_affine_anim
+	walk_fast_left
 	step_end
 
 SootopolisCity_Movement_KyogreDefend:
@@ -390,9 +386,7 @@ SootopolisCity_Movement_KyogreDefend:
 	delay_16
 	delay_16
 	delay_16
-	init_affine_anim
-	walk_left_affine
-	clear_affine_anim
+	walk_fast_left
 	step_end
 
 SootopolisCity_Movement_KyogreMoveBack:
@@ -470,20 +464,12 @@ SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
-	call SootopolisCity_EventScript_SetRoughWater
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-	hideobjectat LOCALID_SOOTOPOLIS_RAYQUAZA, MAP_SOOTOPOLIS_CITY
-	setvar VAR_0x8004, TRUE
-	special Script_DoRayquazaScene
-	playse SE_THUNDER
+	call SootopolisCity_EventScript_SkyLegendArrives
 	special SpawnCameraObject
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 1  @ horizontal pan
 	setvar VAR_0x8006, 8  @ num shakes
@@ -491,7 +477,7 @@ SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 	special ShakeCamera
 	waitstate
 	waitse
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 2  @ horizontal pan
 	setvar VAR_0x8006, 8  @ num shakes
@@ -522,19 +508,13 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
-	call SootopolisCity_EventScript_SetRoughWater
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-	setvar VAR_0x8004, TRUE
-	special Script_DoRayquazaScene
+	call SootopolisCity_EventScript_SkyLegendArrives
 	special SpawnCameraObject
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerApproachLegendaries
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 1  @ horizontal pan
 	setvar VAR_0x8006, 8  @ num shakes
@@ -542,7 +522,7 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	special ShakeCamera
 	waitstate
 	waitse
-	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 2  @ horizontal pan
 	setvar VAR_0x8006, 8  @ num shakes
@@ -565,6 +545,45 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	warpwhitefade MAP_SOOTOPOLIS_CITY, 29, 53
 	waitstate
 	end
+
+@ oddex: replaces the "Rayquaza arrives" cinematic (it shows the vanilla legendaries) with a scene on
+@ the map: the sky legendary appears between the two, they back off and sink, rough water is left.
+SootopolisCity_EventScript_SkyLegendArrives::
+	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	playse SE_THUNDER
+	waitse
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1  @ vertical pan
+	setvar VAR_0x8005, 1  @ horizontal pan
+	setvar VAR_0x8006, 8  @ num shakes
+	setvar VAR_0x8007, 3  @ shake delay
+	special ShakeCamera
+	waitstate
+	waitmoncry
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreBackOff
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonBackOff
+	waitmovement 0
+	fadescreenspeed FADE_TO_BLACK, 8
+	call SootopolisCity_EventScript_SetRoughWater
+	special DrawWholeMapView
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	fadescreenspeed FADE_FROM_BLACK, 8
+	return
+
+SootopolisCity_Movement_GroudonBackOff:
+	lock_facing_direction
+	walk_slow_left
+	walk_slow_left
+	unlock_facing_direction
+	step_end
+
+SootopolisCity_Movement_KyogreBackOff:
+	lock_facing_direction
+	walk_slow_right
+	walk_slow_right
+	unlock_facing_direction
+	step_end
 
 SootopolisCity_EventScript_SetRoughWater::
 	setmetatile 27, 43, METATILE_Sootopolis_RoughWater, FALSE
@@ -1412,7 +1431,7 @@ SootopolisCity_Text_WhatIsThatGreenPokemon:
 	.string "What is that green POKéMON?!$"
 
 SootopolisCity_Text_WhereDidLegendariesGo:
-	.string "GROUDON and KYOGRE…\n"
+	.string "OKAFUMI and SOKONEMU…\n"
 	.string "Where did they go?\p"
 	.string "Will they cause droughts or downpours\n"
 	.string "somewhere else?$"
@@ -1570,7 +1589,7 @@ SootopolisCity_Text_YouBroughtFlyingMon:
 	.string "Well, aren't you amazing!$"
 
 SootopolisCity_Text_GroudonPleaseStop:
-	.string "MAXIE: G… GROUDON…\n"
+	.string "MAXIE: G… OKAFUMI…\n"
 	.string "Please! Stop what you're doing!\p"
 	.string "I know the extent of your power now!\p"
 	.string "If you keep going, all HOENN, not just\n"
@@ -1578,7 +1597,7 @@ SootopolisCity_Text_GroudonPleaseStop:
 
 SootopolisCity_Text_AfterAllOurScheming:
 	.string "MAXIE: So the super-ancient POKéMON\n"
-	.string "weren't only GROUDON and KYOGRE…\p"
+	.string "weren't only OKAFUMI and SOKONEMU…\p"
 	.string "After all our fruitless scheming and\n"
 	.string "frantic efforts, that one POKéMON's\l"
 	.string "simple action puts everything right\l"
@@ -1587,16 +1606,16 @@ SootopolisCity_Text_AfterAllOurScheming:
 	.string "Fuhahaha…$"
 
 SootopolisCity_Text_KyogreCalmDown:
-	.string "ARCHIE: KYOGRE! What's wrong?!\n"
+	.string "ARCHIE: SOKONEMU! What's wrong?!\n"
 	.string "Look over here! It's the RED ORB!\l"
-	.string "Calm down! KYOGRE!\p"
+	.string "Calm down! SOKONEMU!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … …\p"
 	.string "It's no good!\n"
 	.string "It's not responding at all!$"
 
 SootopolisCity_Text_TryingMeaninglessToPokemon:
-	.string "ARCHIE: KYOGRE and GROUDON both\n"
+	.string "ARCHIE: SOKONEMU and OKAFUMI both\n"
 	.string "flew off to who knows where.\p"
 	.string "The weather in HOENN has returned\n"
 	.string "to its normal state…\p"
@@ -1608,7 +1627,7 @@ SootopolisCity_Text_TryingMeaninglessToPokemon:
 
 SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
 	.string "STEVEN: Those POKéMON fighting…\n"
-	.string "GROUDON… And KYOGRE…\p"
+	.string "OKAFUMI… And SOKONEMU…\p"
 	.string "The two super-ancient POKéMON\n"
 	.string "were awakened from a long sleep…\p"
 	.string "And now they are smashing each other\n"
@@ -1623,8 +1642,9 @@ SootopolisCity_Text_InvolvedWithCrisisComeWithMe:
 
 SootopolisCity_Text_DoesThisMakeYourFearPokemon:
 	.string "STEVEN: Listen, {PLAYER}{KUN}.\p"
-	.string "Does seeing GROUDON and KYOGRE make\n"
-	.string "you think POKéMON are to be feared?\p"
+	.string "Does seeing OKAFUMI and SOKONEMU\n"
+	.string "make you think POKéMON are to be\l"
+	.string "feared?\p"
 	.string "But that's not true.\n"
 	.string "POKéMON are really more…\p"
 	.string "…Why am I asking you this?\n"
@@ -1647,7 +1667,7 @@ SootopolisCity_Text_NeverBeenToSkyPillar:
 	.string "I wonder where it could be?$"
 
 SootopolisCity_Text_SoThatsRayquaza:
-	.string "STEVEN: So that's RAYQUAZA…\p"
+	.string "STEVEN: So that's UTSUROBAN…\p"
 	.string "It's incredible how the two rampaging\n"
 	.string "POKéMON would flee from it in fear…$"
 

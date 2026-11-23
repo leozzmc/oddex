@@ -346,6 +346,15 @@ def gen_data(all_species):
     return ''.join(out)
 
 
+def legendary_fields(s):
+    """Friendship, and for `legendary = true` (the three story legendaries) what vanilla sets on its
+    restricted legendaries: no starting friendship, three perfect IVs, banned from random teams."""
+    if not s.get('legendary'):
+        return '        .friendship = STANDARD_FRIENDSHIP,\n'
+    return ('        .friendship = 0,\n        .isRestrictedLegendary = TRUE,\n'
+            '        .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,\n')
+
+
 def gen_info(all_species):
     out = [BANNER, '// Included inside gSpeciesInfo[] from src/data/pokemon/species_info.h.\n']
     for s in all_species:
@@ -365,7 +374,7 @@ def gen_info(all_species):
         else:
             out.append(f'        .genderRatio = PERCENT_FEMALE({s["gender"]}),\n')
         out.append(f'        .eggCycles = {s["egg_cycles"]},\n')
-        out.append('        .friendship = STANDARD_FRIENDSHIP,\n')
+        out.append(legendary_fields(s))
         out.append(f'        .growthRate = GROWTH_{s["growth_rate"]},\n')
         out.append(f'        .eggGroups = MON_EGG_GROUPS({", ".join("EGG_GROUP_" + e for e in s["egg_groups"])}),\n')
         out.append(f'        .abilities = {{ {", ".join("ABILITY_" + a for a in s["abilities"])} }},\n')

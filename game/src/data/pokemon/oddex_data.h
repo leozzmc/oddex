@@ -2319,3 +2319,222 @@ static const struct SpriteFrameImage sPicTable_Shojoran[] = {
     overworld_ascending_frames(gObjectEventPic_Shojoran, 4, 4),
 };
 #endif
+
+// Magaryu
+static const struct LevelUpMove sMagaryuLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 0, MOVE_DRAGON_PULSE),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 1, MOVE_TWISTER),
+    LEVEL_UP_MOVE(10, MOVE_BUBBLE_BEAM),
+    LEVEL_UP_MOVE(15, MOVE_DRAGON_BREATH),
+    LEVEL_UP_MOVE(20, MOVE_AQUA_TAIL),
+    LEVEL_UP_MOVE(25, MOVE_DRAGON_PULSE),
+    LEVEL_UP_MOVE(36, MOVE_RAIN_DANCE),
+    LEVEL_UP_MOVE(41, MOVE_HYDRO_PUMP),
+    LEVEL_UP_MOVE(46, MOVE_DRAGON_DANCE),
+    LEVEL_UP_MOVE(52, MOVE_OUTRAGE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Magaryu[] = INCGFX_U32("graphics/pokemon/oddex/magaryu/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Magaryu[] = INCGFX_U32("graphics/pokemon/oddex/magaryu/back.png", ".4bpp.smol");
+const u16 gMonPalette_Magaryu[] = INCGFX_U16("graphics/pokemon/oddex/magaryu/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Magaryu[] = INCGFX_U16("graphics/pokemon/oddex/magaryu/shiny.pal", ".gbapal");
+const u8 gMonIcon_Magaryu[] = INCGFX_U8("graphics/pokemon/oddex/magaryu/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Magaryu[] = INCGFX_U8("graphics/pokemon/oddex/magaryu/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Magaryu[] = INCGFX_COMP("graphics/pokemon/oddex/magaryu/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Magaryu[] = INCGFX_U16("graphics/pokemon/oddex/magaryu/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Magaryu[] = INCGFX_U16("graphics/pokemon/oddex/magaryu/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Magaryu[] = {
+    overworld_ascending_frames(gObjectEventPic_Magaryu, 4, 4),
+};
+#endif
+
+// Onamazu
+static const struct LevelUpMove sOnamazuLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 0, MOVE_EARTHQUAKE),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 1, MOVE_MUD_SLAP),
+    LEVEL_UP_MOVE( 6, MOVE_REST),
+    LEVEL_UP_MOVE( 6, MOVE_SNORE),
+    LEVEL_UP_MOVE(12, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE(18, MOVE_AMNESIA),
+    LEVEL_UP_MOVE(24, MOVE_AQUA_TAIL),
+    LEVEL_UP_MOVE(33, MOVE_MUDDY_WATER),
+    LEVEL_UP_MOVE(40, MOVE_ZEN_HEADBUTT),
+    LEVEL_UP_MOVE(46, MOVE_FUTURE_SIGHT),
+    LEVEL_UP_MOVE(52, MOVE_FISSURE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Onamazu[] = INCGFX_U32("graphics/pokemon/oddex/onamazu/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Onamazu[] = INCGFX_U32("graphics/pokemon/oddex/onamazu/back.png", ".4bpp.smol");
+const u16 gMonPalette_Onamazu[] = INCGFX_U16("graphics/pokemon/oddex/onamazu/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Onamazu[] = INCGFX_U16("graphics/pokemon/oddex/onamazu/shiny.pal", ".gbapal");
+const u8 gMonIcon_Onamazu[] = INCGFX_U8("graphics/pokemon/oddex/onamazu/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Onamazu[] = INCGFX_U8("graphics/pokemon/oddex/onamazu/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Onamazu[] = INCGFX_COMP("graphics/pokemon/oddex/onamazu/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Onamazu[] = INCGFX_U16("graphics/pokemon/oddex/onamazu/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Onamazu[] = INCGFX_U16("graphics/pokemon/oddex/onamazu/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Onamazu[] = {
+    overworld_ascending_frames(gObjectEventPic_Onamazu, 4, 4),
+};
+#endif
+
+// Yukinba
+static const struct LevelUpMove sYukinbaLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 0, MOVE_HEX),
+    LEVEL_UP_MOVE( 1, MOVE_ASTONISH),
+    LEVEL_UP_MOVE( 1, MOVE_POWDER_SNOW),
+    LEVEL_UP_MOVE( 5, MOVE_MUD_SLAP),
+    LEVEL_UP_MOVE( 9, MOVE_ICE_SHARD),
+    LEVEL_UP_MOVE(13, MOVE_BULLDOZE),
+    LEVEL_UP_MOVE(17, MOVE_ICY_WIND),
+    LEVEL_UP_MOVE(21, MOVE_DIG),
+    LEVEL_UP_MOVE(25, MOVE_AVALANCHE),
+    LEVEL_UP_MOVE(33, MOVE_AURORA_BEAM),
+    LEVEL_UP_MOVE(38, MOVE_SHADOW_BALL),
+    LEVEL_UP_MOVE(43, MOVE_BLIZZARD),
+    LEVEL_UP_MOVE(48, MOVE_DESTINY_BOND),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Yukinba[] = INCGFX_U32("graphics/pokemon/oddex/yukinba/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Yukinba[] = INCGFX_U32("graphics/pokemon/oddex/yukinba/back.png", ".4bpp.smol");
+const u16 gMonPalette_Yukinba[] = INCGFX_U16("graphics/pokemon/oddex/yukinba/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Yukinba[] = INCGFX_U16("graphics/pokemon/oddex/yukinba/shiny.pal", ".gbapal");
+const u8 gMonIcon_Yukinba[] = INCGFX_U8("graphics/pokemon/oddex/yukinba/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Yukinba[] = INCGFX_U8("graphics/pokemon/oddex/yukinba/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Yukinba[] = INCGFX_COMP("graphics/pokemon/oddex/yukinba/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Yukinba[] = INCGFX_U16("graphics/pokemon/oddex/yukinba/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Yukinba[] = INCGFX_U16("graphics/pokemon/oddex/yukinba/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Yukinba[] = {
+    overworld_ascending_frames(gObjectEventPic_Yukinba, 4, 4),
+};
+#endif
+
+// Okafumi
+static const struct LevelUpMove sOkafumiLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_SCARY_FACE),
+    LEVEL_UP_MOVE( 1, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE( 1, MOVE_MUD_SHOT),
+    LEVEL_UP_MOVE( 1, MOVE_ABSORB),
+    LEVEL_UP_MOVE( 1, MOVE_PRECIPICE_BLADES),
+    LEVEL_UP_MOVE( 9, MOVE_EARTH_POWER),
+    LEVEL_UP_MOVE(18, MOVE_BULK_UP),
+    LEVEL_UP_MOVE(27, MOVE_EARTHQUAKE),
+    LEVEL_UP_MOVE(36, MOVE_HAMMER_ARM),
+    LEVEL_UP_MOVE(45, MOVE_FISSURE),
+    LEVEL_UP_MOVE(54, MOVE_REST),
+    LEVEL_UP_MOVE(63, MOVE_GIGA_DRAIN),
+    LEVEL_UP_MOVE(72, MOVE_SHADOW_BALL),
+    LEVEL_UP_MOVE(81, MOVE_SOLAR_BEAM),
+    LEVEL_UP_MOVE(90, MOVE_LEECH_LIFE),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Okafumi[] = INCGFX_U32("graphics/pokemon/oddex/okafumi/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Okafumi[] = INCGFX_U32("graphics/pokemon/oddex/okafumi/back.png", ".4bpp.smol");
+const u16 gMonPalette_Okafumi[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Okafumi[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/shiny.pal", ".gbapal");
+const u8 gMonIcon_Okafumi[] = INCGFX_U8("graphics/pokemon/oddex/okafumi/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Okafumi[] = INCGFX_U8("graphics/pokemon/oddex/okafumi/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Okafumi[] = INCGFX_COMP("graphics/pokemon/oddex/okafumi/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Okafumi[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Okafumi[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Okafumi[] = {
+    overworld_ascending_frames(gObjectEventPic_Okafumi, 4, 4),
+};
+#endif
+
+// Sokonemu
+static const struct LevelUpMove sSokonemuLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_SCARY_FACE),
+    LEVEL_UP_MOVE( 1, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE( 1, MOVE_CONFUSION),
+    LEVEL_UP_MOVE( 1, MOVE_ORIGIN_PULSE),
+    LEVEL_UP_MOVE( 9, MOVE_AQUA_TAIL),
+    LEVEL_UP_MOVE(18, MOVE_CALM_MIND),
+    LEVEL_UP_MOVE(27, MOVE_MUDDY_WATER),
+    LEVEL_UP_MOVE(36, MOVE_PSYCHIC),
+    LEVEL_UP_MOVE(45, MOVE_HYPNOSIS),
+    LEVEL_UP_MOVE(54, MOVE_AQUA_RING),
+    LEVEL_UP_MOVE(63, MOVE_DREAM_EATER),
+    LEVEL_UP_MOVE(72, MOVE_HYDRO_PUMP),
+    LEVEL_UP_MOVE(81, MOVE_FUTURE_SIGHT),
+    LEVEL_UP_MOVE(90, MOVE_WATER_SPOUT),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Sokonemu[] = INCGFX_U32("graphics/pokemon/oddex/sokonemu/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Sokonemu[] = INCGFX_U32("graphics/pokemon/oddex/sokonemu/back.png", ".4bpp.smol");
+const u16 gMonPalette_Sokonemu[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Sokonemu[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/shiny.pal", ".gbapal");
+const u8 gMonIcon_Sokonemu[] = INCGFX_U8("graphics/pokemon/oddex/sokonemu/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Sokonemu[] = INCGFX_U8("graphics/pokemon/oddex/sokonemu/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Sokonemu[] = INCGFX_COMP("graphics/pokemon/oddex/sokonemu/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Sokonemu[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Sokonemu[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Sokonemu[] = {
+    overworld_ascending_frames(gObjectEventPic_Sokonemu, 4, 4),
+};
+#endif
+
+// Utsuroban
+static const struct LevelUpMove sUtsurobanLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_SCARY_FACE),
+    LEVEL_UP_MOVE( 1, MOVE_CONFUSION),
+    LEVEL_UP_MOVE( 1, MOVE_ANCIENT_POWER),
+    LEVEL_UP_MOVE( 1, MOVE_AIR_SLASH),
+    LEVEL_UP_MOVE( 1, MOVE_DRAGON_ASCENT),
+    LEVEL_UP_MOVE( 9, MOVE_PSYBEAM),
+    LEVEL_UP_MOVE(18, MOVE_CALM_MIND),
+    LEVEL_UP_MOVE(27, MOVE_EXTREME_SPEED),
+    LEVEL_UP_MOVE(36, MOVE_PSYCHIC),
+    LEVEL_UP_MOVE(45, MOVE_HYPER_VOICE),
+    LEVEL_UP_MOVE(54, MOVE_REST),
+    LEVEL_UP_MOVE(63, MOVE_FLY),
+    LEVEL_UP_MOVE(72, MOVE_HURRICANE),
+    LEVEL_UP_MOVE(81, MOVE_FUTURE_SIGHT),
+    LEVEL_UP_MOVE(90, MOVE_HYPER_BEAM),
+    LEVEL_UP_END
+};
+const u32 gMonFrontPic_Utsuroban[] = INCGFX_U32("graphics/pokemon/oddex/utsuroban/anim_front.png", ".4bpp.smol");
+const u32 gMonBackPic_Utsuroban[] = INCGFX_U32("graphics/pokemon/oddex/utsuroban/back.png", ".4bpp.smol");
+const u16 gMonPalette_Utsuroban[] = INCGFX_U16("graphics/pokemon/oddex/utsuroban/normal.pal", ".gbapal");
+const u16 gMonShinyPalette_Utsuroban[] = INCGFX_U16("graphics/pokemon/oddex/utsuroban/shiny.pal", ".gbapal");
+const u8 gMonIcon_Utsuroban[] = INCGFX_U8("graphics/pokemon/oddex/utsuroban/icon.png", ".4bpp");
+#if P_FOOTPRINTS
+const u8 gMonFootprint_Utsuroban[] = INCGFX_U8("graphics/pokemon/oddex/utsuroban/footprint.png", ".1bpp");
+#endif
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Utsuroban[] = INCGFX_COMP("graphics/pokemon/oddex/utsuroban/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Utsuroban[] = INCGFX_U16("graphics/pokemon/oddex/utsuroban/overworld_normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Utsuroban[] = INCGFX_U16("graphics/pokemon/oddex/utsuroban/overworld_shiny.pal", ".gbapal");
+#endif
+static const struct SpriteFrameImage sPicTable_Utsuroban[] = {
+    overworld_ascending_frames(gObjectEventPic_Utsuroban, 4, 4),
+};
+#endif
