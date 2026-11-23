@@ -46,7 +46,7 @@ $ODDEX_RUN game/pokeemerald.gba <script.txt>        # 無頭執行按鍵腳本�
 **方案 B（把原版角色換掉）**
 - 整體計畫和步驟在 `docs/research/plan-b-references.md` §5 和 `docs/research/species-plan-b.md`。
 - `content/migration_scope.toml` 定義每一段遷移的範圍（地圖、野生遭遇種類、明確的訓練家清單、例外）。`apply_replacements.py --scope <name>` 和 `check_species_refs.py --scope <name>` 讀的是同一份。
-- `apply_replacements.py` 依 `content/replacements.toml`（原版 → 原創的對照表，早期角色定名後才會建立）就地改寫 `trainers.party` 和 `wild_encounters.json`，只改 species 字樣、保持最小 diff，重複執行結果不變；對照表有缺漏或進化階段對不上時，失敗而且什麼都不寫入。
+- `apply_replacements.py` 依 `content/replacements.toml`（原版 → 原創的對照表，早期角色定名後才會建立）就地改寫 `trainers.party`、`battle_partners.party`（雙打的隊友，scope 用 `partners` 列出）和 `wild_encounters.json`，只改 species 字樣、保持最小 diff，重複執行結果不變；對照表有缺漏或進化階段對不上時，失敗而且什麼都不寫入。
 - 原版世代關掉之後，編譯器不會報錯，release build 會默默把原版角色變成 `SPECIES_NONE`。所以殘留只能靠 `check_species_refs` 和 debug build 的 assert 抓到，這也是 `check-oddex` 存在的原因。叫聲也一樣：`playmoncry` 原版角色在 debug build 會 assert。
 
 **地圖與事件**
