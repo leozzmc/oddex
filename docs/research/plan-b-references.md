@@ -1126,10 +1126,14 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
   - Sootopolis 裡 Kyogre 的移動用了 `init_affine_anim`／`walk_left_affine`，要靠它自己的 affine 表；一般角色小圖沒有這張表，所以改成 `walk_fast_left`（跟 Groudon 的 `walk_fast_right` 對稱）。
   - 文字：8 個腳本檔裡的名字都換了（含 `[mossdeep]` 之前排除的 Magma Hideout 4F、Space Center、Mt. Pyre）。名字變長，9 行重新換行。
   - `[mossdeep]` 的 `exclude_refs` 只剩 Steven 家的 Beldum。
+- 過場動畫（決定於 2026-11-23：不重畫，改成在地圖上演）：Sootopolis 腳本原本呼叫 4 次 `Script_DoRayquazaScene`，會播 Kyogre、Groudon、Rayquaza 的大圖，現在都拿掉了。
+  - 兩隻對打的那一段（從 PC 和從潛水上來各一次）：天氣變成 `WEATHER_ABNORMAL`、打雷，接著就是原本就有的地圖上對打（叫聲、鏡頭晃動）。
+  - 第三隻出現的那一段（各一次）：新的子腳本 `SootopolisCity_EventScript_SkyLegendArrives`。`LEGEND_SKY` 出現在兩隻中間，打雷、叫聲、鏡頭晃動；兩隻各退兩步，畫面暗下去，原地留下洶湧的水面（`SetRoughWater`），再亮起來。之後接原本的腳本（叫聲、放晴、飛走）。
+  - 從 PC 那個版本原本把 Rayquaza 的物件藏起來（`hideobjectat`），現在看得到。
+  - `src/rayquaza_scene.c` 和那個 special 還在，只是沒有腳本呼叫。
 - 山頂那一場野生戰（`BattleSetup_StartLegendaryBattle`）：角色不是原版的 Rayquaza，所以走 `default`，用一般的傳說轉場和音樂（`B_TRANSITION_BLUR`、`MUS_RG_VS_LEGEND`），不會出現原版的轉場圖。
 - **還是原版、這個範圍管不到的**：
-  - `Script_DoRayquazaScene` 的過場動畫（Sootopolis 腳本呼叫 4 次）：畫面上還是 Kyogre、Groudon、Rayquaza 的大圖。要嘛重畫，要嘛把這 4 次呼叫拿掉，需要決定。
-  - 開機動畫（`src/intro.c`）和標題畫面（`src/title_screen.c`）。
+  - **待處理：intro、title**。開機動畫（`src/intro.c`）和標題畫面（`src/title_screen.c`）還是原版三隻。拿掉開機動畫會改變開機的影格數，所有回歸腳本開頭的按鍵時序都可能位移；標題畫面要等 Mark 的 128×128 圖。David 會另外排成一個獨立的 commit。
   - 對戰背景和音樂對原版三隻的特例（`battle_bg.c`、`pokemon.c`）：新角色不會觸發，沒有壞處，只是少了專用背景。
 - Juan 的招式：20 招裡有 7 招是新角色學不到的（Shojomai 的 Sweet Kiss、Flail；Yukinba 的 Encore；Jatai 的 4 招全部）。訓練家的招式不用學得會，所以不會壞；要換成什麼由 Mark 決定。
 - 沒有在遊戲裡看過：這一段還沒有路線。試過用除錯選單直接傳送去看，沒成功（選單按法跟 `to_dolls` 的不一樣），留給 `to_sootopolis`。

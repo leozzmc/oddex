@@ -183,11 +183,10 @@ SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
+	@ oddex: no cinematic (it shows the vanilla legendaries); the weather turns and the fight plays on the map
 	setweather WEATHER_ABNORMAL
 	doweather
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-	special Script_DoRayquazaScene
+	playse SE_THUNDER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
@@ -282,11 +281,10 @@ SootopolisCity_EventScript_LegendariesSceneFromDive::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
+	@ oddex: no cinematic (it shows the vanilla legendaries); the weather turns and the fight plays on the map
 	setweather WEATHER_ABNORMAL
 	doweather
-	setvar VAR_0x8004, FALSE @ Just do Groudon/Kyogre fight scene
-	special Script_DoRayquazaScene
+	playse SE_THUNDER
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
@@ -466,15 +464,7 @@ SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
-	call SootopolisCity_EventScript_SetRoughWater
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-	hideobjectat LOCALID_SOOTOPOLIS_RAYQUAZA, MAP_SOOTOPOLIS_CITY
-	setvar VAR_0x8004, TRUE
-	special Script_DoRayquazaScene
-	playse SE_THUNDER
+	call SootopolisCity_EventScript_SkyLegendArrives
 	special SpawnCameraObject
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
 	waitmovement 0
@@ -518,13 +508,7 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	waitmovement 0
 	special RemoveCameraObject
 	delay 60
-	fadescreenspeed FADE_TO_BLACK, 8
-	call SootopolisCity_EventScript_SetRoughWater
-	removeobject LOCALID_SOOTOPOLIS_GROUDON
-	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
-	setvar VAR_0x8004, TRUE
-	special Script_DoRayquazaScene
+	call SootopolisCity_EventScript_SkyLegendArrives
 	special SpawnCameraObject
 	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerApproachLegendaries
@@ -561,6 +545,45 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	warpwhitefade MAP_SOOTOPOLIS_CITY, 29, 53
 	waitstate
 	end
+
+@ oddex: replaces the "Rayquaza arrives" cinematic (it shows the vanilla legendaries) with a scene on
+@ the map: the sky legendary appears between the two, they back off and sink, rough water is left.
+SootopolisCity_EventScript_SkyLegendArrives::
+	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	playse SE_THUNDER
+	waitse
+	playmoncry SPECIES_ODDEX_LEGEND_SKY, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1  @ vertical pan
+	setvar VAR_0x8005, 1  @ horizontal pan
+	setvar VAR_0x8006, 8  @ num shakes
+	setvar VAR_0x8007, 3  @ shake delay
+	special ShakeCamera
+	waitstate
+	waitmoncry
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreBackOff
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonBackOff
+	waitmovement 0
+	fadescreenspeed FADE_TO_BLACK, 8
+	call SootopolisCity_EventScript_SetRoughWater
+	special DrawWholeMapView
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	fadescreenspeed FADE_FROM_BLACK, 8
+	return
+
+SootopolisCity_Movement_GroudonBackOff:
+	lock_facing_direction
+	walk_slow_left
+	walk_slow_left
+	unlock_facing_direction
+	step_end
+
+SootopolisCity_Movement_KyogreBackOff:
+	lock_facing_direction
+	walk_slow_right
+	walk_slow_right
+	unlock_facing_direction
+	step_end
 
 SootopolisCity_EventScript_SetRoughWater::
 	setmetatile 27, 43, METATILE_Sootopolis_RoughWater, FALSE
