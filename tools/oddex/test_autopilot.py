@@ -89,6 +89,27 @@ class StepwalkTest(unittest.TestCase):
         self.assertEqual(S["dive_edge"]("Underwater_SeafloorCavern", 6, 5), ("EMERGE", goal))
         self.assertIsNone(S["dive_edge"]("Route128", 5, 5))  # shallow water: no Dive
 
+    def test_seafloor_cavern_room1_needs_a_rock_smashed_and_boulders_pushed(self):
+        mp = "SeafloorCavern_Room1"
+        boulders, rocks, others = S["push_objects"](mp)
+        start = (mp, 5, 17, frozenset(boulders.values()), frozenset(rocks.values()))
+        at_exit = lambda s: s[1:3] == (6, 3)  # below the warp to Room2
+        path = S["bfs"](start, at_exit, S["push_neighbors"](mp, others))
+        self.assertIsNotNone(path)
+        self.assertTrue(any(d.startswith("PUSH_") for d in path) and any(d.startswith("SMASH_") for d in path))
+        walking = lambda cur: ((d, n) for d, n in S["push_neighbors"](mp, others)(cur) if "_" not in d)
+        self.assertIsNone(S["bfs"](start, at_exit, walking))
+
+    def test_currents_carry_the_surfer(self):
+        mp = "SeafloorCavern_Room6"
+        self.assertEqual(S["carried"](mp, 9, 3), (8, 12))    # west along row 3, then south to still water
+        self.assertEqual(S["carried"](mp, 3, 3), (3, 3))     # land: nothing happens
+        nb = S["warp_neighbors"]({mp}, True)
+        self.assertEqual(list(nb((mp, 9, 3))), [("WAIT", (mp, 8, 12))])
+        path = S["bfs"]((mp, 11, 20), (mp, 4, 2), nb)        # from Room2's door to Room3's
+        self.assertIsNotNone(path)
+        self.assertIn("WAIT", path)
+
     def test_warps_outside_their_map_are_ignored(self):
         # A Slateport map lists a warp past its layout; a search that visits them all must not crash.
         maps = {n for n in G["ID2NAME"].values() if n.split("_")[0] == "SlateportCity"}
