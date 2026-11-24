@@ -576,3 +576,26 @@ shot gallery/1649_yukijoro.png
 press START 2 120
 shot gallery/1649_yukijoro_shiny.png
 press START 2 120
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press LEFT 2 10
+press UP 2 20
+press RIGHT 2 10
+press DOWN 2 20
+wait 120
+shot gallery/1650_amphorin.png
+press START 2 120
+shot gallery/1650_amphorin_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1651_lernagon.png
+press START 2 120
+shot gallery/1651_lernagon_shiny.png
+press START 2 120

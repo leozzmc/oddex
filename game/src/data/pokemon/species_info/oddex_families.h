@@ -5383,19 +5383,19 @@
         .cryId = CRY_NONE,
         .natDexNum = NATIONAL_DEX_YUKIJORO,
         .categoryName = _("Snow Woman"),
-        .height = 17,
+        .height = 15,
         .weight = 20,
         .description = COMPOUND_STRING(
-            "On nights of heavy snow a tall woman in\n"
-            "white stands by the road. Her hair blows\n"
-            "level in the storm. Her breath is white\n"
-            "smoke, and what it touches goes still."),
+            "On nights of heavy snow a woman in white\n"
+            "rises out of a whirl of blizzard. She has\n"
+            "no feet, only the storm. Her breath is\n"
+            "white smoke; what it touches goes still."),
         .pokemonScale = 300,
         .pokemonOffset = 6,
         .trainerScale = 256,
         .trainerOffset = 0,
         .frontPic = gMonFrontPic_Yukijoro,
-        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
         .frontPicYOffset = 8,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(0, 6),
@@ -5412,7 +5412,7 @@
         .palette = gMonPalette_Yukijoro,
         .shinyPalette = gMonShinyPalette_Yukijoro,
         .iconSprite = gMonIcon_Yukijoro,
-        .iconPalIndex = 3,
+        .iconPalIndex = 2,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(0, 6, SHADOW_SIZE_L)
         FOOTPRINT(Yukijoro)
@@ -5427,5 +5427,146 @@
         )
         .levelUpLearnset = sYukijoroLevelUpLearnset,
         .teachableLearnset = sYukijoroTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+    },
+
+    [SPECIES_AMPHORIN] =
+    {
+        .baseHP        = 55,
+        .baseAttack    = 85,
+        .baseDefense   = 80,
+        .baseSpeed     = 50,
+        .baseSpAttack  = 50,
+        .baseSpDefense = 40,
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_GRASS),
+        .catchRate = 45,
+        .expYield = 120,
+        .evYield_Defense = 1,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 40,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON),
+        .abilities = { ABILITY_STURDY, ABILITY_NONE, ABILITY_REGENERATOR },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Amphorin"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_AMPHORIN,
+        .categoryName = _("Jar Serpent"),
+        .height = 8,
+        .weight = 420,
+        .description = COMPOUND_STRING(
+            "A young serpent that lives in an old\n"
+            "wine jar in the swamp and wears a mask\n"
+            "that is always weeping. It will not\n"
+            "come out until the jar is too small."),
+        .pokemonScale = 400,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Amphorin,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Amphorin,
+        .backPicSize = MON_COORDS_SIZE(40, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Amphorin,
+        .shinyPalette = gMonShinyPalette_Amphorin,
+        .iconSprite = gMonIcon_Amphorin,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 6, SHADOW_SIZE_L)
+        FOOTPRINT(Amphorin)
+        OVERWORLD(
+            sPicTable_Amphorin,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_NONE,
+            sAnimTable_Following,
+            gOverworldPalette_Amphorin,
+            gShinyOverworldPalette_Amphorin
+        )
+        .levelUpLearnset = sAmphorinLevelUpLearnset,
+        .teachableLearnset = sAmphorinTeachableLearnset,
+        .eggMoveLearnset = sNoneEggMoveLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 50, SPECIES_LERNAGON}),
+    },
+
+    [SPECIES_LERNAGON] =
+    {
+        .baseHP        = 95,
+        .baseAttack    = 135,
+        .baseDefense   = 90,
+        .baseSpeed     = 80,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 90,
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_GRASS),
+        .catchRate = 45,
+        .expYield = 300,
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(50.0),
+        .eggCycles = 40,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON),
+        .abilities = { ABILITY_INTIMIDATE, ABILITY_NONE, ABILITY_REGENERATOR },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Lernagon"),
+        .cryId = CRY_NONE,
+        .natDexNum = NATIONAL_DEX_LERNAGON,
+        .categoryName = _("Swamp Hydra"),
+        .height = 28,
+        .weight = 2800,
+        .description = COMPOUND_STRING(
+            "It burst its jar and kept the pieces.\n"
+            "Moss and reeds grow on its back, and\n"
+            "every head wears the same weeping mask.\n"
+            "Cut one off, they say, and two grow."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Lernagon,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPic = gMonBackPic_Lernagon,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .palette = gMonPalette_Lernagon,
+        .shinyPalette = gMonShinyPalette_Lernagon,
+        .iconSprite = gMonIcon_Lernagon,
+        .iconPalIndex = 1,
+        .pokemonJumpType = PKMN_JUMP_TYPE_SLOW,
+        SHADOW(0, 8, SHADOW_SIZE_L)
+        FOOTPRINT(Lernagon)
+        OVERWORLD(
+            sPicTable_Lernagon,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_NONE,
+            sAnimTable_Following,
+            gOverworldPalette_Lernagon,
+            gShinyOverworldPalette_Lernagon
+        )
+        .levelUpLearnset = sLernagonLevelUpLearnset,
+        .teachableLearnset = sLernagonTeachableLearnset,
         .eggMoveLearnset = sNoneEggMoveLearnset,
     },

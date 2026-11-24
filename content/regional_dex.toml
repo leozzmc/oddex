@@ -29,7 +29,7 @@ order = [
     # Mossdeep segment.
     "KAMIKKO", "KAMINOBI", "IWADUSK",
     # League segment.
-    "UMIBOZU", "WARANINGYO", "YUKIJORO", "NINGYOMEN",
+    "UMIBOZU", "WARANINGYO", "YUKIJORO", "NINGYOMEN", "AMPHORIN", "LERNAGON",
     # Sootopolis segment: the three legendaries, last in the dex.
     "SOKONEMU", "OKAFUMI", "UTSUROBAN",
 ]

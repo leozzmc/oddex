@@ -320,14 +320,22 @@ shot dex/288_ningyomen.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/289_sokonemu.png
+shot dex/289_amphorin.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/290_okafumi.png
+shot dex/290_lernagon.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/291_utsuroban.png
+shot dex/291_sokonemu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/292_okafumi.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/293_utsuroban.png
 press B 2 90
 press DOWN 2 20

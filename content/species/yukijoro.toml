@@ -20,13 +20,13 @@ cry = "NONE"
 evolutions = []   # [{ method, param, into }]
 
 [dex]
-height = 17
+height = 15
 weight = 20
 text = """
-On nights of heavy snow a tall woman in
-white stands by the road. Her hair blows
-level in the storm. Her breath is white
-smoke, and what it touches goes still."""
+On nights of heavy snow a woman in white
+rises out of a whirl of blizzard. She has
+no feet, only the storm. Her breath is
+white smoke; what it touches goes still."""
 scale = { pokemon = 300, pokemon_offset = 6, trainer = 256, trainer_offset = 0 }
 
 [learnset]

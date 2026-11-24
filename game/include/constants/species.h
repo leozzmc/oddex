@@ -1770,6 +1770,8 @@ enum __attribute__((packed)) Species
     SPECIES_UMIBOZU,
     SPECIES_WARANINGYO,
     SPECIES_YUKIJORO,
+    SPECIES_AMPHORIN,
+    SPECIES_LERNAGON,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 

@@ -471,7 +471,7 @@
 - 現有角色用 `--set X:species=` 換上去;新角色還沒做,用原版的數值代替:
   - Sidney 的 Waraningyo、Umibozu 和天狗的位置:直接用原版的 Cacturne、Crawdaunt、Shiftry(屬性和種族值都相同或幾乎相同)。
   - Glacia 的 Yukijoro:用原版的 Glalie 和 Walrein,屬性換成冰/妖精(`--set GLALIE:types=ICE,FAIRY --set WALREIN:types=ICE,FAIRY`)。
-  - Drake 的 Taruja:用原版的 Shelgon(種族值高 17%,所以實際會比算出來的簡單);Yatsuoro:用原版的 Salamence,屬性換成龍/草。
+  - Drake 的 Amphorin(當時暫名 Taruja):用原版的 Shelgon(種族值高 17%,所以實際會比算出來的簡單);Lernagon:用原版的 Salamence,屬性換成龍/草。
   - Wallace 的 Ningyomen:用原版的 Milotic,屬性換成水/超能力;Tentacruel 的位置用 Jatai 算(Umibozu 還沒做)。
 - 招式都還是原版那一隻的,所以有些組合不合理(例如放在 Wailord 位置的 Magaryu 用的是 Water Spout)。定案的招式等角色做出來再排。
 - 限制:只算御三家單挑。沒有算 Full Restore(四天王各 2 個、Wallace 4 個)、連打五場中間不能回 Pokémon Center、Double Team、Dragon Dance 這類強化。這些都讓實際比數字難,所以數字只能跟原版比較。
@@ -508,6 +508,6 @@
 - 我的建議和 Juan、Tate & Liza 一樣:先不調,等 Sonia 錄完看實際結果。四天王是連打,真正的難度來自消耗,不是單場的門檻,這一點計算器算不到。
 
 ### 等角色做出來要重算的
-- Taruja(360)比代替它的 Shelgon(420)弱,Drake 的第一隻會比表裡簡單。
+- Amphorin(360)比代替它的 Shelgon(420)弱,Drake 的第一隻會比表裡簡單。
 - Umibozu 放進 Wallace 的 Tentacruel 位置之後,水/惡對三隻御三家的結果。
 - 六隻新角色定案的招式。

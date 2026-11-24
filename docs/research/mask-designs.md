@@ -1164,20 +1164,20 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 
 **狀態(2026-11-24,使用者的決定,David 轉達)**:
 - 6 隻新角色都做,都用方案 A;Sidney 維持 4 隻惡系加天狗,不做第 7 隻;Yukijoro 冰/妖精;難度先不調;名字暫定。
-- 舊對照改成 Sableye → Kyozosu、Crawdaunt → Umibozu、Torkoal → Kamadoro(已經 strict 的範圍不動:`apply_replacements --dry-run` 在 `[mossdeep]`、`[sootopolis]` 都是 0 筆);Lairon → Karabeki 接受。Bagon → Taruja 等龍系線定案。
+- 舊對照改成 Sableye → Kyozosu、Crawdaunt → Umibozu、Torkoal → Kamadoro(已經 strict 的範圍不動:`apply_replacements --dry-run` 在 `[mossdeep]`、`[sootopolis]` 都是 0 筆);Lairon → Karabeki 接受。Bagon → Amphorin 等龍系線定案。
 - **做好的 4 隻**(`feat/league-draft`):Umibozu、Waraningyo、Yukijoro、Ningyomen,模型、TOML、對照、手點的臉。遊戲內截圖:`~/oddex-shots/mark/league/01_four_gallery_dex_2x.png`。和 Brief 不同的地方:
   - Umibozu:手拿的勺子在 64 px 是一個圈加一根柄(看得穿的圈就是「沒有底」);海畫成一塊有厚度的水面。
   - Waraningyo:比 Brief 寫的圓胖(細瘦的稻草束在 64 px 只剩幾條線);一隻眼是墨點,另一隻的位置是釘子的灰色釘頭;蠟燭三根。
-  - Yukijoro:頭髮吹成一面收成尖端的三角旗(一束一束分開時,末端像一隻手)。
+  - Yukijoro:**第一版使用者不採用**(細長的白色柱子加一面黑髮的旗,臉太小,和 Ichimai 的黑髮女鬼也太像)。**第二版(2026-11-24,使用者指定的方向)**:只有上半身的女子,和服下擺的位置是一個寬大的暴風雪漩渦,佔畫面下半部;漩渦上是肩膀、寬袖、交領和一張夠大的能面;頭髮是冰藍色、結霜的,額前剪齊,不遮臉。臉是手點的(齊瀏海、高眉、細長的眼、閉著的小嘴)。新舊對照:`~/oddex-shots/mark/league/04_yukijoro_before_after_ingame_2x.png`、`05_…_1x.png`。
   - Ningyomen:照 Brief;身體的色帶比預想的淡。
-- **Taruja 和 Yatsuoro 還沒做,等使用者決定原型**(見下面「八岐大蛇的查證」)。
-- 圖鑑:4 隻排在傳說三隻前面,所以傳說三隻的編號從 285–287 變成 289–291。
+- **龍系線**:使用者看了查證的結果,選了改用希臘神話的勒拿九頭蛇。原本暫名 Taruja、Yatsuoro 的兩隻改成 **Amphorin**(雙耳陶瓶裡的小蛇)和 **Lernagon**(撐破陶瓶的多頭蛇),都做好了。Bagon、Shelgon → Amphorin,Salamence → Lernagon。
+- 圖鑑:6 隻排在傳說三隻前面,所以傳說三隻的編號從 285–287 變成 291–293。
 
 ### 八岐大蛇的查證(2026-11-24;使用者要求建模前先查)
 - **伊富岐神社**(岐阜縣垂井町,美濃國二宮,現存):現在的祭神是伊吹大神,但祭神自古有幾種說法,其中一說是八岐大蛇(依據是《日本書紀》裡擊退倭建命的伊吹山神是大蛇);另有多多美彦命、素戔嗚命等說。
 - **伊夫岐神社**(滋賀縣米原市,現存):祭神是伊吹大明神(伊吹山的神);有依《源平盛衰記》的解釋,說伊吹大明神是八岐大蛇的化身。草稿裡寫的「中世文獻」就是這個;當時以為是《平家物語》剣巻,那一段原文沒有查到。
 - 島根縣雲南市有一座小祠(岩坪神社境內的「大蛇神社」),觀光網站說祭的是大蛇的一段尾巴;須佐神社保存著傳說是大蛇骨頭的東西。
-- 結論:它主要是神話裡被斬的怪物,但**不是完全沒有被祭祀**。照使用者的條件,這兩隻先停。提給使用者的選項:(1) 照原案只取石見神樂的蛇身和龍面;(2) 換成希臘神話的勒拿九頭蛇(被 Heracles 殺掉的怪物,沒有被祭祀;雙耳陶瓶取代酒樽,每個頭戴希臘悲劇面具),輪廓和兩階段的構想不變;(3) 其他原型。
+- 結論:它主要是神話裡被斬的怪物,但**不是完全沒有被祭祀**。照使用者的條件,這兩隻(當時暫名 Taruja、Yatsuoro)先停;**使用者選了下面的 (2)**。提給使用者的選項:(1) 照原案只取石見神樂的蛇身和龍面;(2) 換成希臘神話的勒拿九頭蛇(被 Heracles 殺掉的怪物,沒有被祭祀;雙耳陶瓶取代酒樽,每個頭戴希臘悲劇面具),輪廓和兩階段的構想不變;(3) 其他原型。
 - 來源(多半是維基百科、觀光網站和整理文章,沒有查到神社自己的由緒書):
   - https://ja.wikipedia.org/wiki/伊富岐神社
   - https://maibarand.shiga.jp/ibuki-shrine/
@@ -1199,8 +1199,8 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 | Cacturne | 2 | 475 | | 2(Lv43–46) | Sidney、Victory Road 的 Edgar | **新角色 Waraningyo**(草/惡,475) |
 | Glalie | 2 | 480 | | 2(Lv50–52) | Glacia ×2 | **新角色 Yukijoro**(冰/妖精,500,+4%) |
 | Walrein | 3 | 530 | | 1(Lv53) | Glacia 的王牌 | Yukijoro(−6%);一隻接兩個位置 |
-| Shelgon | 2 | 420 | | 1(Lv52) | Drake | **新角色 Taruja**(龍/草,360,−14%) |
-| Salamence | 3 | 600 | | 1(Lv55) | Drake 的王牌 | **新角色 Yatsuoro**(龍/草,600;Taruja 的進化) |
+| Shelgon | 2 | 420 | | 1(Lv52) | Drake | **新角色 Amphorin**(龍/草,360,−14%) |
+| Salamence | 3 | 600 | | 1(Lv55) | Drake 的王牌 | **新角色 Lernagon**(龍/草,600;Amphorin 的進化) |
 | Milotic | 2 | 540 | | 1(Lv58) | Wallace 的王牌 | **新角色 Ningyomen**(水/超能力,540) |
 | Dusclops | 2 | 455 | | 3(Lv43–51) | Phoebe ×2(含王牌)、Victory Road 的 Quincy | Ichimai(400,−12%;Duskull 已經是它) |
 | Flygon | 3 | 520 | | 1(Lv53) | Drake | Hannyagon(520,幽靈/龍) |
@@ -1213,7 +1213,7 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - 另外要動的舊對照(都只影響之後才套用的範圍;以前套用過的訓練家不會變):
   - **Sableye:Kyokon → Kyozosu**。現在是 240 對 380(**⚠ −37%**),Phoebe 有一隻 Lv50 的 Sableye,用第 1 階段的小狐狸撐不起四天王。Kyozosu 是 420(+11%),同樣是一般/幽靈。這一段另有 2 名訓練家和 Victory Road B2F 的野生。
   - **Crawdaunt:Jatai → Umibozu**(見下面的新角色;470,+0%)。Juan 那一隻已經套用成 Jatai,不會變。
-  - **Bagon:Magatide → Taruja**。這一段的 Bagon 只在 Meteor Falls 最裡面那一層的草叢(原版唯一抓得到 Bagon 的地方),換成新的龍系線的第 1 階段,玩家攀瀑進去才有東西可抓。360 對 300 是 **⚠ +20%**(野生,偏強不影響難度)。
+  - **Bagon:Magatide → Amphorin**。這一段的 Bagon 只在 Meteor Falls 最裡面那一層的草叢(原版唯一抓得到 Bagon 的地方),換成新的龍系線的第 1 階段,玩家攀瀑進去才有東西可抓。360 對 300 是 **⚠ +20%**(野生,偏強不影響難度)。
   - **Torkoal:Shishiblaze → Kamadoro**(可選)。現在是 310 對 470(⚠ −34%),這一段有 1 名 Lv42 的訓練家;Kamadoro 是 460(−2%)。
 - 這一段裡其他超過 15% 的舊對照,我建議不動(都是野生,或 Lv43 以下的一般訓練家):Aron → Bekurama(−33%,野生)、Tentacool → Shojobob(−34%,野生)、Wailmer → Kamorai(−22%,野生)、Solrock → Iwadawn(−18%,野生和 1 名訓練家)、Hariyama → Yokozunat(−17%)、Slaking → Mandaloka(−19%,2 名 Lv43)、Kadabra → Tsukuyume(−22%,2 名 Lv42)。
 
@@ -1221,7 +1221,7 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - 這一段要用的 Waterfall、Surf、Strength、Rock Smash、Flash 現在都有很多角色能學。
 - 照「取代誰就繼承誰的 HM」:
   - 現有角色:Ichimai(Dusclops:Strength、Flash、Rock Smash)已有 Flash,Strength 和 Rock Smash 建議寫成例外(一疊盤子);Kyozosu(Sableye)、Karabeki(Lairon)、Kamadoro(Ninetales、Torkoal)、Hannyagon(Flygon 的 Strength、Rock Smash)已經都有,Hannyagon 的 Fly 寫成例外(沒有翅膀);Kagurai(Lanturn:Surf、Flash、Waterfall、Dive)只留 Flash,其餘例外(鈴鐺不游泳);Nobusumen(Muk:Strength、Rock Smash)寫成例外。
-  - 新角色:Umibozu 學 Surf、Strength、Rock Smash、Waterfall、Dive(Cut 例外,沒有手);Waraningyo 學 Cut、Strength、Flash;Yukijoro 只學 Flash(Walrein 的游泳類 HM 例外,和 Yukinba 一樣);Taruja 和 Yatsuoro 學 Cut、Strength、Rock Smash(Fly 例外,沒有翅膀);Ningyomen 學 Surf、Waterfall、Dive。
+  - 新角色:Umibozu 學 Surf、Strength、Rock Smash、Waterfall、Dive(Cut 例外,沒有手);Waraningyo 學 Cut、Strength、Flash;Yukijoro 只學 Flash(Walrein 的游泳類 HM 例外,和 Yukinba 一樣);Amphorin 和 Lernagon 學 Cut、Strength、Rock Smash(Fly 例外,沒有翅膀);Ningyomen 學 Surf、Waterfall、Dive。
 
 ### 四天王和冠軍的隊伍(主題要明確)
 
@@ -1230,7 +1230,7 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 | Sidney(惡) | Mightyena 46、Shiftry 48、Cacturne 46、Crawdaunt 48、Absol 49 | Shachowl、**Daibeki**、**Waraningyo**、**Umibozu**、Raijuoh | 5 隻裡 4 隻惡系;Daibeki(草/鋼的大天狗)是 Shiftry 的對照,不是惡系 |
 | Phoebe(幽靈) | Dusclops 48、Banette 49、Sableye 50、Banette 49、Dusclops 51 | Ichimai、Kaminobi、Kyozosu、Kaminobi、Ichimai(王牌) | 5 隻都是幽靈系,不用新角色 |
 | Glacia(冰) | Sealeo 50、Glalie 50、Sealeo 52、Glalie 52、Walrein 53 | Yukinba、**Yukijoro**、Yukinba、Yukijoro、Yukijoro(王牌) | 5 隻都是冰系;原版是 2+2+1,這裡是 2+3 |
-| Drake(龍) | Shelgon 52、Altaria 54、Kingdra 53、Flygon 53、Salamence 55 | **Taruja**、Kumoryu、Magaryu、Hannyagon、**Yatsuoro**(王牌) | 5 隻都是龍系,沒有重複 |
+| Drake(龍) | Shelgon 52、Altaria 54、Kingdra 53、Flygon 53、Salamence 55 | **Amphorin**、Kumoryu、Magaryu、Hannyagon、**Lernagon**(王牌) | 5 隻都是龍系,沒有重複 |
 | Wallace(水) | Wailord 57、Tentacruel 55、Ludicolo 56、Whiscash 56、Gyarados 56、Milotic 58 | Magaryu、**Umibozu**、Shojoran、Onamazu、Kumoryu、**Ningyomen**(王牌) | 6 隻裡 5 隻水系;Kumoryu(龍/飛行)是 Gyarados 的對照 |
 
 - 粗體是新角色,或需要手動指定的位置。
@@ -1247,8 +1247,8 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 | Umibozu | Crawdaunt(之後的 Sharpedo 也可以) | 水/惡 | 470 | 從海面升起來的巨大黑頭,只有兩隻眼睛 | Sidney、Wallace |
 | Waraningyo | Cacturne | 草/惡 | 475 | 被釘在樹上的稻草人偶,臉是一張釘上去的紙面 | Sidney |
 | Yukijoro | Glalie、Walrein | 冰/妖精 | 500 | 雪女:白衣、被風吹成一面旗的黑髮 | Glacia(3 隻,含王牌) |
-| Taruja | Bagon、Shelgon | 龍/草 | 360 | 盤在酒樽裡的小蛇,只露出一個頭 | Drake;Meteor Falls 內層的野生 |
-| Yatsuoro | Salamence | 龍/草 | 600 | 八個頭的大蛇,背上長著苔和樹 | Drake 的王牌 |
+| Amphorin | Bagon、Shelgon | 龍/草 | 360 | 雙耳陶瓶裡的小蛇,頭上戴著悲劇面具 | Drake;Meteor Falls 內層的野生 |
+| Lernagon | Salamence | 龍/草 | 600 | 撐破陶瓶的多頭蛇,每個頭一張悲劇面具,背上長著苔和蘆葦 | Drake 的王牌 |
 | Ningyomen | Milotic | 水/超能力 | 540 | 人魚:長長的魚身,臉是一張女面 | Wallace 的王牌 |
 
 為什麼現有角色填不了:
@@ -1280,6 +1280,7 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 ### Yukijoro 的 Brief(Glalie、Walrein 位置)
 - **原型**:雪女(雪女郎)。日本各地的傳說:下雪的夜裡出現的白衣女人,對著人吹一口氣就凍死。最有名的版本是小泉八雲《怪談》(1904)裡的〈雪女〉,已經是公有領域。妖怪,不是神祇。
 - **一句話概念**:一個又高又窄的白色身影,臉是一張年輕女人的能面;長長的黑髮被風雪吹成水平的一面旗;白衣的下擺沒有腳,散成一陣雪。
+  - (這是第一版,使用者不採用。定案的是第二版:上半身加暴風雪的漩渦、冰藍色的結霜頭髮,見這一節開頭的狀態。下面的輪廓、調色盤、方案是第一版的紀錄。)
 - **輪廓**:細長的直立三角形,頭的一側拖出一條水平的黑髮。要和三隻分開:原版的 Froslass(寬袖子、頭上有角、沒有長髮)、Yukinba(圓錐形的蓑衣、冰柱頭髮、一根冰杖)、Kaminobi(頭髮往下拖地)。
 - **表情**:能面的臉:細長的眼睛往下看,嘴閉著、微微張開一條縫,吐出一道白氣。不笑。
 - **調色盤**:衣服的白 3 階(帶藍)、臉的象牙白 2 階、頭髮的黑 2 階、嘴唇的淡紅、雪和白氣的淡藍 2 階、輪廓。約 11 色。異色:淡紫色的衣服、銀白色的頭髮。
@@ -1287,20 +1288,25 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - **方案 A(建議)**:被風吹著的雪女。**方案 B**:抱著嬰兒的雪女(傳說裡叫路人幫忙抱,越抱越重)。不建議:嬰兒在 64 px 看不出來。
 - 數值:冰/妖精,500(Glalie 480 和 Walrein 530 之間),單一階段。妖精系的理由:傳說裡她是用美貌引人靠近的;而且 Glacia 已經有兩隻冰/幽靈的 Yukinba。妖精讓火/鋼的御三家打她是 4 倍,影響見 `balance.md`。
 
-### Taruja 和 Yatsuoro 的 Brief(Bagon/Shelgon、Salamence 位置)
-- **原型**:八岐大蛇。《古事記》裡八個頭、八條尾巴的大蛇,眼睛像紅色的酸漿果,背上長著苔、檜木和杉木,身體橫跨八個山谷;被八個酒樽的酒灌醉。石見神樂的〈大蛇〉用紙和竹做的蛇身(蛇胴)和龍面在台上演這一段,是面具的傳統。
-- **和規則的關係(請使用者確認)**:它在神話裡是被斬掉的怪物,不是被祭祀的神;但中世有文獻把它和伊吹山的神連在一起。所以做法和 Kumoryu、Kamorai 一樣:角色是「神樂舞台上的蛇身和龍面活了過來」,只取造型,名字和圖鑑都不提神話裡的名字,也不畫尾巴裡的劍。
-- **Taruja(第 1 階段)一句話概念**:一條小蛇盤在一個比牠大的酒樽裡,只有戴著紙糊龍面的頭搭在樽口,臉紅紅的,醉了。
-  - 輪廓:一個圓桶,上面探出一個頭。表情:眼睛半閉、嘴閉著,打瞌睡;不笑。
-  - 調色盤:樽的木色 3 階、竹箍的黃、龍面的綠 2 階和金色的眉、醉了的紅、輪廓。約 10 色。異色:白色的蛇、黑漆的樽。
+### Amphorin 和 Lernagon 的 Brief(Bagon/Shelgon、Salamence 位置;2026-11-24 使用者選定,取代原本以八岐大蛇為原型的 Amphorin、Lernagon)
+- **原型**:希臘神話的勒拿九頭蛇(Lernaean Hydra):住在勒拿沼澤的多頭水蛇,砍掉一個頭會長出兩個,被 Heracles 殺掉(十二功業的第二件)。外國神話是使用者核准過的題材(Enigmen 的 Sphinx)。
+- **查證(2026-11-24)**:
+  - Hydra 是怪物,不是神,查不到任何祭祀它的紀錄。勒拿當地的祭祀是 Demeter 的秘儀(Lernaea)和 Dionysus,出處是 Pausanias《希臘志》2.36–37。
+  - 古希臘宗教在羅馬帝國基督教化之後中斷;現在有人數很少的復興團體,祭的是諸神,不是 Hydra。這一點是我原本就知道的,這次沒有另外上網查。
+  - 來源:https://en.wikipedia.org/wiki/Lernaean_Hydra 、https://en.wikipedia.org/wiki/Lernaea_(festival) 、https://en.wikipedia.org/wiki/Lerna
+- **不畫的東西**:不畫 Heracles(棍棒、獅皮、火把都不出現),不用任何近代作品裡 Hydra 的造型。
+- **要讓使用者知道的一點**:原版第九世代有一隻 Hydrapple,是「好幾個頭從蘋果裡探出來」的草/龍系。我們這一隻也是龍/草、也是「頭從容器裡出來」,概念上有重疊。外型我刻意拉開:容器是希臘的雙耳陶瓶而且在第 2 階段已經撐破,每個頭戴悲劇面具,身體是長苔和蘆葦的沼澤土丘。要是使用者覺得還是太近,可以改屬性(例如龍/毒:Hydra 的血有毒)。
+- **Amphorin(第 1 階段)一句話概念**:一個立在沼澤水裡的雙耳陶瓶(赤陶色、一圈黑帶),瓶口探出一條小蛇,頭上戴著一張希臘悲劇面具,尾巴掛在把手上。
+  - 輪廓:兩個把手的瓶子,上面一顆戴面具的頭。表情:悲劇面具:眉毛中間高、兩端低,空洞的眼,張開、嘴角朝下的嘴。不是笑臉(喜劇面具不用)。
+  - 調色盤:赤陶 3 階、黑釉、面具的象牙白 2 階、蛇的綠 2 階、蘆葦的黃綠、水的灰綠、輪廓。約 12 色。異色:黑釉的瓶子、紅色的帶、白色的蛇。
   - 數值:龍/草,360(Bagon 300 和 Shelgon 420 之間)。Lv50 進化(和 Shelgon 一樣)。
-- **Yatsuoro(第 2 階段)一句話概念**:酒樽撐破了:一團長滿苔和小樹的身體,往上扇形張開好幾個戴龍面的頭,每個頭都是紅眼睛;破掉的樽板還卡在身上。
-  - 輪廓:下面一個長苔的土丘,上面扇形張開的頭。64 px 畫不下八個頭,正面看得到 5 個(中間一個最大),其餘在後面只露出一點。
-  - 表情:中間的頭張嘴吐信,眼睛圓睜;兩邊的頭閉著嘴。不笑。
-  - 調色盤:蛇身的深綠 3 階、苔的黃綠 2 階、龍面的金 2 階、紅眼、嘴裡的暗紅、樽板的木色、輪廓。約 13 色。異色:白色的蛇身、紅葉的樹。
-  - 數值:龍/草,600(和 Salamence 相同)。龍/草對冰是 4 倍,和 Salamence(龍/飛行)一樣,玩家打完 Glacia 手上有冰系招式,弱點的設計照原版。
-- **正面/背面**:Taruja 的背面是樽的背面和搭在樽口的後腦;Yatsuoro 的背面是長滿樹的背和幾條尾巴。
-- **方案 A(建議)**:兩個階段,酒樽貫穿兩隻。**方案 B**:三個階段(Bagon、Shelgon、Salamence 各一隻)。不建議:多做一隻,而 Bagon 和 Shelgon 的位置都只出現一兩次。
+- **Lernagon(第 2 階段)一句話概念**:陶瓶撐破了:一團長滿苔和蘆葦的身體,脖子往上扇形張開,每個頭都戴著同一張悲劇面具;破掉的陶片還卡在身體前面。
+  - 輪廓:下面一個長苔的土丘和幾塊陶片,上面扇形張開的脖子和頭。九個頭在 64 px 畫不下:正面 5 個(中間的最大),後面再露出 2 個。
+  - 表情:每張面具都是皺眉、嘴角朝下的悲劇面具;沒有任何一個頭在笑。
+  - 調色盤:蛇身的綠 2 階、肚子的黃綠、苔 2 階、面具的象牙白 2 階、陶片的赤陶和黑釉、蘆葦、輪廓。約 13 色。異色:白色的蛇身、紅褐色的苔、黑色的陶片。
+  - 數值:龍/草,600(和 Salamence 相同)。龍/草對冰是 4 倍,和 Salamence(龍/飛行)一樣。特性 Intimidate(和 Salamence 相同),隱藏特性 Regenerator(頭會再長出來)。
+- **正面/背面**:Amphorin 的背面是瓶子的背面和蛇的後腦;Lernagon 的背面是幾條脖子的背面和長苔的背。
+- **做出來的樣子(`feat/league-draft`)**:照上面做的。面具是手點的。Lernagon 的背面五條脖子張開,有點像一隻手掌,目前沒有改。
 
 ### Ningyomen 的 Brief(Milotic 位置)
 - **原型**:人魚(日本的人魚):魚的身體、人的臉,出現時預告豐收或災禍;八百比丘尼的傳說裡,吃了人魚肉的女孩活了八百年。妖怪,不是神祇。Milotic 是「最美的」那一隻,所以用一張美麗的女面。
@@ -1313,11 +1319,11 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - 數值:水/超能力(預言),540(和 Milotic 相同),單一階段。之後如果要,Route 119 釣魚點的代號 `FISHING_SPOT`(現在暫時是 Namazura)可以改成牠的第 1 階段,那是另一隻新角色,這次不提。
 
 ### 需要使用者決定的事
-1. 新角色做這 6 隻(Umibozu、Waraningyo、Yukijoro、Taruja、Yatsuoro、Ningyomen)可不可以;每隻的方案 A 可不可以。
+1. 新角色做這 6 隻(Umibozu、Waraningyo、Yukijoro、Amphorin、Lernagon、Ningyomen)可不可以;每隻的方案 A 可不可以。
 2. Sidney 要不要 5 隻都是惡系(要的話多做第 7 隻:Tsukuyume 的進化型)。
-3. Yatsuoro 的原型是八岐大蛇:照「神樂舞台上的蛇身和龍面」的做法(只取造型)可不可以,還是要換別的原型。
+3. (已決定)龍系線的原型從八岐大蛇改成希臘神話的勒拿九頭蛇。
 4. Yukijoro 的屬性:冰/妖精(建議),或單純的冰。
-5. 舊對照的四個改動:Sableye → Kyozosu、Crawdaunt → Umibozu、Bagon → Taruja、Torkoal → Kamadoro(最後一個可選)。
+5. 舊對照的四個改動:Sableye → Kyozosu、Crawdaunt → Umibozu、Bagon → Amphorin、Torkoal → Kamadoro(最後一個可選)。
 6. Lairon → Karabeki(−21%,只有野生)接不接受。
 7. 四天王和 Wallace 的難度:火系御三家打 Drake 和 Wallace 比原版難很多,要不要調,見 `balance.md`。
 8. 六個名字都是暫定的。

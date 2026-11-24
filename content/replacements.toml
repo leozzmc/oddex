@@ -58,6 +58,8 @@ stage_mismatch_ok = [
     "GLALIE",      # stage 2 onto single-stage Yukijoro (500 vs 480)
     "WALREIN",     # stage 3 onto single-stage Yukijoro (500 vs 530): one creature covers Glacia's two lines' tops
     "MILOTIC",     # stage 2 onto single-stage Ningyomen (540 = 540); Feebas stays the FISHING_SPOT role
+    "SHELGON",     # stage 2 onto stage-1 Amphorin (360 vs 420): one creature covers Bagon and Shelgon
+    "SALAMENCE",   # stage 3 onto stage-2 Lernagon (600 = 600): the line has two stages
 ]
 
 [replace]
@@ -250,7 +252,7 @@ WAILORD = "KUMORYU"      # stage 2, 500 -> 490 (-2%); Route 129
 CLAMPERL = "MAGATIDE"    # water, 345 -> 255 (-26%, flagged; underwater wild): the pearl and the jewel
 RELICANTH = "DOGOGGLE"   # rock, 485 -> 355 (-27%, flagged; underwater wild): the living fossil and the dug-up dogu
 CORSOLA = "HANIWORT"     # rock, 410 -> 355 (-13%); Pacifidlog stands on rows of them
-BAGON = "MAGATIDE"       # dragon, 300 -> 255 (-15%); the Pacifidlog trade uses roles instead
+BAGON = "AMPHORIN"       # dragon, 300 -> 360 (+20%, flagged; wild in the inner Meteor Falls). Route 134's was applied as Magatide and stays
 MEDICHAM = "YOKOZUNAT"   # fighting, 410 -> 395 (-4%)
 METANG = "KAGURAI"       # steel, 420 -> 465 (+11%); Steven's partner team
 AGGRON = "DAIBEKI"       # steel, 530 -> 480 (-9%); Aron's line. Steven's third slot is hand-set to Enigmen
@@ -263,8 +265,7 @@ KYOGRE = "SOKONEMU"
 GROUDON = "OKAFUMI"
 RAYQUAZA = "UTSUROBAN"
 # League segment (mask-designs.md "League 段"; the user's decisions of 2026-11-24): Victory Road, the inner Meteor
-# Falls, the Elite Four and Wallace. Sableye, Crawdaunt and Torkoal changed above. Bagon, Shelgon and Salamence wait
-# for the dragon line (its source is with the user).
+# Falls, the Elite Four and Wallace. Sableye, Crawdaunt, Torkoal and Bagon changed above.
 CACTURNE = "WARANINGYO"  # grass/dark like it, same total (475); Sidney
 GLALIE = "YUKIJORO"      # ice, 480 -> 500 (+4%); Glacia
 WALREIN = "YUKIJORO"     # ice, 530 -> 500 (-6%); Glacia's ace
@@ -275,3 +276,5 @@ LAIRON = "KARABEKI"      # stage 2, steel, 430 -> 340 (-21%, flagged; Victory Ro
 LANTURN = "KAGURAI"      # stage 2, electric, 460 -> 465 (+1%)
 MUK = "NOBUSUMEN"        # stage 2, poison, 500 -> 480 (-4%)
 NINETALES = "KAMADORO"   # stage 2, fire, 505 -> 460 (-9%)
+SHELGON = "AMPHORIN"     # dragon, 420 -> 360 (-14%); Drake
+SALAMENCE = "LERNAGON"   # dragon, same total (600); Drake's ace
