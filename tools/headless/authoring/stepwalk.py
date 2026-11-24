@@ -1,6 +1,6 @@
 """Walk where autopilot.py's static planner cannot, replanning after every unit.
 
-usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--avoid x,y;x,y...] [--min-hp N]
+usage: stepwalk.py START.ss OUT_PREFIX MAP X Y [--live] [--surf] [--dive] [--avoid x,y;x,y...] [--min-hp N]
 
 default  BFS on map data across warps and ledges: a warp is taken only where its tile has a warp
          behavior (doors, ladders, holes; the Lavaridge Gym's holes and geysers are one-way), ledges
@@ -16,6 +16,14 @@ default  BFS on map data across warps and ledges: a warp is taken only where its
          the state they end in are still printed, with exit status 2.
 --min-hp N  stop (commands so far, end state) once the lead stands free below N percent HP, so the
          caller can heal and call again.
+         Boulder rooms (a map with pushable boulders, goal in the same map) are planned with the
+         boulders and breakable rocks where they are now: a push moves a boulder one tile (Strength is
+         asked for on the first push), a rock next to the player is smashed.
+         Water currents (with --surf) carry the player: a step onto one is followed by waits until the
+         current lets go.
+--dive   also plans Dive (implies --surf): down from deep water (A, YES), up where the underwater map allows
+         surfacing (B, YES), through the dive/emerge connections and the maps' setdivewarp; the
+         Underwater_* maps join the search.
 --surf   water is walkable (waterfalls are not); stepping from land onto water uses Surf (A, YES).
 --live   BFS on the running game's collision grid of the current map (gBackupMapLayout) with the
          objects where they stand now: hidden objects that map.json still lists, setmetatile
@@ -65,9 +73,60 @@ def is_warp(beh):
     return any(k in beh for k in ("WARP", "DOOR", "LADDER", "ESCALATOR", "HOLE"))
 
 
-def warp_neighbors(maps, surf=False):
+DIVEABLE = {"MB_INTERIOR_DEEP_WATER", "MB_DEEP_WATER", "MB_SOOTOPOLIS_DEEP_WATER"}  # MetatileBehavior_IsDiveable
+NO_EMERGE = {"MB_NO_SURFACING", "MB_SEAWEED_NO_SURFACING", "MB_WATER_DOOR"}        # ..._IsUnableToEmerge (BUGFIX)
+
+
+def underwater(mp):
+    return G["load"](mp)["json"].get("map_type") == "MAP_TYPE_UNDERWATER"
+
+
+def dive_edge(mp, x, y):
+    """('DIVE' | 'EMERGE', (map, x, y)) for using Dive on this tile, or None (TrySetDiveWarp): down from
+    deep water, up from an underwater tile that allows surfacing. The destination is the map's dive or
+    emerge connection at the same coordinates, else the map script's fixed `setdivewarp`.
+    shortcut: the first setdivewarp of the script; the Sealed Chamber picks between two by a flag."""
+    import re
+    m = G["load"](mp)
+    beh = G["cell"](m, x, y)[2]
+    if underwater(mp):
+        if beh in NO_EMERGE:
+            return None
+        kind = "emerge"
+    elif beh in DIVEABLE:
+        kind = "dive"
+    else:
+        return None
+    conn = next((c for c in m["conn"] if c["direction"] == kind), None)
+    if conn:
+        return kind.upper(), (G["ID2NAME"][conn["map"]], x, y)
+    script = open(os.path.join(os.path.dirname(G["ROM"]), "data", "maps", mp, "scripts.inc")).read()
+    fixed = re.search(r"setdivewarp (MAP_\w+), (\d+), (\d+)", script)
+    if fixed and fixed.group(1) in G["ID2NAME"]:
+        return kind.upper(), (G["ID2NAME"][fixed.group(1)], int(fixed.group(2)), int(fixed.group(3)))
+    return None
+
+
+CURRENTS = {"MB_EASTWARD_CURRENT": (1, 0), "MB_WESTWARD_CURRENT": (-1, 0),
+            "MB_NORTHWARD_CURRENT": (0, -1), "MB_SOUTHWARD_CURRENT": (0, 1)}
+
+
+def carried(mp, x, y):
+    """Where a water current takes a surfer standing on (x, y): tile by tile along each tile's direction
+    until still water or a wall. (x, y) itself when it is not a current, or the current is blocked."""
+    m, seen = G["load"](mp), set()
+    while (x, y) not in seen and G["cell"](m, x, y)[2] in CURRENTS:
+        seen.add((x, y))
+        dx, dy = CURRENTS[G["cell"](m, x, y)[2]]
+        if not (0 <= x + dx < m["W"] and 0 <= y + dy < m["H"]) or G["cell"](m, x + dx, y + dy)[0]:
+            break
+        x, y = x + dx, y + dy
+    return x, y
+
+
+def warp_neighbors(maps, surf=False, dive=False):
     """Steps on map data: collision, map.json objects, ledges, warps into `maps` (marked '|'); water
-    only with surf."""
+    only with surf; with dive, also Dive down and up ('DIVE' / 'EMERGE') between `maps`."""
     def warps(mp):
         m = G["load"](mp)
         return {(w["x"], w["y"]): w for w in m["json"]["warp_events"]  # vanilla has warps outside their map
@@ -83,9 +142,16 @@ def warp_neighbors(maps, surf=False):
         m = G["load"](mp)
         w = warps(mp).get((x, y))
         beh = G["cell"](m, x, y)[2]
+        if carried(mp, x, y) != (x, y):
+            yield "WAIT", (mp, *carried(mp, x, y))  # on a current: no steering until it lets go
+            return
         if w and "ARROW" in beh and G["ID2NAME"].get(w["dest_map"]) in maps:
             # An exit mat warps only when pushed again while standing on it.
             yield through(mp, w, ARROW[beh.split("_")[-3]])
+        if dive:
+            e = dive_edge(mp, x, y)
+            if e and e[1][0] in maps:
+                yield e
         for d, (dx, dy) in DIRS.items():
             nx, ny = x + dx, y + dy
             if not (0 <= nx < m["W"] and 0 <= ny < m["H"]) or (nx, ny) in m["objs"]:
@@ -183,6 +249,73 @@ def gate_neighbors(mp, objs=None):
     return neighbors
 
 
+# Strength and Rock Smash rooms (the Seafloor Cavern). A boulder moves one tile when walked into, if the
+# tile behind it is free land; the player stays where they are. A breakable rock is removed from the
+# tile next to it. shortcut: one boulder per push, no ice or holes, add them when a route needs them.
+FLAG_SYS_USE_STRENGTH = 0x889  # SYSTEM_FLAGS (0x860) + 0x29; shortcut: hard-coded like FLAGS_OFFSET
+FLAGS_OFFSET = 4720
+STRENGTH_CMDS = ["press A 2 60", "press A 2 90", "press A 2 180", "press A 2 240"]  # text, text, YES, the pose
+SMASH_CMDS = ["press A 2 90", "press A 2 60"]                                       # text, YES
+
+
+def push_objects(mp):
+    """({localId: (x, y)} of boulders, same of rocks, set of other object tiles) from map.json."""
+    boulders, rocks, others = {}, {}, set()
+    for i, o in enumerate(G["load"](mp)["json"]["object_events"]):
+        xy = (o["x"], o["y"])
+        if "PUSHABLE_BOULDER" in o["graphics_id"]:
+            boulders[i + 1] = xy
+        elif "BREAKABLE_ROCK" in o["graphics_id"]:
+            rocks[i + 1] = xy
+        else:
+            others.add(xy)
+    return boulders, rocks, others
+
+
+def push_neighbors(mp, others, surf=False):
+    """Steps in a boulder room; states are (map, x, y, frozenset of boulders, frozenset of rocks).
+    'PUSH_<DIR>' moves a boulder (the player stays), 'SMASH_<DIR>' breaks a rock."""
+    m = G["load"](mp)
+    warps = {(w["x"], w["y"]) for w in m["json"]["warp_events"]}
+
+    def land(x, y):
+        return 0 <= x < m["W"] and 0 <= y < m["H"] and not G["cell"](m, x, y)[0] and (x, y) not in others
+
+    def neighbors(cur):
+        _, x, y, bs, rs = cur
+        for d, (dx, dy) in DIRS.items():
+            n = (x + dx, y + dy)
+            if not land(*n) or (G["is_water"](G["cell"](m, *n)[2]) and not surf):
+                continue
+            if n in rs:
+                yield "SMASH_" + d, (mp, x, y, bs, rs - {n})
+            elif n in bs:
+                t = (n[0] + dx, n[1] + dy)
+                if land(*t) and t not in bs and t not in rs and t not in warps and not G["is_water"](G["cell"](m, *t)[2]):
+                    yield "PUSH_" + d, (mp, x, y, (bs - {n}) | {t}, rs)
+            else:
+                yield d, (mp, n[0], n[1], bs, rs)
+    return neighbors
+
+
+def live_push_objects(ss, mp):
+    """Boulders and rocks where they are now (active objects, else where map.json puts them; a smashed
+    rock's hide flag is temporary and its object is gone), and the other active objects' tiles."""
+    boulders, rocks, others = push_objects(mp)
+    st, live = W["state"](ss), {}
+    for i in range(16):
+        b = SYMS["gObjectEvents"] + 36 * i
+        if W["read"](st, b, "<B")[0] & 1:
+            x, y = W["read"](st, b + 16, "<hh")
+            live[W["read"](st, b + 8, "<B")[0]] = (x - OFF, y - OFF)
+    px, py = G["where"](ss)[1:3]
+    near = lambda xy: abs(xy[0] - px) <= 7 and abs(xy[1] - py) <= 5  # on screen: an absent object is gone
+    bs = frozenset(live.get(k, xy) for k, xy in boulders.items())
+    rs = frozenset(live.get(k, xy) for k, xy in rocks.items() if k in live or not near(xy))
+    known = set(boulders) | set(rocks) | {255}
+    return bs, rs, others | {xy for k, xy in live.items() if k not in known}
+
+
 # Arrow-tile puzzles (src/rotating_tile_puzzle.c): stepping on a floor switch moves every object that
 # stands on an arrow of the switch's colour one tile along the arrow (nothing checks where it lands).
 # shortcut: the colour order and the script name pattern are copied from the Mossdeep Gym; add the Trick
@@ -275,6 +408,10 @@ def live_neighbors(ss, avoid):
 
 
 SURF_FRAMES = 8  # frames per tile while surfing (twice walking speed)
+# Dive: A on deep water, B underwater; the text, then A on YES. The "used DIVE" text and the warp are
+# waited out by the not-free branch of the loop (B never answers a prompt here: YES is already given).
+DIVE_CMDS = {"DIVE": ["wait 2", "press A 2 120", "press A 2 60"], "EMERGE": ["wait 2", "press B 2 120", "press A 2 60"],
+             "WAIT": ["wait 8"]}  # WAIT: carried by a current, one tile at a time
 
 
 def surfing(ss):
@@ -284,7 +421,8 @@ def surfing(ss):
 
 def main():
     ss, prefix, goal = ARGV[0], ARGV[1], (ARGV[2], int(ARGV[3]), int(ARGV[4]))
-    live, surf = "--live" in ARGV, "--surf" in ARGV
+    live, dive = "--live" in ARGV, "--dive" in ARGV
+    surf = "--surf" in ARGV or dive
     min_hp = int(ARGV[ARGV.index("--min-hp") + 1]) if "--min-hp" in ARGV else 0
     avoid = []
     if "--avoid" in ARGV:
@@ -310,18 +448,21 @@ def main():
         if not free:
             c = [G["battle_press"](ss) if cb != "CB2_Overworld" else "press B 2 30"]
         else:
-            area = {goal[0].split("_")[0], mp.split("_")[0]}
+            area = {goal[0].split("_")[0], mp.split("_")[0]} | ({"Underwater"} if dive else set())
             floors = {n for n in G["ID2NAME"].values() if n.split("_")[0] in area}
             if mp in GATE_MAPS and not live:
                 st = W["state"](ss)
                 sb1 = W["read"](st, SYMS["gSaveBlock1Ptr"], "<I")[0]
                 orients = tuple(W["read"](st, sb1 + VARS_OFFSET, f"<{len(gates(mp))}B"))  # VAR_TEMP_0.. bytes
                 dirs = bfs((mp, x, y, orients), lambda st_: st_[:3] == goal, gate_neighbors(mp, live_objects(ss)))
+            elif goal[0] == mp and not live and push_objects(mp)[0]:
+                bs, rs, others = live_push_objects(ss, mp)
+                dirs = bfs((mp, x, y, bs, rs), lambda st_: st_[:3] == goal, push_neighbors(mp, others, surf))
             elif mp in TILE_PUZZLES and goal[0] == mp and not live:
                 objs = frozenset(template_objects(ss, mp) | live_objects(ss))
                 dirs = bfs((mp, x, y, objs), lambda st_: st_[:3] == goal, puzzle_neighbors(mp, objs))
             else:
-                nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf)
+                nb = live_neighbors(ss, avoid) if live else warp_neighbors(floors, surf, dive)
                 dirs = bfs((mp, x, y), goal, lambda cur: ((d, n) for d, n in nb(cur) if n not in blocked))
             if not dirs:
                 if not cmds:
@@ -332,10 +473,29 @@ def main():
             d = dirs[0].rstrip("|")
             n = 1 if not live else next((i for i, e in enumerate(dirs) if e != dirs[0]), len(dirs))
             m = G["load"](mp)
-            nx, ny = x + DIRS[d][0], y + DIRS[d][1]
-            tried = ((mp, x, y), (mp, nx, ny))
+            act, _, face = d.partition("_")
+            if act in ("PUSH", "SMASH"):
+                # Face the boulder or rock (walking into it only turns), then push, or ask the field move.
+                st = W["state"](ss)
+                sb1 = W["read"](st, SYMS["gSaveBlock1Ptr"], "<I")[0]
+                strong = (W["read"](st, sb1 + FLAGS_OFFSET + FLAG_SYS_USE_STRENGTH // 8, "<B")[0] >> (FLAG_SYS_USE_STRENGTH % 8)) & 1
+                c = ["wait 2", f"hold {face} 16", "wait 30"]
+                if act == "SMASH":
+                    c += SMASH_CMDS
+                elif not strong:
+                    c += STRENGTH_CMDS
+                facing = face
+                nxt = f"{prefix}_{k:04d}.ss"
+                G["run"](ss, c, nxt)
+                cmds += c
+                ss = nxt
+                continue
+            nx, ny = (x, y) if d in DIVE_CMDS else (x + DIRS[d][0], y + DIRS[d][1])
+            tried = None if d in DIVE_CMDS else ((mp, x, y), (mp, nx, ny))
             onto_water = 0 <= nx < m["W"] and 0 <= ny < m["H"] and G["is_water"](G["cell"](m, nx, ny)[2])
-            if surf and onto_water and not surfing(ss):
+            if d in DIVE_CMDS:
+                c = DIVE_CMDS[d]
+            elif surf and onto_water and not surfing(ss) and not underwater(mp):
                 # Face the water, A for the prompt, A for YES; the "used SURF" text is cleared by
                 # the not-free branch above.
                 c = ["wait 2", f"hold {d} 16", "wait 20", "press A 2 120", "press A 2 60"]

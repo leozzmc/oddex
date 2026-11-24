@@ -1000,6 +1000,7 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 - 錄製時踩到的坑：
   - Fly、教招式之後，START 選單的游標和背包的口袋會留在上次的位置；喝藥的按鍵巨集假設游標在 BAG、口袋在 ITEMS，所以每次 Fly 或教完招式都要把它們放回去。
   - 一串分段重跑時，中間有一段失敗而沒有停下來，後面的分段就接在舊的 savestate 上，組起來從開機跑會走偏。分段結束時除了位置，也要比 `gRngValue` 和 vblank 計數。
+  - 分段的檔名一律用小寫，後面的系列加數字前綴（`a1`…`z8`、`2a1`…），不要只靠大小寫來區分：這台 Mac 的檔案系統不分大小寫，`A1.txt` 會直接蓋掉 `a1.txt`（`to_sootopolis` 有 31 段被蓋掉，靠原指令從倖存的 savestate 重新產生、再和下一個倖存的狀態比對簽章才救回來）。
 
 ## 13. 第 6 步第八段：Tate & Liza 之後 → Juan（第 8 個徽章）
 
@@ -1138,4 +1139,58 @@ Fly 的地圖游標（每格一次方向鍵）：Mt. Pyre 山頂 → Lavaridge �
 - Juan 的招式：套用後 20 招裡有 7 招是新角色學不到的，照 Mark 在 balance.md 定的換掉，現在 20 招都學得到：Shojomai 是 Water Pulse／Attract／Teeter Dance／Draining Kiss，Yukinba 是 Icy Wind／Body Slam／Aurora Beam／Water Pulse，Jatai 是 Water Pulse／Poison Jab／Crunch／Haze；Onamazu 和 Magaryu 不變。
 - 重新同步：`resync.py prepare`（舊 ROM = a3bfcfb2，新 ROM = 這一段全部套用後）對 `to_mossdeep` 的 950 個 chunk 全部「no difference」，腳本不用改（`run`／`shots`／`assemble` 還是沒有實際用到）。80 張截圖有 9 張不同，逐張看過後更新基準：8 張是訓練家角色的性別符號（原因見 §12.3），1 張是 Haniwort 的圖鑑編號 271 → 274。
 - 沒有在遊戲裡看過：這一段還沒有路線。試過用除錯選單直接傳送去看，沒成功（選單按法跟 `to_dolls` 的不一樣），留給 `to_sootopolis`。
+
+### 13.6 `to_sootopolis`
+
+接在 `to_mossdeep` 後面（`include` 鏈有 9 層，超過 runner 原本的上限 8，所以上限改成 16）。路線：
+1. 出 Mossdeep 道館 → 回血 → Mart（15 個 Hyper Potion、20 個 Max Repel）→ 往北衝浪到 Route 125，打 7 個訓練家 → Fly 回 Mossdeep → Route 127 的 8 個訓練家。
+   - 目的是練主力，但經驗值會依等級差縮減：對手 Lv30 上下時，15 個訓練家只讓 Grinarbor 從 Lv47 升到 Lv49。
+2. Space Center：1F 的手下和樓梯口的守衛 → 2F 三個手下連戰 → 喝藥 → Steven 的雙打（截圖 t01）。
+3. Steven 家拿 HM08 → Mossdeep 南邊的水面抓一隻 Shojobob，教 Dive（蓋掉 Absorb）。
+4. Route 127 → Route 126 潛水（規劃器第一次潛水，順便遇到野生 Magatide）→ Route 128 潛水，從水裡的門浮上來進 Seafloor Cavern。
+   - Room1、Room2、Room8：巨石規劃器（敲岩石、推巨石）。Room6：水流把人帶到 Room3 的門。
+   - Room3：從下面跟手下講話，Shelly 才不會加入變成雙打；喝藥後單獨打 Shelly（截圖 t02）。
+   - Room9：Archie（截圖 t03）→ 紅色寶珠喚醒 `LEGEND_SEA`（截圖 t04）→ 被帶到 Route 128，天氣異常。
+5. Fly 到 Mossdeep 回血、再買 15 個 Hyper Potion → Route 126 潛水到火山口底下，浮上來進 Sootopolis：兩隻在水面上對打。跟著 Steven 到 Cave of Origin，告訴 Wallace `LEGEND_SKY` 在 Sky Pillar（選單要按下兩次）。
+6. Fly 到 Mossdeep → Routes 127、128、129、130、131。Route 131 一進地圖就換成 `LAYOUT_ROUTE131_SKY_PILLAR`，北邊的水道只有這個版面才通，要用 `--live`。
+7. Sky Pillar：洞口是 `MB_SOUTH_ARROW_WARP`（站上去按下）→ Wallace 開門 → 爬塔。
+   - 第一次爬（`VAR_SKY_PILLAR_STATE < 2`）用的是 `*_CLEAN` 版面，沒有裂地板，不需要 Mach Bike。
+   - 但 4F 還是分成兩半：從 3F 右邊的樓梯上去，走到 (5,4) 往右踩上 (6,4) 的裂地板（clean 版面也留著這幾格），掉到 3F 中間的小房間，那裡的樓梯才通到 4F 有 5F 樓梯的那一半。
+   - 山頂 (14,9) 的觸發點：`LEGEND_SKY` 醒來、飛走（截圖 t05）。山頂的地圖類型是 `MAP_TYPE_ROUTE`，可以直接 Fly。
+8. Fly 到 Sootopolis：`LEGEND_SKY` 出現、兩隻退場、放晴（截圖 t06）→ 跟 Maxie、Archie 講話（兩個都講過才會離開）→ Wallace 給 HM07 → 回血。
+9. 道館：三段薄冰每一格只能踩一次（踩 7、19、38 格後樓梯才出現），照解出來的走法逐個轉角走，不會掉到 B1F，一個訓練家都不用打。Juan（截圖 t07）→ Rain Badge（截圖 t08）。
+
+頭目戰結束時的 HP（David 的標準：主力 ≥ 1/3、我方沒有人倒下）：
+
+| 對戰 | 上場 | 結束時 | 標準 |
+| --- | --- | --- | --- |
+| Steven 雙打（Maxie、Tabitha） | Grinarbor Lv49、Haniwort、Terubozu | Grinarbor 0/149（倒下）、Haniwort 41/88、Terubozu 71/71 | 不套用 |
+| Shelly | Grinarbor | 70/149 | — |
+| Archie | Grinarbor Lv51 | 76/152，沒有人倒下 | 符合 |
+| Juan | Grinarbor Lv51 | 89/152，沒有人倒下 | 符合 |
+
+- Steven 雙打不套用這條標準（David，2026-11-24）：回歸路線幾乎只用一隻在打，跟一般玩家的平衡不同；三隻上場、確定能贏就好。只派主力上場會輸（主力倒下就算輸）。
+- Juan：戰鬥中主力低於 60% 時喝一瓶 Hyper Potion（只喝了一瓶）。不喝的話贏是贏，但結束時只剩 24/152。Wood Hammer 的反作用力佔了損血的大半。David 接受這個做法（2026-11-24）：標準的目的是留餘裕，玩家本來就會喝藥，所以不用另外練一隻 Magaryu。
+- 沒有練第二隻：隊伍是滿的（主力、Haniwort、Terubozu，加上 Strength／Surf、Fly、Dive 三隻 HM 載具）。
+
+Fly 的地圖游標：Route 125 → Mossdeep 是下 1；Route 127 → Mossdeep 是上 1、右 1；Route 128 → Mossdeep 是上 4；Sootopolis → Mossdeep 是右 3、上 2；Sky Pillar 山頂 → Sootopolis 是上、右、上、右、上。
+
+在遊戲裡第一次看到的地圖場景（截圖在 `~/oddex-shots/sonia/sootopolis/`）：
+- Seafloor Cavern 的甦醒、Sootopolis 的對打、Sky Pillar 山頂、Sootopolis 的到場，都能播完，沒有當機。角色是 32×32 的一般小圖，暴雨裡偏小偏暗，但看得出是誰。
+- 山頂的「翻身」原本靠 Rayquaza 專用的動畫格，現在變成左右轉頭再飛走，可以接受。
+- 修了一個問題：`SkyLegendArrives` 的淡出淡入原本用 `fadescreenspeed`，在暴雨下會把已經被天氣調暗的調色盤再調暗一次，之後大約 10 秒幾乎全黑。改用 `fadescreenswapbuffers`（原版在天氣下就是用它；指令一樣是 3 個位元組，ROM 版面不動）。
+
+這一段新增的工具（測試在 `tools/oddex/test_autopilot.py`）：
+- stepwalk `--dive`：水面上深水格的 DIVE、水底的 EMERGE，目的地讀 dive／emerge connection 和 `setdivewarp`；包含 `Underwater` 的地圖。
+- stepwalk 的巨石規劃器：BFS 的狀態包含巨石和可敲岩石的位置，`PUSH_<方向>`／`SMASH_<方向>`；第一次推會回答 Strength 的詢問。
+- stepwalk 的水流：踩上水流格只會被帶走（`carried`），一路到停下來的地方。
+- autopilot：雙打隊友戰（`multi_2_vs_2`）的隊伍選單位置是自己的隊首 0、隊友 1、自己的後備 2、3。
+
+錄製時踩到的坑：
+- 長錄製放在 `~/oddex-recording/`，不要放 session 的暫存目錄（session 重啟會被清掉，這一段因此重錄過一次）。
+- Repel 還有效時不能再用；失效時會問要不要再用一個，這時 Surf 的 A 會選到 YES。喝藥、用 Repel 的巨集都要驗證效果（HP 有沒有增加、計數是不是 250）。
+- 巡邏的訓練家追不到：站在它的原位那一排（左右走的）或那一列等它看到。
+- Route 128 → 129 要從 x=33–43 過去（x=46–54 是死水）；Route 131 的靜態版面南北不通。
+- 靜止時按住新的方向會先花 8 影格轉身，`hold RIGHT 32` 只會走一格多；要走到定點用 stepwalk。
+- 戰鬥中喝藥：行動選單 RIGHT、A（背包）、A、A（USE）、A（隊首）。
 
