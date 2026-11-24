@@ -175,7 +175,8 @@ static void quietLog(struct mLogger* logger, int category, enum mLogLevel level,
 static struct mLogger logger = { .log = quietLog };
 
 static void runScript(const char* path, int depth) {
-	if (depth > 8) {
+	// Guards against an include cycle. The story scripts chain one per segment (to_sootopolis is the tenth).
+	if (depth > 16) {
 		fprintf(stderr, "include nested too deeply: %s\n", path);
 		exit(2);
 	}
