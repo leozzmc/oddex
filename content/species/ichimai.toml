@@ -38,6 +38,7 @@ level = [
 ]
 # Surf and Dive of its own (a spirit of the well and the water), and Flash from Duskull, the vanilla
 # species it replaces on Mt. Pyre. No Cut, Strength or Rock Smash (no strength in its drowned arms).
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no STRENGTH, ROCK_SMASH (Dusclops brings them; a stack of plates pushes and breaks nothing).
 teachable = [
     "ATTRACT", "BLIZZARD", "BODY_SLAM", "CALM_MIND", "DIVE", "DREAM_EATER", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "PSYCHIC", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SUNNY_DAY", "SURF", "SWAGGER", "SWORDS_DANCE", "THIEF", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC", "WATER_PULSE"
 ]

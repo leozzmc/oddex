@@ -462,3 +462,131 @@
   - Onamazu 的 Earthquake 換成 Mud Shot:只有 Onamazu 那一格從 Lv61 降到 Lv58,整隊的門檻還是卡在王牌(Lv68),幾乎沒有用。
   - 王牌的 Ice Beam 換成 Dragon Pulse:草不變(Lv48)、火不變,水反而變難(Lv50)。不建議。
   - 我的建議是先不調,照 Tate & Liza 的做法等 Sonia 錄完看實際結果:火系玩家到這裡通常已經有水上抓的隊友,而且這一場是單打。
+
+## 四天王和 Wallace(草稿)(2026-11-24,Mark;只是分析,角色和隊伍都還沒做)
+
+### 怎麼算的
+- `tools/oddex/damage_calc.py <SIDNEY|PHOEBE|GLACIA|DRAKE|WALLACE> --summary --levels 40-90`,一對一,我方取最低亂數、對手取最高亂數。五場都是單打。
+- 我方用最終型(Grinarbor、Trekcart、Ridgeloom);原版基準用 `--vanilla 421e141a --starters SCEPTILE,BLAZIKEN,SWAMPERT`。
+- 現有角色用 `--set X:species=` 換上去;新角色還沒做,用原版的數值代替:
+  - Sidney 的 Waraningyo、Umibozu 和天狗的位置:直接用原版的 Cacturne、Crawdaunt、Shiftry(屬性和種族值都相同或幾乎相同)。
+  - Glacia 的 Yukijoro:用原版的 Glalie 和 Walrein,屬性換成冰/妖精(`--set GLALIE:types=ICE,FAIRY --set WALREIN:types=ICE,FAIRY`)。
+  - Drake 的 Amphorin(當時暫名 Taruja):用原版的 Shelgon(種族值高 17%,所以實際會比算出來的簡單);Lernagon:用原版的 Salamence,屬性換成龍/草。
+  - Wallace 的 Ningyomen:用原版的 Milotic,屬性換成水/超能力;Tentacruel 的位置用 Jatai 算(Umibozu 還沒做)。
+- 招式都還是原版那一隻的,所以有些組合不合理(例如放在 Wailord 位置的 Magaryu 用的是 Water Spout)。定案的招式等角色做出來再排。
+- 限制:只算御三家單挑。沒有算 Full Restore(四天王各 2 個、Wallace 4 個)、連打五場中間不能回 Pokémon Center、Double Team、Dragon Dance 這類強化。這些都讓實際比數字難,所以數字只能跟原版比較。
+
+### 結果:每個御三家單挑打贏全隊的最低等級
+
+| | | 草 | 火 | 水 |
+|---|---|---|---|---|
+| Sidney(Lv46–49) | 原版 | Lv48 | Lv60 | Lv53 |
+| | 建議 | Lv43 | Lv53 | Lv45 |
+| Phoebe(Lv48–51) | 原版 | Lv51 | Lv56 | Lv45 |
+| | 建議 | Lv41 | Lv59 | Lv48 |
+| Glacia(Lv50–53) | 原版 | Lv56 | Lv58 | Lv59 |
+| | 建議(Yukijoro 是冰/妖精) | Lv60 | Lv46 | Lv60 |
+| | 建議(Yukijoro 是單純的冰) | Lv54 | Lv58 | Lv60 |
+| Drake(Lv52–55) | 原版 | Lv78 | Lv70 | Lv62 |
+| | 建議 | Lv68 | **Lv83** | Lv62 |
+| Wallace(Lv55–58) | 原版 | Lv63 | Lv78 | Lv72 |
+| | 建議 | Lv58 | **90 以上** | Lv63 |
+
+### 看得出來的事
+- **草(Grinarbor,草/惡)**:整體比原版簡單。Phoebe 最明顯(Lv41 對 Lv51):惡系打幽靈是 2 倍,她的五隻都是幽靈。
+- **水(Ridgeloom,水/飛行)**:和原版差不多,Wallace 比原版簡單(Lv63 對 Lv72)。
+- **火(Trekcart,火/鋼)**:
+  - Sidney、Glacia 比原版簡單或相同。Yukijoro 是冰/妖精的話,火和鋼打她都很痛,Glacia 會變成火系最輕鬆的一場(Lv46 對原版 Lv58)。
+  - **Drake 和 Wallace 比原版難很多。** 原因和 Juan 那一場一樣:火和鋼打水/龍的 Magaryu 都只有 1/4,它在 Drake 和 Wallace 的隊伍裡各有一隻;Wallace 還有 Onamazu 的 Earthquake(對火/鋼是 4 倍)。原版的 Blaziken 有格鬥系的等倍招式可以打。
+  - 火系在原版本來就是最吃虧的(Drake Lv70、Wallace Lv78),到了聯盟也應該有一整隊,不是一隻打到底;但差距確實變大了。
+- Drake 的王牌改成龍/草之後,對冰一樣是 4 倍(和原版的龍/飛行相同),火系打它反而比原版容易(Lv54 對 Lv68)。
+
+### 可以調的地方(要不要調請使用者決定)
+- **Wallace 的 Wailord 位置不要放 Magaryu。** 改成還沒有人用的水系(例如這一批的 Umibozu 放兩個位置之一,或之後才做的角色),火系在 Wallace 就只剩 Onamazu 和王牌兩關。缺點是 Wallace 會少一隻龍。
+- **Drake 的 Kingdra 位置是對照來的**(Kingdra → Magaryu),不好動;可以把它的等級從 Lv53 降到 Lv51。
+- **Onamazu 在 Wallace 隊伍裡的 Earthquake 換成 Muddy Water**:火系那一格從 Lv84 降到和其他幾隻差不多。
+- 我的建議和 Juan、Tate & Liza 一樣:先不調,等 Sonia 錄完看實際結果。四天王是連打,真正的難度來自消耗,不是單場的門檻,這一點計算器算不到。
+
+### 定案的隊伍和招式(2026-11-24;使用者核准 6 隻新角色之後排的,`trainers.party` 由 Sonia 改)
+
+每一招都對過該角色的 TOML:升級招式要在那個等級以前學到(進化時學的也算),或在招式機/教學清單裡。粗體是換掉的招式,後面括號是原版那一格。道具照原版(四天王各 2 個 Full Restore、Wallace 4 個;王牌帶 Sitrus Berry)。
+
+**Sidney(惡)**
+
+| 原版 | 改成 | 招式 |
+|---|---|---|
+| Mightyena Lv46 | Shachowl Lv46 | Crunch / **Zen Headbutt**(Double-Edge)/ Sand Attack / **Snarl**(Roar) |
+| Shiftry Lv48 | Daibeki Lv48 | Swagger / **Iron Defense**(Double Team)/ **Magical Leaf**(Extrasensory)/ **Air Slash**(Torment) |
+| Cacturne Lv46 | Waraningyo Lv46 | Leech Seed / Feint Attack / Needle Arm / Cotton Spore(都不用換) |
+| Crawdaunt Lv48 | Umibozu Lv48 | Surf / **Scary Face**(Swords Dance)/ Strength / Facade |
+| Absol Lv49 @ Sitrus Berry | Raijuoh Lv49 @ Sitrus Berry | **Shock Wave**(Aerial Ace,同樣必中)/ **Strength**(Slash)/ **Howl**(Swords Dance)/ **Crunch**(Rock Slide) |
+
+**Phoebe(幽靈)**
+
+| 原版 | 改成 | 招式 |
+|---|---|---|
+| Dusclops Lv48 | Ichimai Lv48 | **Hex**(Shadow Punch)/ **Night Shade**(Confuse Ray)/ Curse / Protect |
+| Banette Lv49 | Kaminobi Lv49 | Shadow Ball / **Curse**(Grudge)/ Will-O-Wisp / **Sucker Punch**(Feint Attack) |
+| Sableye Lv50 | Kyozosu Lv50 | Shadow Ball / **Fake Tears**(Double Team)/ **Shadow Sneak**(Night Shade)/ Feint Attack |
+| Banette Lv49 | Kaminobi Lv49 | Shadow Ball / Psychic / Thunderbolt / Facade(都不用換) |
+| Dusclops Lv51 @ Sitrus Berry | Ichimai Lv51 @ Sitrus Berry | Shadow Ball / Ice Beam / **Muddy Water**(Rock Slide)/ **Thunderbolt**(Earthquake) |
+
+**Glacia(冰)**
+
+| 原版 | 改成 | 招式 |
+|---|---|---|
+| Sealeo Lv50 | Yukinba Lv50 | **Icy Wind**(Encore)/ Body Slam / Hail / **Avalanche**(Ice Ball) |
+| Glalie Lv50 | Yukijoro Lv50 | **Safeguard**(Light Screen)/ **Draining Kiss**(Crunch)/ Icy Wind / Ice Beam |
+| Sealeo Lv52 | Yukinba Lv52 | Attract / **Body Slam**(Double-Edge)/ Hail / Blizzard |
+| Glalie Lv52 | Yukijoro Lv52 | Shadow Ball / **Moonblast**(Explosion)/ Hail / Ice Beam |
+| Walrein Lv53 @ Sitrus Berry | Yukijoro Lv53 @ Sitrus Berry | Ice Beam / **Blizzard**(Sheer Cold)/ **Moonblast**(Surf)/ **Shadow Ball**(Body Slam) |
+
+**Drake(龍)**
+
+| 原版 | 改成 | 招式 |
+|---|---|---|
+| Shelgon Lv52 | Amphorin Lv52 | Rock Tomb / Dragon Claw / Protect / **Body Slam**(Double-Edge) |
+| Altaria Lv54 | Kumoryu Lv54 | **Take Down**(Double-Edge)/ Dragon Breath / Dragon Dance / Aerial Ace |
+| Kingdra Lv53 | Magaryu Lv53 | **Double Team**(Smokescreen)/ Dragon Dance / Surf / **Facade**(Body Slam) |
+| Flygon Lv53 | Hannyagon Lv53 | **Shadow Ball**(Flamethrower)/ Crunch / Dragon Breath / Earthquake |
+| Salamence Lv55 @ Sitrus Berry | Lernagon Lv55 @ Sitrus Berry | **Giga Drain**(Flamethrower)/ Dragon Claw / Rock Slide / Crunch |
+
+**Wallace(水)**
+
+| 原版 | 改成 | 招式 |
+|---|---|---|
+| Wailord Lv57 | Magaryu Lv57(手動指定) | Rain Dance / **Hydro Pump**(Water Spout)/ **Facade**(Double-Edge)/ Blizzard |
+| Tentacruel Lv55 | Umibozu Lv55(手動指定) | Toxic / **Surf**(Hydro Pump,牠 Lv56 才學)/ **Dark Pulse**(Sludge Bomb)/ Ice Beam |
+| Ludicolo Lv56 | Shojoran Lv56 | Giga Drain / Surf / **Draining Kiss**(Leech Seed)/ Double Team |
+| Whiscash Lv56 | Onamazu Lv56 | Earthquake / Surf / Amnesia / Hyper Beam(都不用換) |
+| Gyarados Lv56 | Kumoryu Lv56 | Dragon Dance / Earthquake / Hyper Beam / Surf(都不用換) |
+| Milotic Lv58 @ Sitrus Berry | Ningyomen Lv58 @ Sitrus Berry | Recover / Surf / Ice Beam / Toxic(都不用換) |
+
+換招的原則:
+- 學不了的才換;換成同一類的招式(變化招式換變化招式,必中換必中,一般系換一般系),威力不比原版高太多。
+- 沒有給任何一隻「打火/鋼 4 倍」的地面系補招:Raijuoh 原本想用 Dig 取代 Rock Slide,算出來火系在那一格要多 13 級,所以改成 Strength。Onamazu 和 Hannyagon、Kumoryu 的 Earthquake 是原版那一格本來就有的,沒有動。
+- Lernagon 進化時學的 Outrage、Ningyomen 的 Psychic 都沒有放進隊伍,免得王牌比原版強。
+
+### 用定案的隊伍重算(2026-11-24)
+
+實際的角色、等級、個體值(照原版那一格)和上面的招式;`trainers.party` 還沒改,所以是把隊伍直接餵給 `damage_calc` 的函式算的,算法和上面相同。同一隻出現兩三次的(Ichimai、Kaminobi、Yukinba、Yukijoro)每一隻各算各的。
+
+| | | 草 | 火 | 水 |
+|---|---|---|---|---|
+| Sidney | 原版 | Lv48 | Lv60 | Lv53 |
+| | 定案 | Lv48 | Lv65 | Lv45 |
+| Phoebe | 原版 | Lv51 | Lv56 | Lv45 |
+| | 定案 | Lv41 | Lv59 | Lv48 |
+| Glacia | 原版 | Lv56 | Lv58 | Lv59 |
+| | 定案 | Lv63 | Lv45 | Lv57 |
+| Drake | 原版 | Lv78 | Lv70 | Lv62 |
+| | 定案 | Lv62 | **Lv83** | Lv63 |
+| Wallace | 原版 | Lv63 | Lv78 | Lv72 |
+| | 定案 | Lv58 | **90 以上** | Lv63 |
+
+- 和草稿的估計比:Sidney 的火從 53 變成 65(Umibozu 的 HP 比 Crawdaunt 高很多,火/鋼要打三四下,牠的 Surf 打兩下);Glacia 的草從 60 變成 63(卡在王牌的 Ice Beam 和 Blizzard,不是 Moonblast:把 Moonblast 都拿掉,數字一樣);Drake 的草從 68 降到 62(Lernagon 沒有 Flamethrower)。
+- 結論和草稿相同:草系整體比原版輕鬆(Glacia 除外),水系差不多,**火系在 Drake 和 Wallace 明顯比原版難**,原因還是 Magaryu(火和鋼打水/龍都是 1/4)。使用者已經決定難度先不調;上面「可以調的地方」那三項還是可以用的手段。
+
+### 還沒驗證的
+- 實際對戰的結果(Sonia 錄 League 的路線時才知道);四天王連打的消耗、Full Restore、Double Team 和 Dragon Dance 的強化,計算器都算不到。
+- AI 的旗標照原版(Sidney 有 `Force Setup First Turn`):他的隊伍裡現在會強化的招式是 Daibeki 的 Iron Defense 和 Raijuoh 的 Howl,第一回合會先用。

@@ -1,0 +1,55 @@
+# League segment (docs/research/mask-designs.md, "Amphorin 和 Lernagon 的 Brief"): the first stage of Drake's dragon line,
+# replaces Bagon (wild in the inner Meteor Falls) and Shelgon. Total 360, between Bagon (300) and Shelgon (420).
+
+id = "AMPHORIN"
+name = "Amphorin"
+category = "Jar Serpent"
+
+types = ["DRAGON", "GRASS"]
+abilities = ["STURDY", "NONE", "REGENERATOR"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 55, atk = 85, def = 80, spa = 50, spd = 40, spe = 50 }   # total 360
+ev_yield = { def = 1 }
+catch_rate = 45
+exp_yield = 120
+gender = 50.0
+egg_cycles = 40
+egg_groups = ["DRAGON"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = [{ method = "LEVEL", param = 50, into = "LERNAGON" }]
+
+[dex]
+height = 8
+weight = 420
+text = """
+A young serpent that lives in an old
+wine jar in the swamp and wears a mask
+that is always weeping. It will not
+come out until the jar is too small."""
+scale = { pokemon = 400, pokemon_offset = 10, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ABSORB"], [1, "LEER"], [1, "BITE"], [9, "DRAGON_BREATH"], [17, "MEGA_DRAIN"], [25, "SCARY_FACE"], [33, "CRUNCH"], [41, "PROTECT"], [49, "DRAGON_CLAW"], [57, "GIGA_DRAIN"],
+]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no FLY (Salamence brings it; a hydra has no wings).
+teachable = [
+    "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "BULLET_SEED", "CRUNCH", "CUT", "DOUBLE_TEAM", "DRAGON_CLAW", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/amphorin"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = ["MeteorFalls_B1F_2R"]
+level_band = [25, 50]
+family = ["AMPHORIN", "LERNAGON"]

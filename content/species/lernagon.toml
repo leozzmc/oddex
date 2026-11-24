@@ -1,0 +1,55 @@
+# League segment (docs/research/mask-designs.md, "Amphorin 和 Lernagon 的 Brief"): Amphorin's evolution, replaces Salamence,
+# Drake's ace. Total 600 as Salamence; dragon/grass is 4x weak to ice as Salamence is. Moves are provisional.
+
+id = "LERNAGON"
+name = "Lernagon"
+category = "Swamp Hydra"
+
+types = ["DRAGON", "GRASS"]
+abilities = ["INTIMIDATE", "NONE", "REGENERATOR"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 95, atk = 135, def = 90, spa = 110, spd = 90, spe = 80 }   # total 600
+ev_yield = { atk = 3 }
+catch_rate = 45
+exp_yield = 300
+gender = 50.0
+egg_cycles = 40
+egg_groups = ["DRAGON"]
+growth_rate = "SLOW"
+body_color = "GREEN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 28
+weight = 2800
+text = """
+It burst its jar and kept the pieces.
+Moss and reeds grow on its back, and
+every head wears the same weeping mask.
+Cut one off, they say, and two grow."""
+scale = { pokemon = 256, pokemon_offset = 0, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [0, "OUTRAGE"], [1, "ABSORB"], [1, "LEER"], [1, "BITE"], [9, "DRAGON_BREATH"], [17, "MEGA_DRAIN"], [25, "SCARY_FACE"], [33, "CRUNCH"], [41, "PROTECT"], [49, "DRAGON_CLAW"], [55, "GIGA_DRAIN"], [61, "DRAGON_DANCE"], [67, "WOOD_HAMMER"],
+]
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no FLY (Salamence brings it; a hydra has no wings).
+teachable = [
+    "ATTRACT", "BODY_SLAM", "BRICK_BREAK", "BULLET_SEED", "CRUNCH", "CUT", "DOUBLE_TEAM", "DRAGON_CLAW", "DRAGON_PULSE", "EARTHQUAKE", "ENDURE", "ENERGY_BALL", "FACADE", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "REST", "RETURN", "ROCK_SLIDE", "ROCK_SMASH", "ROCK_TOMB", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/lernagon"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SHAKE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "SLOW"
+shadow = { x = 0, y = 8, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [50, 60]
+family = ["AMPHORIN", "LERNAGON"]

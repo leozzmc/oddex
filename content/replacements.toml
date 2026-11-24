@@ -46,10 +46,20 @@ stage_mismatch_ok = [
     "LUVDISC",     # single-stage (330) onto stage-2 Shojomai (340), Route 125
     "SEAKING",     # stage 2 onto stage-1 Kamorai (310 vs 450), Goldeen's creature; the line has no stage 2
     # Sootopolis segment (mask-designs.md "Sootopolis 段"):
-    "CRAWDAUNT",   # stage 2 onto single-stage Jatai (458 vs 468): Juan; Corphish's Namazura evolves into Whiscash's slot
+    "CRAWDAUNT",   # stage 2 onto a single-stage creature: Jatai for Juan (applied in [sootopolis]), Umibozu from the League on
     "WAILORD",     # stage 2 onto single-stage Kumoryu (490 vs 500): one wild slot on Route 129; Kamorai has no stage 2
     "MEDICHAM",    # stage 2 onto stage-3 Yokozunat (395 vs 410): one trainer; Gachirinza (Meditite) would be -32%
     "KINGDRA",     # stage 3 onto stage-2 Magaryu (500 vs 540): one evolution covers Seadra and Kingdra
+    # League segment (mask-designs.md "League 段"):
+    "SABLEYE",     # single-stage (380) onto stage-2 Kyozosu (420): Phoebe's Lv50 slot; Kyokon (240) was -37%
+    "TORKOAL",     # single-stage (470) onto stage-2 Kamadoro (460); Shishiblaze (310) was -34%
+    "DUSCLOPS",    # stage 2 onto single-stage Ichimai (400 vs 455), Duskull's creature
+    "CACTURNE",    # stage 2 onto single-stage Waraningyo (475 = 475); Cacnea stays Okinoir
+    "GLALIE",      # stage 2 onto single-stage Yukijoro (500 vs 480)
+    "WALREIN",     # stage 3 onto single-stage Yukijoro (500 vs 530): one creature covers Glacia's two lines' tops
+    "MILOTIC",     # stage 2 onto single-stage Ningyomen (540 = 540); Feebas stays the FISHING_SPOT role
+    "SHELGON",     # stage 2 onto stage-1 Amphorin (360 vs 420): one creature covers Bagon and Shelgon
+    "SALAMENCE",   # stage 3 onto stage-2 Lernagon (600 = 600): the line has two stages
 ]
 
 [replace]
@@ -115,14 +125,14 @@ PIKACHU = "INARIZUMA"
 # rival's fire types, Kamorai for Wailmer, Okinoir for Oddish (Route 110 onward).
 MAKUHITA = "SHISHIBLAZE"
 SLUGMA = "SHISHIBLAZE"
-TORKOAL = "SHISHIBLAZE"
+TORKOAL = "KAMADORO"     # was Shishiblaze (310, -34%) until the League segment; scopes already applied keep it
 WAILMER = "KAMORAI"
 ODDISH = "OKINOIR"
 # Existing species for the rest: Bekurama is the only stage-1 steel type (Aron); Kyokon keeps the
 # ghost type (Sableye); Shojobob floats on the water like Tentacool. The Dewford pair are new:
 # Gachirinza for the gym's Meditite, Komorimen for Granite Cave's Zubat.
 ARON = "BEKURAMA"
-SABLEYE = "KYOKON"
+SABLEYE = "KYOZOSU"      # was Kyokon (240, -37%) until the League segment; scopes already applied keep it
 TENTACOOL = "SHOJOBOB"
 MEDITITE = "GACHIRINZA"
 ZUBAT = "KOMORIMEN"
@@ -237,12 +247,12 @@ HERACROSS = "YOKOZUNAT"  # bug/fighting, 500 -> 395 (-21%)
 PHANPY = "MANDALUMB"     # ground, 330 -> 280 (-15%)
 # Sootopolis segment (mask-designs.md "Sootopolis 段"; the user's decisions of 2026-11-23): Routes 126-134,
 # the underwater routes, Juan, and Steven's partner team (src/data/battle_partners.party).
-CRAWDAUNT = "JATAI"      # stage 2, 468 -> 458 (-2%); Juan
+CRAWDAUNT = "UMIBOZU"    # water/dark like it, 468 -> 470. Juan's was applied as Jatai in [sootopolis] and stays
 WAILORD = "KUMORYU"      # stage 2, 500 -> 490 (-2%); Route 129
 CLAMPERL = "MAGATIDE"    # water, 345 -> 255 (-26%, flagged; underwater wild): the pearl and the jewel
 RELICANTH = "DOGOGGLE"   # rock, 485 -> 355 (-27%, flagged; underwater wild): the living fossil and the dug-up dogu
 CORSOLA = "HANIWORT"     # rock, 410 -> 355 (-13%); Pacifidlog stands on rows of them
-BAGON = "MAGATIDE"       # dragon, 300 -> 255 (-15%); the Pacifidlog trade uses roles instead
+BAGON = "AMPHORIN"       # dragon, 300 -> 360 (+20%, flagged; wild in the inner Meteor Falls). Route 134's was applied as Magatide and stays
 MEDICHAM = "YOKOZUNAT"   # fighting, 410 -> 395 (-4%)
 METANG = "KAGURAI"       # steel, 420 -> 465 (+11%); Steven's partner team
 AGGRON = "DAIBEKI"       # steel, 530 -> 480 (-9%); Aron's line. Steven's third slot is hand-set to Enigmen
@@ -254,3 +264,17 @@ KINGDRA = "MAGARYU"      # 540 -> 500 (-7%); Juan's ace
 KYOGRE = "SOKONEMU"
 GROUDON = "OKAFUMI"
 RAYQUAZA = "UTSUROBAN"
+# League segment (mask-designs.md "League 段"; the user's decisions of 2026-11-24): Victory Road, the inner Meteor
+# Falls, the Elite Four and Wallace. Sableye, Crawdaunt, Torkoal and Bagon changed above.
+CACTURNE = "WARANINGYO"  # grass/dark like it, same total (475); Sidney
+GLALIE = "YUKIJORO"      # ice, 480 -> 500 (+4%); Glacia
+WALREIN = "YUKIJORO"     # ice, 530 -> 500 (-6%); Glacia's ace
+MILOTIC = "NINGYOMEN"    # water, same total (540); Wallace's ace
+DUSCLOPS = "ICHIMAI"     # ghost, 455 -> 400 (-12%); Phoebe
+FLYGON = "HANNYAGON"     # stage 3, dragon, 520 = 520; Drake
+LAIRON = "KARABEKI"      # stage 2, steel, 430 -> 340 (-21%, flagged; Victory Road wild only): Aron's line
+LANTURN = "KAGURAI"      # stage 2, electric, 460 -> 465 (+1%)
+MUK = "NOBUSUMEN"        # stage 2, poison, 500 -> 480 (-4%)
+NINETALES = "KAMADORO"   # stage 2, fire, 505 -> 460 (-9%)
+SHELGON = "AMPHORIN"     # dragon, 420 -> 360 (-14%); Drake
+SALAMENCE = "LERNAGON"   # dragon, same total (600); Drake's ace
