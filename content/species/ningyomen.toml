@@ -1,0 +1,55 @@
+# League segment (docs/research/mask-designs.md, "Ningyomen 的 Brief"): replaces Milotic, Wallace's ace.
+# Stats as Milotic; moves are provisional.
+
+id = "NINGYOMEN"
+name = "Ningyomen"
+category = "Face Fish"
+
+types = ["WATER", "PSYCHIC"]
+abilities = ["MARVEL_SCALE", "NONE", "CUTE_CHARM"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 95, atk = 60, def = 79, spa = 100, spd = 125, spe = 81 }   # total 540
+ev_yield = { spd = 2 }
+catch_rate = 60
+exp_yield = 189
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["WATER_1", "DRAGON"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 40
+weight = 1100
+text = """
+A long fish with the face of a young
+woman. When one is seen, a great harvest
+or a great wave is coming. It is said a
+girl who ate one lived 800 years."""
+scale = { pokemon = 256, pokemon_offset = 2, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "WATER_GUN"], [1, "CONFUSION"], [1, "WRAP"], [7, "REFRESH"], [13, "WATER_PULSE"], [19, "TWISTER"], [25, "PSYBEAM"], [31, "AQUA_RING"], [37, "RECOVER"], [43, "AQUA_TAIL"], [49, "PSYCHIC"], [55, "RAIN_DANCE"], [61, "HYDRO_PUMP"], [67, "FUTURE_SIGHT"],
+]
+# HMs as Milotic: Surf, Waterfall, Dive.
+teachable = [
+    "ATTRACT", "BLIZZARD", "CALM_MIND", "DIVE", "DOUBLE_TEAM", "ENDURE", "FACADE", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "HYPER_BEAM", "ICE_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SAFEGUARD", "SECRET_POWER", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SURF", "SWAGGER", "TOXIC", "WATERFALL", "WATER_PULSE",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/ningyomen"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 8, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [43, 58]
+family = ["NINGYOMEN"]

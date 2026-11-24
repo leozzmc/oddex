@@ -1,0 +1,56 @@
+# League segment (docs/research/mask-designs.md, "Yukijoro 的 Brief"): replaces Glalie and Walrein (Glacia, three
+# of her five). Total 500, between Glalie (480) and Walrein (530); moves are provisional.
+
+id = "YUKIJORO"
+name = "Yukijoro"
+category = "Snow Woman"
+
+types = ["ICE", "FAIRY"]
+abilities = ["SNOW_CLOAK", "NONE", "CURSED_BODY"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 80, atk = 60, def = 80, spa = 110, spd = 100, spe = 70 }   # total 500
+ev_yield = { spa = 2 }
+catch_rate = 60
+exp_yield = 180
+gender = 100.0   # percent female: always female
+egg_cycles = 20
+egg_groups = ["FAIRY", "AMORPHOUS"]
+growth_rate = "MEDIUM_FAST"
+body_color = "WHITE"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 17
+weight = 20
+text = """
+On nights of heavy snow a tall woman in
+white stands by the road. Her hair blows
+level in the storm. Her breath is white
+smoke, and what it touches goes still."""
+scale = { pokemon = 300, pokemon_offset = 6, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "POWDER_SNOW"], [1, "LEER"], [1, "ASTONISH"], [7, "DOUBLE_TEAM"], [13, "ICY_WIND"], [19, "DRAINING_KISS"], [25, "ICE_SHARD"], [31, "HAIL"], [37, "AURORA_BEAM"], [43, "MOONBLAST"], [50, "ICE_BEAM"], [56, "BLIZZARD"], [62, "SHEER_COLD"],
+]
+# HMs follow the vanilla species it replaces, except: no SURF, STRENGTH, ROCK_SMASH, WATERFALL, DIVE (Walrein brings
+# them; a snow woman neither swims nor pushes rocks). FLASH is from Glalie.
+teachable = [
+    "ATTRACT", "BLIZZARD", "DOUBLE_TEAM", "ENDURE", "FACADE", "FLASH", "FRUSTRATION", "HAIL", "HIDDEN_POWER", "ICE_BEAM", "PROTECT", "REST", "RETURN", "SAFEGUARD", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/yukijoro"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SHAKE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [43, 58]
+family = ["YUKIJORO"]

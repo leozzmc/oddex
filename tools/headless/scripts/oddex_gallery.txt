@@ -216,10 +216,10 @@ press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
@@ -505,13 +505,13 @@ shot gallery/1639_shojoran.png
 press START 2 120
 shot gallery/1639_shojoran_shiny.png
 press START 2 120
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
-press DOWN 2 20
 press LEFT 2 10
 press UP 2 20
 press RIGHT 2 10
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
+press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
 press DOWN 2 20
@@ -551,4 +551,28 @@ wait 120
 shot gallery/1645_utsuroban.png
 press START 2 120
 shot gallery/1645_utsuroban_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1646_ningyomen.png
+press START 2 120
+shot gallery/1646_ningyomen_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1647_umibozu.png
+press START 2 120
+shot gallery/1647_umibozu_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1648_waraningyo.png
+press START 2 120
+shot gallery/1648_waraningyo_shiny.png
+press START 2 120
+press UP 2 20
+wait 120
+shot gallery/1649_yukijoro.png
+press START 2 120
+shot gallery/1649_yukijoro_shiny.png
 press START 2 120

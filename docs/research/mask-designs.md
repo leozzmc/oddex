@@ -1162,6 +1162,30 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 
 ## League 段(草稿)(2026-11-24,Mark;Juan 之後 → 冠軍。只有文件,沒有動美術和資料;正式的範圍等 Sonia 定)
 
+**狀態(2026-11-24,使用者的決定,David 轉達)**:
+- 6 隻新角色都做,都用方案 A;Sidney 維持 4 隻惡系加天狗,不做第 7 隻;Yukijoro 冰/妖精;難度先不調;名字暫定。
+- 舊對照改成 Sableye → Kyozosu、Crawdaunt → Umibozu、Torkoal → Kamadoro(已經 strict 的範圍不動:`apply_replacements --dry-run` 在 `[mossdeep]`、`[sootopolis]` 都是 0 筆);Lairon → Karabeki 接受。Bagon → Taruja 等龍系線定案。
+- **做好的 4 隻**(`feat/league-draft`):Umibozu、Waraningyo、Yukijoro、Ningyomen,模型、TOML、對照、手點的臉。遊戲內截圖:`~/oddex-shots/mark/league/01_four_gallery_dex_2x.png`。和 Brief 不同的地方:
+  - Umibozu:手拿的勺子在 64 px 是一個圈加一根柄(看得穿的圈就是「沒有底」);海畫成一塊有厚度的水面。
+  - Waraningyo:比 Brief 寫的圓胖(細瘦的稻草束在 64 px 只剩幾條線);一隻眼是墨點,另一隻的位置是釘子的灰色釘頭;蠟燭三根。
+  - Yukijoro:頭髮吹成一面收成尖端的三角旗(一束一束分開時,末端像一隻手)。
+  - Ningyomen:照 Brief;身體的色帶比預想的淡。
+- **Taruja 和 Yatsuoro 還沒做,等使用者決定原型**(見下面「八岐大蛇的查證」)。
+- 圖鑑:4 隻排在傳說三隻前面,所以傳說三隻的編號從 285–287 變成 289–291。
+
+### 八岐大蛇的查證(2026-11-24;使用者要求建模前先查)
+- **伊富岐神社**(岐阜縣垂井町,美濃國二宮,現存):現在的祭神是伊吹大神,但祭神自古有幾種說法,其中一說是八岐大蛇(依據是《日本書紀》裡擊退倭建命的伊吹山神是大蛇);另有多多美彦命、素戔嗚命等說。
+- **伊夫岐神社**(滋賀縣米原市,現存):祭神是伊吹大明神(伊吹山的神);有依《源平盛衰記》的解釋,說伊吹大明神是八岐大蛇的化身。草稿裡寫的「中世文獻」就是這個;當時以為是《平家物語》剣巻,那一段原文沒有查到。
+- 島根縣雲南市有一座小祠(岩坪神社境內的「大蛇神社」),觀光網站說祭的是大蛇的一段尾巴;須佐神社保存著傳說是大蛇骨頭的東西。
+- 結論:它主要是神話裡被斬的怪物,但**不是完全沒有被祭祀**。照使用者的條件,這兩隻先停。提給使用者的選項:(1) 照原案只取石見神樂的蛇身和龍面;(2) 換成希臘神話的勒拿九頭蛇(被 Heracles 殺掉的怪物,沒有被祭祀;雙耳陶瓶取代酒樽,每個頭戴希臘悲劇面具),輪廓和兩階段的構想不變;(3) 其他原型。
+- 來源(多半是維基百科、觀光網站和整理文章,沒有查到神社自己的由緒書):
+  - https://ja.wikipedia.org/wiki/伊富岐神社
+  - https://maibarand.shiga.jp/ibuki-shrine/
+  - https://ja.wikipedia.org/wiki/伊吹山
+  - https://japanese-religions.com/en/jr9200005004942
+  - https://www.kankou-shimane.com/en/japanesemythology/yamata-no-orochi/
+  - https://en.wikipedia.org/wiki/Yamata_no_Orochi
+
 ### 範圍和清單是怎麼來的
 - 我自己用 `check_species_refs.py --maps <地圖前綴> --json` 掃的:Ever Grande City(含 Pokémon League 的大廳、四個房間、冠軍房間)、Victory Road 三層、Meteor Falls 要攀瀑才進得去的內層(`MeteorFalls_1F_2R`、`MeteorFalls_B1F_1R`、`MeteorFalls_B1F_2R`)。Route 128 以前的海路已經在 `[sootopolis]` 裡。
 - 訓練家是從這些地圖的腳本找出來的,只有第一次對戰的隊伍,不含 rematch。四天王、Wallace 和 Victory Road 的 Wally 都在內。

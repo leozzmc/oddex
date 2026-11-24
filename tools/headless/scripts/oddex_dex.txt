@@ -304,14 +304,30 @@ shot dex/284_iwadusk.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/285_sokonemu.png
+shot dex/285_umibozu.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/286_okafumi.png
+shot dex/286_waraningyo.png
 press B 2 90
 press DOWN 2 20
 press A 2 150
-shot dex/287_utsuroban.png
+shot dex/287_yukijoro.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/288_ningyomen.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/289_sokonemu.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/290_okafumi.png
+press B 2 90
+press DOWN 2 20
+press A 2 150
+shot dex/291_utsuroban.png
 press B 2 90
 press DOWN 2 20

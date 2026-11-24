@@ -33,7 +33,7 @@ scale = { pokemon = 541, pokemon_offset = 19, trainer = 256, trainer_offset = 0 
 level = [
     [1, "TACKLE"], [1, "THUNDER_SHOCK"], [1, "SUPERSONIC"], [9, "METAL_SOUND"], [13, "SPARK"], [17, "MIRROR_SHOT"], [21, "ELECTRO_BALL"], [25, "FLASH_CANNON"], [29, "DISCHARGE"], [30, "TRI_ATTACK"], [36, "LOCK_ON"], [42, "ZAP_CANNON"],
 ]
-# HMs follow the vanilla species it replaces (content/replacements.toml), except: no CUT, STRENGTH, ROCK_SMASH (Metang brings them; a cluster of bells has no limbs).
+# HMs follow the vanilla species it replaces (content/replacements.toml), except: no CUT, STRENGTH, ROCK_SMASH (Metang brings them; a cluster of bells has no limbs) and no SURF, WATERFALL, DIVE (Lanturn brings them; bells do not swim).
 teachable = [
     "ATTRACT", "ENDURE", "FACADE", "FLASH", "FLASH_CANNON", "FRUSTRATION", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHOCK_WAVE", "SLEEP_TALK", "SNORE", "SUBSTITUTE", "SWAGGER", "THUNDER", "THUNDERBOLT", "THUNDER_WAVE", "TOXIC",
 ]

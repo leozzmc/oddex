@@ -35,7 +35,8 @@ scale = { pokemon = 300, pokemon_offset = 4, trainer = 256, trainer_offset = 0 }
 level = [
     [0, "CROSS_POISON"], [1, "ABSORB"], [1, "SUPERSONIC"], [1, "SCREECH"], [5, "ASTONISH"], [9, "POISON_FANG"], [13, "WING_ATTACK"], [17, "BITE"], [21, "AIR_CUTTER"], [26, "POISON_JAB"], [31, "AIR_SLASH"], [36, "MEAN_LOOK"], [41, "HAZE"], [46, "VENOSHOCK"], [51, "CONFUSE_RAY"], [56, "LEECH_LIFE"],
 ]
-# HMs follow Golbat and Crobat, the vanilla species it replaces: Fly only.
+# HMs follow Golbat and Crobat, the vanilla species it replaces: Fly only. Muk (League segment) would add STRENGTH and
+# ROCK_SMASH; not given (a bat spread like a quilt has nothing to push with).
 teachable = [
     "AERIAL_ACE", "ATTRACT", "CRUNCH", "DARK_PULSE", "DOUBLE_TEAM", "ENDURE", "FACADE", "FLY", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "HYPER_BEAM", "PROTECT", "RAIN_DANCE", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SLUDGE_BOMB", "SNATCH", "SNORE", "STEEL_WING", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "TAUNT", "THIEF", "TORMENT", "TOXIC", "X_SCISSOR",
 ]

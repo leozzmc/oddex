@@ -1,0 +1,55 @@
+# League segment (docs/research/mask-designs.md, "Waraningyo 的 Brief"): replaces Cacturne (Sidney).
+# Stats and types as Cacturne; moves are provisional.
+
+id = "WARANINGYO"
+name = "Waraningyo"
+category = "Straw Doll"
+
+types = ["GRASS", "DARK"]
+abilities = ["CURSED_BODY", "NONE", "WATER_ABSORB"]   # [slot 1, slot 2, hidden]
+base_stats = { hp = 70, atk = 115, def = 60, spa = 115, spd = 60, spe = 55 }   # total 475
+ev_yield = { atk = 1, spa = 1 }
+catch_rate = 60
+exp_yield = 166
+gender = 50.0
+egg_cycles = 20
+egg_groups = ["GRASS", "AMORPHOUS"]
+growth_rate = "MEDIUM_FAST"
+body_color = "BROWN"
+cry = "NONE"
+evolutions = []   # [{ method, param, into }]
+
+[dex]
+height = 13
+weight = 60
+text = """
+A straw doll nailed to a tree at two in
+the morning. Its face is paper, drawn in
+ink. Three candles burn on the iron
+stand it wears, and never burn down."""
+scale = { pokemon = 300, pokemon_offset = 6, trainer = 256, trainer_offset = 0 }
+
+[learnset]
+level = [
+    [1, "ABSORB"], [1, "LEER"], [1, "ASTONISH"], [9, "GROWTH"], [13, "LEECH_SEED"], [17, "PIN_MISSILE"], [21, "INGRAIN"], [26, "FEINT_ATTACK"], [32, "NEEDLE_ARM"], [38, "COTTON_SPORE"], [44, "DESTINY_BOND"], [50, "WOOD_HAMMER"],
+]
+# HMs as Cacturne: Cut (its nails), Strength, Flash (its candles).
+teachable = [
+    "ATTRACT", "BULLET_SEED", "CUT", "DOUBLE_TEAM", "ENDURE", "ENERGY_BALL", "FACADE", "FLASH", "FRUSTRATION", "GIGA_DRAIN", "HIDDEN_POWER", "PROTECT", "REST", "RETURN", "SECRET_POWER", "SHADOW_BALL", "SLEEP_TALK", "SNORE", "SOLAR_BEAM", "STRENGTH", "SUBSTITUTE", "SUNNY_DAY", "SWAGGER", "SWORDS_DANCE", "THIEF", "TOXIC",
+]
+egg = []
+
+
+[graphics]
+dir = "graphics/pokemon/oddex/waraningyo"   # rendered by tools/oddex/blender/make_art.py
+front_anim = "V_SQUISH_AND_BOUNCE"
+front_frames = [[0, 6], [1, 15], [0, 6], [1, 15], [0, 3]]
+back_anim = "CONCAVE_ARC_LARGE"
+jump = "NONE"
+shadow = { x = 0, y = 6, size = "L" }
+overworld = { size = "32x32", shadow = "M", tracks = "NONE" }
+
+[design]
+habitat = []
+level_band = [43, 58]
+family = ["WARANINGYO"]

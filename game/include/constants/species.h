@@ -1766,6 +1766,10 @@ enum __attribute__((packed)) Species
     SPECIES_OKAFUMI,
     SPECIES_SOKONEMU,
     SPECIES_UTSUROBAN,
+    SPECIES_NINGYOMEN,
+    SPECIES_UMIBOZU,
+    SPECIES_WARANINGYO,
+    SPECIES_YUKIJORO,
     // oddex:species-ids end
     SPECIES_CUSTOM_END,
 
