@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-24 | **League 段（Ever Grande、Victory Road、Meteor Falls 內層、四天王、Wallace）**：新做 6 隻，都用方案 A：Umibozu（海坊主，水/惡）、Waraningyo（丑時參拜的稻草人偶，草/惡）、Yukijoro（雪女，冰/妖精，小泉八雲《怪談》1904）、Taruja→Yatsuoro（龍/草，只取石見神樂「大蛇」道具的造型，不提神話名字、不畫劍）、Ningyomen（人魚，水/超能力）；Sidney 維持 4 惡＋1；舊對照改成 Sableye→Kyozosu、Crawdaunt→Umibozu、Bagon→Taruja、Torkoal→Kamadoro（已 strict 的範圍不改）；Lairon→Karabeki（−21%，只有野生）；難度先不調，等路線錄完再看；名字暫定 | 使用者 | 草稿見 feat/league-draft 的 mask-designs.md「League 段」和 balance.md「四天王和 Wallace」；八岐大蛇和伊吹山的關係、有沒有被祭祀，Mark 建模前要查證，是現存信仰的祭神就回來問使用者 |
 | 2026-11-23 | 標題畫面：背景換成 Utsuroban 的剪影（feat/title-screen b91a8daa）；上面的「POKéMON」標題字維持原版，副標題「EMERALD VERSION」改成「ODDEX」，底部的「©2005 GAME FREAK inc.」改成「FAN GAME, NOT OFFICIAL」的寫法；開機動畫另外處理 | 使用者 | Mark 的兩個 ODDEX 標題字草稿（漆面能面、夜裡的眼睛）沒有採用，放在 ~/oddex-shots/mark/title/ |
 | 2026-11-23 | 核准傳說三隻的設計：Sokonemu（LEGEND_SEA）、Okafumi（LEGEND_LAND）、Utsuroban（LEGEND_SKY），feat/sootopolis-batch 3c9c74a8；Utsuroban 地圖小圖箱子上的紅色「+」（像紅十字標誌）要拿掉；劇情裡的大型物件先用角色自己的 32×32 地圖圖（OBJ_EVENT_GFX_SPECIES），睡姿和 64×64 飛行圖等在遊戲裡看過再決定 | 使用者 | 紅十字標誌受國際法保護，遊戲裡不用 |
 | 2026-11-23 | 核准 Onamazu、Magaryu、Yukinba 的美術（feat/sootopolis-batch 385eb501）；Onamazu 額頭的面具碎片不留眼洞（64 px 會被看成第三隻眼） | 使用者 | 截圖 ~/oddex-shots/mark/sootopolis/01_gallery_dex_2x.png |
