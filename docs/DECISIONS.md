@@ -2,6 +2,7 @@
 
 | 日期 | 決策 | 決定者 | 備註 |
 |---|---|---|---|
+| 2026-11-24 | League 段 6 隻全部定案：Yukijoro 第二版（上半身＋暴風雪漩渦、冰藍髮、能面）通過；九頭蛇線 Amphorin → Lernagon 維持龍/草（知道跟原版 Hydrapple 的概念重疊，外型已拉開，接受） | 使用者 | feat/league-draft 4159f94e；截圖 ~/oddex-shots/mark/league/03、04 |
 | 2026-11-24 | League 段：Umibozu、Waraningyo、Ningyomen 的美術通過；Yukijoro 重新設計成「只有上半身的女子，和服下擺化成暴風雪的漩渦，輪廓要有分量」；Drake 的龍系線從八岐大蛇改成勒拿九頭蛇（雙耳陶瓶裡的小蛇 → 撐破陶瓶、每個頭戴皺眉悲劇面具的多頭蛇，龍/草 600） | 使用者 | 八岐大蛇在伊吹山一帶的現存神社是祭神的諸說之一，依「真實信仰的神不能捕捉」的規則換掉（Mark 的查證寫在 mask-designs.md） |
 | 2026-11-24 | **League 段（Ever Grande、Victory Road、Meteor Falls 內層、四天王、Wallace）**：新做 6 隻，都用方案 A：Umibozu（海坊主，水/惡）、Waraningyo（丑時參拜的稻草人偶，草/惡）、Yukijoro（雪女，冰/妖精，小泉八雲《怪談》1904）、Taruja→Yatsuoro（龍/草，只取石見神樂「大蛇」道具的造型，不提神話名字、不畫劍）、Ningyomen（人魚，水/超能力）；Sidney 維持 4 惡＋1；舊對照改成 Sableye→Kyozosu、Crawdaunt→Umibozu、Bagon→Taruja、Torkoal→Kamadoro（已 strict 的範圍不改）；Lairon→Karabeki（−21%，只有野生）；難度先不調，等路線錄完再看；名字暫定 | 使用者 | 草稿見 feat/league-draft 的 mask-designs.md「League 段」和 balance.md「四天王和 Wallace」；八岐大蛇和伊吹山的關係、有沒有被祭祀，Mark 建模前要查證，是現存信仰的祭神就回來問使用者 |
 | 2026-11-23 | 標題畫面：背景換成 Utsuroban 的剪影（feat/title-screen b91a8daa）；上面的「POKéMON」標題字維持原版，副標題「EMERALD VERSION」改成「ODDEX」，底部的「©2005 GAME FREAK inc.」改成「FAN GAME, NOT OFFICIAL」的寫法；開機動畫另外處理 | 使用者 | Mark 的兩個 ODDEX 標題字草稿（漆面能面、夜裡的眼睛）沒有採用，放在 ~/oddex-shots/mark/title/ |
