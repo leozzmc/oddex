@@ -563,12 +563,12 @@ SootopolisCity_EventScript_SkyLegendArrives::
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreBackOff
 	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonBackOff
 	waitmovement 0
-	fadescreenspeed FADE_TO_BLACK, 8
+	fadescreenswapbuffers FADE_TO_BLACK  @ not fadescreen: under the downpour that darkens the palettes twice
 	call SootopolisCity_EventScript_SetRoughWater
 	special DrawWholeMapView
 	removeobject LOCALID_SOOTOPOLIS_GROUDON
 	removeobject LOCALID_SOOTOPOLIS_KYOGRE
-	fadescreenspeed FADE_FROM_BLACK, 8
+	fadescreenswapbuffers FADE_FROM_BLACK
 	return
 
 SootopolisCity_Movement_GroudonBackOff:
