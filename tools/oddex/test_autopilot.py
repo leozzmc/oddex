@@ -127,6 +127,15 @@ class StageReachTest(unittest.TestCase):
         self.assertNotIn("Route105", maps())
         self.assertIn("Route105", maps("--surf"))
 
+    def test_waterfall_opens_ever_grande(self):
+        import subprocess
+        sr = os.path.join(os.path.dirname(AP), "stage_reach.py")
+        def maps(*flags):
+            return subprocess.run([sys.executable, "-I", sr, "EverGrandeCity", "20", "69", "EverGrandeCity,VictoryRoad_1F",
+                                   "--surf", *flags], capture_output=True, text=True, check=True).stdout.splitlines()[0]
+        self.assertNotIn("VictoryRoad_1F", maps())
+        self.assertIn("VictoryRoad_1F", maps("--waterfall"))
+
 
 class AutopilotTest(unittest.TestCase):
     def test_hm_moves_are_the_eight_hms(self):

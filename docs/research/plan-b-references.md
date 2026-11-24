@@ -1194,3 +1194,47 @@ Fly 的地圖游標：Route 125 → Mossdeep 是下 1；Route 127 → Mossdeep �
 - 靜止時按住新的方向會先花 8 影格轉身，`hold RIGHT 32` 只會走一格多；要走到定點用 stepwalk。
 - 戰鬥中喝藥：行動選單 RIGHT、A（背包）、A、A（USE）、A（隊首）。
 
+## 14. 第 6 步第九段：Juan 之後 → Wallace（殿堂）
+
+草稿（2026-11-25）：`content/migration_scope.toml` 的 `[league]`，`strict = false`，還沒有套用任何東西。Mark 的 6 隻新角色和對照表在 `feat/league-draft`（6c4dadd7），合進 develop 之後才能套用。
+
+### 14.1 可達性和範圍邊界
+
+- `stage_reach.py` 新增 `--waterfall`（以前瀑布一律過不去）。從 Ever Grande 下面的海面出發，對整個地表跑兩次（`--rock-smash --cut --strength --surf`，有和沒有 `--waterfall`），多出來的就是這一段：
+  - Ever Grande 瀑布以上：城市、Pokémon Center、聯盟大廳、四天王和冠軍的房間、殿堂。
+  - Victory Road 1F、B1F、B2F。
+  - Meteor Falls 內層：`1F_2R`、`B1F_1R`、`B1F_2R`，以及最裡面的 `StevensCave`。
+  - Route 114、Route 119 的瀑布上面只有道具，沒有新的訓練家或野生表。
+- 人工加入（劇情觸發）：Victory Road 出口的 Wally（`TRAINER_WALLY_VR_1`）、四天王、Wallace。
+- Ever Grande 自己的水面和釣魚表有 Surf 就到得了，但前面沒有任何範圍收它，放進這一段。
+- 排除（破關後）：Meteor Falls 最裡面的 Steven（房間破關前就進得去，所以野生表放進來）、Wally 的再戰（`TRAINER_WALLY_VR_2` 起）、所有 `_2`–`_5` 的再戰。
+- 24 名訓練家：Meteor Falls 2 組、Victory Road 16 名、Wally、四天王、Wallace。20 個野生表（8 張地圖）。
+
+### 14.2 範圍內的原版角色
+
+`check_species_refs.py --scope league`：235 處、64 種，全部是資料（party 71、wild 164）；腳本、文字、地圖物件、C 都是 0。
+
+- 64 種在 Mark 的對照表（`feat/league-draft` 的 `content/replacements.toml`）裡都有對應，沒有缺漏。
+- 其中 16 種是這一批新增或改掉的對應：
+  - 新角色：Cacturne → Waraningyo、Glalie／Walrein → Yukijoro、Milotic → Ningyomen、Shelgon → Amphorin、Salamence → Lernagon。
+  - 舊對應改掉（已 strict 的範圍不受影響，那些檔案裡已經沒有原版名字）：Sableye → Kyozosu（原本 Kyokon）、Torkoal → Kamadoro（原本 Shishiblaze）、Crawdaunt → Umibozu（原本 Jatai）、Bagon → Amphorin（原本 Magatide）。
+  - 第一次出現的對應：Dusclops → Ichimai、Flygon → Hannyagon、Lairon → Karabeki、Lanturn → Kagurai、Muk → Nobusumen、Ninetales → Kamadoro。
+- 套用之後要手改的（`trainers.party`）：
+  - Wallace 的兩格不照對照表：Wailord 的位置放 Magaryu（表上是 Kumoryu）、Tentacruel 的位置放 Umibozu（表上是 Jatai）。
+  - 四天王和 Wallace 的招式：照 balance.md「定案的隊伍和招式」，25 隻裡學不到的招式都已經排好替代。
+  - Victory Road 的 Wally：隊伍要和他在 Mauville 的角色接得上（Gardevoir 那一格），套用後對一次。
+- 工具看不到、錄路線時要親眼確認的：
+  - 殿堂（`src/hall_of_fame.c`）顯示的是玩家隊伍，沒有寫死的角色。
+  - 片尾（`src/credits.c`）依全國圖鑑編號列出抓過的角色加御三家；原創角色有沒有正常顯示，要等路線跑到片尾才知道。
+
+### 14.3 路線錄製的難度（`to_league`，接在 `to_sootopolis` 後面）
+
+- HM07：隊伍裡的 Shojobob、Utoghast 都學得了 Waterfall。
+- Victory Road：B1F 有 8 顆巨石和 6 顆岩石（巨石規劃器），B2F 有室內的水面和瀑布；B1F、B2F 是暗的（`requires_flash`）。不開 Flash 也走得過去，但截圖會是黑的，要先確認有沒有 HM05 和能學的角色。
+- 真正的難處是四天王連打五場，中間不能回 Pokémon Center：
+  - 主力 Grinarbor 現在 Lv51。Mark 的計算（草系單挑、不算 Full Restore 和強化招式）：Sidney Lv48、Phoebe Lv41、Glacia Lv63、Drake Lv62、Wallace Lv58。Glacia 的 Yukijoro 是冰/妖精，兩種屬性打草/惡都是 2 倍。
+  - 對手 Lv46–58，比海上的訓練家高，Victory Road 的 16 名訓練家（Lv43 上下）給的經驗值會比之前多，但一隻打到底大概還是不夠。
+  - 可以用的手段：聯盟商店的 Full Restore、Revive（手上的錢還沒核對）；戰鬥中喝藥的做法 Juan 那一場已經有了。
+  - 需要 David 決定的：四天王和 Wallace 要不要套用「主力 ≥ 1/3、無人倒下」的標準；要不要先練第二隻（之前提過的 Magaryu）。我的建議是先照現況錄一次看實際結果，再決定要不要練。
+- 殿堂之後是片尾，然後回到 Littleroot。回歸腳本停在哪裡（殿堂、片尾結束、還是回到家）也要決定；片尾很長，但它是原版角色最可能殘留、工具又看不到的地方，建議至少跑完一次。
+

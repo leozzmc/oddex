@@ -448,3 +448,33 @@ exclude_maps = ["SootopolisCity_MysteryEventsHouse_B1F"]
 script_files = ["data/scripts/cave_of_origin.inc"]
 # The Sootopolis brothers' size records (SIZE_RECORD_1 / _2 roles).
 c_files = ["src/pokemon_size_record.c"]
+
+[league]
+description = "After Juan: Waterfall, Ever Grande, Victory Road, the inner Meteor Falls, the Elite Four and Wallace"
+strict = false   # draft: nothing applied yet (Mark's League batch is on feat/league-draft)
+# Reachability: stage_reach.py --rock-smash --cut --strength --surf, with and without --waterfall, over the
+# whole surface world from Ever Grande's lower sea. Waterfall (HM07, usable with the Rain Badge) adds exactly:
+# Ever Grande above its waterfall (the city's interiors and the League), Victory Road's three floors, and
+# Meteor Falls' inner rooms (1F_2R, B1F_1R, B1F_2R and Steven's cave behind them). The other waterfalls
+# (Route 114, Route 119) lead to items only.
+# Ever Grande's own water and fishing tables were reachable with Surf already; no earlier scope took them.
+# Scripted, added by hand: Wally at Victory Road's exit, the Elite Four, Wallace.
+# Post-game, out: Steven in Meteor Falls (his cave's wild table is in: the room is open before the Hall of
+# Fame), Wally's rematches (TRAINER_WALLY_VR_2 on), every *_2.._5 rematch.
+wild_maps = ["EverGrandeCity", "VictoryRoad_1F", "VictoryRoad_B1F", "VictoryRoad_B2F",
+             "MeteorFalls_1F_2R", "MeteorFalls_B1F_1R", "MeteorFalls_B1F_2R", "MeteorFalls_StevensCave"]
+trainers = [
+    # Meteor Falls, the room above the waterfall.
+    "TRAINER_NICOLAS_1", "TRAINER_JOHN_AND_JAY_1",
+    # Victory Road 1F, B1F, B2F.
+    "TRAINER_ALBERT", "TRAINER_HOPE", "TRAINER_EDGAR", "TRAINER_KATELYNN", "TRAINER_QUINCY",
+    "TRAINER_MITCHELL", "TRAINER_HALLE", "TRAINER_SHANNON", "TRAINER_SAMUEL", "TRAINER_MICHELLE",
+    "TRAINER_VITO", "TRAINER_CAROLINE", "TRAINER_DIANNE", "TRAINER_FELIX", "TRAINER_JULIE", "TRAINER_OWEN",
+    # Wally at the exit of Victory Road (scripted).
+    "TRAINER_WALLY_VR_1",
+    # The Pokemon League.
+    "TRAINER_SIDNEY", "TRAINER_PHOEBE", "TRAINER_GLACIA", "TRAINER_DRAKE", "TRAINER_WALLACE",
+]
+maps = ["EverGrandeCity*", "VictoryRoad*", "MeteorFalls_1F_2R", "MeteorFalls_B1F_1R", "MeteorFalls_B1F_2R",
+        "MeteorFalls_StevensCave"]
+

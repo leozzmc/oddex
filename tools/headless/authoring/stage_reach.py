@@ -1,9 +1,9 @@
 """Which trainers the player can meet at a story stage, for content/migration_scope.toml.
 
-usage: stage_reach.py START_MAP X Y "MapPattern,MapPattern*,..." [--rock-smash] [--cut] [--strength] [--surf]
+usage: stage_reach.py START_MAP X Y "MapPattern,MapPattern*,..." [--rock-smash] [--cut] [--strength] [--surf] [--waterfall]
 
 BFS from a start tile across connections and warps, limited to maps matching the patterns. Water
-is impassable unless --surf (waterfalls stay impassable: Waterfall comes later). Cuttable trees, breakable rocks and boulders block
+is impassable unless --surf (waterfalls also need --waterfall: HM07 works from the Rain Badge on). Cuttable trees, breakable rocks and boulders block
 unless --cut, --rock-smash or --strength says the player can clear them. A trainer counts as
 reachable when a tile next to it or in its sight line is reachable. (check_maps.py's reachability
 is different: it assumes every field move and only asks whether an event can ever be reached.)
@@ -30,6 +30,7 @@ FIELD = tuple(o for flag, o in (("--cut", "CUTTABLE_TREE"), ("--rock-smash", "BR
                                 ("--strength", "PUSHABLE_BOULDER")) if flag not in ARGS)
 
 SURF = "--surf" in ARGS
+WATERFALL = "--waterfall" in ARGS
 
 
 def blocked_objs(m):
@@ -72,7 +73,7 @@ while q:
             c2, e2, b2 = cell(mm, nx, ny)
         elif not (el == e2 or el in (0, 15) or e2 in (0, 15) or (SURF and (is_water(beh) or is_water(b2)))):
             continue
-        if (c2 and not is_warp) or (is_water(b2) and (not SURF or "WATERFALL" in b2)):
+        if (c2 and not is_warp) or (is_water(b2) and (not SURF or ("WATERFALL" in b2 and not WATERFALL))):
             continue
         if (nn, nx, ny) not in seen:
             seen.add((nn, nx, ny)); q.append((nn, nx, ny))
