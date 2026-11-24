@@ -462,3 +462,52 @@
   - Onamazu 的 Earthquake 換成 Mud Shot:只有 Onamazu 那一格從 Lv61 降到 Lv58,整隊的門檻還是卡在王牌(Lv68),幾乎沒有用。
   - 王牌的 Ice Beam 換成 Dragon Pulse:草不變(Lv48)、火不變,水反而變難(Lv50)。不建議。
   - 我的建議是先不調,照 Tate & Liza 的做法等 Sonia 錄完看實際結果:火系玩家到這裡通常已經有水上抓的隊友,而且這一場是單打。
+
+## 四天王和 Wallace(草稿)(2026-11-24,Mark;只是分析,角色和隊伍都還沒做)
+
+### 怎麼算的
+- `tools/oddex/damage_calc.py <SIDNEY|PHOEBE|GLACIA|DRAKE|WALLACE> --summary --levels 40-90`,一對一,我方取最低亂數、對手取最高亂數。五場都是單打。
+- 我方用最終型(Grinarbor、Trekcart、Ridgeloom);原版基準用 `--vanilla 421e141a --starters SCEPTILE,BLAZIKEN,SWAMPERT`。
+- 現有角色用 `--set X:species=` 換上去;新角色還沒做,用原版的數值代替:
+  - Sidney 的 Waraningyo、Umibozu 和天狗的位置:直接用原版的 Cacturne、Crawdaunt、Shiftry(屬性和種族值都相同或幾乎相同)。
+  - Glacia 的 Yukijoro:用原版的 Glalie 和 Walrein,屬性換成冰/妖精(`--set GLALIE:types=ICE,FAIRY --set WALREIN:types=ICE,FAIRY`)。
+  - Drake 的 Taruja:用原版的 Shelgon(種族值高 17%,所以實際會比算出來的簡單);Yatsuoro:用原版的 Salamence,屬性換成龍/草。
+  - Wallace 的 Ningyomen:用原版的 Milotic,屬性換成水/超能力;Tentacruel 的位置用 Jatai 算(Umibozu 還沒做)。
+- 招式都還是原版那一隻的,所以有些組合不合理(例如放在 Wailord 位置的 Magaryu 用的是 Water Spout)。定案的招式等角色做出來再排。
+- 限制:只算御三家單挑。沒有算 Full Restore(四天王各 2 個、Wallace 4 個)、連打五場中間不能回 Pokémon Center、Double Team、Dragon Dance 這類強化。這些都讓實際比數字難,所以數字只能跟原版比較。
+
+### 結果:每個御三家單挑打贏全隊的最低等級
+
+| | | 草 | 火 | 水 |
+|---|---|---|---|---|
+| Sidney(Lv46–49) | 原版 | Lv48 | Lv60 | Lv53 |
+| | 建議 | Lv43 | Lv53 | Lv45 |
+| Phoebe(Lv48–51) | 原版 | Lv51 | Lv56 | Lv45 |
+| | 建議 | Lv41 | Lv59 | Lv48 |
+| Glacia(Lv50–53) | 原版 | Lv56 | Lv58 | Lv59 |
+| | 建議(Yukijoro 是冰/妖精) | Lv60 | Lv46 | Lv60 |
+| | 建議(Yukijoro 是單純的冰) | Lv54 | Lv58 | Lv60 |
+| Drake(Lv52–55) | 原版 | Lv78 | Lv70 | Lv62 |
+| | 建議 | Lv68 | **Lv83** | Lv62 |
+| Wallace(Lv55–58) | 原版 | Lv63 | Lv78 | Lv72 |
+| | 建議 | Lv58 | **90 以上** | Lv63 |
+
+### 看得出來的事
+- **草(Grinarbor,草/惡)**:整體比原版簡單。Phoebe 最明顯(Lv41 對 Lv51):惡系打幽靈是 2 倍,她的五隻都是幽靈。
+- **水(Ridgeloom,水/飛行)**:和原版差不多,Wallace 比原版簡單(Lv63 對 Lv72)。
+- **火(Trekcart,火/鋼)**:
+  - Sidney、Glacia 比原版簡單或相同。Yukijoro 是冰/妖精的話,火和鋼打她都很痛,Glacia 會變成火系最輕鬆的一場(Lv46 對原版 Lv58)。
+  - **Drake 和 Wallace 比原版難很多。** 原因和 Juan 那一場一樣:火和鋼打水/龍的 Magaryu 都只有 1/4,它在 Drake 和 Wallace 的隊伍裡各有一隻;Wallace 還有 Onamazu 的 Earthquake(對火/鋼是 4 倍)。原版的 Blaziken 有格鬥系的等倍招式可以打。
+  - 火系在原版本來就是最吃虧的(Drake Lv70、Wallace Lv78),到了聯盟也應該有一整隊,不是一隻打到底;但差距確實變大了。
+- Drake 的王牌改成龍/草之後,對冰一樣是 4 倍(和原版的龍/飛行相同),火系打它反而比原版容易(Lv54 對 Lv68)。
+
+### 可以調的地方(要不要調請使用者決定)
+- **Wallace 的 Wailord 位置不要放 Magaryu。** 改成還沒有人用的水系(例如這一批的 Umibozu 放兩個位置之一,或之後才做的角色),火系在 Wallace 就只剩 Onamazu 和王牌兩關。缺點是 Wallace 會少一隻龍。
+- **Drake 的 Kingdra 位置是對照來的**(Kingdra → Magaryu),不好動;可以把它的等級從 Lv53 降到 Lv51。
+- **Onamazu 在 Wallace 隊伍裡的 Earthquake 換成 Muddy Water**:火系那一格從 Lv84 降到和其他幾隻差不多。
+- 我的建議和 Juan、Tate & Liza 一樣:先不調,等 Sonia 錄完看實際結果。四天王是連打,真正的難度來自消耗,不是單場的門檻,這一點計算器算不到。
+
+### 等角色做出來要重算的
+- Taruja(360)比代替它的 Shelgon(420)弱,Drake 的第一隻會比表裡簡單。
+- Umibozu 放進 Wallace 的 Tentacruel 位置之後,水/惡對三隻御三家的結果。
+- 六隻新角色定案的招式。
