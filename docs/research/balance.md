@@ -590,3 +590,25 @@
 ### 還沒驗證的
 - 實際對戰的結果(Sonia 錄 League 的路線時才知道);四天王連打的消耗、Full Restore、Double Team 和 Dragon Dance 的強化,計算器都算不到。
 - AI 的旗標照原版(Sidney 有 `Force Setup First Turn`):他的隊伍裡現在會強化的招式是 Daibeki 的 Iron Defense 和 Raijuoh 的 Howl,第一回合會先用。
+
+## Victory Road 和 Meteor Falls 內部:套用 [league] 後學不到的 25 招(2026-11-25,Mark)
+
+Sonia 套用 [league] 之後查出 6 名訓練家有 25 招是新角色學不到的(判定:該等級以前的升級招式含進化前、teachable、egg;四天王和 Wallace 照上面的表改完全部學得到)。下面是替代招式,`trainers.party` 由 Sonia 改。再戰版(John & Jay 2–5、Wally 2–5)不在 [league] 範圍,等破關後的範圍套用時用同一組。
+
+| 訓練家 | 角色(原版位置) | 原招 → 替代 | 整組 |
+|---|---|---|---|
+| John & Jay | Yokozunat Lv39(Medicham) | Fire Punch → Brick Break;Psych Up → Silver Wind | Psychic / Brick Break / Silver Wind / Protect |
+| John & Jay | Yokozunat Lv39(Hariyama) | Focus Punch → Superpower;Belly Drum → Bulk Up | Superpower / Rock Tomb / Rest / Bulk Up |
+| Katelynn | Hannyagon Lv43(Gardevoir) | Skill Swap → Scary Face;Thunderbolt → Shadow Ball | Scary Face / Psychic / Shadow Ball / Calm Mind |
+| Katelynn | Mandaloka Lv43(Slaking) | Shadow Ball → Fire Spin;Aerial Ace → Strength;Brick Break → Rock Smash | Earthquake / Fire Spin / Strength / Rock Smash |
+| Quincy | Mandaloka Lv43(Slaking) | Ice Beam → Mud Shot;Thunderbolt → Hyper Voice | Attract / Mud Shot / Hyper Voice / Flamethrower |
+| Quincy | Ichimai Lv43(Dusclops) | Skill Swap → Spite;Will-O-Wisp → Thunder Wave | Spite / Protect / Thunder Wave / Toxic |
+| Mitchell | Iwadusk Lv43(Lunatone) | Explosion → Rock Slide | Rock Slide / Reflect / Light Screen / Psychic |
+| Mitchell | Iwadawn Lv43(Solrock) | Explosion → Power Gem;Reflect → Harden;Light Screen → Calm Mind;Shadow Ball → Dazzling Gleam | Power Gem / Harden / Calm Mind / Dazzling Gleam |
+| Dianne | Kagurai Lv43(Lanturn) | Earthquake → Flash Cannon | Thunderbolt / Flash Cannon |
+| Wally | Mandaring Lv43(Delcatty) | Sing → Hyper Voice;Assist → Sand Attack;Charm → Growl;Feint Attack → Bulldoze | Hyper Voice / Sand Attack / Growl / Bulldoze |
+| Wally | Kagurai Lv41(Magneton) | Screech → Metal Sound | Supersonic / Thunderbolt / Tri Attack / Metal Sound |
+| Wally | Hannyagon Lv45(Gardevoir) | Future Sight → Shadow Ball | Double Team / Calm Mind / Psychic / Shadow Ball |
+
+- 選法:保留原招的角色(變化招換變化招,攻擊招換同屬性或同威力帶的)。刻意沒給最強的選項:Mandaloka 沒給 Boomburst 和 Earth Power,Iwadusk 沒給 Moonblast。Mandaloka 接的是 Slaking 但沒有 Truant,所以攻擊招挑弱一點的。
+- **沒有跑 `damage_calc`**:一般訓練家不在上面的表裡,Wally 這次換的招也沒算。Sonia 錄 Victory Road 時會留意 Wally 和 Katelynn 的 Mandaloka(Earthquake 對火鋼御三家是 4 倍),明顯過強再調。
