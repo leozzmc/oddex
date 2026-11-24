@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/event_objects.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
 #include "constants/rgb.h"
@@ -451,6 +452,19 @@ static bool32 IsSpritePalTagBlendImmune(u32 palIndex)
     return (palIndex >= 16 && IS_BLEND_IMMUNE_TAG(GetSpritePaletteTagByPaletteNum(palIndex - 16)));
 }
 
+// oddex: the legendaries' scene objects take the player's color map in rain instead of the darkened one every
+// other sprite palette gets, so they stay readable in the storm they are the centre of. By tag: their
+// palettes load into whichever sprite slot is free.
+static bool32 IsSpritePalTagStormLit(u32 palIndex)
+{
+    u32 tag;
+
+    if (palIndex < 16)
+        return FALSE;
+    tag = GetSpritePaletteTagByPaletteNum(palIndex - 16);
+    return tag >= OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SEA && tag <= OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SKY;
+}
+
 static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
 {
     u16 curPalIndex;
@@ -490,7 +504,8 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
             {
                 u8 r, g, b;
 
-                if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_CONTRAST || curPalIndex - 16 == gWeatherPtr->contrastColorMapSpritePalIndex)
+                if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_CONTRAST || curPalIndex - 16 == gWeatherPtr->contrastColorMapSpritePalIndex
+                 || IsSpritePalTagStormLit(curPalIndex))
                     colorMap = sContrastColorMaps[colorMapIndex];
                 else
                     colorMap = sDarkenedContrastColorMaps[colorMapIndex];
@@ -583,7 +598,7 @@ static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMap
         {
             const u8 *colorMap;
 
-            if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_DARK_CONTRAST)
+            if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_DARK_CONTRAST && !IsSpritePalTagStormLit(curPalIndex))
                 colorMap = sDarkenedContrastColorMaps[colorMapIndex];
             else
                 colorMap = sContrastColorMaps[colorMapIndex];

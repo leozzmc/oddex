@@ -40,6 +40,14 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SchoolKidM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Maniac;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HexManiac;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RayquazaStill;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendSeaFront;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendSeaSide;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendSeaAsleep;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendLandFront;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendLandSide;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendLandAsleep;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendSkyStill;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OddexLegendSky;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -625,6 +633,14 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_POOCHYENA] =                &gObjectEventGraphicsInfo_Poochyena,
     [OBJ_EVENT_GFX_KYOGRE_SIDE] =              &gObjectEventGraphicsInfo_KyogreSide,
     [OBJ_EVENT_GFX_GROUDON_SIDE] =             &gObjectEventGraphicsInfo_GroudonSide,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_FRONT] = &gObjectEventGraphicsInfo_OddexLegendSeaFront,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_SIDE] = &gObjectEventGraphicsInfo_OddexLegendSeaSide,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_ASLEEP] = &gObjectEventGraphicsInfo_OddexLegendSeaAsleep,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_FRONT] = &gObjectEventGraphicsInfo_OddexLegendLandFront,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_SIDE] = &gObjectEventGraphicsInfo_OddexLegendLandSide,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_ASLEEP] = &gObjectEventGraphicsInfo_OddexLegendLandAsleep,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_SKY_STILL] = &gObjectEventGraphicsInfo_OddexLegendSkyStill,
+    [OBJ_EVENT_GFX_ODDEX_LEGEND_SKY] = &gObjectEventGraphicsInfo_OddexLegendSky,
     [OBJ_EVENT_GFX_MYSTERY_GIFT_MAN] =         &gObjectEventGraphicsInfo_MysteryEventDeliveryman,
     [OBJ_EVENT_GFX_TRICK_HOUSE_STATUE] =       &gObjectEventGraphicsInfo_Statue,
     [OBJ_EVENT_GFX_KIRLIA] =                   &gObjectEventGraphicsInfo_Kirlia,

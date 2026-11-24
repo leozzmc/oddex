@@ -413,6 +413,16 @@ enum
     OBJ_EVENT_GFX_PUSHABLE_BOULDER_FRLG,
     OBJ_EVENT_GFX_CUTTABLE_TREE_FRLG,
     OBJ_EVENT_GFX_BREAKABLE_ROCK_FRLG,
+    // oddex: the 64x64 scene objects of the three legendaries (tools/oddex/scene_art.py), in the layout of
+    // the vanilla Kyogre/Groudon front, side and asleep objects and of Rayquaza's still and cutscene ones.
+    OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_FRONT,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_SIDE,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_ASLEEP,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_FRONT,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_SIDE,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_LAND_ASLEEP,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_SKY_STILL,
+    OBJ_EVENT_GFX_ODDEX_LEGEND_SKY,
     NUM_OBJ_EVENT_GFX,
 };
 
@@ -568,6 +578,12 @@ enum
 #define OBJ_EVENT_PAL_TAG_METEORITE               0x1131
 #define OBJ_EVENT_PAL_TAG_SEAGALLOP               0x1132
 #define OBJ_EVENT_PAL_TAG_SS_ANNE                 0x1133
+// oddex: the legendaries' scene objects carry their own colours instead of a shared NPC palette.
+#define OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SEA        0x1134
+#define OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SEA_ASLEEP 0x1135
+#define OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_LAND       0x1136
+#define OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_LAND_ASLEEP 0x1137
+#define OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SKY        0x1138
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla

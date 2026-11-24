@@ -2506,3 +2506,68 @@ static const struct SpriteFrameImage sPicTable_MomFrlg[] = {
 };
 
 #endif // IS_FRLG
+
+// oddex: front frames 0-1 and side frames 2-3, laid out like the vanilla Kyogre/Groudon tables.
+static const struct SpriteFrameImage sPicTable_OddexLegendSeaFront[] = {
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_OddexLegendSeaSide[] = {
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendSea, 8, 8, 3),
+};
+
+static const struct SpriteFrameImage sPicTable_OddexLegendLandFront[] = {
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 0),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_OddexLegendLandSide[] = {
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 2),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+    overworld_frame(gObjectEventPic_OddexLegendLand, 8, 8, 3),
+};
+
+static const struct SpriteFrameImage sPicTable_OddexLegendSkyStill[] = {
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+    obj_frame_tiles(gObjectEventPic_OddexLegendSkyStill),
+};
+
+static const struct SpriteFrameImage sPicTable_OddexLegendSky[] = {
+    overworld_ascending_frames(gObjectEventPic_OddexLegendSky, 8, 8),
+};

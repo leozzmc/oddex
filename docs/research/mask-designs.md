@@ -1141,6 +1141,30 @@ Zubat 是 Komorimen(245,單一階段)。這一段的幹部和 Maxie 用 Golbat �
 - 大地那隻出現時的環境描述從「熱」改成「乾」:井乾了、湖面下降、天上一朵雲都沒有。
 - Wallace 在 Cave of Origin:第三隻是「很久以前從天上下來過的船」;Sky Pillar 是當年的人為了再叫它一次蓋的塔。
 
+### 傳說三隻:劇情場景用的 64×64 物件圖(2026-11-25,Mark)
+
+使用者看過 Sootopolis 場景的截圖後決定:32×32 的地圖小圖在暴雨裡又小又暗,劇情場景改用 64×64。圖由 `tools/oddex/scene_art.py` 產生(`. tools/env.sh && python3 tools/oddex/scene_art.py --preview OUT.png`),放在各自的 `game/graphics/pokemon/oddex/<name>/`。
+
+格式照原版對應的那幾張(原版 Kyogre、Groudon 是 32×32 四幀,Rayquaza 是 64×64 一幀加五幀),用的也是原版那幾張的動作表和仿射動畫(`sAnimTable_Standard`、`sAnimTable_GroudonSide`、`sAnimTable_Rayquaza`、`sAffineAnimTable_KyogreGroudon`),Sonia 沿用的移動腳本不用改:
+
+| 新的 graphics id | 對應原版 | 圖 | 幀 | 調色盤 tag |
+|---|---|---|---|---|
+| `OBJ_EVENT_GFX_ODDEX_LEGEND_SEA_FRONT` | `KYOGRE_FRONT` | `sokonemu/scene.png` 256×64 | 0 正面、1 正面呼吸 | `OBJ_EVENT_PAL_TAG_ODDEX_LEGEND_SEA` |
+| `…_SEA_SIDE` | `KYOGRE_SIDE` | 同上 | 2 側面(朝西)、3 側面呼吸 | 同上 |
+| `…_SEA_ASLEEP` | `KYOGRE_ASLEEP` | 同上的正面兩幀 | 0、1 | `…_SEA_ASLEEP`(`scene_asleep.pal`) |
+| `…_LAND_FRONT`/`_SIDE`/`_ASLEEP` | `GROUDON_*` | `okafumi/scene.png` | 同上 | `…_LAND`、`…_LAND_ASLEEP` |
+| `…_SKY_STILL` | `RAYQUAZA_STILL` | `utsuroban/scene_still.png` 64×64 | 懸停 | `…_SKY` |
+| `…_SKY` | `RAYQUAZA` | `utsuroban/scene.png` 320×64 | 照 `sAnimTable_Rayquaza`:0 落地、窗內無光(睡),1 落地、亮燈(醒),2 叫(窗子閃白),3 懸停在光柱上,4 收起光柱往上飛 | 同上 |
+
+- **正面直接用已核准的戰鬥圖**(`anim_front.png` 的兩幀),手擺的眼睛原樣帶過來,風格不會跑掉。側面是同一個模型用 `ODDEX_OW_RES=256 ODDEX_SIDE_AZ=30` 重新渲染的 64px 圖,朝西(遊戲會把朝東鏡射)。Utsuroban 的另外四幀是從戰鬥圖用 2D 做的(切掉光柱、補上底部輪廓、換窗子的顏色),箱子只出現在有光柱的幀,樣子沒有改(沒有十字)。
+- **睡姿照原版做法**:同一張圖換調色盤。`scene_asleep.pal` 把顏色抽掉大半、壓暗一點,會發光的眼睛(索引 14)變成陰影色,看起來是閉著眼的石像。不需要另外畫幀。
+- **調色盤:每隻自己的 object palette tag**(共 5 個:海、海睡、陸、陸睡、天)。原因:(1) 原版醒著的那幾張借用 NPC 共用調色盤 3、4,顏色是配合原版角色畫的,換成我們的角色就要改掉全遊戲 NPC 共用的顏色;(2) 這版引擎是依 tag 動態載入調色盤(`LoadObjectEventPalette`),有空的 OBJ 調色盤格就能載入,不必佔固定的 NPC 格;(3) 顏色和戰鬥圖是同一組 15 色,所以地圖上和戰鬥裡是同一隻。Sootopolis 三隻同時在場時多用 3 格 OBJ 調色盤。
+- **暴雨裡的辨識度**,兩件事一起做:
+  - 輪廓:深色輪廓外面再加一圈 1px 的淺色邊,用的是各自調色盤裡本來就有的最亮色(海、陸:索引 15;天:光柱的 13),不佔新的顏色。深色輪廓在深藍的水面上會消失,淺色邊不會;在淺色的洞窟地面上則是深色輪廓在作用。
+  - 亮度:下雨時引擎對主角以外的所有 sprite 調色盤用「加暗」的色彩對照表(`sDarkenedContrastColorMaps`),主角用一般的(`sContrastColorMaps`)。第一次在遊戲裡看,大圖雖然夠大,顏色還是被壓成一團暗色。所以在 `src/field_weather.c` 加了 `IsSpritePalTagStormLit`:這 5 個 tag 的調色盤在雨天跟主角用同一張表。依 tag 判斷,不記錄狀態,調色盤載到哪一格都一樣。沒有用 `BLEND_IMMUNE_FLAG`(那會讓牠們在畫面淡出時不跟著變黑),淡出、時間色調(傍晚偏暖)都照常作用。
+- **接線(Sonia)**:只要改 `map.json` 的 `graphics_id`。`SeafloorCavern_Room9`:醒 `SEA_FRONT`、睡 `SEA_ASLEEP`;`MagmaHideout_4F`:`LAND_FRONT`、`LAND_ASLEEP`;`SkyPillar_Top`:睡著的那個 `SKY`(朝下 = 第 0 幀)、另一個 `SKY_STILL`;`SootopolisCity`:`LAND_SIDE`、`SEA_SIDE`、`SKY`。64×64 的物件以所在格子為底邊、水平置中,左右各多出 1.5 格、往上多 3 格。要注意兩件事:(1) Seafloor Cavern 和 Magma Hideout 那兩個物件離主角 5 格,鏡頭不動的話大圖的上半會超出畫面,只看得到下半身,要不要把物件往下移或加鏡頭移動由 Sonia 決定;(2) 換圖之後場景裡動作的影格數會變,`to_sootopolis` 在 Sootopolis 對戰場景之後會錯開(我用暫時接線跑過:到對戰場景為止都同步,之後在 Sky Pillar 前遇到不該有的野生戰),接線後要用 `resync.py` 重新同步。
+- 重畫這三隻的戰鬥圖之後要重跑 `scene_art.py`;`test_scene_art.py` 會比對 repo 裡的圖(不需要 Blender 的部分)。
+
 ### 支線:Sealed Chamber 和三個 Regi(建議延後)
 - **建議:延到破關後內容那一段**(和 Marine/Terra Cave、Steven 的 Beldum、Metagross 一起),這一段維持 Sonia 草稿的排除。
 - 理由:

@@ -97,7 +97,11 @@ maskkit.show_front_only(scene, not is_mask)
 maskkit.shoot(scene, str(out / 'back.png'), azimuth=back_az, elevation=14, size=size)
 # The overworld views share the scale the largest of them needs, or the creature changes size
 # (and look: a big mask from the front, a small body from the side) as it turns.
-ow = (('ow_back', 180, not is_mask), ('ow_front', 0, True), ('ow_side', opts.get('side_az', -60), True))
+# ODDEX_OW_RES / ODDEX_SIDE_AZ: the 64px scene sprites (tools/oddex/scene_art.py) want these views larger
+# and less side-on than the 32px map sprites.
+ow_res = int(os.environ.get('ODDEX_OW_RES', 128))
+side_az = float(os.environ.get('ODDEX_SIDE_AZ', opts.get('side_az', -60)))
+ow = (('ow_back', 180, not is_mask), ('ow_front', 0, True), ('ow_side', side_az, True))
 spans = []
 for _, az, front_only in ow:
     maskkit.show_front_only(scene, front_only)
@@ -105,4 +109,4 @@ for _, az, front_only in ow:
     spans.append(maskkit.frame_all(scene, margin=1.0 / 0.9))
 for name, az, front_only in ow:
     maskkit.show_front_only(scene, front_only)
-    maskkit.shoot(scene, str(out / f'{name}.png'), azimuth=az, elevation=25, res=128, span=max(spans))
+    maskkit.shoot(scene, str(out / f'{name}.png'), azimuth=az, elevation=25, res=ow_res, span=max(spans))

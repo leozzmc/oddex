@@ -636,3 +636,14 @@ const u16 gObjectEventPic_PidgeyOld[] = INCGFX_U16("graphics/object_events/pics/
 const u16 gObjectEventPic_ClefairyOld[] = INCGFX_U16("graphics/object_events/pics/pokemon_old/clefairy.png", ".4bpp", "-mwidth 2 -mheight 2");
 
 #endif // IS_FRLG
+
+// oddex: 64x64 scene objects of the three legendaries (tools/oddex/scene_art.py writes the files).
+const u32 gObjectEventPic_OddexLegendSea[] = INCGFX_U32("graphics/pokemon/oddex/sokonemu/scene.png", ".4bpp", "-mwidth 8 -mheight 8");
+const u32 gObjectEventPic_OddexLegendLand[] = INCGFX_U32("graphics/pokemon/oddex/okafumi/scene.png", ".4bpp", "-mwidth 8 -mheight 8");
+const u32 gObjectEventPic_OddexLegendSkyStill[] = INCGFX_U32("graphics/pokemon/oddex/utsuroban/scene_still.png", ".4bpp");
+const u32 gObjectEventPic_OddexLegendSky[] = INCGFX_U32("graphics/pokemon/oddex/utsuroban/scene.png", ".4bpp", "-mwidth 8 -mheight 8");
+const u16 gObjectEventPal_OddexLegendSea[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/scene.pal", ".gbapal");
+const u16 gObjectEventPal_OddexLegendSeaAsleep[] = INCGFX_U16("graphics/pokemon/oddex/sokonemu/scene_asleep.pal", ".gbapal");
+const u16 gObjectEventPal_OddexLegendLand[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/scene.pal", ".gbapal");
+const u16 gObjectEventPal_OddexLegendLandAsleep[] = INCGFX_U16("graphics/pokemon/oddex/okafumi/scene_asleep.pal", ".gbapal");
+const u16 gObjectEventPal_OddexLegendSky[] = INCGFX_U16("graphics/pokemon/oddex/utsuroban/scene.pal", ".gbapal");
